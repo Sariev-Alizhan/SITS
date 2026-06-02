@@ -59,7 +59,15 @@ function generate(lang) {
     `<html lang="${lang}" data-theme="dark" data-lang="${lang}">`
   );
 
-  // 2. meta description / og:description / twitter:description
+  // 2. <title> — локализованный per язык (не путать с og:title, который про слоган)
+  if (meta.title) {
+    out = out.replace(
+      /<title>[^<]*<\/title>/,
+      `<title>${escText(meta.title)}</title>`
+    );
+  }
+
+  // 2.1. meta description / og:description / twitter:description
   out = out.replace(
     /<meta name="description" content="[^"]*"\s*\/?>/,
     `<meta name="description" content="${escAttr(meta.description)}" />`

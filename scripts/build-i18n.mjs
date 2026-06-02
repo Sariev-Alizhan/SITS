@@ -112,6 +112,14 @@ function generate(lang) {
   // 6. Убираем root-redirect блок (только на /)
   out = out.replace(/<!-- ROOT-REDIRECT-START -->[\s\S]*?<!-- ROOT-REDIRECT-END -->\n?/, '');
 
+  // 6.1. Для /en страница чисто латинская — киррилические preload-ы не нужны
+  // (@font-face всё равно зарегистрирован, если вдруг встретится кириллица — загрузится по unicode-range).
+  if (lang === 'en') {
+    // На /en латинский текст — киррилические preload'ы wasted. @font-face всё равно
+    // зарегистрирован, так что если вдруг встретится кириллица, файл загрузится по unicode-range.
+    out = out.replace(/[^\S\n]*<link rel="preload" href="\/fonts\/unbounded-\d+-cyrillic\.woff2"[^>]*\/>\n/g, '');
+  }
+
   // 7. Pre-render текстов для всех data-i18n
   out = out.replace(
     /<(\w+)([^>]*\bdata-i18n="([^"]+)"[^>]*)>([^<]*)<\/\1>/g,

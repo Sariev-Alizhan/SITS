@@ -1540,6 +1540,7 @@ form.addEventListener('submit', async e => {
     service: form.elements.type.value.trim(),
     details: form.elements.message.value.trim(),
     website: form.elements.website ? form.elements.website.value : '', // honeypot
+    formTime: window.__formLoaded || 0, // time-trap: серверу пригодится, чтобы отловить слишком быструю сабмиссию
   };
   try {
     const r = await fetch('/api/lead', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
@@ -1554,6 +1555,8 @@ form.addEventListener('submit', async e => {
 });
 
 document.getElementById('year').textContent = new Date().getFullYear();
+// time-trap: фиксируем момент готовности формы для анти-бот проверки
+window.__formLoaded = Date.now();
 
 /* ============ INTERACTIVE FX ============ */
 /* Курсор-прожектор + magnetic + 3D-наклон портфолио.
@@ -1615,11 +1618,11 @@ document.getElementById('year').textContent = new Date().getFullYear();
 })();
 </script>
 
-<!-- Vercel Web Analytics через ESM (без билда). Если endpoint /_vercel/insights/* не активен,
-     inject() тихо словит сетевую ошибку — сайт не сломается. -->
+<!-- Vercel Web Analytics через ESM — версия залочена для защиты от supply-chain атак.
+     При обновлении @vercel/analytics нужно вручную сменить версию здесь. -->
 <script type="module">
   try {
-    const { inject } = await import('https://esm.sh/@vercel/analytics');
+    const { inject } = await import('https://esm.sh/@vercel/analytics@1.5.0');
     inject();
   } catch (e) { /* analytics not critical */ }
 </script>

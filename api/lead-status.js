@@ -1,9 +1,8 @@
 // /api/lead-status.js — обновление статуса заявки в CRM.
-// POST { id, status } + auth via ADMIN_PASSWORD (header Authorization: Bearer ... or ?key=).
-// Статусы хранятся в отдельном хэше `lead-statuses` — список `leads` не трогаем,
-// поэтому старые заявки и API остаются совместимыми.
+// Защита: timing-safe пароль, rate-limit на провалы.
 
 import { kv } from '@vercel/kv';
+import { rateLimit, getClientIp, timingSafeEqual, parseBody } from './_security.js';
 
 const ALLOWED = new Set(['new', 'in_progress', 'closed']);
 
@@ -12,17 +11,33 @@ export default async function handler(req, res) {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
   }
 
-  const pass =
+  const ip = getClientIp(req);
+  const rl = await rateLimit({ key: `admin-write:${ip}`, limit: 60, windowSec: 300 });
+  if (!rl.ok) {
+    res.setHeader('Retry-After', String(rl.resetSec || 60));
+    return res.status(429).json({ ok: false, error: 'Слишком много запросов' });
+  }
+
+  const provided =
     req.query.key ||
     (req.headers.authorization || '').replace('Bearer ', '');
-  if (!process.env.ADMIN_PASSWORD || pass !== process.env.ADMIN_PASSWORD) {
+  const expected = process.env.ADMIN_PASSWORD || '';
+
+  if (!expected || !timingSafeEqual(String(provided), expected)) {
+    const failRl = await rateLimit({ key: `admin-fail:${ip}`, limit: 5, windowSec: 300 });
+    if (!failRl.ok) {
+      res.setHeader('Retry-After', String(failRl.resetSec || 60));
+      return res.status(429).json({ ok: false, error: 'Слишком много неудачных попыток. Подождите.' });
+    }
     return res.status(401).json({ ok: false, error: 'Неверный пароль' });
   }
 
   try {
-    const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
-    const { id, status } = body;
+    let body;
+    try { body = parseBody(req, 4 * 1024); }
+    catch (e) { return res.status(e.code || 400).json({ ok: false, error: 'Bad request' }); }
 
+    const { id, status } = body;
     if (!id || typeof id !== 'string') {
       return res.status(400).json({ ok: false, error: 'Не передан id заявки' });
     }
@@ -35,7 +50,7 @@ export default async function handler(req, res) {
     }
     return res.status(200).json({ ok: true });
   } catch (e) {
-    console.error(e);
+    console.error(e?.message || e);
     return res.status(500).json({ ok: false, error: 'Внутренняя ошибка сервера' });
   }
 }

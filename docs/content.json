@@ -1,0 +1,56 @@
+{
+  "company": {
+    "name": "SITS",
+    "full_name": "Sariyev IT Solutions",
+    "tagline_ru": "Превращаем идеи в цифровые продукты",
+    "tagline_en": "We turn ideas into digital products",
+    "founder_ru": "Сариев Алижан Сабитулы",
+    "founder_en": "Sariyev Alizhan Sabituly",
+    "founder_role": "Основатель · Founder",
+    "founder_photo": "brand/founder.jpg",
+    "founder_photo_square": "brand/founder-square.jpg"
+  },
+  "contacts": {
+    "instagram": "https://www.instagram.com/sariyev.it.solutions/",
+    "youtube": "https://www.youtube.com/@sariyev.it.solutions",
+    "linkedin": "https://www.linkedin.com/in/alizhan-sariyev-5a3804278/",
+    "email": "raimzhan1907@gmail.com",
+    "phone": "+7 (___) ___-__-__ (заглушка — заменить)"
+  },
+  "brand": {
+    "fonts": {
+      "logo": "PT Serif / Liberation Serif (Times-style serif)",
+      "display": "Unbounded",
+      "body": "Manrope"
+    },
+    "colors": {
+      "logo_red": "#b31d22",
+      "accent_light": "#e23744",
+      "accent_dark": "#ff4757",
+      "accent_deep": "#b71e2a",
+      "bg_light": "#fdf3f3",
+      "bg_dark": "#150708",
+      "logo_dark_bg": "#222224"
+    },
+    "theme": "Светло-красная дневная + тёмно-красная ночная (авто по времени + ручной переключатель)"
+  },
+  "services": [
+    { "icon": "🌐", "title": "Сайты и веб-платформы", "desc": "Сайты, лендинги и сложные платформы с нуля." },
+    { "icon": "📱", "title": "Мобильные приложения", "desc": "Нативные и кроссплатформенные приложения для iOS и Android." },
+    { "icon": "🎮", "title": "Разработка игр", "desc": "Игры для мобильных и ПК на Unity и Unreal Engine." },
+    { "icon": "⚙️", "title": "Бизнес-автоматизация", "desc": "Автоматизация процессов и рутины бизнеса." },
+    { "icon": "🎬", "title": "AI-контент и монтаж", "desc": "AI-ролики для TikTok и Instagram, профессиональный видеомонтаж." },
+    { "icon": "🛠️", "title": "IT-поддержка", "desc": "Техобслуживание и сопровождение продуктов 24/7." }
+  ],
+  "portfolio": [
+    { "id": "01", "name": "Atelier57", "url": "https://www.atelier57.kz", "category": "Сайт-визитка", "desc": "Студия интерьерного дизайна и бутик (Алматы). Элегантный мультиязычный сайт.", "screenshots": ["portfolio/01_atelier57.png", "portfolio/01_atelier57_full.png"] },
+    { "id": "02", "name": "RedPad Games", "url": "https://redpad-website.vercel.app", "category": "Игровая студия", "desc": "Сайт независимой игровой студии. Кинематографичный лендинг с атмосферой игрового мира.", "screenshots": ["portfolio/02_redpad.png", "portfolio/02_redpad_full.png"] },
+    { "id": "03", "name": "Red Flag Community (RFC)", "url": "http://redflag.kz", "category": "E-commerce / fashion", "desc": "Интернет-магазин streetwear-бренда (Астана). Editorial-дизайн, корзина, мультивалютность.", "screenshots": ["portfolio/03_rfc.png", "portfolio/03_rfc_full.png"] },
+    { "id": "04", "name": "Tengri Yurt", "url": "https://www.tengri-yurt.kz/en", "category": "E-commerce / премиум", "desc": "Продажа казахских юрт ручной работы с доставкой по миру. Кинематографичный мультиязычный сайт.", "screenshots": ["portfolio/04_tengri-yurt.png", "portfolio/04_tengri-yurt_full.png"] },
+    { "id": "05", "name": "Horecom", "url": "https://horecom-platform.vercel.app/ru", "category": "B2B-платформа", "desc": "Оптовая платформа для пекарен, кафе и кондитеров (HoReCa). Каталог SKU, заказы через WhatsApp.", "screenshots": ["portfolio/05_horecom.png", "portfolio/05_horecom_full.png"] },
+    { "id": "06", "name": "BoilerGen / Games AI", "url": "https://boilergen-eight.vercel.app/landing.html", "category": "Dev-инструмент / SaaS", "desc": "Лендинг open-source AI-тулкита для разработки игр. Тёмный dev-дизайн.", "screenshots": ["portfolio/06_boilergen.png", "portfolio/06_boilergen_full.png"] },
+    { "id": "07", "name": "FreelanceHub", "url": "https://freelance-hub.kz", "category": "Маркетплейс", "desc": "Платформа фриланса без комиссий с прямыми выплатами (Kaspi, USDT, банк). Чистый editorial-дизайн.", "screenshots": ["portfolio/07_freelance-hub.png", "portfolio/07_freelance-hub_full.png"] },
+    { "id": "08", "name": "Interagent", "url": "https://www.interagent.kz", "category": "B2B-маркетплейс", "desc": "Торговая площадка для поставщиков и магазинов. 3D-иллюстрации, регистрация и каталог.", "screenshots": ["portfolio/08_interagent.png", "portfolio/08_interagent_full.png"] },
+    { "id": "09", "name": "Citytorg", "url": "https://www.citytorg.kz", "category": "Каталог / городской сервис", "desc": "Каталог акций и магазинов города (Усть-Каменогорск). Карточки товаров и акций.", "screenshots": ["portfolio/09_citytorg.png", "portfolio/09_citytorg_full.png"] }
+  ]
+}

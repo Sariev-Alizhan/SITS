@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITS — CRM · Заявки</title>
+<link rel="icon" type="image/png" href="brand/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;500;600;700&family=PT+Serif:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#150708; --surface:#220a0d; --surface-2:#1f090b;
+    --text:#ffeced; --dim:#c89599; --logo:#e0454f;
+    --accent:#ff4757; --border:rgba(255,71,87,0.22); --ok:#39d98a; --new:#ff4757;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 22px;}
+  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px;}
+  .logo{display:flex;flex-direction:column;line-height:1;}
+  .logo-word{font-family:'PT Serif',serif;font-weight:700;font-size:1.5rem;color:var(--logo);letter-spacing:.07em;}
+  .logo-tag{font-family:'PT Serif',serif;font-size:.56rem;color:var(--logo);letter-spacing:.02em;opacity:.9;}
+  h1{font-family:'Unbounded';font-size:1.1rem;font-weight:600;}
+  .stat{color:var(--dim);font-size:.9rem;}
+  .login{max-width:360px;margin:14vh auto;background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:34px;}
+  .login h2{font-family:'Unbounded';font-size:1.2rem;margin-bottom:8px;}
+  .login p{color:var(--dim);font-size:.9rem;margin-bottom:20px;}
+  input{width:100%;padding:13px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-family:'Manrope';font-size:.97rem;}
+  input:focus{outline:none;border-color:var(--accent);}
+  button{margin-top:14px;width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--accent),#8e1620);color:#fff;font-weight:700;font-size:1rem;cursor:pointer;font-family:'Manrope';transition:.2s;}
+  button:hover{transform:translateY(-2px);}
+  .err{color:var(--accent);font-size:.85rem;margin-top:12px;min-height:1em;}
+  .controls{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+  .controls input{max-width:280px;}
+  .refresh{width:auto;margin:0;padding:11px 18px;}
+  table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;}
+  th,td{text-align:left;padding:14px 16px;font-size:.92rem;border-bottom:1px solid var(--border);vertical-align:top;}
+  th{font-family:'Unbounded';font-weight:600;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(255,71,87,0.04);}
+  .badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:700;background:rgba(255,71,87,0.15);color:var(--accent);}
+  .contact{font-weight:600;}
+  .muted{color:var(--dim);}
+  .empty{text-align:center;color:var(--dim);padding:50px;}
+  .hidden{display:none;}
+  @media(max-width:680px){ th:nth-child(4),td:nth-child(4){display:none;} }
+</style>
+</head>
+<body>
+
+<!-- ЛОГИН -->
+<div class="login" id="loginBox">
+  <div class="logo" style="margin-bottom:18px;"><span class="logo-word">SITS</span><span class="logo-tag">Sariyev IT Solutions</span></div>
+  <h2>CRM · вход</h2>
+  <p>Введите пароль администратора, чтобы посмотреть заявки.</p>
+  <input type="password" id="pass" placeholder="Пароль" autocomplete="current-password">
+  <button id="loginBtn">Войти</button>
+  <div class="err" id="loginErr"></div>
+</div>
+
+<!-- ПАНЕЛЬ -->
+<div class="wrap hidden" id="panel">
+  <header>
+    <div class="logo"><span class="logo-word">SITS</span><span class="logo-tag">Sariyev IT Solutions · CRM</span></div>
+    <div class="stat" id="stat"></div>
+  </header>
+  <div class="controls">
+    <input type="text" id="search" placeholder="Поиск по имени, контакту, услуге…">
+    <button class="refresh" id="refreshBtn">Обновить</button>
+  </div>
+  <table>
+    <thead><tr><th>Дата</th><th>Имя</th><th>Контакт</th><th>Услуга</th><th>Описание</th><th>Статус</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <div class="empty hidden" id="empty">Заявок пока нет.</div>
+</div>
+
+<script>
+  let PASS = '';
+  let LEADS = [];
+  const $ = (id) => document.getElementById(id);
+
+  async function load() {
+    const r = await fetch('/api/leads?key=' + encodeURIComponent(PASS));
+    if (r.status === 401) throw new Error('Неверный пароль');
+    if (!r.ok) throw new Error('Ошибка сервера');
+    const data = await r.json();
+    LEADS = data.leads || [];
+    render();
+  }
+
+  function render() {
+    const q = $('search').value.trim().toLowerCase();
+    const list = LEADS.filter(l =>
+      !q || [l.name, l.contact, l.service, l.details].join(' ').toLowerCase().includes(q)
+    );
+    $('stat').textContent = 'Всего заявок: ' + LEADS.length;
+    $('rows').innerHTML = list.map(l => `
+      <tr>
+        <td class="muted">${new Date(l.createdAt).toLocaleString('ru-RU')}</td>
+        <td>${esc(l.name)}</td>
+        <td class="contact">${esc(l.contact)}</td>
+        <td>${esc(l.service || '—')}</td>
+        <td class="muted">${esc(l.details || '—')}</td>
+        <td><span class="badge">${l.status === 'new' ? 'новая' : esc(l.status)}</span></td>
+      </tr>`).join('');
+    $('empty').classList.toggle('hidden', list.length > 0);
+  }
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+  async function doLogin() {
+    PASS = $('pass').value;
+    $('loginErr').textContent = '';
+    try {
+      await load();
+      $('loginBox').classList.add('hidden');
+      $('panel').classList.remove('hidden');
+    } catch (e) {
+      $('loginErr').textContent = e.message;
+    }
+  }
+
+  $('loginBtn').addEventListener('click', doLogin);
+  $('pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  $('refreshBtn').addEventListener('click', () => load().catch(e => alert(e.message)));
+  $('search').addEventListener('input', render);
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+node_modules/
+.vercel/
+.env*
+.DS_Store
+
+# Archive: previous design version (kept locally for rollback, not for deploy)
+_archive/
+
+# Claude Design source bundle (kept locally as reference, not for deploy)
+SITS-2/
+SITS-2.zip

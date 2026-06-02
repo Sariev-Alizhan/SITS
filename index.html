@@ -227,6 +227,18 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .p-row h4{font-family:var(--font-display);font-weight:500;font-size:21px;letter-spacing:-.01em;line-height:1.2}
 .p-row p{color:var(--muted);font-size:16px;line-height:1.6;max-width:520px}
 
+/* ============ APPROACH ============ */
+.approach{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+.ap-item{padding:32px;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--surface);
+  transition:transform .5s var(--ease),border-color .5s,background .5s}
+.ap-item:hover{transform:translateY(-4px);border-color:var(--line-2);background:var(--surface-2)}
+.ap-num{font-family:var(--font-display);font-weight:500;font-size:34px;letter-spacing:-.02em;line-height:1;
+  color:transparent;-webkit-text-stroke:1px var(--line-2);margin-bottom:20px;transition:-webkit-text-stroke .4s}
+.ap-item:hover .ap-num{-webkit-text-stroke:1px var(--red)}
+.ap-item p{color:var(--muted);font-size:15px;line-height:1.6}
+.contact-pricing{font-size:14px;color:var(--muted);line-height:1.55;margin-bottom:16px;
+  padding:14px 18px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface-2)}
+
 /* ============ PORTFOLIO ============ */
 .pf-bento{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;grid-auto-rows:236px}
 .pf{position:relative;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line);background:var(--img-frame);
@@ -331,6 +343,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .nav-actions .btn{display:none}
   .burger{display:flex}
   .lang-switch{display:none}
+  .approach{grid-template-columns:1fr;gap:12px}
   .bento{grid-template-columns:repeat(2,1fr)}
   .s-sites,.s-mobile,.s-ai,.s-support{grid-column:span 2}
   .s-sites{grid-row:auto}
@@ -523,6 +536,22 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   </div>
 </section>
 
+<!-- ============ APPROACH ============ -->
+<section class="section" id="approach">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="left">
+        <h2 data-i18n="approach.title">Подход и гарантии</h2>
+      </div>
+    </div>
+    <div class="approach">
+      <div class="ap-item reveal"><div class="ap-num">01</div><p data-i18n="approach.1">Индивидуальная разработка — под ваше ТЗ и масштаб задачи, для B2B и B2C</p></div>
+      <div class="ap-item reveal"><div class="ap-num">02</div><p data-i18n="approach.2">Премиальное качество — основательно и без компромиссов</p></div>
+      <div class="ap-item reveal"><div class="ap-num">03</div><p data-i18n="approach.3">Пожизненная гарантия — сопровождаем и исправляем наши разработки весь срок жизни продукта</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ PORTFOLIO ============ -->
 <section class="section" id="portfolio">
   <div class="wrap">
@@ -595,6 +624,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         </div>
       </div>
       <div class="reveal">
+        <p class="contact-pricing" data-i18n="contact.pricing">Стоимость рассчитываем индивидуально под объём работ — обсудим после того, как с вами свяжется наш администратор</p>
         <form class="contact-form" id="contactForm">
           <div class="form-fields" id="formFields">
             <div class="hp-field" aria-hidden="true">
@@ -693,6 +723,12 @@ const I18N = {
       p3H:'Разработка', p3P:'Пишем чистый код, тестируем на реальных данных и устройствах. Демонстрируем результат по этапам.',
       p4H:'Запуск и поддержка', p4P:'Публикуем, передаём доступы и сопровождаем продукт после релиза — 24/7.',
     },
+    approach: {
+      title:'Подход и гарантии',
+      '1':'Индивидуальная разработка — под ваше ТЗ и масштаб задачи, для B2B и B2C',
+      '2':'Премиальное качество — основательно и без компромиссов',
+      '3':'Пожизненная гарантия — сопровождаем и исправляем наши разработки весь срок жизни продукта',
+    },
     portfolio: {
       tag:'Портфолио', h2:'Избранные работы',
       desc:'Девять запущенных проектов — от интерьерных бутиков до B2B-платформ и игровых студий.',
@@ -732,6 +768,7 @@ const I18N = {
       labelType:'Тип проекта', phType:'Сайт, приложение, игра…',
       labelMsg:'О проекте', phMsg:'Пара слов о задаче, сроках и бюджете',
       submit:'Отправить заявку', sending:'Отправляем…',
+      pricing:'Стоимость рассчитываем индивидуально под объём работ — обсудим после того, как с вами свяжется наш администратор',
       note:'Нажимая «Отправить», вы соглашаетесь на обработку данных для связи.',
       successH:'Заявка отправлена', successP:'Спасибо — мы свяжемся с вами в ближайшее время.',
       errorAlert:'Не удалось отправить. Попробуйте ещё раз или напишите нам в Instagram.',
@@ -775,6 +812,12 @@ const I18N = {
       p3H:'Development', p3P:'We write clean code and test on real data and devices, showing progress at every milestone.',
       p4H:'Launch & support', p4P:'We ship, hand over the keys, and keep the product running 24/7 after release.',
     },
+    approach: {
+      title:'Approach & guarantees',
+      '1':'Individual development — built to your spec and project scale, for B2B and B2C',
+      '2':'Premium quality — thorough and uncompromising',
+      '3':'Lifetime warranty — we support and fix our work for the entire life of the product',
+    },
     portfolio: {
       tag:'Work', h2:'Selected projects',
       desc:'Nine projects shipped to production — from interior boutiques to B2B platforms and game studios.',
@@ -814,6 +857,7 @@ const I18N = {
       labelType:'Project type', phType:'Site, app, game…',
       labelMsg:'About the project', phMsg:'A few words on the task, timeline and budget',
       submit:'Send request', sending:'Sending…',
+      pricing:'Pricing is calculated individually by scope — we’ll discuss it once our administrator reaches out',
       note:'By clicking "Send", you consent to your data being used for contact.',
       successH:'Request sent', successP:'Thanks — we’ll get back to you shortly.',
       errorAlert:'Couldn’t send. Please try again or message us on Instagram.',
@@ -857,6 +901,12 @@ const I18N = {
       p3H:'Әзірлеу', p3P:'Таза код жазамыз, нақты деректер мен құрылғыларда сынаймыз. Әр кезеңде нәтижені көрсетеміз.',
       p4H:'Іске қосу және қолдау', p4P:'Жобаны жариялаймыз, кіруді тапсырамыз және 24/7 режимінде сүйемелдейміз.',
     },
+    approach: {
+      title:'Тәсіл мен кепілдіктер',
+      '1':'Жеке әзірлеу — сіздің ТЗ мен жобаның ауқымына сай, B2B және B2C үшін',
+      '2':'Премиум сапа — мұқият әрі ымырасыз',
+      '3':'Өмір бойы кепілдік — өз әзірлемелерімізді өнімнің қызмет ету мерзімі бойы сүйемелдеп, түзетеміз',
+    },
     portfolio: {
       tag:'Жұмыстар', h2:'Таңдаулы жобалар',
       desc:'Тоғыз өндіріске енгізілген жоба — интерьер бутиктерінен бастап B2B-платформалар мен ойын студияларына дейін.',
@@ -896,6 +946,7 @@ const I18N = {
       labelType:'Жоба түрі', phType:'Сайт, қосымша, ойын…',
       labelMsg:'Жоба туралы', phMsg:'Тапсырма, мерзім мен бюджет туралы бірнеше сөз',
       submit:'Өтінімді жіберу', sending:'Жіберілуде…',
+      pricing:'Құнды жұмыс көлеміне қарай жеке есептейміз — әкімшіміз сізбен байланысқаннан кейін талқылаймыз',
       note:'«Жіберу» түймесін басу арқылы байланыс үшін деректерді өңдеуге келісім бересіз.',
       successH:'Өтінім жіберілді', successP:'Рахмет — жақын арада хабарласамыз.',
       errorAlert:'Жіберу сәтсіз аяқталды. Қайталап көріңіз немесе Instagram арқылы жазыңыз.',

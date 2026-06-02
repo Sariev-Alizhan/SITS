@@ -2,6 +2,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "buildCommand": "node scripts/build-i18n.mjs",
+  "outputDirectory": ".",
   "headers": [
     {
       "source": "/(.*)",

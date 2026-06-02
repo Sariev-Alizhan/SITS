@@ -11,7 +11,13 @@ export default async function handler(req, res) {
   }
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
-    const { name = '', contact = '', service = '', details = '' } = body;
+    const { name = '', contact = '', service = '', details = '', website = '' } = body;
+
+    // Honeypot: невидимое поле "website". Люди его не видят, боты заполняют.
+    // Возвращаем 200 ok без сохранения — бот не поймёт, что отлуплен.
+    if (website && String(website).trim().length > 0) {
+      return res.status(200).json({ ok: true });
+    }
 
     if (!name.trim() || !contact.trim()) {
       return res.status(400).json({ ok: false, error: 'Поля «Имя» и «Контакт» обязательны' });

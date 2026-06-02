@@ -8,11 +8,20 @@
 <link rel="icon" type="image/png" href="brand/favicon.png" />
 <link rel="apple-touch-icon" href="brand/apple-touch-icon.png" />
 
+<link rel="canonical" href="https://sits-eta.vercel.app/" />
+<!-- hreflang: переключение языка пока клиентское, поэтому все варианты ссылаются на один URL.
+     Когда появятся раздельные роуты (/ru /en /kk) — поменять href ниже на эти пути. -->
+<link rel="alternate" hreflang="ru" href="https://sits-eta.vercel.app/" />
+<link rel="alternate" hreflang="en" href="https://sits-eta.vercel.app/" />
+<link rel="alternate" hreflang="kk" href="https://sits-eta.vercel.app/" />
+<link rel="alternate" hreflang="x-default" href="https://sits-eta.vercel.app/" />
+
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="SITS — Sariyev IT Solutions" />
 <meta property="og:title" content="SITS — Превращаем идеи в цифровые продукты" />
 <meta property="og:description" content="IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка." />
-<meta property="og:image" content="brand/og-image.png" />
+<meta property="og:url" content="https://sits-eta.vercel.app/" />
+<meta property="og:image" content="https://sits-eta.vercel.app/brand/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content="ru_RU" />
@@ -280,6 +289,8 @@ form.contact-form{border:1px solid var(--line);background:var(--surface);border-
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 form .btn-primary{width:100%;justify-content:center;margin-top:6px}
 .form-note{font-size:12.5px;color:var(--faint);margin-top:16px;text-align:center}
+/* honeypot — невидим людям, но боты заполнят */
+.hp-field{position:absolute !important;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
 .form-success{display:none;text-align:center;padding:36px 0}
 .form-success.show{display:block;animation:fade .6s var(--ease) forwards}
 .form-success .chk{width:60px;height:60px;border-radius:50%;border:1px solid var(--red);color:var(--red);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
@@ -572,6 +583,10 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       <div class="reveal">
         <form class="contact-form" id="contactForm">
           <div class="form-fields" id="formFields">
+            <div class="hp-field" aria-hidden="true">
+              <label for="f-website">Website (leave empty)</label>
+              <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+            </div>
             <div class="form-row">
               <div class="field"><label for="f-name" data-i18n="contact.labelName">Имя</label><input id="f-name" name="name" type="text" data-i18n-placeholder="contact.phName" placeholder="Как к вам обращаться" required /></div>
               <div class="field"><label for="f-contact" data-i18n="contact.labelContact">Email или телефон</label><input id="f-contact" name="contact" type="text" data-i18n-placeholder="contact.phContact" placeholder="Куда ответить" required /></div>
@@ -1027,15 +1042,21 @@ const form = document.getElementById('contactForm');
 form.addEventListener('submit', async e => {
   e.preventDefault();
   if (!form.checkValidity()) { form.reportValidity(); return; }
+  // Дополнительная клиентская валидация: имя и контакт должны быть непустыми
+  const nameV = form.elements.name.value.trim();
+  const contactV = form.elements.contact.value.trim();
+  if (!nameV || !contactV) { form.reportValidity(); return; }
   const btn = form.querySelector('button[type="submit"]');
+  if (btn.disabled) return; // защита от повторных кликов
   const orig = btn.innerHTML;
   btn.disabled = true; btn.style.opacity = '.7';
   btn.textContent = pickI18n(currentLang, 'contact.sending') || 'Sending…';
   const payload = {
-    name:    form.elements.name.value.trim(),
-    contact: form.elements.contact.value.trim(),
+    name:    nameV,
+    contact: contactV,
     service: form.elements.type.value.trim(),
     details: form.elements.message.value.trim(),
+    website: form.elements.website ? form.elements.website.value : '', // honeypot
   };
   try {
     const r = await fetch('/api/lead', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
@@ -1051,5 +1072,8 @@ form.addEventListener('submit', async e => {
 
 document.getElementById('year').textContent = new Date().getFullYear();
 </script>
+
+<!-- Vercel Analytics (включи в дашборде проекта: Analytics → Enable) -->
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

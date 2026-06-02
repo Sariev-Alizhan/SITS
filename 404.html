@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 — SITS · Sariyev IT Solutions</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" type="image/png" href="/brand/favicon.png" />
+<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+<meta name="theme-color" content="#0c0a0b" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=PT+Serif:wght@700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --font-display:'Unbounded',sans-serif;
+  --font-body:'Manrope',system-ui,sans-serif;
+  --font-logo:'PT Serif',Georgia,serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+html[data-theme="dark"]{
+  --bg:#0c0a0b; --surface:#141112; --text:#f4f1f1; --muted:#a39d9e; --faint:#6f696a;
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  --red:#e23744; --red-soft:rgba(226,55,68,.14);
+}
+html[data-theme="light"]{
+  --bg:#f6f3f3; --surface:#ffffff; --text:#171314; --muted:#6a6364; --faint:#9b9495;
+  --line:rgba(20,12,13,.1); --line-2:rgba(20,12,13,.18);
+  --red:#b31d22; --red-soft:rgba(179,29,34,.1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;
+  -webkit-font-smoothing:antialiased;text-align:center}
+.logo{position:fixed;top:24px;left:32px;font-family:var(--font-logo);font-weight:700;font-size:22px;letter-spacing:.04em;color:var(--text)}
+.logo b{color:var(--red)}
+.wrap{max-width:560px}
+.code{font-family:var(--font-display);font-weight:600;font-size:clamp(96px,18vw,200px);line-height:1;letter-spacing:-.04em;color:var(--text)}
+.code .dot{color:var(--red)}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:32px 0 14px}
+.kicker .ln{width:32px;height:1px;background:var(--line-2)}
+h1{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin-bottom:14px}
+p{color:var(--muted);font-size:16px;line-height:1.6;margin-bottom:36px}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-weight:600;font-size:14.5px;
+  border-radius:100px;padding:13px 26px;text-decoration:none;transition:.3s var(--ease)}
+.btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.btn svg{width:14px;height:14px;transition:transform .3s var(--ease)}
+.btn:hover svg{transform:translate(-2px,0)}
+.foot{position:fixed;bottom:22px;left:0;right:0;text-align:center;color:var(--faint);font-size:12px}
+</style>
+</head>
+<body>
+<a class="logo" href="/">SIT<b>S</b></a>
+
+<div class="wrap">
+  <div class="code">404<span class="dot">.</span></div>
+  <div class="kicker"><span class="ln"></span>Страница не найдена</div>
+  <h1>Похоже, такой страницы нет</h1>
+  <p>Возможно, ссылка устарела или адрес введён с опечаткой. Вернитесь на главную — там всё на месте.</p>
+  <a class="btn" href="/">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    На главную
+  </a>
+</div>
+
+<div class="foot">© <span id="y"></span> SITS — Sariyev IT Solutions</div>
+
+<script>
+(function(){
+  try { var s = localStorage.getItem('sits-theme'); if (s) document.documentElement.setAttribute('data-theme', s); } catch(e){}
+})();
+document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

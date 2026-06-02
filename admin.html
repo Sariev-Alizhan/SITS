@@ -4,17 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SITS — CRM · Заявки</title>
+<meta name="robots" content="noindex">
 <link rel="icon" type="image/png" href="brand/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;500;600;700&family=PT+Serif:wght@700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#150708; --surface:#220a0d; --surface-2:#1f090b;
     --text:#ffeced; --dim:#c89599; --logo:#e0454f;
-    --accent:#ff4757; --border:rgba(255,71,87,0.22); --ok:#39d98a; --new:#ff4757;
+    --accent:#ff4757; --border:rgba(255,71,87,0.22);
+    --ok:#39d98a; --warn:#ffb648; --new:#ff4757;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-  .wrap{max-width:1100px;margin:0 auto;padding:32px 22px;}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 22px;}
   header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px;}
   .logo{display:flex;flex-direction:column;line-height:1;}
   .logo-word{font-family:'PT Serif',serif;font-weight:700;font-size:1.5rem;color:var(--logo);letter-spacing:.07em;}
@@ -28,16 +30,25 @@
   input:focus{outline:none;border-color:var(--accent);}
   button{margin-top:14px;width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--accent),#8e1620);color:#fff;font-weight:700;font-size:1rem;cursor:pointer;font-family:'Manrope';transition:.2s;}
   button:hover{transform:translateY(-2px);}
+  button:disabled{opacity:.6;cursor:not-allowed;transform:none;}
   .err{color:var(--accent);font-size:.85rem;margin-top:12px;min-height:1em;}
-  .controls{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+  .controls{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;align-items:center;}
   .controls input{max-width:280px;}
+  .btn-ghost{width:auto;margin:0;padding:11px 18px;background:transparent;border:1px solid var(--border);color:var(--text);font-weight:600;font-size:.92rem;}
+  .btn-ghost:hover{border-color:var(--accent);transform:none;background:rgba(255,71,87,.05);}
   .refresh{width:auto;margin:0;padding:11px 18px;}
   table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;}
   th,td{text-align:left;padding:14px 16px;font-size:.92rem;border-bottom:1px solid var(--border);vertical-align:top;}
   th{font-family:'Unbounded';font-weight:600;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);}
   tr:last-child td{border-bottom:none;}
   tr:hover td{background:rgba(255,71,87,0.04);}
-  .badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:700;background:rgba(255,71,87,0.15);color:var(--accent);}
+  .badge{display:inline-block;padding:4px 11px;border-radius:100px;font-size:.72rem;font-weight:700;cursor:pointer;
+    border:1px solid transparent;transition:.2s;user-select:none;letter-spacing:.02em;white-space:nowrap;}
+  .badge:hover{transform:translateY(-1px);filter:brightness(1.08);}
+  .badge.busy{opacity:.5;cursor:wait;}
+  .badge-new{background:rgba(255,71,87,.15);color:var(--accent);}
+  .badge-progress{background:rgba(255,182,72,.15);color:var(--warn);}
+  .badge-closed{background:rgba(57,217,138,.15);color:var(--ok);}
   .contact{font-weight:600;}
   .muted{color:var(--dim);}
   .empty{text-align:center;color:var(--dim);padding:50px;}
@@ -65,7 +76,8 @@
   </header>
   <div class="controls">
     <input type="text" id="search" placeholder="Поиск по имени, контакту, услуге…">
-    <button class="refresh" id="refreshBtn">Обновить</button>
+    <button class="btn-ghost" id="refreshBtn">Обновить</button>
+    <button class="btn-ghost" id="exportBtn">Экспорт в CSV</button>
   </div>
   <table>
     <thead><tr><th>Дата</th><th>Имя</th><th>Контакт</th><th>Услуга</th><th>Описание</th><th>Статус</th></tr></thead>
@@ -75,6 +87,10 @@
 </div>
 
 <script>
+  const STATUS_CYCLE = ['new','in_progress','closed'];
+  const STATUS_LABEL = { new:'новая', in_progress:'в работе', closed:'закрыта' };
+  const STATUS_CLASS = { new:'badge-new', in_progress:'badge-progress', closed:'badge-closed' };
+
   let PASS = '';
   let LEADS = [];
   const $ = (id) => document.getElementById(id);
@@ -84,7 +100,9 @@
     if (r.status === 401) throw new Error('Неверный пароль');
     if (!r.ok) throw new Error('Ошибка сервера');
     const data = await r.json();
-    LEADS = data.leads || [];
+    LEADS = (data.leads || []).slice();
+    // Явная сортировка: новые сверху по createdAt
+    LEADS.sort((a, b) => (new Date(b.createdAt)) - (new Date(a.createdAt)));
     render();
   }
 
@@ -94,19 +112,71 @@
       !q || [l.name, l.contact, l.service, l.details].join(' ').toLowerCase().includes(q)
     );
     $('stat').textContent = 'Всего заявок: ' + LEADS.length;
-    $('rows').innerHTML = list.map(l => `
+    $('rows').innerHTML = list.map(l => {
+      const st = STATUS_CYCLE.includes(l.status) ? l.status : 'new';
+      return `
       <tr>
         <td class="muted">${new Date(l.createdAt).toLocaleString('ru-RU')}</td>
         <td>${esc(l.name)}</td>
         <td class="contact">${esc(l.contact)}</td>
         <td>${esc(l.service || '—')}</td>
         <td class="muted">${esc(l.details || '—')}</td>
-        <td><span class="badge">${l.status === 'new' ? 'новая' : esc(l.status)}</span></td>
-      </tr>`).join('');
+        <td><span class="badge ${STATUS_CLASS[st]}" data-id="${esc(l.id || '')}" data-status="${st}" title="Кликни для смены статуса">${STATUS_LABEL[st]}</span></td>
+      </tr>`;
+    }).join('');
     $('empty').classList.toggle('hidden', list.length > 0);
   }
 
-  function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+  async function cycleStatus(badge) {
+    const id = badge.dataset.id;
+    const cur = badge.dataset.status;
+    if (!id || badge.classList.contains('busy')) return;
+    const next = STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur) + 1) % STATUS_CYCLE.length];
+    badge.classList.add('busy');
+    try {
+      const r = await fetch('/api/lead-status?key=' + encodeURIComponent(PASS), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status: next })
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok || !data.ok) throw new Error(data.error || 'Не удалось обновить статус');
+      const lead = LEADS.find(l => l.id === id);
+      if (lead) lead.status = next;
+      render();
+    } catch (e) {
+      badge.classList.remove('busy');
+      alert(e.message);
+    }
+  }
+
+  function exportCSV() {
+    if (!LEADS.length) { alert('Нет данных для экспорта'); return; }
+    const headers = ['date','name','contact','service','details','status'];
+    const rows = LEADS.map(l => [
+      new Date(l.createdAt).toISOString(),
+      l.name || '',
+      l.contact || '',
+      l.service || '',
+      (l.details || '').replace(/\r?\n/g, ' '),
+      STATUS_LABEL[l.status] || l.status || 'new',
+    ]);
+    const escape = v => {
+      const s = String(v == null ? '' : v);
+      return /[",;\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    };
+    const csv = '﻿' + // BOM — Excel поймёт кириллицу
+      [headers, ...rows].map(r => r.map(escape).join(',')).join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const today = new Date().toISOString().slice(0, 10);
+    a.href = url; a.download = 'sits-leads-' + today + '.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
 
   async function doLogin() {
     PASS = $('pass').value;
@@ -123,7 +193,13 @@
   $('loginBtn').addEventListener('click', doLogin);
   $('pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
   $('refreshBtn').addEventListener('click', () => load().catch(e => alert(e.message)));
+  $('exportBtn').addEventListener('click', exportCSV);
   $('search').addEventListener('input', render);
+  // Делегирование клика по бейджу статуса
+  $('rows').addEventListener('click', e => {
+    const badge = e.target.closest('.badge');
+    if (badge) cycleStatus(badge);
+  });
 </script>
 </body>
 </html>

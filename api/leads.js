@@ -15,13 +15,17 @@ export default async function handler(req, res) {
   try {
     let leads = [];
     if (process.env.KV_REST_API_URL) {
-      const raw = await kv.lrange('leads', 0, 1000);
-      leads = raw
+      const [raw, statuses] = await Promise.all([
+        kv.lrange('leads', 0, 1000),
+        kv.hgetall('lead-statuses').catch(() => ({})),
+      ]);
+      leads = (raw || [])
         .map((r) => {
           try { return typeof r === 'string' ? JSON.parse(r) : r; }
           catch { return null; }
         })
-        .filter(Boolean);
+        .filter(Boolean)
+        .map((l) => ({ ...l, status: (statuses && statuses[l.id]) || l.status || 'new' }));
     }
     return res.status(200).json({ ok: true, leads });
   } catch (e) {

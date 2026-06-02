@@ -73,6 +73,10 @@ html[data-theme="dark"]{
   --shadow:0 30px 70px -40px rgba(0,0,0,.9);
   --nav-bg:rgba(12,10,11,.72);
   --img-frame:#0a0808;
+  --fx-glow-1:rgba(226,55,68,.22);
+  --fx-glow-2:rgba(226,55,68,.13);
+  --fx-dot:rgba(255,255,255,.055);
+  --fx-grain:.06;
 }
 html[data-theme="light"]{
   --bg:#f6f3f3;
@@ -89,6 +93,10 @@ html[data-theme="light"]{
   --shadow:0 30px 70px -44px rgba(80,20,25,.28);
   --nav-bg:rgba(246,243,243,.78);
   --img-frame:#ece8e8;
+  --fx-glow-1:rgba(226,55,68,.12);
+  --fx-glow-2:rgba(179,29,34,.07);
+  --fx-dot:rgba(179,29,34,.07);
+  --fx-grain:.035;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -98,6 +106,33 @@ a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 ::selection{background:var(--red);color:#fff}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+
+/* ============ AMBIENT FX ============ */
+.fx-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.fx-aurora{position:absolute;border-radius:50%;filter:blur(90px);will-change:transform}
+.fx-aurora.a1{width:46vw;height:46vw;max-width:620px;max-height:620px;top:-12%;right:-6%;
+  background:radial-gradient(circle at 50% 50%,var(--fx-glow-1),transparent 70%);
+  animation:drift1 26s ease-in-out infinite alternate}
+.fx-aurora.a2{width:38vw;height:38vw;max-width:520px;max-height:520px;bottom:-14%;left:-8%;
+  background:radial-gradient(circle at 50% 50%,var(--fx-glow-2),transparent 70%);
+  animation:drift2 32s ease-in-out infinite alternate}
+@keyframes drift1{from{transform:translate(0,0) scale(1)}to{transform:translate(-7%,9%) scale(1.12)}}
+@keyframes drift2{from{transform:translate(0,0) scale(1)}to{transform:translate(8%,-7%) scale(1.1)}}
+.fx-dots{position:absolute;inset:0;
+  background-image:radial-gradient(var(--fx-dot) 1px,transparent 1.4px);background-size:26px 26px;
+  -webkit-mask-image:radial-gradient(ellipse 75% 55% at 50% 18%,#000 0%,transparent 72%);
+          mask-image:radial-gradient(ellipse 75% 55% at 50% 18%,#000 0%,transparent 72%)}
+.fx-grain{position:absolute;inset:0;opacity:var(--fx-grain);mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* Контент над фоновым слоем — nav и mobile-menu уже z-index выше */
+main, footer{position:relative;z-index:1}
+@media(max-width:680px){
+  .fx-aurora{filter:blur(60px)}
+  .fx-aurora.a1{width:80vw;height:80vw;top:-8%;right:-20%}
+  .fx-aurora.a2{width:70vw;height:70vw}
+  .fx-dots{background-size:20px 20px}
+}
+@media(prefers-reduced-motion:reduce){.fx-aurora{animation:none !important}}
 
 /* ============ NAV ============ */
 .nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:50;display:flex;align-items:center;
@@ -385,6 +420,13 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 </style>
 </head>
 <body>
+
+<div class="fx-bg" aria-hidden="true">
+  <div class="fx-aurora a1"></div>
+  <div class="fx-aurora a2"></div>
+  <div class="fx-dots"></div>
+  <div class="fx-grain"></div>
+</div>
 
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">

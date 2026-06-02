@@ -211,13 +211,14 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .pf:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--line-2)}
 .pf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .9s var(--ease)}
 .pf:hover img{transform:scale(1.045)}
-.pf .grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,6,6,.86) 0%,rgba(8,6,6,.42) 34%,rgba(8,6,6,0) 62%);
-  opacity:.82;transition:opacity .5s}
-.pf:hover .grad{opacity:.97}
+.pf .grad{position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.94) 0%, rgba(0,0,0,.78) 28%, rgba(0,0,0,.38) 58%, rgba(0,0,0,0) 85%);
+  opacity:1;transition:opacity .5s}
+.pf:hover .grad{opacity:1}
 .pf .pf-body{position:absolute;inset:0;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;z-index:2}
-.pf .pf-cat{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:7px}
-.pf .pf-name{font-family:var(--font-display);font-weight:500;font-size:20px;color:#fff;line-height:1.12;letter-spacing:-.01em}
-.pf .pf-desc{color:rgba(255,255,255,.74);font-size:13.5px;line-height:1.5;margin-top:9px;max-width:94%;
+.pf .pf-cat{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:7px}
+.pf .pf-name{font-family:var(--font-display);font-weight:500;font-size:20px;color:#fff;line-height:1.12;letter-spacing:-.01em;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.pf .pf-desc{color:rgba(255,255,255,.92);font-size:13.5px;line-height:1.5;margin-top:9px;max-width:94%;
   max-height:0;opacity:0;overflow:hidden;transition:max-height .5s var(--ease),opacity .4s,margin .4s}
 .pf:hover .pf-desc{max-height:130px;opacity:1}
 .pf .pf-open{display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-weight:600;font-size:13.5px;color:#fff;

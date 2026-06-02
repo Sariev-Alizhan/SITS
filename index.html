@@ -3,17 +3,31 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ROOT-REDIRECT-START -->
+<!-- Только на корне /. На /en и /kz build-script этот блок вырезает (URI уважается). -->
+<script>
+(function(){
+  var p = location.pathname;
+  if (p !== '/' && p !== '/index.html') return;
+  var saved = null; try { saved = localStorage.getItem('sits-lang'); } catch(e) {}
+  if (saved === 'en') return location.replace('/en');
+  if (saved === 'kk') return location.replace('/kz');
+  if (saved === 'ru') return;
+  var nl = (navigator.language || '').toLowerCase();
+  if (nl.indexOf('kk') === 0) return location.replace('/kz');
+  if (nl.indexOf('en') === 0) return location.replace('/en');
+})();
+</script>
+<!-- ROOT-REDIRECT-END -->
 <title>SITS — Sariyev IT Solutions</title>
 <meta name="description" content="SITS — Sariyev IT Solutions. IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка." />
 <link rel="icon" type="image/png" href="brand/favicon.png" />
 <link rel="apple-touch-icon" href="brand/apple-touch-icon.png" />
 
 <link rel="canonical" href="https://sits-eta.vercel.app/" />
-<!-- hreflang: переключение языка пока клиентское, поэтому все варианты ссылаются на один URL.
-     Когда появятся раздельные роуты (/ru /en /kk) — поменять href ниже на эти пути. -->
 <link rel="alternate" hreflang="ru" href="https://sits-eta.vercel.app/" />
-<link rel="alternate" hreflang="en" href="https://sits-eta.vercel.app/" />
-<link rel="alternate" hreflang="kk" href="https://sits-eta.vercel.app/" />
+<link rel="alternate" hreflang="en" href="https://sits-eta.vercel.app/en" />
+<link rel="alternate" hreflang="kk" href="https://sits-eta.vercel.app/kz" />
 <link rel="alternate" hreflang="x-default" href="https://sits-eta.vercel.app/" />
 
 <meta property="og:type" content="website" />
@@ -644,7 +658,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 /* ============ I18N ============ */
 const I18N = {
   ru: {
-    _meta: { description: 'SITS — Sariyev IT Solutions. IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка.', locale: 'ru_RU' },
+    _meta: { ogTitle: 'SITS — Превращаем идеи в цифровые продукты', description: 'SITS — Sariyev IT Solutions. IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка.', locale: 'ru_RU' },
     nav: { services:'Услуги', process:'Как работаем', portfolio:'Портфолио', about:'О нас', contact:'Контакты', cta:'Обсудить проект', menu:'Меню', themeToggle:'Сменить тему' },
     hero: {
       kicker: 'Sariyev IT Solutions — IT-студия полного цикла',
@@ -726,7 +740,7 @@ const I18N = {
   },
 
   en: {
-    _meta: { description: 'SITS — Sariyev IT Solutions. A full-cycle IT studio: websites, mobile apps, games, business automation, AI content and IT support.', locale: 'en_US' },
+    _meta: { ogTitle: 'SITS — Turning ideas into digital products', description: 'SITS — Sariyev IT Solutions. A full-cycle IT studio: websites, mobile apps, games, business automation, AI content and IT support.', locale: 'en_US' },
     nav: { services:'Services', process:'Process', portfolio:'Work', about:'About', contact:'Contact', cta:'Start a project', menu:'Menu', themeToggle:'Toggle theme' },
     hero: {
       kicker: 'Sariyev IT Solutions — full-cycle IT studio',
@@ -808,7 +822,7 @@ const I18N = {
   },
 
   kk: {
-    _meta: { description: 'SITS — Sariyev IT Solutions. Толық циклді IT-студия: сайттар, мобильді қосымшалар, ойындар, бизнес-автоматтандыру, AI-контент және IT-қолдау.', locale: 'kk_KZ' },
+    _meta: { ogTitle: 'SITS — Идеяларды цифрлық өнімдерге айналдырамыз', description: 'SITS — Sariyev IT Solutions. Толық циклді IT-студия: сайттар, мобильді қосымшалар, ойындар, бизнес-автоматтандыру, AI-контент және IT-қолдау.', locale: 'kk_KZ' },
     nav: { services:'Қызметтер', process:'Жұмыс тәртібі', portfolio:'Жұмыстар', about:'Біз туралы', contact:'Байланыс', cta:'Жобаны талқылау', menu:'Мәзір', themeToggle:'Тақырыпты ауыстыру' },
     hero: {
       kicker: 'Sariyev IT Solutions — толық циклді IT-студия',
@@ -1020,22 +1034,30 @@ function applyLang(lang) {
   currentLang = lang;
 }
 
-/* ============ DETECT + INIT ============ */
-function detectLang() {
-  let saved = null;
-  try { saved = localStorage.getItem('sits-lang'); } catch(e) {}
-  if (saved && LANGS.includes(saved)) return saved;
-  const nl = (navigator.language || 'en').toLowerCase();
-  if (nl.startsWith('kk')) return 'kk';
-  if (nl.startsWith('ru')) return 'ru';
-  return 'en';
-}
+/* ============ ROUTE-BASED LANG ============ */
+/* URL — единственный источник истины для языка после первой загрузки.
+   Redirect-скрипт в <head> уже отправил пользователя на правильный путь, если нужно.
+   localStorage используется только redirect-скриптом и для запоминания выбора. */
+const LANG_PATH = { ru: '/', en: '/en', kk: '/kz' };
+const PATH_LANG = { '/': 'ru', '/index.html': 'ru', '/en': 'en', '/en.html': 'en', '/kz': 'kk', '/kz.html': 'kk' };
+function langFromPath() { return PATH_LANG[location.pathname] || 'ru'; }
 
 document.querySelectorAll('#langSwitch button, #mmLang button').forEach(b => {
-  b.addEventListener('click', () => applyLang(b.dataset.lang));
+  b.addEventListener('click', () => {
+    const lang = b.dataset.lang;
+    if (!LANGS.includes(lang)) return;
+    const path = LANG_PATH[lang] || '/';
+    if (location.pathname !== path) history.pushState({ lang }, '', path);
+    applyLang(lang); // меняет тексты, обновляет localStorage и <html lang>
+  });
 });
 
-applyLang(detectLang());
+// back/forward между языками
+window.addEventListener('popstate', () => applyLang(langFromPath()));
+
+// Стартовый язык всегда из URL — pre-rendered HTML уже на нужном языке,
+// applyLang вызывается для синхронизации портфолио и активного pill переключателя.
+applyLang(langFromPath());
 
 /* ============ FORM → /api/lead ============ */
 const form = document.getElementById('contactForm');

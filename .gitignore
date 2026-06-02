@@ -3,6 +3,10 @@ node_modules/
 .env*
 .DS_Store
 
+# Build artefacts — генерируются scripts/build-i18n.mjs из index.html
+en.html
+kz.html
+
 # Archive: previous design version (kept locally for rollback, not for deploy)
 _archive/
 

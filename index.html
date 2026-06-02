@@ -77,6 +77,7 @@ html[data-theme="dark"]{
   --fx-glow-2:rgba(226,55,68,.13);
   --fx-dot:rgba(255,255,255,.055);
   --fx-grain:.06;
+  --fx-cursor:rgba(226,55,68,.16);
 }
 html[data-theme="light"]{
   --bg:#f6f3f3;
@@ -97,6 +98,7 @@ html[data-theme="light"]{
   --fx-glow-2:rgba(179,29,34,.07);
   --fx-dot:rgba(179,29,34,.07);
   --fx-grain:.035;
+  --fx-cursor:rgba(179,29,34,.10);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -133,6 +135,26 @@ main, footer{position:relative;z-index:1}
   .fx-dots{background-size:20px 20px}
 }
 @media(prefers-reduced-motion:reduce){.fx-aurora{animation:none !important}}
+
+/* === Cursor spotlight (z-index 0, между фоном и контентом) === */
+.fx-cursor{position:fixed;top:0;left:0;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,var(--fx-cursor),transparent 70%);
+  filter:blur(28px);pointer-events:none;z-index:0;opacity:0;
+  transition:opacity .4s var(--ease);will-change:transform;
+  transform:translate3d(-50vw,-50vh,0)}
+.fx-cursor.on{opacity:1}
+
+/* === Magnetic CTA: только will-change, transition уже у .btn === */
+.magnetic{will-change:transform}
+
+/* === Portfolio 3D tilt + cursor glow === */
+.pf-bento{perspective:800px}
+.pf{transform-style:preserve-3d}
+.pf::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(circle 240px at var(--mx,50%) var(--my,50%),rgba(255,255,255,.16),transparent 60%);
+  mix-blend-mode:overlay;opacity:0;transition:opacity .4s ease;z-index:3}
+.pf.fx-active::after{opacity:1}
+.pf.fx-active{will-change:transform}
 
 /* ============ NAV ============ */
 .nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:50;display:flex;align-items:center;
@@ -427,6 +449,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   <div class="fx-dots"></div>
   <div class="fx-grain"></div>
 </div>
+<div class="fx-cursor" aria-hidden="true"></div>
 
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
@@ -449,7 +472,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
       </button>
-      <a href="#contact" class="btn btn-primary" data-i18n="nav.cta">Обсудить проект</a>
+      <a href="#contact" class="btn btn-primary magnetic" data-i18n="nav.cta">Обсудить проект</a>
     </div>
     <button class="burger" id="burger" data-i18n-aria-label="nav.menu" aria-label="Меню"><span></span><span></span><span></span></button>
   </div>
@@ -1186,6 +1209,65 @@ form.addEventListener('submit', async e => {
 });
 
 document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ============ INTERACTIVE FX ============ */
+/* Курсор-прожектор + magnetic + 3D-наклон портфолио.
+   Только на десктопе с точным указателем и при отсутствии reduced-motion. */
+(function(){
+  const fine = matchMedia('(pointer:fine)').matches;
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if (!fine || reduce) return;
+
+  /* --- Cursor spotlight: один rAF-цикл с lerp .15 --- */
+  const cur = document.querySelector('.fx-cursor');
+  if (cur) {
+    const HALF = 260;
+    let mx = -9999, my = -9999, cx = -9999, cy = -9999, started = false;
+    addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      if (!started) { started = true; cx = mx; cy = my; cur.classList.add('on'); }
+    }, { passive: true });
+    const loop = () => {
+      cx += (mx - cx) * 0.15;
+      cy += (my - cy) * 0.15;
+      cur.style.transform = 'translate3d(' + (cx - HALF) + 'px,' + (cy - HALF) + 'px,0)';
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  }
+
+  /* --- Magnetic CTA (~35% от смещения) --- */
+  document.querySelectorAll('.magnetic').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width / 2) * 0.35;
+      const dy = (e.clientY - r.top - r.height / 2) * 0.35;
+      btn.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+  });
+
+  /* --- 3D-наклон карточек портфолио через делегирование (выдерживает re-render) --- */
+  const bento = document.getElementById('pfBento');
+  if (bento) {
+    let active = null;
+    const reset = el => { if (el) { el.style.transform = ''; el.classList.remove('fx-active'); } };
+    bento.addEventListener('mousemove', e => {
+      const card = e.target.closest('.pf');
+      if (!card) return;
+      if (card !== active) { reset(active); active = card; card.classList.add('fx-active'); }
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      const rx = (0.5 - py) * 12;
+      const ry = (px - 0.5) * 12;
+      card.style.transform = 'perspective(800px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-4px)';
+      card.style.setProperty('--mx', (px * 100) + '%');
+      card.style.setProperty('--my', (py * 100) + '%');
+    });
+    bento.addEventListener('mouseleave', () => { reset(active); active = null; });
+  }
+})();
 </script>
 
 <!-- Vercel Web Analytics через ESM (без билда). Если endpoint /_vercel/insights/* не активен,

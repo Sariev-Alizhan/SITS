@@ -131,27 +131,27 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
 .alink:hover svg{transform:translate(2px,-2px)}
 
 /* ============ HERO ============ */
-.hero{padding:calc(var(--nav-h) + 96px) 0 80px;position:relative}
+.hero{padding:calc(var(--nav-h) + 56px) 0 72px;position:relative}
 .hero .wrap{min-width:0;width:100%}
 .kicker{display:flex;align-items:center;gap:12px;font-size:12.5px;font-weight:600;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:40px}
+  text-transform:uppercase;color:var(--muted);margin-bottom:32px}
 .kicker .ln{width:38px;height:1px;background:var(--line-2)}
 .hero-grid{display:grid;grid-template-columns:1fr;gap:0}
-h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.0;letter-spacing:-.035em;
-  font-size:clamp(2.1rem,9vw,128px);max-width:14ch;overflow-wrap:anywhere}
+h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;letter-spacing:-.03em;
+  font-size:clamp(2.1rem,5.4vw,76px);max-width:16ch;hyphens:none}
 .hero-title .ln-mask{display:block;overflow:hidden;padding-bottom:.04em}
 .hero-title .rise{display:block;transform:translateY(108%);opacity:0;animation:rise 1s var(--ease) forwards}
 @keyframes rise{to{transform:translateY(0);opacity:1}}
 .dot{color:var(--red)}
-.hero-lower{display:flex;justify-content:space-between;align-items:flex-end;gap:48px;margin-top:48px;flex-wrap:wrap;
+.hero-lower{display:flex;justify-content:space-between;align-items:flex-end;gap:48px;margin-top:36px;flex-wrap:wrap;
   opacity:0;animation:fade 1s var(--ease) .55s forwards}
 @keyframes fade{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-.hero-sub{color:var(--muted);font-size:clamp(17px,1.6vw,20px);line-height:1.55;max-width:440px}
+.hero-sub{color:var(--muted);font-size:clamp(17px,1.4vw,19px);line-height:1.55;max-width:440px}
 .hero-sub .em{color:var(--text);font-weight:500}
 .hero-actions{display:flex;align-items:center;gap:26px;flex-shrink:0}
-.hero-meta{display:flex;gap:0;margin-top:72px;border-top:1px solid var(--line);padding-top:26px;flex-wrap:wrap;
+.hero-meta{display:flex;gap:0;margin-top:48px;border-top:1px solid var(--line);padding-top:24px;flex-wrap:wrap;
   opacity:0;animation:fade 1s var(--ease) .75s forwards}
-.hero-meta .m{padding-right:54px;margin-right:54px;border-right:1px solid var(--line)}
+.hero-meta .m{padding-right:46px;margin-right:46px;border-right:1px solid var(--line)}
 .hero-meta .m:last-child{border-right:none;margin-right:0;padding-right:0}
 .hero-meta .mv{font-family:var(--font-display);font-weight:500;font-size:clamp(26px,3vw,34px);letter-spacing:-.02em;line-height:1}
 .hero-meta .ml{font-size:13px;color:var(--muted);margin-top:9px}

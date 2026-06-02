@@ -212,11 +212,11 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .pf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .9s var(--ease)}
 .pf:hover img{transform:scale(1.045)}
 .pf .grad{position:absolute;inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.94) 0%, rgba(0,0,0,.78) 28%, rgba(0,0,0,.38) 58%, rgba(0,0,0,0) 85%);
+  background:linear-gradient(to top, rgba(0,0,0,.96) 0%, rgba(0,0,0,.85) 28%, rgba(0,0,0,.5) 58%, rgba(0,0,0,0) 85%);
   opacity:1;transition:opacity .5s}
 .pf:hover .grad{opacity:1}
 .pf .pf-body{position:absolute;inset:0;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;z-index:2}
-.pf .pf-cat{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:7px}
+.pf .pf-cat{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.92);margin-bottom:7px;text-shadow:0 1px 2px rgba(0,0,0,.55)}
 .pf .pf-name{font-family:var(--font-display);font-weight:500;font-size:20px;color:#fff;line-height:1.12;letter-spacing:-.01em;text-shadow:0 1px 2px rgba(0,0,0,.35)}
 .pf .pf-desc{color:rgba(255,255,255,.92);font-size:13.5px;line-height:1.5;margin-top:9px;max-width:94%;
   max-height:0;opacity:0;overflow:hidden;transition:max-height .5s var(--ease),opacity .4s,margin .4s}
@@ -332,8 +332,8 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .pf img{position:relative;inset:auto;height:200px}
   .pf .grad{display:none}
   .pf .pf-body{position:relative;inset:auto;padding:18px 20px 22px}
-  .pf .pf-cat{color:var(--muted)}
-  .pf .pf-name{color:var(--text);font-size:18px}
+  .pf .pf-cat{color:var(--muted);text-shadow:none}
+  .pf .pf-name{color:var(--text);font-size:18px;text-shadow:none}
   .pf .pf-desc{color:var(--muted);font-size:13.5px;max-height:none;opacity:1;margin-top:8px}
   .pf .pf-open{color:var(--text);transform:none;opacity:1;margin-top:14px}
   .pf:hover img{transform:none}

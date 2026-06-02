@@ -1072,5 +1072,14 @@ form.addEventListener('submit', async e => {
 
 document.getElementById('year').textContent = new Date().getFullYear();
 </script>
+
+<!-- Vercel Web Analytics через ESM (без билда). Если endpoint /_vercel/insights/* не активен,
+     inject() тихо словит сетевую ошибку — сайт не сломается. -->
+<script type="module">
+  try {
+    const { inject } = await import('https://esm.sh/@vercel/analytics');
+    inject();
+  } catch (e) { /* analytics not critical */ }
+</script>
 </body>
 </html>

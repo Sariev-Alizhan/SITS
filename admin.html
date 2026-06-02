@@ -49,6 +49,11 @@
   .badge-new{background:rgba(255,71,87,.15);color:var(--accent);}
   .badge-progress{background:rgba(255,182,72,.15);color:var(--warn);}
   .badge-closed{background:rgba(57,217,138,.15);color:var(--ok);}
+  .del-btn{background:transparent;border:1px solid var(--border);color:var(--dim);
+    margin:0;padding:5px 9px;width:auto;font-size:.7rem;font-weight:600;border-radius:8px;
+    cursor:pointer;transition:.2s;letter-spacing:.02em;}
+  .del-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(255,71,87,.06);transform:none;}
+  .del-btn:disabled{opacity:.5;cursor:wait;}
   .contact{font-weight:600;}
   .muted{color:var(--dim);}
   .empty{text-align:center;color:var(--dim);padding:50px;}
@@ -80,7 +85,7 @@
     <button class="btn-ghost" id="exportBtn">Экспорт в CSV</button>
   </div>
   <table>
-    <thead><tr><th>Дата</th><th>Имя</th><th>Контакт</th><th>Услуга</th><th>Описание</th><th>Статус</th></tr></thead>
+    <thead><tr><th>Дата</th><th>Имя</th><th>Контакт</th><th>Услуга</th><th>Описание</th><th>Статус</th><th></th></tr></thead>
     <tbody id="rows"></tbody>
   </table>
   <div class="empty hidden" id="empty">Заявок пока нет.</div>
@@ -122,12 +127,35 @@
         <td>${esc(l.service || '—')}</td>
         <td class="muted">${esc(l.details || '—')}</td>
         <td><span class="badge ${STATUS_CLASS[st]}" data-id="${esc(l.id || '')}" data-status="${st}" title="Кликни для смены статуса">${STATUS_LABEL[st]}</span></td>
+        <td><button class="del-btn" data-del="${esc(l.id || '')}" data-name="${esc(l.name || '')}" title="Удалить заявку">Удалить</button></td>
       </tr>`;
     }).join('');
     $('empty').classList.toggle('hidden', list.length > 0);
   }
 
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+  async function deleteLead(btn) {
+    const id = btn.dataset.del;
+    const name = btn.dataset.name || '—';
+    if (!id || btn.disabled) return;
+    if (!confirm('Удалить заявку «' + name + '»? Это действие необратимо.')) return;
+    btn.disabled = true;
+    try {
+      const r = await fetch('/api/lead-delete?key=' + encodeURIComponent(PASS), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok || !data.ok) throw new Error(data.error || 'Не удалось удалить');
+      LEADS = LEADS.filter(l => l.id !== id);
+      render();
+    } catch (e) {
+      btn.disabled = false;
+      alert(e.message);
+    }
+  }
 
   async function cycleStatus(badge) {
     const id = badge.dataset.id;
@@ -197,6 +225,8 @@
   $('search').addEventListener('input', render);
   // Делегирование клика по бейджу статуса
   $('rows').addEventListener('click', e => {
+    const del = e.target.closest('.del-btn');
+    if (del) { deleteLead(del); return; }
     const badge = e.target.closest('.badge');
     if (badge) cycleStatus(badge);
   });

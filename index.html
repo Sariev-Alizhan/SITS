@@ -112,6 +112,18 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
 .mobile-menu a{font-family:var(--font-display);font-weight:400;font-size:30px;letter-spacing:-.02em;padding:16px 0;border-bottom:1px solid var(--line)}
 .mobile-menu .mm-soc{display:flex;gap:12px;margin-top:28px}
 
+/* ============ LANG SWITCH ============ */
+.lang-switch{display:inline-flex;align-items:center;gap:1px;border:1px solid var(--line);border-radius:100px;padding:3px;height:40px}
+.lang-switch button{font-family:var(--font-body);font-size:11.5px;font-weight:600;letter-spacing:.06em;
+  background:transparent;border:none;color:var(--muted);padding:6px 10px;border-radius:100px;cursor:pointer;transition:.25s var(--ease);min-width:34px}
+.lang-switch button:hover{color:var(--text)}
+.lang-switch button.on{background:var(--surface);color:var(--text)}
+.mm-lang{display:flex;gap:10px;margin-top:28px}
+.mm-lang button{flex:1;background:transparent;border:1px solid var(--line);color:var(--muted);
+  font-family:var(--font-body);font-size:14px;font-weight:600;padding:13px;border-radius:14px;cursor:pointer;
+  transition:.25s var(--ease);letter-spacing:.04em}
+.mm-lang button.on{border-color:var(--text);color:var(--text);background:var(--surface)}
+
 /* arrow link */
 .alink{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:var(--text);transition:gap .3s var(--ease)}
 .alink svg{width:15px;height:15px;color:var(--red);transition:transform .3s var(--ease)}
@@ -292,6 +304,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .nav-links{display:none}
   .nav-actions .btn{display:none}
   .burger{display:flex}
+  .lang-switch{display:none}
   .bento{grid-template-columns:repeat(2,1fr)}
   .s-sites,.s-mobile,.s-ai,.s-support{grid-column:span 2}
   .s-sites{grid-row:auto}
@@ -330,33 +343,43 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   <div class="wrap">
     <a href="#hero" class="logo">SIT<b>S</b></a>
     <div class="nav-links">
-      <a href="#services">Услуги</a>
-      <a href="#process">Как работаем</a>
-      <a href="#portfolio">Портфолио</a>
-      <a href="#about">О нас</a>
-      <a href="#contact">Контакты</a>
+      <a href="#services" data-i18n="nav.services">Услуги</a>
+      <a href="#process" data-i18n="nav.process">Как работаем</a>
+      <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+      <a href="#about" data-i18n="nav.about">О нас</a>
+      <a href="#contact" data-i18n="nav.contact">Контакты</a>
     </div>
     <div class="nav-actions">
-      <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Сменить тему">
+      <div class="lang-switch" id="langSwitch" role="group" aria-label="Language">
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="kk">KZ</button>
+      </div>
+      <button class="icon-btn theme-toggle" id="themeToggle" data-i18n-aria-label="nav.themeToggle" aria-label="Сменить тему">
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
       </button>
-      <a href="#contact" class="btn btn-primary">Обсудить проект</a>
+      <a href="#contact" class="btn btn-primary" data-i18n="nav.cta">Обсудить проект</a>
     </div>
-    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    <button class="burger" id="burger" data-i18n-aria-label="nav.menu" aria-label="Меню"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#services">Услуги</a>
-  <a href="#process">Как работаем</a>
-  <a href="#portfolio">Портфолио</a>
-  <a href="#about">О нас</a>
-  <a href="#contact">Контакты</a>
+  <a href="#services" data-i18n="nav.services">Услуги</a>
+  <a href="#process" data-i18n="nav.process">Как работаем</a>
+  <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+  <a href="#about" data-i18n="nav.about">О нас</a>
+  <a href="#contact" data-i18n="nav.contact">Контакты</a>
   <div class="mm-soc">
     <a href="https://www.instagram.com/sariyev.it.solutions/" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
     <a href="https://www.youtube.com/@sariyev.it.solutions" target="_blank" rel="noopener" class="icon-btn" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12zM9.8 15V9l5.2 3-5.2 3z"/></svg></a>
     <a href="https://www.linkedin.com/in/alizhan-sariyev-5a3804278/" target="_blank" rel="noopener" class="icon-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0V8zm7.5 0H12v2.2h.07c.63-1.2 2.17-2.46 4.46-2.46C21.4 7.74 24 10 24 14.6V24h-5v-8.2c0-1.95-.04-4.46-2.7-4.46-2.71 0-3.13 2.12-3.13 4.32V24h-5V8z"/></svg></a>
+  </div>
+  <div class="mm-lang" id="mmLang" role="group" aria-label="Language">
+    <button type="button" data-lang="ru">RU</button>
+    <button type="button" data-lang="en">EN</button>
+    <button type="button" data-lang="kk">KZ</button>
   </div>
 </div>
 
@@ -364,23 +387,23 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 <!-- ============ HERO ============ -->
 <section class="hero" id="hero">
   <div class="wrap">
-    <div class="kicker"><span class="ln"></span>Sariyev IT Solutions — IT-студия полного цикла</div>
+    <div class="kicker"><span class="ln"></span><span data-i18n="hero.kicker">Sariyev IT Solutions — IT-студия полного цикла</span></div>
     <h1 class="hero-title">
-      <span class="ln-mask"><span class="rise" style="animation-delay:.05s">Превращаем</span></span>
-      <span class="ln-mask"><span class="rise" style="animation-delay:.16s">идеи в</span></span>
-      <span class="ln-mask"><span class="rise" style="animation-delay:.27s">продукты<span class="dot">.</span></span></span>
+      <span class="ln-mask"><span class="rise" style="animation-delay:.05s" data-i18n="hero.titleA">Превращаем</span></span>
+      <span class="ln-mask"><span class="rise" style="animation-delay:.16s" data-i18n="hero.titleB">идеи в</span></span>
+      <span class="ln-mask"><span class="rise" style="animation-delay:.27s"><span data-i18n="hero.titleC">продукты</span><span class="dot">.</span></span></span>
     </h1>
     <div class="hero-lower">
-      <p class="hero-sub">Сайты, приложения, игры, автоматизация, AI-контент и поддержка — <span class="em">от идеи до запуска и сопровождения</span>, под одной крышей.</p>
+      <p class="hero-sub"><span data-i18n="hero.sub">Сайты, приложения, игры, автоматизация, AI-контент и поддержка — </span><span class="em" data-i18n="hero.subEm">от идеи до запуска и сопровождения</span><span data-i18n="hero.subTail">, под одной крышей.</span></p>
       <div class="hero-actions">
-        <a href="#contact" class="alink">Обсудить проект <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-        <a href="#portfolio" class="alink" style="color:var(--muted)">Работы</a>
+        <a href="#contact" class="alink"><span data-i18n="hero.ctaPrimary">Обсудить проект</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        <a href="#portfolio" class="alink" style="color:var(--muted)" data-i18n="hero.ctaSecondary">Работы</a>
       </div>
     </div>
     <div class="hero-meta">
-      <div class="m"><div class="mv">9 проектов</div><div class="ml">запущены в продакшен</div></div>
-      <div class="m"><div class="mv">6 направлений</div><div class="ml">от веба до игр и AI</div></div>
-      <div class="m"><div class="mv">24/7</div><div class="ml">поддержка продуктов</div></div>
+      <div class="m"><div class="mv" data-i18n="hero.meta1V">9 проектов</div><div class="ml" data-i18n="hero.meta1L">запущены в продакшен</div></div>
+      <div class="m"><div class="mv" data-i18n="hero.meta2V">6 направлений</div><div class="ml" data-i18n="hero.meta2L">от веба до игр и AI</div></div>
+      <div class="m"><div class="mv" data-i18n="hero.meta3V">24/7</div><div class="ml" data-i18n="hero.meta3L">поддержка продуктов</div></div>
     </div>
   </div>
 </section>
@@ -390,10 +413,10 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left">
-        <div class="sec-tag"><i></i>Услуги</div>
-        <h2>Полный цикл разработки</h2>
+        <div class="sec-tag"><i></i><span data-i18n="services.tag">Услуги</span></div>
+        <h2 data-i18n="services.h2">Полный цикл разработки</h2>
       </div>
-      <p class="desc">Шесть направлений, которые закрывают весь путь продукта — от первой строки кода до ежедневной поддержки.</p>
+      <p class="desc" data-i18n="services.desc">Шесть направлений, которые закрывают весь путь продукта — от первой строки кода до ежедневной поддержки.</p>
     </div>
     <div class="bento">
       <div class="b-card s-sites reveal">
@@ -402,9 +425,9 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
           <div class="svc-num">01</div>
         </div>
         <div class="svc-body">
-          <h3>Сайты и веб-платформы</h3>
-          <p>Сайты, лендинги и сложные платформы с нуля. Быстрые, адаптивные, на современном стеке — от визитки до B2B-маркетплейса.</p>
-          <div class="svc-tags"><span>Landing</span><span>Веб-платформы</span><span>E-commerce</span><span>SaaS</span></div>
+          <h3 data-i18n="services.s1H">Сайты и веб-платформы</h3>
+          <p data-i18n="services.s1P">Сайты, лендинги и сложные платформы с нуля. Быстрые, адаптивные, на современном стеке — от визитки до B2B-маркетплейса.</p>
+          <div class="svc-tags"><span data-i18n="services.s1T1">Landing</span><span data-i18n="services.s1T2">Веб-платформы</span><span data-i18n="services.s1T3">E-commerce</span><span data-i18n="services.s1T4">SaaS</span></div>
         </div>
       </div>
       <div class="b-card s-mobile reveal">
@@ -412,35 +435,35 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
           <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg></div>
           <div class="svc-num">02</div>
         </div>
-        <div class="svc-body"><h3>Мобильные приложения</h3><p>Нативные и кроссплатформенные приложения для iOS и Android.</p></div>
+        <div class="svc-body"><h3 data-i18n="services.s2H">Мобильные приложения</h3><p data-i18n="services.s2P">Нативные и кроссплатформенные приложения для iOS и Android.</p></div>
       </div>
       <div class="b-card reveal">
         <div class="svc-top">
           <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="10" rx="4"/><path d="M6.5 11v2M5.5 12h2M15.5 11.5h.01M18 13.5h.01"/></svg></div>
           <div class="svc-num">03</div>
         </div>
-        <div class="svc-body"><h3>Разработка игр</h3><p>Игры для мобильных и ПК на Unity и Unreal Engine.</p></div>
+        <div class="svc-body"><h3 data-i18n="services.s3H">Разработка игр</h3><p data-i18n="services.s3P">Игры для мобильных и ПК на Unity и Unreal Engine.</p></div>
       </div>
       <div class="b-card reveal">
         <div class="svc-top">
           <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12h2.5M19 12h2.5M5.2 5.2l1.8 1.8M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg></div>
           <div class="svc-num">04</div>
         </div>
-        <div class="svc-body"><h3>Бизнес-автоматизация</h3><p>Автоматизация процессов и рутины бизнеса.</p></div>
+        <div class="svc-body"><h3 data-i18n="services.s4H">Бизнес-автоматизация</h3><p data-i18n="services.s4P">Автоматизация процессов и рутины бизнеса.</p></div>
       </div>
       <div class="b-card s-ai reveal">
         <div class="svc-top">
           <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4.5 9 8.5v7l6 4v-15z"/><rect x="2.5" y="9.5" width="4.5" height="5" rx="1"/><path d="M18.5 9.5a4 4 0 0 1 0 5"/></svg></div>
           <div class="svc-num">05</div>
         </div>
-        <div class="svc-body"><h3>AI-контент и монтаж</h3><p>AI-ролики для TikTok и Instagram, профессиональный видеомонтаж.</p><div class="svc-tags"><span>AI-видео</span><span>Reels / TikTok</span><span>Монтаж</span></div></div>
+        <div class="svc-body"><h3 data-i18n="services.s5H">AI-контент и монтаж</h3><p data-i18n="services.s5P">AI-ролики для TikTok и Instagram, профессиональный видеомонтаж.</p><div class="svc-tags"><span data-i18n="services.s5T1">AI-видео</span><span data-i18n="services.s5T2">Reels / TikTok</span><span data-i18n="services.s5T3">Монтаж</span></div></div>
       </div>
       <div class="b-card s-support reveal">
         <div class="svc-top">
           <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a1.5 1.5 0 0 0 2.1 2.1l6-6a4 4 0 0 0 5.4-5.4l-2.3 2.3-2.1-2.1z"/></svg></div>
           <div class="svc-num">06</div>
         </div>
-        <div class="svc-body"><h3>IT-поддержка</h3><p>Техобслуживание и сопровождение продуктов 24/7.</p><div class="svc-tags"><span>SLA</span><span>Мониторинг</span><span>Сопровождение</span></div></div>
+        <div class="svc-body"><h3 data-i18n="services.s6H">IT-поддержка</h3><p data-i18n="services.s6P">Техобслуживание и сопровождение продуктов 24/7.</p><div class="svc-tags"><span data-i18n="services.s6T1">SLA</span><span data-i18n="services.s6T2">Мониторинг</span><span data-i18n="services.s6T3">Сопровождение</span></div></div>
       </div>
     </div>
   </div>
@@ -451,16 +474,16 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left">
-        <div class="sec-tag"><i></i>Как работаем</div>
-        <h2>Прозрачный процесс</h2>
+        <div class="sec-tag"><i></i><span data-i18n="process.tag">Как работаем</span></div>
+        <h2 data-i18n="process.h2">Прозрачный процесс</h2>
       </div>
-      <p class="desc">Четыре этапа от первого созвона до живого продукта. Вы всегда видите, где проект и что дальше.</p>
+      <p class="desc" data-i18n="process.desc">Четыре этапа от первого созвона до живого продукта. Вы всегда видите, где проект и что дальше.</p>
     </div>
     <div class="process">
-      <div class="p-row reveal"><div class="pn">01</div><h4>Бриф и стратегия</h4><p>Разбираем задачу, цели и аудиторию. Фиксируем объём, сроки и смету — без сюрпризов по ходу.</p></div>
-      <div class="p-row reveal"><div class="pn">02</div><h4>Дизайн и прототип</h4><p>Собираем UX-логику и визуал. Показываем кликабельный прототип ещё до написания кода.</p></div>
-      <div class="p-row reveal"><div class="pn">03</div><h4>Разработка</h4><p>Пишем чистый код, тестируем на реальных данных и устройствах. Демонстрируем результат по этапам.</p></div>
-      <div class="p-row reveal"><div class="pn">04</div><h4>Запуск и поддержка</h4><p>Публикуем, передаём доступы и сопровождаем продукт после релиза — 24/7.</p></div>
+      <div class="p-row reveal"><div class="pn">01</div><h4 data-i18n="process.p1H">Бриф и стратегия</h4><p data-i18n="process.p1P">Разбираем задачу, цели и аудиторию. Фиксируем объём, сроки и смету — без сюрпризов по ходу.</p></div>
+      <div class="p-row reveal"><div class="pn">02</div><h4 data-i18n="process.p2H">Дизайн и прототип</h4><p data-i18n="process.p2P">Собираем UX-логику и визуал. Показываем кликабельный прототип ещё до написания кода.</p></div>
+      <div class="p-row reveal"><div class="pn">03</div><h4 data-i18n="process.p3H">Разработка</h4><p data-i18n="process.p3P">Пишем чистый код, тестируем на реальных данных и устройствах. Демонстрируем результат по этапам.</p></div>
+      <div class="p-row reveal"><div class="pn">04</div><h4 data-i18n="process.p4H">Запуск и поддержка</h4><p data-i18n="process.p4P">Публикуем, передаём доступы и сопровождаем продукт после релиза — 24/7.</p></div>
     </div>
   </div>
 </section>
@@ -470,10 +493,10 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left">
-        <div class="sec-tag"><i></i>Портфолио</div>
-        <h2>Избранные работы</h2>
+        <div class="sec-tag"><i></i><span data-i18n="portfolio.tag">Портфолио</span></div>
+        <h2 data-i18n="portfolio.h2">Избранные работы</h2>
       </div>
-      <p class="desc">Девять запущенных проектов — от интерьерных бутиков до B2B-платформ и игровых студий.</p>
+      <p class="desc" data-i18n="portfolio.desc">Девять запущенных проектов — от интерьерных бутиков до B2B-платформ и игровых студий.</p>
     </div>
     <div class="pf-bento" id="pfBento"></div>
   </div>
@@ -487,18 +510,18 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         <img src="brand/founder-square.jpg" alt="Сариев Алижан Сабитулы — основатель SITS" loading="lazy" />
         <div class="cap">
           <div><div class="nm">Сариев Алижан Сабитулы</div><div class="rl">Sariyev Alizhan Sabituly</div></div>
-          <div class="badge">Founder</div>
+          <div class="badge" data-i18n="about.role">Founder</div>
         </div>
       </div>
       <div class="about-text reveal">
-        <div class="sec-tag"><i></i>О нас</div>
-        <h2>Студия с подходом, а не конвейером</h2>
-        <p>SITS — Sariyev IT Solutions — это IT-студия полного цикла. Мы берём проект от идеи и доводим до запуска: <span class="em">сайты и платформы, мобильные приложения, игры на Unity и Unreal, бизнес-автоматизация, AI-контент и поддержка.</span></p>
-        <p>За каждым проектом — внимание к деталям, честные сроки и продукт, которым удобно пользоваться. Вы работаете напрямую с теми, кто его делает.</p>
+        <div class="sec-tag"><i></i><span data-i18n="about.tag">О нас</span></div>
+        <h2 data-i18n="about.h2">Студия с подходом, а не конвейером</h2>
+        <p><span data-i18n="about.p1">SITS — Sariyev IT Solutions — это IT-студия полного цикла. Мы берём проект от идеи и доводим до запуска: </span><span class="em" data-i18n="about.p1Em">сайты и платформы, мобильные приложения, игры на Unity и Unreal, бизнес-автоматизация, AI-контент и поддержка.</span></p>
+        <p data-i18n="about.p2">За каждым проектом — внимание к деталям, честные сроки и продукт, которым удобно пользоваться. Вы работаете напрямую с теми, кто его делает.</p>
         <div class="about-stats">
-          <div class="a"><div class="num">9</div><div class="lbl">проектов в продакшене</div></div>
-          <div class="a"><div class="num">6</div><div class="lbl">направлений</div></div>
-          <div class="a"><div class="num">100%</div><div class="lbl">проектов под ключ</div></div>
+          <div class="a"><div class="num" data-i18n="about.a1V">9</div><div class="lbl" data-i18n="about.a1L">проектов в продакшене</div></div>
+          <div class="a"><div class="num" data-i18n="about.a2V">6</div><div class="lbl" data-i18n="about.a2L">направлений</div></div>
+          <div class="a"><div class="num" data-i18n="about.a3V">100%</div><div class="lbl" data-i18n="about.a3L">проектов под ключ</div></div>
         </div>
       </div>
     </div>
@@ -510,9 +533,9 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   <div class="wrap">
     <div class="contact-grid">
       <div class="contact-info reveal">
-        <div class="sec-tag"><i></i>Контакты</div>
-        <h2>Расскажите о&nbsp;проекте</h2>
-        <p>Заполните форму или напишите напрямую — ответим в течение дня и предложим, как реализовать идею.</p>
+        <div class="sec-tag"><i></i><span data-i18n="contact.tag">Контакты</span></div>
+        <h2 data-i18n="contact.h2">Расскажите о&nbsp;проекте</h2>
+        <p data-i18n="contact.desc">Заполните форму или напишите напрямую — ответим в течение дня и предложим, как реализовать идею.</p>
         <div class="cinfo-list">
           <a href="https://www.instagram.com/sariyev.it.solutions/" target="_blank" rel="noopener" class="cinfo">
             <div class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div>
@@ -540,18 +563,18 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         <form class="contact-form" id="contactForm">
           <div class="form-fields" id="formFields">
             <div class="form-row">
-              <div class="field"><label for="f-name">Имя</label><input id="f-name" name="name" type="text" placeholder="Как к вам обращаться" required /></div>
-              <div class="field"><label for="f-contact">Email или телефон</label><input id="f-contact" name="contact" type="text" placeholder="Куда ответить" required /></div>
+              <div class="field"><label for="f-name" data-i18n="contact.labelName">Имя</label><input id="f-name" name="name" type="text" data-i18n-placeholder="contact.phName" placeholder="Как к вам обращаться" required /></div>
+              <div class="field"><label for="f-contact" data-i18n="contact.labelContact">Email или телефон</label><input id="f-contact" name="contact" type="text" data-i18n-placeholder="contact.phContact" placeholder="Куда ответить" required /></div>
             </div>
-            <div class="field"><label for="f-type">Тип проекта</label><input id="f-type" name="type" type="text" placeholder="Сайт, приложение, игра, автоматизация…" /></div>
-            <div class="field"><label for="f-msg">О проекте</label><textarea id="f-msg" name="message" placeholder="Пара слов о задаче, сроках и бюджете" required></textarea></div>
-            <button type="submit" class="btn btn-primary">Отправить заявку <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
-            <div class="form-note">Нажимая «Отправить», вы соглашаетесь на обработку данных для связи.</div>
+            <div class="field"><label for="f-type" data-i18n="contact.labelType">Тип проекта</label><input id="f-type" name="type" type="text" data-i18n-placeholder="contact.phType" placeholder="Сайт, приложение, игра, автоматизация…" /></div>
+            <div class="field"><label for="f-msg" data-i18n="contact.labelMsg">О проекте</label><textarea id="f-msg" name="message" data-i18n-placeholder="contact.phMsg" placeholder="Пара слов о задаче, сроках и бюджете" required></textarea></div>
+            <button type="submit" class="btn btn-primary"><span data-i18n="contact.submit">Отправить заявку</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+            <div class="form-note" data-i18n="contact.note">Нажимая «Отправить», вы соглашаетесь на обработку данных для связи.</div>
           </div>
           <div class="form-success" id="formSuccess">
             <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></div>
-            <h4>Заявка отправлена</h4>
-            <p>Спасибо — мы свяжемся с вами в ближайшее время.</p>
+            <h4 data-i18n="contact.successH">Заявка отправлена</h4>
+            <p data-i18n="contact.successP">Спасибо — мы свяжемся с вами в ближайшее время.</p>
           </div>
         </form>
       </div>
@@ -566,19 +589,19 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
     <div class="foot-top">
       <div class="foot-brand">
         <div class="logo">SIT<b>S</b></div>
-        <p>IT-студия полного цикла. Превращаем идеи в цифровые продукты.</p>
+        <p data-i18n="footer.tagline">IT-студия полного цикла. Превращаем идеи в цифровые продукты.</p>
       </div>
       <div class="foot-cols">
         <div class="foot-col">
-          <h5>Навигация</h5>
-          <a href="#services">Услуги</a>
-          <a href="#process">Как работаем</a>
-          <a href="#portfolio">Портфолио</a>
-          <a href="#about">О нас</a>
-          <a href="#contact">Контакты</a>
+          <h5 data-i18n="footer.navTitle">Навигация</h5>
+          <a href="#services" data-i18n="nav.services">Услуги</a>
+          <a href="#process" data-i18n="nav.process">Как работаем</a>
+          <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+          <a href="#about" data-i18n="nav.about">О нас</a>
+          <a href="#contact" data-i18n="nav.contact">Контакты</a>
         </div>
         <div class="foot-col">
-          <h5>Соцсети</h5>
+          <h5 data-i18n="footer.socTitle">Соцсети</h5>
           <a href="https://www.instagram.com/sariyev.it.solutions/" target="_blank" rel="noopener">Instagram</a>
           <a href="https://www.youtube.com/@sariyev.it.solutions" target="_blank" rel="noopener">YouTube</a>
           <a href="https://www.linkedin.com/in/alizhan-sariyev-5a3804278/" target="_blank" rel="noopener">LinkedIn</a>
@@ -587,83 +610,436 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
     </div>
     <div class="foot-bottom">
       <div>© <span id="year"></span> SITS — Sariyev IT Solutions</div>
-      <div class="founder">Основатель — <b>Сариев Алижан Сабитулы</b></div>
+      <div class="founder"><span data-i18n="footer.founder">Основатель —</span> <b>Сариев Алижан Сабитулы</b></div>
     </div>
   </div>
 </footer>
 
 <script>
-const PORTFOLIO=[
-  {name:"Atelier57",url:"https://www.atelier57.kz",category:"Сайт-визитка",desc:"Студия интерьерного дизайна и бутик (Алматы). Элегантный мультиязычный сайт.",img:"portfolio/01_atelier57.webp",cls:"pf-1"},
-  {name:"RedPad Games",url:"https://redpad-website.vercel.app",category:"Игровая студия",desc:"Сайт независимой игровой студии. Кинематографичный лендинг с атмосферой игрового мира.",img:"portfolio/02_redpad.webp",cls:"pf-2"},
-  {name:"Red Flag Community",url:"http://redflag.kz",category:"E-commerce / fashion",desc:"Интернет-магазин streetwear-бренда (Астана). Editorial-дизайн, корзина, мультивалютность.",img:"portfolio/03_rfc.webp",cls:"pf-3"},
-  {name:"Tengri Yurt",url:"https://www.tengri-yurt.kz/en",category:"E-commerce / премиум",desc:"Продажа казахских юрт ручной работы с доставкой по миру. Кинематографичный мультиязычный сайт.",img:"portfolio/04_tengri-yurt.webp",cls:"pf-4"},
-  {name:"Horecom",url:"https://horecom-platform.vercel.app/ru",category:"B2B-платформа",desc:"Оптовая платформа для пекарен, кафе и кондитеров (HoReCa). Каталог SKU, заказы через WhatsApp.",img:"portfolio/05_horecom.webp",cls:"pf-5"},
-  {name:"BoilerGen / Games AI",url:"https://boilergen-eight.vercel.app/landing.html",category:"Dev-инструмент / SaaS",desc:"Лендинг open-source AI-тулкита для разработки игр. Тёмный dev-дизайн.",img:"portfolio/06_boilergen.webp",cls:"pf-6"},
-  {name:"FreelanceHub",url:"https://freelance-hub.kz",category:"Маркетплейс",desc:"Платформа фриланса без комиссий с прямыми выплатами (Kaspi, USDT, банк). Чистый editorial-дизайн.",img:"portfolio/07_freelance-hub.webp",cls:"pf-7"},
-  {name:"Interagent",url:"https://www.interagent.kz",category:"B2B-маркетплейс",desc:"Торговая площадка для поставщиков и магазинов. 3D-иллюстрации, регистрация и каталог.",img:"portfolio/08_interagent.webp",cls:"pf-8"},
-  {name:"Citytorg",url:"https://www.citytorg.kz",category:"Каталог / городской сервис",desc:"Каталог акций и магазинов города (Усть-Каменогорск). Карточки товаров и акций.",img:"portfolio/09_citytorg.webp",cls:"pf-9"}
+/* ============ I18N ============ */
+const I18N = {
+  ru: {
+    _meta: { description: 'SITS — Sariyev IT Solutions. IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка.', locale: 'ru_RU' },
+    nav: { services:'Услуги', process:'Как работаем', portfolio:'Портфолио', about:'О нас', contact:'Контакты', cta:'Обсудить проект', menu:'Меню', themeToggle:'Сменить тему' },
+    hero: {
+      kicker: 'Sariyev IT Solutions — IT-студия полного цикла',
+      titleA: 'Превращаем', titleB: 'идеи в', titleC: 'продукты',
+      sub: 'Сайты, приложения, игры, автоматизация, AI-контент и поддержка — ',
+      subEm: 'от идеи до запуска и сопровождения',
+      subTail: ', под одной крышей.',
+      ctaPrimary: 'Обсудить проект', ctaSecondary: 'Работы',
+      meta1V:'9 проектов', meta1L:'запущены в продакшен',
+      meta2V:'6 направлений', meta2L:'от веба до игр и AI',
+      meta3V:'24/7', meta3L:'поддержка продуктов',
+    },
+    services: {
+      tag:'Услуги', h2:'Полный цикл разработки',
+      desc:'Шесть направлений, которые закрывают весь путь продукта — от первой строки кода до ежедневной поддержки.',
+      s1H:'Сайты и веб-платформы',
+      s1P:'Сайты, лендинги и сложные платформы с нуля. Быстрые, адаптивные, на современном стеке — от визитки до B2B-маркетплейса.',
+      s1T1:'Landing', s1T2:'Веб-платформы', s1T3:'E-commerce', s1T4:'SaaS',
+      s2H:'Мобильные приложения', s2P:'Нативные и кроссплатформенные приложения для iOS и Android.',
+      s3H:'Разработка игр', s3P:'Игры для мобильных и ПК на Unity и Unreal Engine.',
+      s4H:'Бизнес-автоматизация', s4P:'Автоматизация процессов и рутины бизнеса.',
+      s5H:'AI-контент и монтаж', s5P:'AI-ролики для TikTok и Instagram, профессиональный видеомонтаж.',
+      s5T1:'AI-видео', s5T2:'Reels / TikTok', s5T3:'Монтаж',
+      s6H:'IT-поддержка', s6P:'Техобслуживание и сопровождение продуктов 24/7.',
+      s6T1:'SLA', s6T2:'Мониторинг', s6T3:'Сопровождение',
+    },
+    process: {
+      tag:'Как работаем', h2:'Прозрачный процесс',
+      desc:'Четыре этапа от первого созвона до живого продукта. Вы всегда видите, где проект и что дальше.',
+      p1H:'Бриф и стратегия', p1P:'Разбираем задачу, цели и аудиторию. Фиксируем объём, сроки и смету — без сюрпризов по ходу.',
+      p2H:'Дизайн и прототип', p2P:'Собираем UX-логику и визуал. Показываем кликабельный прототип ещё до написания кода.',
+      p3H:'Разработка', p3P:'Пишем чистый код, тестируем на реальных данных и устройствах. Демонстрируем результат по этапам.',
+      p4H:'Запуск и поддержка', p4P:'Публикуем, передаём доступы и сопровождаем продукт после релиза — 24/7.',
+    },
+    portfolio: {
+      tag:'Портфолио', h2:'Избранные работы',
+      desc:'Девять запущенных проектов — от интерьерных бутиков до B2B-платформ и игровых студий.',
+      open:'Открыть',
+      cat: {
+        '01':'Сайт-визитка', '02':'Игровая студия', '03':'E-commerce / fashion',
+        '04':'E-commerce / премиум', '05':'B2B-платформа', '06':'Dev-инструмент / SaaS',
+        '07':'Маркетплейс', '08':'B2B-маркетплейс', '09':'Каталог / городской сервис',
+      },
+      desc_: {
+        '01':'Студия интерьерного дизайна и бутик (Алматы). Элегантный мультиязычный сайт.',
+        '02':'Сайт независимой игровой студии. Кинематографичный лендинг с атмосферой игрового мира.',
+        '03':'Интернет-магазин streetwear-бренда (Астана). Editorial-дизайн, корзина, мультивалютность.',
+        '04':'Продажа казахских юрт ручной работы с доставкой по миру. Кинематографичный мультиязычный сайт.',
+        '05':'Оптовая платформа для пекарен, кафе и кондитеров (HoReCa). Каталог SKU, заказы через WhatsApp.',
+        '06':'Лендинг open-source AI-тулкита для разработки игр. Тёмный dev-дизайн.',
+        '07':'Платформа фриланса без комиссий с прямыми выплатами (Kaspi, USDT, банк). Чистый editorial-дизайн.',
+        '08':'Торговая площадка для поставщиков и магазинов. 3D-иллюстрации, регистрация и каталог.',
+        '09':'Каталог акций и магазинов города (Усть-Каменогорск). Карточки товаров и акций.',
+      },
+    },
+    about: {
+      tag:'О нас', role:'Founder',
+      h2:'Студия с подходом, а не конвейером',
+      p1:'SITS — Sariyev IT Solutions — это IT-студия полного цикла. Мы берём проект от идеи и доводим до запуска: ',
+      p1Em:'сайты и платформы, мобильные приложения, игры на Unity и Unreal, бизнес-автоматизация, AI-контент и поддержка.',
+      p2:'За каждым проектом — внимание к деталям, честные сроки и продукт, которым удобно пользоваться. Вы работаете напрямую с теми, кто его делает.',
+      a1V:'9', a1L:'проектов в продакшене',
+      a2V:'6', a2L:'направлений',
+      a3V:'100%', a3L:'проектов под ключ',
+    },
+    contact: {
+      tag:'Контакты', h2:'Расскажите о проекте',
+      desc:'Заполните форму или напишите напрямую — ответим в течение дня и предложим, как реализовать идею.',
+      labelName:'Имя', phName:'Как к вам обращаться',
+      labelContact:'Email или телефон', phContact:'Куда ответить',
+      labelType:'Тип проекта', phType:'Сайт, приложение, игра, автоматизация…',
+      labelMsg:'О проекте', phMsg:'Пара слов о задаче, сроках и бюджете',
+      submit:'Отправить заявку', sending:'Отправляем…',
+      note:'Нажимая «Отправить», вы соглашаетесь на обработку данных для связи.',
+      successH:'Заявка отправлена', successP:'Спасибо — мы свяжемся с вами в ближайшее время.',
+      errorAlert:'Не удалось отправить. Попробуйте ещё раз или напишите нам в Instagram.',
+    },
+    footer: { tagline:'IT-студия полного цикла. Превращаем идеи в цифровые продукты.', navTitle:'Навигация', socTitle:'Соцсети', founder:'Основатель —' },
+  },
+
+  en: {
+    _meta: { description: 'SITS — Sariyev IT Solutions. A full-cycle IT studio: websites, mobile apps, games, business automation, AI content and IT support.', locale: 'en_US' },
+    nav: { services:'Services', process:'Process', portfolio:'Work', about:'About', contact:'Contact', cta:'Start a project', menu:'Menu', themeToggle:'Toggle theme' },
+    hero: {
+      kicker: 'Sariyev IT Solutions — full-cycle IT studio',
+      titleA: 'Turning', titleB: 'ideas into', titleC: 'products',
+      sub: 'Websites, apps, games, automation, AI content and support — ',
+      subEm: 'from idea to launch and beyond',
+      subTail: ', all under one roof.',
+      ctaPrimary: 'Start a project', ctaSecondary: 'See work',
+      meta1V:'9 projects', meta1L:'live in production',
+      meta2V:'6 disciplines', meta2L:'from web to games and AI',
+      meta3V:'24/7', meta3L:'product support',
+    },
+    services: {
+      tag:'Services', h2:'Full development cycle',
+      desc:'Six disciplines that cover a product’s entire journey — from the first line of code to day-to-day support.',
+      s1H:'Websites & web platforms',
+      s1P:'Sites, landing pages and complex platforms built from scratch. Fast, responsive, on a modern stack — from one-pagers to B2B marketplaces.',
+      s1T1:'Landing', s1T2:'Web platforms', s1T3:'E-commerce', s1T4:'SaaS',
+      s2H:'Mobile apps', s2P:'Native and cross-platform apps for iOS and Android.',
+      s3H:'Game development', s3P:'Mobile and PC games on Unity and Unreal Engine.',
+      s4H:'Business automation', s4P:'Streamlining routine processes and back-office workflows.',
+      s5H:'AI content & video', s5P:'AI-driven reels for TikTok and Instagram, professional video editing.',
+      s5T1:'AI video', s5T2:'Reels / TikTok', s5T3:'Editing',
+      s6H:'IT support', s6P:'Maintenance and 24/7 product care after launch.',
+      s6T1:'SLA', s6T2:'Monitoring', s6T3:'Support',
+    },
+    process: {
+      tag:'Process', h2:'A transparent workflow',
+      desc:'Four stages from the first call to a live product. You always know where the project stands and what comes next.',
+      p1H:'Brief & strategy', p1P:'We unpack the task, goals and audience. We lock scope, timeline and budget — no surprises along the way.',
+      p2H:'Design & prototype', p2P:'We build UX logic and visuals, and show a clickable prototype before a single line of code.',
+      p3H:'Development', p3P:'We write clean code and test on real data and devices, showing progress at every milestone.',
+      p4H:'Launch & support', p4P:'We ship, hand over the keys, and keep the product running 24/7 after release.',
+    },
+    portfolio: {
+      tag:'Work', h2:'Selected projects',
+      desc:'Nine projects shipped to production — from interior boutiques to B2B platforms and game studios.',
+      open:'Open',
+      cat: {
+        '01':'Showcase site', '02':'Game studio', '03':'E-commerce / fashion',
+        '04':'E-commerce / premium', '05':'B2B platform', '06':'Dev tool / SaaS',
+        '07':'Marketplace', '08':'B2B marketplace', '09':'Catalog / local service',
+      },
+      desc_: {
+        '01':'Interior design studio and boutique (Almaty). An elegant multilingual site.',
+        '02':'Website for an indie game studio. A cinematic landing with the atmosphere of the game world.',
+        '03':'Online store for an Astana-based streetwear brand. Editorial design, cart, multi-currency.',
+        '04':'Handcrafted Kazakh yurts shipped worldwide. A cinematic, multilingual storefront.',
+        '05':'Wholesale platform for bakeries, cafés and confectioners (HoReCa). SKU catalog, orders via WhatsApp.',
+        '06':'Landing page for an open-source AI toolkit for game development. Dark, dev-style design.',
+        '07':'A zero-commission freelance platform with direct payouts (Kaspi, USDT, bank). Clean editorial design.',
+        '08':'Marketplace for suppliers and retailers. 3D illustrations, sign-up and catalog.',
+        '09':'Local catalog of deals and stores (Oskemen). Product and promo cards.',
+      },
+    },
+    about: {
+      tag:'About', role:'Founder',
+      h2:'A studio with craft, not a factory line',
+      p1:'SITS — Sariyev IT Solutions — is a full-cycle IT studio. We take a project from idea to launch: ',
+      p1Em:'websites and platforms, mobile apps, Unity and Unreal games, business automation, AI content and support.',
+      p2:'Every project gets attention to detail, honest timelines and a product that’s genuinely pleasant to use. You work directly with the people who build it.',
+      a1V:'9', a1L:'projects in production',
+      a2V:'6', a2L:'disciplines',
+      a3V:'100%', a3L:'turnkey projects',
+    },
+    contact: {
+      tag:'Contact', h2:'Tell us about your project',
+      desc:'Drop us a line — we reply within a day with a proposal on how to bring your idea to life.',
+      labelName:'Name', phName:'How should we address you',
+      labelContact:'Email or phone', phContact:'Where to reply',
+      labelType:'Project type', phType:'Site, app, game, automation…',
+      labelMsg:'About the project', phMsg:'A few words on the task, timeline and budget',
+      submit:'Send request', sending:'Sending…',
+      note:'By clicking "Send", you consent to your data being used for contact.',
+      successH:'Request sent', successP:'Thanks — we’ll get back to you shortly.',
+      errorAlert:'Couldn’t send. Please try again or message us on Instagram.',
+    },
+    footer: { tagline:'Full-cycle IT studio. Turning ideas into digital products.', navTitle:'Navigation', socTitle:'Social', founder:'Founder —' },
+  },
+
+  kk: {
+    _meta: { description: 'SITS — Sariyev IT Solutions. Толық циклді IT-студия: сайттар, мобильді қосымшалар, ойындар, бизнес-автоматтандыру, AI-контент және IT-қолдау.', locale: 'kk_KZ' },
+    nav: { services:'Қызметтер', process:'Жұмыс тәртібі', portfolio:'Жұмыстар', about:'Біз туралы', contact:'Байланыс', cta:'Жобаны талқылау', menu:'Мәзір', themeToggle:'Тақырыпты ауыстыру' },
+    hero: {
+      kicker: 'Sariyev IT Solutions — толық циклді IT-студия',
+      titleA: 'Идеяларды', titleB: 'цифрлық өнімдерге', titleC: 'айналдырамыз',
+      sub: 'Сайттар, қосымшалар, ойындар, автоматтандыру, AI-контент және қолдау — ',
+      subEm: 'идеядан жобаны іске қосуға және сүйемелдеуге дейін',
+      subTail: ', бір шаңырақ астында.',
+      ctaPrimary: 'Жобаны талқылау', ctaSecondary: 'Жұмыстар',
+      meta1V:'9 жоба', meta1L:'өндіріске шықты',
+      meta2V:'6 бағыт', meta2L:'веб, ойын, AI және басқа',
+      meta3V:'24/7', meta3L:'өнімдерге қолдау',
+    },
+    services: {
+      tag:'Қызметтер', h2:'Толық даму циклі',
+      desc:'Алты бағыт — өнімнің бірінші жол кодынан күнделікті қолдауына дейінгі бүкіл жолды қамтиды.',
+      s1H:'Сайттар мен веб-платформалар',
+      s1P:'Сайттар, лендингтер және күрделі платформалар — нөлден бастап. Жылдам, бейімделген, заманауи стек — визиткадан B2B-маркетплейске дейін.',
+      s1T1:'Landing', s1T2:'Веб-платформалар', s1T3:'E-commerce', s1T4:'SaaS',
+      s2H:'Мобильді қосымшалар', s2P:'iOS және Android үшін нативті және кроссплатформалық қосымшалар.',
+      s3H:'Ойындар жасау', s3P:'Mobile және PC ойындары — Unity мен Unreal Engine негізінде.',
+      s4H:'Бизнес-автоматтандыру', s4P:'Бизнестегі процестер мен күнделікті жұмысты автоматтандыру.',
+      s5H:'AI-контент және монтаж', s5P:'TikTok пен Instagram үшін AI-роликтер, кәсіби бейне монтаж.',
+      s5T1:'AI-бейне', s5T2:'Reels / TikTok', s5T3:'Монтаж',
+      s6H:'IT-қолдау', s6P:'Өнімдерге 24/7 техникалық қызмет көрсету мен сүйемелдеу.',
+      s6T1:'SLA', s6T2:'Мониторинг', s6T3:'Сүйемелдеу',
+    },
+    process: {
+      tag:'Жұмыс тәртібі', h2:'Айқын процесс',
+      desc:'Алғашқы әңгімеден дайын өнімге дейін — төрт кезең. Жоба қай кезеңде, келесі қадам не — әрқашан көрініп тұрады.',
+      p1H:'Бриф пен стратегия', p1P:'Тапсырманы, мақсаттарды және аудиторияны зерттейміз. Көлемі, мерзімі мен сметаны нақтылаймыз — жол бойы кенеттен өзгеріс болмайды.',
+      p2H:'Дизайн және прототип', p2P:'UX-логика мен визуалды жобалаймыз. Кодтан бұрын басылатын прототипті көрсетеміз.',
+      p3H:'Әзірлеу', p3P:'Таза код жазамыз, нақты деректер мен құрылғыларда сынаймыз. Әр кезеңде нәтижені көрсетеміз.',
+      p4H:'Іске қосу және қолдау', p4P:'Жобаны жариялаймыз, кіруді тапсырамыз және 24/7 режимінде сүйемелдейміз.',
+    },
+    portfolio: {
+      tag:'Жұмыстар', h2:'Таңдаулы жобалар',
+      desc:'Тоғыз өндіріске енгізілген жоба — интерьер бутиктерінен бастап B2B-платформалар мен ойын студияларына дейін.',
+      open:'Ашу',
+      cat: {
+        '01':'Визитка-сайт', '02':'Ойын студиясы', '03':'E-commerce / fashion',
+        '04':'E-commerce / премиум', '05':'B2B-платформа', '06':'Dev-құрал / SaaS',
+        '07':'Маркетплейс', '08':'B2B-маркетплейс', '09':'Каталог / қалалық сервис',
+      },
+      desc_: {
+        '01':'Интерьер дизайн студиясы және бутик (Алматы). Талғампаз, көп тілді сайт.',
+        '02':'Тәуелсіз ойын студиясының сайты. Ойын әлемінің атмосферасы бар кинематографиялық лендинг.',
+        '03':'Streetwear брендінің интернет-дүкені (Астана). Editorial-дизайн, себет, көп валюта.',
+        '04':'Қолдан жасалған қазақ киіз үйлерін әлемге жеткізу. Кинематографиялық, көп тілді сайт.',
+        '05':'Наубайханалар, кафелер мен кондитерлерге арналған көтерме платформа (HoReCa). SKU каталогы, WhatsApp арқылы тапсырыс.',
+        '06':'Ойын әзірлеуге арналған ашық бастапқы AI-құралдар жинағының лендингі. Қара dev-дизайн.',
+        '07':'Комиссиясыз фриланс платформасы — тікелей төлемдермен (Kaspi, USDT, банк). Таза editorial-дизайн.',
+        '08':'Жеткізушілер мен дүкендерге арналған сауда алаңы. 3D-иллюстрациялар, тіркеу және каталог.',
+        '09':'Қаладағы акциялар мен дүкендердің каталогы (Өскемен). Тауар мен акциялардың карточкалары.',
+      },
+    },
+    about: {
+      tag:'Біз туралы', role:'Founder',
+      h2:'Конвейер емес — өз тәсілі бар студия',
+      p1:'SITS — Sariyev IT Solutions — толық циклді IT-студия. Жобаны идеядан бастап іске қосуға дейін жеткіземіз: ',
+      p1Em:'сайттар мен платформалар, мобильді қосымшалар, Unity мен Unreal ойындары, бизнес-автоматтандыру, AI-контент және қолдау.',
+      p2:'Әр жобада — ұсақ-түйекке мән беру, шынайы мерзімдер және ыңғайлы өнім. Сіз тікелей оны жасаушылармен жұмыс істейсіз.',
+      a1V:'9', a1L:'өндірістегі жоба',
+      a2V:'6', a2L:'бағыт',
+      a3V:'100%', a3L:'«кілт астында» жобалар',
+    },
+    contact: {
+      tag:'Байланыс', h2:'Жобаңыз туралы айтып беріңіз',
+      desc:'Форманы толтырыңыз немесе тікелей жазыңыз — бір күн ішінде жауап беріп, идеяны қалай жүзеге асыру керектігін ұсынамыз.',
+      labelName:'Аты-жөні', phName:'Сізге қалай жүгінсек болады',
+      labelContact:'Email немесе телефон', phContact:'Қайда жауап беру керек',
+      labelType:'Жоба түрі', phType:'Сайт, қосымша, ойын, автоматтандыру…',
+      labelMsg:'Жоба туралы', phMsg:'Тапсырма, мерзім мен бюджет туралы бірнеше сөз',
+      submit:'Өтінімді жіберу', sending:'Жіберілуде…',
+      note:'«Жіберу» түймесін басу арқылы байланыс үшін деректерді өңдеуге келісім бересіз.',
+      successH:'Өтінім жіберілді', successP:'Рахмет — жақын арада хабарласамыз.',
+      errorAlert:'Жіберу сәтсіз аяқталды. Қайталап көріңіз немесе Instagram арқылы жазыңыз.',
+    },
+    footer: { tagline:'Толық циклді IT-студия. Идеяларды цифрлық өнімдерге айналдырамыз.', navTitle:'Навигация', socTitle:'Әлеуметтік желілер', founder:'Негізін қалаушы —' },
+  },
+};
+
+const LANGS = ['ru','en','kk'];
+let currentLang = 'ru';
+let pfRendered = false;
+
+function pickI18n(lang, key) {
+  let v = I18N[lang];
+  for (const k of key.split('.')) {
+    if (v == null) return null;
+    v = v[k];
+  }
+  return v;
+}
+
+/* ============ PORTFOLIO ============ */
+const PORTFOLIO = [
+  { id:'01', name:'Atelier57',           url:'https://www.atelier57.kz',                       img:'portfolio/01_atelier57.webp',     cls:'pf-1' },
+  { id:'02', name:'RedPad Games',        url:'https://redpad-website.vercel.app',              img:'portfolio/02_redpad.webp',        cls:'pf-2' },
+  { id:'03', name:'Red Flag Community',  url:'http://redflag.kz',                              img:'portfolio/03_rfc.webp',           cls:'pf-3' },
+  { id:'04', name:'Tengri Yurt',         url:'https://www.tengri-yurt.kz/en',                  img:'portfolio/04_tengri-yurt.webp',   cls:'pf-4' },
+  { id:'05', name:'Horecom',             url:'https://horecom-platform.vercel.app/ru',         img:'portfolio/05_horecom.webp',       cls:'pf-5' },
+  { id:'06', name:'BoilerGen / Games AI',url:'https://boilergen-eight.vercel.app/landing.html',img:'portfolio/06_boilergen.webp',     cls:'pf-6' },
+  { id:'07', name:'FreelanceHub',        url:'https://freelance-hub.kz',                       img:'portfolio/07_freelance-hub.webp', cls:'pf-7' },
+  { id:'08', name:'Interagent',          url:'https://www.interagent.kz',                      img:'portfolio/08_interagent.webp',    cls:'pf-8' },
+  { id:'09', name:'Citytorg',            url:'https://www.citytorg.kz',                        img:'portfolio/09_citytorg.webp',      cls:'pf-9' },
 ];
-document.getElementById('pfBento').innerHTML=PORTFOLIO.map(p=>`
-  <a class="pf reveal ${p.cls}" href="${p.url}" target="_blank" rel="noopener" aria-label="${p.name}">
-    <img src="${p.img}" alt="${p.name} — ${p.category}" loading="lazy" />
-    <div class="grad"></div>
-    <div class="pf-body">
-      <div class="pf-cat">${p.category}</div>
-      <div class="pf-name">${p.name}</div>
-      <div class="pf-desc">${p.desc}</div>
-      <span class="pf-open">Открыть <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-    </div>
-  </a>`).join('');
 
-/* THEME */
-const root=document.documentElement, themeToggle=document.getElementById('themeToggle');
-(function(){let s=null;try{s=localStorage.getItem('sits-theme')}catch(e){}
-  root.setAttribute('data-theme',s||'dark')})();
-themeToggle.addEventListener('click',()=>{const n=root.getAttribute('data-theme')==='dark'?'light':'dark';
-  root.setAttribute('data-theme',n);try{localStorage.setItem('sits-theme',n)}catch(e){}});
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-/* NAV */
-const nav=document.getElementById('nav');
-const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>16);
-onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+function renderPortfolio(lang) {
+  const t = I18N[lang].portfolio;
+  document.getElementById('pfBento').innerHTML = PORTFOLIO.map(p => {
+    const cat = t.cat[p.id] || '';
+    const desc = t.desc_[p.id] || '';
+    return `
+      <a class="pf reveal ${p.cls}" href="${p.url}" target="_blank" rel="noopener" aria-label="${esc(p.name)}">
+        <img src="${p.img}" alt="${esc(p.name)} — ${esc(cat)}" loading="lazy" />
+        <div class="grad"></div>
+        <div class="pf-body">
+          <div class="pf-cat">${esc(cat)}</div>
+          <div class="pf-name">${esc(p.name)}</div>
+          <div class="pf-desc">${esc(desc)}</div>
+          <span class="pf-open">${esc(t.open)} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+        </div>
+      </a>`;
+  }).join('');
+  // First render: let intersection observer pick them up. Subsequent: just show them.
+  document.querySelectorAll('#pfBento .pf').forEach(el => {
+    if (pfRendered) el.classList.add('in');
+    else io.observe(el);
+  });
+  pfRendered = true;
+}
 
-/* MOBILE MENU */
-const burger=document.getElementById('burger'),mm=document.getElementById('mobileMenu');
-const toggleMenu=o=>{burger.classList.toggle('open',o);mm.classList.toggle('open',o);document.body.style.overflow=o?'hidden':''};
-burger.addEventListener('click',()=>toggleMenu(!mm.classList.contains('open')));
-mm.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
+/* ============ THEME ============ */
+const root = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+(function(){ let s=null; try{ s=localStorage.getItem('sits-theme'); }catch(e){}
+  root.setAttribute('data-theme', s || 'dark'); })();
+themeToggle.addEventListener('click', () => {
+  const n = root.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+  root.setAttribute('data-theme', n);
+  try { localStorage.setItem('sits-theme', n); } catch(e) {}
+});
 
-/* REVEAL */
-const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -7% 0px'});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+/* ============ NAV scroll ============ */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 16);
+onScroll(); window.addEventListener('scroll', onScroll, { passive:true });
 
-/* FORM → /api/lead (Telegram + CRM) */
-const form=document.getElementById('contactForm');
-form.addEventListener('submit',async e=>{
+/* ============ MOBILE MENU ============ */
+const burger = document.getElementById('burger'), mm = document.getElementById('mobileMenu');
+const toggleMenu = o => { burger.classList.toggle('open', o); mm.classList.toggle('open', o); document.body.style.overflow = o ? 'hidden' : ''; };
+burger.addEventListener('click', () => toggleMenu(!mm.classList.contains('open')));
+mm.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
+/* ============ REVEAL ============ */
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold:.12, rootMargin:'0px 0px -7% 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ============ APPLY LANG ============ */
+function applyLang(lang) {
+  if (!I18N[lang]) lang = 'en';
+
+  // textContent
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = pickI18n(lang, el.getAttribute('data-i18n'));
+    if (v != null) el.textContent = v;
+  });
+  // placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const v = pickI18n(lang, el.getAttribute('data-i18n-placeholder'));
+    if (v != null) el.setAttribute('placeholder', v);
+  });
+  // aria-label
+  document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+    const v = pickI18n(lang, el.getAttribute('data-i18n-aria-label'));
+    if (v != null) el.setAttribute('aria-label', v);
+  });
+
+  // <html lang>
+  root.setAttribute('lang', lang === 'kk' ? 'kk' : lang);
+  root.setAttribute('data-lang', lang);
+
+  // meta description (+ og + twitter)
+  const m = I18N[lang]._meta;
+  if (m) {
+    const md = document.querySelector('meta[name="description"]');
+    if (md) md.setAttribute('content', m.description);
+    const ogd = document.querySelector('meta[property="og:description"]');
+    if (ogd) ogd.setAttribute('content', m.description);
+    const twd = document.querySelector('meta[name="twitter:description"]');
+    if (twd) twd.setAttribute('content', m.description);
+    const ogl = document.querySelector('meta[property="og:locale"]');
+    if (ogl && m.locale) ogl.setAttribute('content', m.locale);
+  }
+
+  // portfolio
+  renderPortfolio(lang);
+
+  // switcher active pill
+  document.querySelectorAll('#langSwitch button, #mmLang button').forEach(b => {
+    b.classList.toggle('on', b.dataset.lang === lang);
+  });
+
+  try { localStorage.setItem('sits-lang', lang); } catch(e) {}
+  currentLang = lang;
+}
+
+/* ============ DETECT + INIT ============ */
+function detectLang() {
+  let saved = null;
+  try { saved = localStorage.getItem('sits-lang'); } catch(e) {}
+  if (saved && LANGS.includes(saved)) return saved;
+  const nl = (navigator.language || 'en').toLowerCase();
+  if (nl.startsWith('kk')) return 'kk';
+  if (nl.startsWith('ru')) return 'ru';
+  return 'en';
+}
+
+document.querySelectorAll('#langSwitch button, #mmLang button').forEach(b => {
+  b.addEventListener('click', () => applyLang(b.dataset.lang));
+});
+
+applyLang(detectLang());
+
+/* ============ FORM → /api/lead ============ */
+const form = document.getElementById('contactForm');
+form.addEventListener('submit', async e => {
   e.preventDefault();
-  if(!form.checkValidity()){form.reportValidity();return}
-  const btn=form.querySelector('button[type="submit"]');
-  const orig=btn.innerHTML;btn.disabled=true;btn.style.opacity='.7';btn.textContent='Отправляем…';
-  const payload={
-    name:form.elements.name.value.trim(),
-    contact:form.elements.contact.value.trim(),
-    service:form.elements.type.value.trim(),
-    details:form.elements.message.value.trim()
+  if (!form.checkValidity()) { form.reportValidity(); return; }
+  const btn = form.querySelector('button[type="submit"]');
+  const orig = btn.innerHTML;
+  btn.disabled = true; btn.style.opacity = '.7';
+  btn.textContent = pickI18n(currentLang, 'contact.sending') || 'Sending…';
+  const payload = {
+    name:    form.elements.name.value.trim(),
+    contact: form.elements.contact.value.trim(),
+    service: form.elements.type.value.trim(),
+    details: form.elements.message.value.trim(),
   };
-  try{
-    const r=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    const data=await r.json().catch(()=>({}));
-    if(!r.ok||!data.ok)throw new Error(data.error||'Не удалось отправить заявку');
-    document.getElementById('formFields').style.display='none';
+  try {
+    const r = await fetch('/api/lead', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok || !data.ok) throw new Error(data.error || 'Send failed');
+    document.getElementById('formFields').style.display = 'none';
     document.getElementById('formSuccess').classList.add('show');
-  }catch(err){
-    btn.disabled=false;btn.style.opacity='';btn.innerHTML=orig;
-    alert((err&&err.message)||'Не удалось отправить. Попробуйте ещё раз или напишите нам в Instagram.');
+  } catch (err) {
+    btn.disabled = false; btn.style.opacity = ''; btn.innerHTML = orig;
+    alert((err && err.message) || pickI18n(currentLang, 'contact.errorAlert') || 'Send failed');
   }
 });
 
-document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>

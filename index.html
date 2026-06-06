@@ -832,13 +832,26 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 .foot-col h5{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:16px;font-weight:600}
 .foot-col a{display:block;color:var(--muted);font-size:14.5px;margin-bottom:11px;transition:color .25s}
 .foot-col a:hover{color:var(--text)}
-.foot-legal{display:flex;gap:22px 44px;flex-wrap:wrap;padding:28px 0;
-  border-top:1px solid var(--line);margin-bottom:24px}
-.foot-legal .lg-item{display:flex;flex-direction:column;gap:6px;min-width:0}
-.foot-legal .lg-address{flex:1 1 320px}
-.foot-legal .lg-lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:600}
-.foot-legal .lg-val{color:var(--muted);font-size:14px;line-height:1.55;font-variant-numeric:tabular-nums}
-.foot-legal .lg-val.lg-entity{color:var(--text);font-weight:600;letter-spacing:.01em;font-variant-numeric:normal}
+/* Legal info card — grid с явной иерархией: entity на всю ширину, BIN/дата в 2 колонки, адрес внизу */
+.foot-legal{display:grid;grid-template-columns:1fr 1fr;gap:24px 36px;
+  padding:30px 32px;margin:36px 0 28px;
+  border:1px solid var(--line);border-radius:var(--r-xl);
+  background:color-mix(in srgb, var(--surface) 55%, transparent)}
+.foot-legal .lg-title{grid-column:1/-1;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--faint);font-weight:600;margin:0 0 4px;
+  padding-bottom:14px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:10px}
+.foot-legal .lg-title::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red)}
+.foot-legal .lg-entity-row{grid-column:1/-1}
+.foot-legal .lg-address{grid-column:1/-1}
+.foot-legal .lg-item{display:flex;flex-direction:column;gap:7px;min-width:0}
+.foot-legal .lg-lbl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);font-weight:600}
+.foot-legal .lg-val{color:var(--muted);font-size:14.5px;line-height:1.6;
+  font-variant-numeric:tabular-nums}
+.foot-legal .lg-val.lg-entity{color:var(--text);font-weight:600;font-size:17px;
+  letter-spacing:.01em;font-variant-numeric:normal}
+.foot-legal .lg-address .lg-val{font-variant-numeric:normal}
 .foot-bottom{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;padding-top:28px;border-top:1px solid var(--line);
   color:var(--faint);font-size:13px}
 .foot-bottom .founder b{color:var(--muted);font-weight:600}
@@ -868,10 +881,18 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .hero-mute{right:18px;bottom:22px;width:40px;height:40px}
   .hero-mute svg{width:16px;height:16px}
   .hero-lower{flex-direction:column;align-items:flex-start;gap:22px;margin-top:26px}
-  .hero-meta{gap:18px 0;margin-top:30px;padding-top:18px}
-  .hero-meta .m{padding-right:24px;margin-right:24px}
-  .hero-meta .mv{font-size:clamp(22px,7vw,28px)}
+  /* Meta-row на мобилке — фиксированная 2-рядная сетка для всех языков (как в EN) */
+  .hero-meta{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    grid-template-areas:"a a" "b c";
+    gap:20px 24px;margin-top:30px;padding-top:18px}
+  .hero-meta .m{padding:0;margin:0;border:none;min-width:0}
+  .hero-meta .m:nth-child(1){grid-area:a;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  .hero-meta .m:nth-child(2){grid-area:b}
+  .hero-meta .m:nth-child(3){grid-area:c;padding-left:20px;border-left:1px solid var(--line)}
+  .hero-meta .mv{font-size:clamp(22px,6.8vw,28px)}
   .hero-meta .ml{font-size:12px;margin-top:6px}
+  .foot-legal{grid-template-columns:1fr;gap:20px;padding:24px 22px;margin:28px 0 22px}
+  .foot-legal .lg-item{grid-column:1/-1}
   .bento{grid-template-columns:1fr}
   .s-sites,.s-mobile,.s-ai,.s-support{grid-column:auto}
   /* Portfolio: image on top, text below on solid surface — fully readable on touch */
@@ -1225,8 +1246,9 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         </div>
       </div>
     </div>
-    <div class="foot-legal" data-i18n-aria-label="legal.title" aria-label="Реквизиты компании">
-      <div class="lg-item">
+    <section class="foot-legal" data-i18n-aria-label="legal.title" aria-label="Реквизиты компании">
+      <h5 class="lg-title" data-i18n="legal.title">Реквизиты компании</h5>
+      <div class="lg-item lg-entity-row">
         <div class="lg-lbl" data-i18n="legal.entityLbl">Юридическое лицо</div>
         <div class="lg-val lg-entity" data-i18n="legal.entityVal">ТОО «SARIYEV IT SOLUTIONS»</div>
       </div>
@@ -1242,7 +1264,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         <div class="lg-lbl" data-i18n="legal.addressLbl">Юридический адрес</div>
         <div class="lg-val" data-i18n="legal.addressVal">041609, Алматинская область, Талгарский район, с. Бесагаш, ул. Торғай, 32</div>
       </div>
-    </div>
+    </section>
     <div class="foot-bottom">
       <div>© <span id="year"></span> SITS — Sariyev IT Solutions</div>
       <div class="founder"><span data-i18n="footer.founder">Основатель —</span> <b>Сариев Алижан Сабитулы</b></div>

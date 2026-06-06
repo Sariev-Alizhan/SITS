@@ -1,0 +1,28 @@
+{
+  "name": "SITS — Sariyev IT Solutions",
+  "short_name": "SITS",
+  "description": "IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0c0a0b",
+  "theme_color": "#0c0a0b",
+  "lang": "ru",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "developer"],
+  "icons": [
+    {
+      "src": "/brand/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

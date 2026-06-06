@@ -23,6 +23,10 @@
 <meta name="description" content="SITS — Sariyev IT Solutions. IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка." />
 <link rel="icon" type="image/png" href="brand/favicon.png" />
 <link rel="apple-touch-icon" href="brand/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="SITS" />
 
 <link rel="canonical" href="https://sits-eta.vercel.app/" />
 <link rel="alternate" hreflang="ru" href="https://sits-eta.vercel.app/" />
@@ -66,6 +70,13 @@
     "postalCode": "041609",
     "addressCountry": "KZ"
   },
+  "contactPoint": [{
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "availableLanguage": ["Russian", "English", "Kazakh"],
+    "url": "https://sits-eta.vercel.app/#contact"
+  }],
+  "knowsAbout": ["Web Development", "Mobile App Development", "Game Development", "Business Process Automation", "AI Content Creation", "IT Support"],
   "founder": {
     "@type": "Person",
     "@id": "https://sits-eta.vercel.app/#founder",
@@ -115,6 +126,36 @@
     { "@type": "ListItem", "position": 8, "item": { "@type": "WebSite", "name": "Interagent", "url": "https://www.interagent.kz", "description": "B2B-маркетплейс для поставщиков и магазинов" } },
     { "@type": "ListItem", "position": 9, "item": { "@type": "WebSite", "name": "Citytorg", "url": "https://www.citytorg.kz", "description": "Каталог акций и магазинов (Усть-Каменогорск)" } }
   ]
+}
+</script>
+
+<!-- Schema.org Services — 6 направлений студии -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Service", "name": "Сайты и веб-платформы", "description": "Сайты, лендинги и сложные платформы с нуля. Быстрые, адаптивные, на современном стеке — от визитки до B2B-маркетплейса.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "Web development" },
+    { "@type": "Service", "name": "Мобильные приложения", "description": "Нативные и кроссплатформенные приложения для iOS и Android.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "Mobile app development" },
+    { "@type": "Service", "name": "Разработка игр", "description": "Игры для мобильных и ПК на Unity и Unreal Engine.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "Game development" },
+    { "@type": "Service", "name": "Бизнес-автоматизация", "description": "Автоматизация процессов и рутины бизнеса.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "Business process automation" },
+    { "@type": "Service", "name": "AI-контент и видеомонтаж", "description": "AI-ролики для TikTok и Instagram, профессиональный видеомонтаж.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "AI content and video editing" },
+    { "@type": "Service", "name": "IT-поддержка 24/7", "description": "Техобслуживание и сопровождение продуктов 24/7.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "IT support" }
+  ]
+}
+</script>
+
+<!-- Schema.org VideoObject — hero-видео для Google Video index -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "SITS — Sariyev IT Solutions",
+  "description": "IT-студия полного цикла из Казахстана: сайты, мобильные приложения, игры, AI-контент.",
+  "thumbnailUrl": "https://sits-eta.vercel.app/brand/hero/hero-poster.jpg",
+  "uploadDate": "2026-06-06",
+  "duration": "PT33S",
+  "contentUrl": "https://sits-eta.vercel.app/brand/hero/hero-1080.mp4",
+  "publisher": { "@id": "https://sits-eta.vercel.app/#organization" }
 }
 </script>
 
@@ -883,9 +924,31 @@ form .btn-primary{width:100%;justify-content:center;margin-top:6px}
 .hp-field{position:absolute !important;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
 .form-success{display:none;text-align:center;padding:36px 0}
 .form-success.show{display:block;animation:fade .6s var(--ease) forwards}
-.form-success .chk{width:60px;height:60px;border-radius:50%;border:1px solid var(--red);color:var(--red);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
-.form-success h4{font-family:var(--font-display);font-size:21px;font-weight:500;margin-bottom:8px}
-.form-success p{color:var(--muted)}
+.form-success .chk{width:60px;height:60px;border-radius:50%;border:1px solid var(--red);
+  color:var(--red);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;
+  position:relative}
+.form-success.show .chk{animation:chk-pop .55s cubic-bezier(.34,1.56,.64,1) .15s backwards}
+.form-success .chk svg{animation:chk-draw .5s var(--ease) .5s backwards;
+  stroke-dasharray:24;stroke-dashoffset:0}
+@keyframes chk-pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes chk-draw{from{stroke-dashoffset:24}to{stroke-dashoffset:0}}
+.form-success h4{font-family:var(--font-display);font-size:21px;font-weight:500;margin-bottom:8px;
+  animation:fade .6s var(--ease) .6s backwards}
+.form-success p{color:var(--muted);animation:fade .6s var(--ease) .75s backwards}
+
+/* Submit button loading state — spinner */
+.btn-spinner{display:inline-block;width:16px;height:16px;border:2px solid currentColor;
+  border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite;
+  vertical-align:middle;margin-left:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Inline form error (вместо alert) */
+.form-error{display:none;background:color-mix(in srgb, var(--red) 12%, transparent);
+  border:1px solid color-mix(in srgb, var(--red) 35%, transparent);
+  border-radius:var(--r-sm);padding:12px 14px;color:var(--text);font-size:13.5px;
+  line-height:1.45;margin-top:14px}
+.form-error.show{display:block;animation:fade .35s var(--ease) forwards}
+.form-error strong{color:var(--red);font-weight:600}
 
 /* ============ FOOTER ============ */
 footer{border-top:1px solid var(--line);padding:64px 0 38px}
@@ -988,6 +1051,26 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
   .hero-title .rise,.hero-lower,.hero-meta{opacity:1!important;transform:none!important}
+}
+
+/* ============ PRINT ============ */
+/* Print stylesheet — для печати визитки/портфолио в PDF */
+@media print {
+  *,*::before,*::after{
+    background:#fff!important;color:#000!important;
+    text-shadow:none!important;box-shadow:none!important;animation:none!important;transition:none!important}
+  body{font-size:12pt;line-height:1.4}
+  .nav,.fx-bg,.fx-cursor,.hero-video,.hero-mute,.mobile-menu,.burger,
+  .lang-switch,.icon-btn,.theme-toggle,.skip-link,
+  form.contact-form,.contact-info .cinfo .ci-arr{display:none!important}
+  main,footer{position:static!important}
+  section{page-break-inside:avoid;padding:18pt 0!important}
+  h1,h2,h3,h4{page-break-after:avoid}
+  a{color:#000!important;text-decoration:underline}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;color:#555!important}
+  .hero-title{font-size:28pt}
+  .pf img{max-width:50%;height:auto}
+  .foot-legal{border:1pt solid #000;padding:14pt;page-break-inside:avoid}
 }
 </style>
 </head>
@@ -1275,6 +1358,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
             <div class="field"><label for="f-type" data-i18n="contact.labelType">Тип проекта</label><input id="f-type" name="type" type="text" data-i18n-placeholder="contact.phType" placeholder="Сайт, приложение, игра…" /></div>
             <div class="field"><label for="f-msg" data-i18n="contact.labelMsg">О проекте</label><textarea id="f-msg" name="message" data-i18n-placeholder="contact.phMsg" placeholder="Пара слов о задаче, сроках и бюджете" required></textarea></div>
             <button type="submit" class="btn btn-primary"><span data-i18n="contact.submit">Отправить заявку</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+            <div class="form-error" id="formError" role="alert" aria-live="polite"></div>
             <div class="form-note" data-i18n="contact.note">Нажимая «Отправить», вы соглашаетесь на обработку данных для связи.</div>
           </div>
           <div class="form-success" id="formSuccess">
@@ -1430,6 +1514,7 @@ const I18N = {
       note:'Нажимая «Отправить», вы соглашаетесь на обработку данных для связи.',
       successH:'Заявка отправлена', successP:'Спасибо — мы свяжемся с вами в ближайшее время.',
       errorAlert:'Не удалось отправить. Попробуйте ещё раз или напишите нам в Instagram.',
+      errorLabel:'Ошибка',
     },
     footer: { tagline:'IT-студия полного цикла. Превращаем идеи в цифровые продукты.', navTitle:'Навигация', socTitle:'Соцсети', founder:'Основатель —' },
     legal: {
@@ -1529,6 +1614,7 @@ const I18N = {
       note:'By clicking "Send", you consent to your data being used for contact.',
       successH:'Request sent', successP:'Thanks — we’ll get back to you shortly.',
       errorAlert:'Couldn’t send. Please try again or message us on Instagram.',
+      errorLabel:'Error',
     },
     footer: { tagline:'Full-cycle IT studio. Turning ideas into digital products.', navTitle:'Navigation', socTitle:'Social', founder:'Founder —' },
     legal: {
@@ -1628,6 +1714,7 @@ const I18N = {
       note:'«Жіберу» түймесін басу арқылы байланыс үшін деректерді өңдеуге келісім бересіз.',
       successH:'Өтінім жіберілді', successP:'Рахмет — жақын арада хабарласамыз.',
       errorAlert:'Жіберу сәтсіз аяқталды. Қайталап көріңіз немесе Instagram арқылы жазыңыз.',
+      errorLabel:'Қате',
     },
     footer: { tagline:'Толық циклді IT-студия. Идеяларды цифрлық өнімдерге айналдырамыз.', navTitle:'Навигация', socTitle:'Әлеуметтік желілер', founder:'Негізін қалаушы —' },
     legal: {
@@ -1813,8 +1900,11 @@ form.addEventListener('submit', async e => {
   const btn = form.querySelector('button[type="submit"]');
   if (btn.disabled) return; // защита от повторных кликов
   const orig = btn.innerHTML;
-  btn.disabled = true; btn.style.opacity = '.7';
-  btn.textContent = pickI18n(currentLang, 'contact.sending') || 'Sending…';
+  const errBox = document.getElementById('formError');
+  if (errBox) { errBox.classList.remove('show'); errBox.textContent = ''; }
+  btn.disabled = true; btn.style.opacity = '.8'; btn.setAttribute('aria-busy', 'true');
+  const sendingLbl = pickI18n(currentLang, 'contact.sending') || 'Sending…';
+  btn.innerHTML = '<span>' + sendingLbl + '</span><span class="btn-spinner" aria-hidden="true"></span>';
   const payload = {
     name:    nameV,
     contact: contactV,
@@ -1830,8 +1920,15 @@ form.addEventListener('submit', async e => {
     document.getElementById('formFields').style.display = 'none';
     document.getElementById('formSuccess').classList.add('show');
   } catch (err) {
-    btn.disabled = false; btn.style.opacity = ''; btn.innerHTML = orig;
-    alert((err && err.message) || pickI18n(currentLang, 'contact.errorAlert') || 'Send failed');
+    btn.disabled = false; btn.style.opacity = ''; btn.innerHTML = orig; btn.removeAttribute('aria-busy');
+    const msg = (err && err.message) || pickI18n(currentLang, 'contact.errorAlert') || 'Send failed';
+    if (errBox) {
+      const errLbl = pickI18n(currentLang, 'contact.errorLabel') || 'Ошибка';
+      errBox.innerHTML = '<strong>' + errLbl + ':</strong> ' + msg.replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+      errBox.classList.add('show');
+    } else {
+      alert(msg);
+    }
   }
 });
 
@@ -1954,13 +2051,17 @@ window.__formLoaded = Date.now();
 })();
 </script>
 
-<!-- Vercel Web Analytics через ESM — версия залочена для защиты от supply-chain атак.
-     При обновлении @vercel/analytics нужно вручную сменить версию здесь. -->
+<!-- Vercel Web Analytics + Speed Insights через ESM — версии залочены от supply-chain.
+     При обновлении нужно вручную сменить версию здесь. -->
 <script type="module">
   try {
     const { inject } = await import('https://esm.sh/@vercel/analytics@1.5.0');
     inject();
   } catch (e) { /* analytics not critical */ }
+  try {
+    const { injectSpeedInsights } = await import('https://esm.sh/@vercel/speed-insights@2.0.0');
+    injectSpeedInsights();
+  } catch (e) { /* speed insights not critical */ }
 </script>
 </body>
 </html>

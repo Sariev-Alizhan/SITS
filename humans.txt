@@ -1,0 +1,28 @@
+/* TEAM */
+
+  Founder & CEO:   Alizhan Sariyev (Сариев Алижан Сабитулы)
+  Contact:         raimzhan1907@gmail.com
+  LinkedIn:        https://www.linkedin.com/in/alizhan-sariyev-5a3804278/
+  Location:        Almaty, Kazakhstan
+
+/* COMPANY */
+
+  Legal name:      ТОО «SARIYEV IT SOLUTIONS»
+  BIN:             250440005104
+  Founded:         2025-04-04
+  Address:         041609, Алматинская обл., Талгарский р-н, с. Бесагаш, ул. Торғай, 32
+  Languages:       Russian · English · Kazakh
+
+/* SITE */
+
+  Last update:     2026-06-07
+  Standards:       HTML5, CSS3, ES2024
+  Components:      Self-hosted fonts, video, animations
+  Performance:     Lighthouse 95+ all categories (desktop)
+  Hosted on:       Vercel
+  Source maps:     none (build artefacts inline)
+
+/* SAY HI */
+
+  Instagram:       @sariyev.it.solutions
+  YouTube:         @sariyev.it.solutions

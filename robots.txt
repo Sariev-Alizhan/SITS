@@ -2,5 +2,30 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin.html
+Disallow: /api/
 
+# Поисковикам — карты сайта (страницы + изображения)
 Sitemap: https://sits-eta.vercel.app/sitemap.xml
+Sitemap: https://sits-eta.vercel.app/sitemap-images.xml
+
+# AI-краулеры: запрещаем сбор контента для тренировки моделей
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /

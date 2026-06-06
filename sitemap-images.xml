@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://sits-eta.vercel.app/</loc>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/brand/og-image.png</image:loc>
+      <image:title>SITS — Sariyev IT Solutions</image:title>
+      <image:caption>IT-студия полного цикла из Казахстана</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/brand/hero/hero-poster.jpg</image:loc>
+      <image:title>SITS hero — Послание Президента (фон)</image:title>
+      <image:caption>Кадр из фонового видео hero-секции</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/brand/founder-square.jpg</image:loc>
+      <image:title>Сариев Алижан Сабитулы — основатель SITS</image:title>
+      <image:caption>Founder &amp; CEO SITS, Alizhan Sariyev</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/portfolio/01_atelier57.webp</image:loc>
+      <image:title>Atelier57 — Студия интерьерного дизайна (Алматы)</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/portfolio/02_redpad.webp</image:loc>
+      <image:title>RedPad Games — Независимая игровая студия</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/portfolio/03_rfc.webp</image:loc>
+      <image:title>Red Flag Community — Streetwear E-commerce (Астана)</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/portfolio/04_tengri-yurt.webp</image:loc>
+      <image:title>Tengri Yurt — Продажа казахских юрт по миру</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/portfolio/05_horecom.webp</image:loc>
+      <image:title>Horecom — B2B-платформа для HoReCa</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/portfolio/06_boilergen.webp</image:loc>
+      <image:title>BoilerGen — Open-source AI-тулкит для игр</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/portfolio/07_freelance-hub.webp</image:loc>
+      <image:title>FreelanceHub — Платформа фриланса без комиссий</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/portfolio/08_interagent.webp</image:loc>
+      <image:title>Interagent — B2B-маркетплейс</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/portfolio/09_citytorg.webp</image:loc>
+      <image:title>Citytorg — Каталог акций и магазинов (Усть-Каменогорск)</image:title>
+    </image:image>
+  </url>
+</urlset>

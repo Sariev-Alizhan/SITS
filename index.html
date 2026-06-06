@@ -162,6 +162,9 @@
 <!-- Preconnect к CDN, откуда подгружается Vercel Analytics модуль (ESM) -->
 <link rel="preconnect" href="https://esm.sh" crossorigin />
 
+<!-- Preload hero-poster — LCP-кандидат, грузим как можно раньше -->
+<link rel="preload" as="image" href="/brand/hero/hero-poster.avif" type="image/avif" fetchpriority="high" />
+
 <!-- Self-hosted fonts — woff2 в /fonts/, грузятся напрямую без обращения к Google. -->
 <link rel="preload" href="/fonts/unbounded-600-latin.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/fonts/unbounded-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
@@ -899,6 +902,19 @@ form.contact-form{border:1px solid var(--line);background:var(--surface);border-
 .field textarea{resize:vertical;min-height:118px}
 .field input:focus,.field textarea:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px var(--red-soft)}
 
+/* ============ SCROLL PROGRESS ============ */
+/* Тонкая полоска прогресса сверху страницы — показывает % прокрутки */
+.scroll-progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;
+  background:transparent;pointer-events:none}
+.scroll-progress::before{content:"";display:block;height:100%;
+  background:linear-gradient(90deg, var(--red), color-mix(in srgb, var(--red) 60%, var(--text)));
+  transform-origin:left;transform:scaleX(var(--scroll, 0));
+  transition:transform .12s linear;
+  box-shadow:0 0 12px color-mix(in srgb, var(--red) 60%, transparent)}
+@media (prefers-reduced-motion: reduce){
+  .scroll-progress{display:none}
+}
+
 /* ============ A11Y ============ */
 /* Skip-to-content link — невидим, появляется при focus с клавиатуры (WCAG 2.4.1) */
 .skip-link{position:fixed;top:12px;left:12px;z-index:100;
@@ -1080,6 +1096,9 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 
 <!-- Skip link для клавиатурной навигации (WCAG 2.4.1) -->
 <a href="#main" class="skip-link" data-i18n="a11y.skipToContent">Перейти к содержимому</a>
+
+<!-- Scroll progress bar — обновляется через rAF при прокрутке -->
+<div class="scroll-progress" aria-hidden="true"></div>
 
 <div class="fx-bg" aria-hidden="true">
   <div class="fx-aurora a1"></div>
@@ -1937,6 +1956,26 @@ form.addEventListener('submit', async e => {
 document.getElementById('year').textContent = new Date().getFullYear();
 // time-trap: фиксируем момент готовности формы для анти-бот проверки
 window.__formLoaded = Date.now();
+
+/* ============ SCROLL PROGRESS ============ */
+/* Обновляет CSS-переменную --scroll = scrollY / (документ - viewport).
+   Через rAF — не мешает основному потоку, реагирует мгновенно. */
+(function(){
+  const bar = document.querySelector('.scroll-progress');
+  if (!bar) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let ticking = false;
+  const update = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+    bar.style.setProperty('--scroll', ratio.toString());
+    ticking = false;
+  };
+  addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
+})();
 
 /* ============ HERO VIDEO ============ */
 /* - 720p на узких экранах / 1080p на десктопе

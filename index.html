@@ -44,6 +44,35 @@
 <meta name="twitter:description" content="IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент." />
 <meta name="twitter:image" content="brand/og-image.png" />
 <meta name="theme-color" content="#0c0a0b" />
+
+<!-- Schema.org Organization (юр. данные) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "SITS — Sariyev IT Solutions",
+  "legalName": "ТОО «SARIYEV IT SOLUTIONS»",
+  "alternateName": "Sariyev IT Solutions",
+  "identifier": [{ "@type": "PropertyValue", "propertyID": "BIN", "value": "250440005104" }],
+  "foundingDate": "2025-04-04",
+  "url": "https://sits-eta.vercel.app/",
+  "logo": "https://sits-eta.vercel.app/brand/favicon.png",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "ул. Торғай, 32",
+    "addressLocality": "село Бесагаш",
+    "addressRegion": "Алматинская область, Талгарский район",
+    "postalCode": "041609",
+    "addressCountry": "KZ"
+  },
+  "sameAs": [
+    "https://www.instagram.com/sariyev.it.solutions/",
+    "https://www.youtube.com/@sariyev.it.solutions",
+    "https://www.linkedin.com/in/alizhan-sariyev-5a3804278/"
+  ]
+}
+</script>
+
 <!-- Preconnect к CDN, откуда подгружается Vercel Analytics модуль (ESM) -->
 <link rel="preconnect" href="https://esm.sh" crossorigin />
 
@@ -542,14 +571,87 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
 .alink:hover svg{transform:translate(2px,-2px)}
 
 /* ============ HERO ============ */
-.hero{padding:calc(var(--nav-h) + 56px) 0 72px;position:relative}
-.hero .wrap{min-width:0;width:100%}
+.hero{padding:calc(var(--nav-h) + 56px) 0 72px;position:relative;overflow:hidden;isolation:isolate}
+.hero .wrap{min-width:0;width:100%;position:relative;z-index:2}
+
+/* Hero background video — under text, over global fx-bg */
+.hero-video{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  background:#0a0809}
+[data-theme="light"] .hero-video{background:#1a1416}
+/* Постер показываем только если видео отключено (Save-Data / reduced-motion) */
+.hero-video.no-video{background:#0a0809 url('/brand/hero/hero-poster.jpg') 68% center/cover no-repeat}
+.hero-video-el{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:68% center;display:block;opacity:.88;
+  filter:saturate(.92) contrast(1.04);transform:translateZ(0)}
+/* Theme-aware veil: плотная вуаль слева под текстом, чистая справа — где лицо */
+.hero-video::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(100deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 88%, transparent) 28%,
+      color-mix(in srgb, var(--bg) 50%, transparent) 52%,
+      color-mix(in srgb, var(--bg) 18%, transparent) 75%,
+      transparent 100%)}
+/* Bottom fade — без перекрытия лица в верхней половине */
+.hero-video::after{content:"";position:absolute;left:0;right:0;bottom:0;height:38%;z-index:1;pointer-events:none;
+  background:linear-gradient(to top, var(--bg) 0%, color-mix(in srgb, var(--bg) 55%, transparent) 45%, transparent 100%)}
+
+/* Light theme: чуть осветляем + чуть смещаем баланс вуали */
+[data-theme="light"] .hero-video-el{opacity:.9;filter:saturate(.95) contrast(.98) brightness(1.06)}
+[data-theme="light"] .hero-video::before{
+  background:
+    linear-gradient(100deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 92%, transparent) 28%,
+      color-mix(in srgb, var(--bg) 62%, transparent) 50%,
+      color-mix(in srgb, var(--bg) 25%, transparent) 72%,
+      transparent 100%)}
+[data-theme="light"] .hero-video::after{
+  background:linear-gradient(to top,
+    var(--bg) 0%,
+    color-mix(in srgb, var(--bg) 72%, transparent) 45%,
+    transparent 100%)}
+
+/* На узких экранах кадрируем чуть ближе к центру, чтобы лицо не уехало за край */
+@media (max-width: 760px){
+  .hero-video-el{object-position:60% center}
+}
+
+/* Mute / unmute toggle */
+.hero-mute{position:absolute;z-index:3;
+  right:max(22px, calc((100vw - 1200px)/2 + 22px));bottom:38px;
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);
+  background:color-mix(in srgb, var(--bg) 55%, transparent);
+  backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);
+  color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:.3s var(--ease);opacity:0;animation:fade 1s var(--ease) .9s forwards}
+.hero-mute:hover{border-color:var(--text);background:color-mix(in srgb, var(--bg) 78%, transparent);transform:translateY(-1px)}
+.hero-mute svg{width:18px;height:18px;display:block}
+.hero-mute .ic-sound{display:none}
+.hero-mute[aria-pressed="false"] .ic-muted{display:none}
+.hero-mute[aria-pressed="false"] .ic-sound{display:block}
+
+/* Hide video for users who opt out of motion — fallback на постер */
+@media (prefers-reduced-motion: reduce){
+  .hero-video-el{display:none}
+  .hero-mute{display:none}
+  .hero-video{background:#0a0809 url('/brand/hero/hero-poster.jpg') 68% center/cover no-repeat}
+}
+
 .kicker{display:flex;align-items:center;gap:12px;font-size:12.5px;font-weight:600;letter-spacing:.16em;
   text-transform:uppercase;color:var(--muted);margin-bottom:32px}
 .kicker .ln{width:38px;height:1px;background:var(--line-2)}
 .hero-grid{display:grid;grid-template-columns:1fr;gap:0}
 h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;letter-spacing:-.03em;
-  font-size:clamp(2.1rem,5.4vw,76px);max-width:16ch;hyphens:none}
+  font-size:clamp(2rem,4.6vw,62px);max-width:13ch;hyphens:none;
+  text-shadow:0 2px 30px color-mix(in srgb, var(--bg) 70%, transparent),
+              0 1px 2px color-mix(in srgb, var(--bg) 85%, transparent)}
+/* Длинные слова в KZ требуют больше места — даём чуть шире и чуть мельче шрифт */
+:root[data-lang="kk"] h1.hero-title{font-size:clamp(1.8rem,4vw,52px);max-width:15ch}
+:root[data-lang="ru"] h1.hero-title{max-width:12ch}
+/* CTA-ссылки и подпись внутри hero-lower тоже над видео — лёгкое свечение для контраста */
+.hero-sub,.hero-actions{text-shadow:0 1px 12px color-mix(in srgb, var(--bg) 70%, transparent)}
+.hero-meta .mv{text-shadow:0 2px 16px color-mix(in srgb, var(--bg) 65%, transparent)}
 .hero-title .ln-mask{display:block;overflow:hidden;padding-bottom:.04em}
 .hero-title .rise{display:block;transform:translateY(108%);opacity:0;animation:rise 1s var(--ease) forwards}
 @keyframes rise{to{transform:translateY(0);opacity:1}}
@@ -730,6 +832,13 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 .foot-col h5{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:16px;font-weight:600}
 .foot-col a{display:block;color:var(--muted);font-size:14.5px;margin-bottom:11px;transition:color .25s}
 .foot-col a:hover{color:var(--text)}
+.foot-legal{display:flex;gap:22px 44px;flex-wrap:wrap;padding:28px 0;
+  border-top:1px solid var(--line);margin-bottom:24px}
+.foot-legal .lg-item{display:flex;flex-direction:column;gap:6px;min-width:0}
+.foot-legal .lg-address{flex:1 1 320px}
+.foot-legal .lg-lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.foot-legal .lg-val{color:var(--muted);font-size:14px;line-height:1.55;font-variant-numeric:tabular-nums}
+.foot-legal .lg-val.lg-entity{color:var(--text);font-weight:600;letter-spacing:.01em;font-variant-numeric:normal}
 .foot-bottom{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;padding-top:28px;border-top:1px solid var(--line);
   color:var(--faint);font-size:13px}
 .foot-bottom .founder b{color:var(--muted);font-weight:600}
@@ -754,10 +863,15 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 @media(max-width:600px){
   .wrap{padding:0 22px}
   .section{padding:88px 0}
-  .hero{padding-top:calc(var(--nav-h) + 56px)}
-  .hero-lower{flex-direction:column;align-items:flex-start;gap:28px}
-  .hero-meta{gap:24px 0}
+  .hero{padding-top:calc(var(--nav-h) + 36px);padding-bottom:48px}
+  .kicker{margin-bottom:22px}
+  .hero-mute{right:18px;bottom:22px;width:40px;height:40px}
+  .hero-mute svg{width:16px;height:16px}
+  .hero-lower{flex-direction:column;align-items:flex-start;gap:22px;margin-top:26px}
+  .hero-meta{gap:18px 0;margin-top:30px;padding-top:18px}
   .hero-meta .m{padding-right:24px;margin-right:24px}
+  .hero-meta .mv{font-size:clamp(22px,7vw,28px)}
+  .hero-meta .ml{font-size:12px;margin-top:6px}
   .bento{grid-template-columns:1fr}
   .s-sites,.s-mobile,.s-ai,.s-support{grid-column:auto}
   /* Portfolio: image on top, text below on solid surface — fully readable on touch */
@@ -774,6 +888,16 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .pf:hover img{transform:none}
   .form-row{grid-template-columns:1fr}
   .p-row{grid-template-columns:56px 1fr}
+}
+/* Очень узкие экраны (iPhone SE) — ещё компактнее */
+@media(max-width:400px){
+  .hero{padding-top:calc(var(--nav-h) + 28px);padding-bottom:36px}
+  h1.hero-title{font-size:clamp(1.85rem,9vw,34px)}
+  .hero-sub{font-size:15.5px}
+  .hero-meta{margin-top:24px}
+  .hero-meta .m{padding-right:18px;margin-right:18px}
+  .hero-meta .mv{font-size:24px}
+  .hero-mute{bottom:18px;right:14px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
@@ -839,6 +963,25 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 <main>
 <!-- ============ HERO ============ -->
 <section class="hero" id="hero">
+  <div class="hero-video" aria-hidden="true">
+    <video class="hero-video-el" id="heroVideo"
+           autoplay muted loop playsinline preload="metadata"
+           poster="brand/hero/hero-poster.jpg"
+           disableremoteplayback x-webkit-airplay="deny">
+      <source src="brand/hero/hero-720.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <button class="hero-mute" id="heroMute" type="button"
+          aria-pressed="true" data-i18n-aria-label="hero.muteLabel" aria-label="Включить или выключить звук">
+    <svg class="ic-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M11 5 6 9H3v6h3l5 4z"/>
+      <path d="m22 9-6 6M16 9l6 6"/>
+    </svg>
+    <svg class="ic-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M11 5 6 9H3v6h3l5 4z"/>
+      <path d="M16.5 8.5a5 5 0 0 1 0 7M19.5 5.5a9 9 0 0 1 0 13"/>
+    </svg>
+  </button>
   <div class="wrap">
     <div class="kicker"><span class="ln"></span><span data-i18n="hero.kicker">Sariyev IT Solutions — IT-студия полного цикла</span></div>
     <h1 class="hero-title">
@@ -1082,6 +1225,24 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         </div>
       </div>
     </div>
+    <div class="foot-legal" data-i18n-aria-label="legal.title" aria-label="Реквизиты компании">
+      <div class="lg-item">
+        <div class="lg-lbl" data-i18n="legal.entityLbl">Юридическое лицо</div>
+        <div class="lg-val lg-entity" data-i18n="legal.entityVal">ТОО «SARIYEV IT SOLUTIONS»</div>
+      </div>
+      <div class="lg-item">
+        <div class="lg-lbl" data-i18n="legal.binLbl">БИН</div>
+        <div class="lg-val">250440005104</div>
+      </div>
+      <div class="lg-item">
+        <div class="lg-lbl" data-i18n="legal.sinceLbl">На рынке с</div>
+        <div class="lg-val">04.04.2025</div>
+      </div>
+      <div class="lg-item lg-address">
+        <div class="lg-lbl" data-i18n="legal.addressLbl">Юридический адрес</div>
+        <div class="lg-val" data-i18n="legal.addressVal">041609, Алматинская область, Талгарский район, с. Бесагаш, ул. Торғай, 32</div>
+      </div>
+    </div>
     <div class="foot-bottom">
       <div>© <span id="year"></span> SITS — Sariyev IT Solutions</div>
       <div class="founder"><span data-i18n="footer.founder">Основатель —</span> <b>Сариев Алижан Сабитулы</b></div>
@@ -1105,6 +1266,7 @@ const I18N = {
       meta1V:'9 проектов', meta1L:'запущены в продакшен',
       meta2V:'6 направлений', meta2L:'от веба до игр и AI',
       meta3V:'24/7', meta3L:'поддержка продуктов',
+      muteLabel:'Включить или выключить звук',
     },
     services: {
       tag:'Услуги', h2:'Полный цикл разработки',
@@ -1179,6 +1341,14 @@ const I18N = {
       errorAlert:'Не удалось отправить. Попробуйте ещё раз или напишите нам в Instagram.',
     },
     footer: { tagline:'IT-студия полного цикла. Превращаем идеи в цифровые продукты.', navTitle:'Навигация', socTitle:'Соцсети', founder:'Основатель —' },
+    legal: {
+      title:'Реквизиты компании',
+      entityLbl:'Юридическое лицо', entityVal:'ТОО «SARIYEV IT SOLUTIONS»',
+      binLbl:'БИН',
+      sinceLbl:'На рынке с',
+      addressLbl:'Юридический адрес',
+      addressVal:'041609, Алматинская область, Талгарский район, с. Бесагаш, ул. Торғай, 32',
+    },
   },
 
   en: {
@@ -1194,6 +1364,7 @@ const I18N = {
       meta1V:'9 projects', meta1L:'live in production',
       meta2V:'6 disciplines', meta2L:'from web to games and AI',
       meta3V:'24/7', meta3L:'product support',
+      muteLabel:'Toggle sound',
     },
     services: {
       tag:'Services', h2:'Full development cycle',
@@ -1268,6 +1439,14 @@ const I18N = {
       errorAlert:'Couldn’t send. Please try again or message us on Instagram.',
     },
     footer: { tagline:'Full-cycle IT studio. Turning ideas into digital products.', navTitle:'Navigation', socTitle:'Social', founder:'Founder —' },
+    legal: {
+      title:'Legal information',
+      entityLbl:'Registered entity', entityVal:'LLP «SARIYEV IT SOLUTIONS»',
+      binLbl:'BIN',
+      sinceLbl:'Registered since',
+      addressLbl:'Registered address',
+      addressVal:'041609, Almaty Region, Talgar District, Besagash village, 32 Torgai St., Kazakhstan',
+    },
   },
 
   kk: {
@@ -1283,6 +1462,7 @@ const I18N = {
       meta1V:'9 жоба', meta1L:'өндіріске шықты',
       meta2V:'6 бағыт', meta2L:'веб, ойын, AI және басқа',
       meta3V:'24/7', meta3L:'өнімдерге қолдау',
+      muteLabel:'Дыбысты қосу немесе өшіру',
     },
     services: {
       tag:'Қызметтер', h2:'Толық даму циклі',
@@ -1357,6 +1537,14 @@ const I18N = {
       errorAlert:'Жіберу сәтсіз аяқталды. Қайталап көріңіз немесе Instagram арқылы жазыңыз.',
     },
     footer: { tagline:'Толық циклді IT-студия. Идеяларды цифрлық өнімдерге айналдырамыз.', navTitle:'Навигация', socTitle:'Әлеуметтік желілер', founder:'Негізін қалаушы —' },
+    legal: {
+      title:'Деректемелер',
+      entityLbl:'Заңды тұлға', entityVal:'«SARIYEV IT SOLUTIONS» ЖШС',
+      binLbl:'БСН',
+      sinceLbl:'Тіркелген',
+      addressLbl:'Заңды мекенжайы',
+      addressVal:'041609, Алматы облысы, Талғар ауданы, Бесағаш ауылы, Торғай көшесі, 32 үй',
+    },
   },
 };
 
@@ -1557,6 +1745,61 @@ form.addEventListener('submit', async e => {
 document.getElementById('year').textContent = new Date().getFullYear();
 // time-trap: фиксируем момент готовности формы для анти-бот проверки
 window.__formLoaded = Date.now();
+
+/* ============ HERO VIDEO ============ */
+/* - 720p на узких экранах / 1080p на десктопе
+   - уважаем prefers-reduced-motion и Save-Data
+   - mute/unmute с persist в localStorage
+   - playsinline для iOS, fallback на постер если autoplay заблокирован */
+(function(){
+  const v = document.getElementById('heroVideo');
+  const btn = document.getElementById('heroMute');
+  if (!v) return;
+
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const saveData = (navigator.connection && navigator.connection.saveData) === true;
+
+  if (reduce || saveData) {
+    // Видео не грузим, переключаем .hero-video в режим постера (см. CSS .no-video)
+    const parent = v.closest('.hero-video');
+    if (parent) parent.classList.add('no-video');
+    v.removeAttribute('autoplay');
+    v.preload = 'none';
+    v.remove();
+    if (btn) btn.remove();
+    return;
+  }
+
+  // Выбираем источник по ширине viewport
+  const desktop = matchMedia('(min-width: 1024px)').matches;
+  v.src = desktop ? 'brand/hero/hero-1080.mp4' : 'brand/hero/hero-720.mp4';
+
+  // Попытка автозапуска (на всякий случай — autoplay+muted и так должны сработать)
+  const tryPlay = () => v.play().catch(() => {});
+  v.addEventListener('loadeddata', tryPlay, { once: true });
+  tryPlay();
+
+  if (!btn) return;
+
+  // Восстанавливаем предпочтение пользователя
+  let unmutedPref = false;
+  try { unmutedPref = localStorage.getItem('sits-hero-sound') === '1'; } catch (e) {}
+
+  // Если пользователь раньше включал звук — пробуем включить сразу.
+  // Может не сработать без жеста (политика autoplay) — тогда оставим muted.
+  if (unmutedPref) {
+    v.muted = false;
+    v.play().then(() => btn.setAttribute('aria-pressed', 'false'))
+            .catch(() => { v.muted = true; btn.setAttribute('aria-pressed', 'true'); });
+  }
+
+  btn.addEventListener('click', () => {
+    v.muted = !v.muted;
+    btn.setAttribute('aria-pressed', v.muted ? 'true' : 'false');
+    try { localStorage.setItem('sits-hero-sound', v.muted ? '0' : '1'); } catch (e) {}
+    if (!v.muted && v.paused) v.play().catch(() => {});
+  });
+})();
 
 /* ============ INTERACTIVE FX ============ */
 /* Курсор-прожектор + magnetic + 3D-наклон портфолио.

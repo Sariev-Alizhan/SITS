@@ -13,3 +13,6 @@ _archive/
 # Claude Design source bundle (kept locally as reference, not for deploy)
 SITS-2/
 SITS-2.zip
+
+# Hero video source (heavy HEVC .MOV — web-оптимизированные варианты лежат в brand/hero/)
+Послание Президента/

@@ -612,28 +612,9 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
     color-mix(in srgb, var(--bg) 72%, transparent) 45%,
     transparent 100%)}
 
-/* На мобильных — приближаем кадр на лицо и сдвигаем вниз, в зону между заголовком и meta */
+/* На мобильных — сдвигаем кадр правее, чтобы лицо стояло справа от заголовка */
 @media (max-width: 760px){
-  .hero-video-el{object-position:center center;opacity:.96;
-    transform:scale(1.55) translateY(12%);transform-origin:center 30%}
-  /* Вертикальная вуаль: плотно сверху (под заголовком) и снизу (под meta), прозрачно в зоне лица */
-  .hero-video::before{
-    background:
-      linear-gradient(180deg,
-        var(--bg) 0%,
-        color-mix(in srgb, var(--bg) 72%, transparent) 20%,
-        color-mix(in srgb, var(--bg) 12%, transparent) 45%,
-        color-mix(in srgb, var(--bg) 40%, transparent) 70%,
-        var(--bg) 100%)}
-  .hero-video::after{display:none}
-  [data-theme="light"] .hero-video::before{
-    background:
-      linear-gradient(180deg,
-        var(--bg) 0%,
-        color-mix(in srgb, var(--bg) 78%, transparent) 20%,
-        color-mix(in srgb, var(--bg) 28%, transparent) 45%,
-        color-mix(in srgb, var(--bg) 55%, transparent) 70%,
-        var(--bg) 100%)}
+  .hero-video-el{object-position:45% center}
 }
 
 /* Mute / unmute toggle */

@@ -1,25 +1,29 @@
- name: Lighthouse CI                                             
-
-  on:
-    pull_request:
-      branches: [main]                                                                                                                                                                                         
-    push:
-      branches: [main]                                                                                                                                                                                         
-    workflow_dispatch:                                            
-
-  jobs:
+name: Lighthouse CI                                                                                                                                                                                       
+   
+  on:                                                                                                                                                                                                          
+    pull_request:                                                                                                                                                                                              
+      branches: [main]
+    push:                                                                                                                                                                                                      
+      branches: [main]                                            
+    workflow_dispatch:
+                      
+  jobs:               
     lighthouse:
       runs-on: ubuntu-latest
-      steps:                                                                                                                                                                                                   
+      steps:   
         - uses: actions/checkout@v4
-        - uses: actions/setup-node@v4                                                                                                                                                                          
-          with:                                                   
-            node-version: '20'
-        - name: Build pre-rendered HTML
-          run: node scripts/build-i18n.mjs                                                                                                                                                                     
-        - name: Install Lighthouse CI
+                                                                                                                                                                                                               
+        - uses: actions/setup-node@v4
+          with:                                                                                                                                                                                                
+            node-version: '20'                                                                                                                                                                                 
+               
+        - name: Build pre-rendered HTML                                                                                                                                                                        
+          run: node scripts/build-i18n.mjs                        
+                                       
+        - name: Install Lighthouse CI     
           run: npm install -g @lhci/cli@0.14.x                                                                                                                                                                 
-        - name: Run Lighthouse CI                                 
-          run: lhci autorun
-          env:                                                                                                                                                                                                 
+                                     
+        - name: Run Lighthouse CI                                                                                                                                                                              
+          run: lhci autorun                                                                                                                                                                                    
+          env:                   
             LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

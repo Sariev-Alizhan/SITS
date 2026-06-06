@@ -50,6 +50,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": "https://sits-eta.vercel.app/#organization",
   "name": "SITS — Sariyev IT Solutions",
   "legalName": "ТОО «SARIYEV IT SOLUTIONS»",
   "alternateName": "Sariyev IT Solutions",
@@ -65,10 +66,54 @@
     "postalCode": "041609",
     "addressCountry": "KZ"
   },
+  "founder": {
+    "@type": "Person",
+    "@id": "https://sits-eta.vercel.app/#founder",
+    "name": "Alizhan Sariyev",
+    "alternateName": "Сариев Алижан Сабитулы",
+    "jobTitle": "Founder & CEO",
+    "url": "https://www.linkedin.com/in/alizhan-sariyev-5a3804278/",
+    "image": "https://sits-eta.vercel.app/brand/founder-square.jpg",
+    "sameAs": ["https://www.linkedin.com/in/alizhan-sariyev-5a3804278/"]
+  },
   "sameAs": [
     "https://www.instagram.com/sariyev.it.solutions/",
     "https://www.youtube.com/@sariyev.it.solutions",
     "https://www.linkedin.com/in/alizhan-sariyev-5a3804278/"
+  ]
+}
+</script>
+
+<!-- Schema.org WebSite + SearchAction (для Sitelinks Searchbox) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "SITS — Sariyev IT Solutions",
+  "url": "https://sits-eta.vercel.app/",
+  "inLanguage": ["ru", "en", "kk"],
+  "publisher": { "@id": "https://sits-eta.vercel.app/#organization" }
+}
+</script>
+
+<!-- Schema.org ItemList — портфолио (CreativeWork × 9) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "SITS Portfolio",
+  "itemListOrder": "https://schema.org/ItemListOrderAscending",
+  "numberOfItems": 9,
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "item": { "@type": "WebSite", "name": "Atelier57", "url": "https://www.atelier57.kz", "description": "Студия интерьерного дизайна и бутик (Алматы)" } },
+    { "@type": "ListItem", "position": 2, "item": { "@type": "WebSite", "name": "RedPad Games", "url": "https://redpad-website.vercel.app", "description": "Сайт независимой игровой студии" } },
+    { "@type": "ListItem", "position": 3, "item": { "@type": "WebSite", "name": "Red Flag Community", "url": "http://redflag.kz", "description": "E-commerce streetwear-бренда (Астана)" } },
+    { "@type": "ListItem", "position": 4, "item": { "@type": "WebSite", "name": "Tengri Yurt", "url": "https://www.tengri-yurt.kz/en", "description": "Продажа казахских юрт с доставкой по миру" } },
+    { "@type": "ListItem", "position": 5, "item": { "@type": "WebSite", "name": "Horecom", "url": "https://horecom-platform.vercel.app/ru", "description": "B2B-платформа для HoReCa" } },
+    { "@type": "ListItem", "position": 6, "item": { "@type": "WebSite", "name": "BoilerGen / Games AI", "url": "https://boilergen-eight.vercel.app/landing.html", "description": "Open-source AI-тулкит для разработки игр" } },
+    { "@type": "ListItem", "position": 7, "item": { "@type": "WebSite", "name": "FreelanceHub", "url": "https://freelance-hub.kz", "description": "Платформа фриланса без комиссий" } },
+    { "@type": "ListItem", "position": 8, "item": { "@type": "WebSite", "name": "Interagent", "url": "https://www.interagent.kz", "description": "B2B-маркетплейс для поставщиков и магазинов" } },
+    { "@type": "ListItem", "position": 9, "item": { "@type": "WebSite", "name": "Citytorg", "url": "https://www.citytorg.kz", "description": "Каталог акций и магазинов (Усть-Каменогорск)" } }
   ]
 }
 </script>
@@ -810,6 +855,26 @@ form.contact-form{border:1px solid var(--line);background:var(--surface);border-
   padding:14px 16px;color:var(--text);font-family:var(--font-body);font-size:15.5px;transition:.25s var(--ease)}
 .field textarea{resize:vertical;min-height:118px}
 .field input:focus,.field textarea:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px var(--red-soft)}
+
+/* ============ A11Y ============ */
+/* Skip-to-content link — невидим, появляется при focus с клавиатуры (WCAG 2.4.1) */
+.skip-link{position:fixed;top:12px;left:12px;z-index:100;
+  background:var(--text);color:var(--bg);
+  padding:12px 22px;border-radius:var(--r-sm);
+  font-weight:600;font-size:14.5px;letter-spacing:.01em;
+  text-decoration:none;transform:translateY(-200%);
+  transition:transform .2s var(--ease);
+  box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.skip-link:focus-visible,.skip-link:focus{transform:translateY(0);outline:2px solid var(--red);outline-offset:2px}
+
+/* Focus-visible — единый стиль для всех интерактивных элементов */
+:where(a,button,input,textarea,select,[tabindex]):focus-visible{
+  outline:2px solid var(--red);outline-offset:3px;border-radius:4px}
+.btn:focus-visible,.icon-btn:focus-visible,.lang-switch button:focus-visible,
+.alink:focus-visible,.hero-mute:focus-visible{
+  outline:2px solid var(--red);outline-offset:3px}
+/* Поля формы — кастомный focus уже есть выше, не дублируем */
+.field input:focus-visible,.field textarea:focus-visible{outline:none}
 .field input::placeholder,.field textarea::placeholder{color:var(--faint)}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 form .btn-primary{width:100%;justify-content:center;margin-top:6px}
@@ -928,6 +993,9 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 </head>
 <body>
 
+<!-- Skip link для клавиатурной навигации (WCAG 2.4.1) -->
+<a href="#main" class="skip-link" data-i18n="a11y.skipToContent">Перейти к содержимому</a>
+
 <div class="fx-bg" aria-hidden="true">
   <div class="fx-aurora a1"></div>
   <div class="fx-aurora a2"></div>
@@ -981,7 +1049,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   </div>
 </div>
 
-<main>
+<main id="main" tabindex="-1">
 <!-- ============ HERO ============ -->
 <section class="hero" id="hero">
   <div class="hero-video" aria-hidden="true">
@@ -1278,6 +1346,7 @@ const I18N = {
   ru: {
     _meta: { title: 'SITS — IT-студия полного цикла', ogTitle: 'SITS — Превращаем идеи в цифровые продукты', description: 'SITS — Sariyev IT Solutions. IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка.', locale: 'ru_RU' },
     nav: { services:'Услуги', process:'Как работаем', portfolio:'Портфолио', about:'О нас', contact:'Контакты', cta:'Обсудить проект', menu:'Меню', themeToggle:'Сменить тему' },
+    a11y: { skipToContent:'Перейти к содержимому' },
     hero: {
       kicker: 'Sariyev IT Solutions — IT-студия полного цикла',
       titleA: 'Превращаем', titleB: 'идеи в', titleC: 'продукты',
@@ -1376,6 +1445,7 @@ const I18N = {
   en: {
     _meta: { title: 'SITS — Full-Cycle IT Studio', ogTitle: 'SITS — Turning ideas into digital products', description: 'SITS — Sariyev IT Solutions. A full-cycle IT studio: websites, mobile apps, games, business automation, AI content and IT support.', locale: 'en_US' },
     nav: { services:'Services', process:'Process', portfolio:'Work', about:'About', contact:'Contact', cta:'Start a project', menu:'Menu', themeToggle:'Toggle theme' },
+    a11y: { skipToContent:'Skip to content' },
     hero: {
       kicker: 'Sariyev IT Solutions — full-cycle IT studio',
       titleA: 'Turning', titleB: 'ideas into', titleC: 'products',
@@ -1474,6 +1544,7 @@ const I18N = {
   kk: {
     _meta: { title: 'SITS — Толық циклді IT-студия', ogTitle: 'SITS — Идеяларды цифрлық өнімдерге айналдырамыз', description: 'SITS — Sariyev IT Solutions. Толық циклді IT-студия: сайттар, мобильді қосымшалар, ойындар, бизнес-автоматтандыру, AI-контент және IT-қолдау.', locale: 'kk_KZ' },
     nav: { services:'Қызметтер', process:'Жұмыс тәртібі', portfolio:'Жұмыстар', about:'Біз туралы', contact:'Байланыс', cta:'Жобаны талқылау', menu:'Мәзір', themeToggle:'Тақырыпты ауыстыру' },
+    a11y: { skipToContent:'Мазмұнға өту' },
     hero: {
       kicker: 'Sariyev IT Solutions — толық циклді IT-студия',
       titleA: 'Идеяларды', titleB: 'цифрлық өнімдерге', titleC: 'айналдырамыз',

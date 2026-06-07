@@ -47,7 +47,9 @@
 <meta name="twitter:title" content="SITS — Превращаем идеи в цифровые продукты" />
 <meta name="twitter:description" content="IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент." />
 <meta name="twitter:image" content="brand/og-image.png" />
-<meta name="theme-color" content="#0c0a0b" />
+<meta name="theme-color" content="#0c0a0b" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f6f3f3" media="(prefers-color-scheme: light)" />
+<meta name="color-scheme" content="dark light" />
 
 <!-- Schema.org Organization (юр. данные) -->
 <script type="application/ld+json">
@@ -772,6 +774,10 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .reveal.in{opacity:1;transform:none}
+/* Stagger для bento и портфолио — каждая следующая карточка появляется чуть позже */
+.bento .reveal{transition-delay:calc(var(--reveal-i, 0) * 80ms)}
+.pf-bento .reveal{transition-delay:calc(var(--reveal-i, 0) * 60ms)}
+.p-row.reveal{transition-delay:calc(var(--reveal-i, 0) * 100ms)}
 
 /* ============ SERVICES BENTO ============ */
 .bento{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;grid-auto-rows:minmax(176px,auto)}
@@ -1190,8 +1196,8 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       </div>
     </div>
     <div class="hero-meta">
-      <div class="m"><div class="mv" data-i18n="hero.meta1V">9 проектов</div><div class="ml" data-i18n="hero.meta1L">запущены в продакшен</div></div>
-      <div class="m"><div class="mv" data-i18n="hero.meta2V">6 направлений</div><div class="ml" data-i18n="hero.meta2L">от веба до игр и AI</div></div>
+      <div class="m"><div class="mv" data-count="9" data-i18n="hero.meta1V">9 проектов</div><div class="ml" data-i18n="hero.meta1L">запущены в продакшен</div></div>
+      <div class="m"><div class="mv" data-count="6" data-i18n="hero.meta2V">6 направлений</div><div class="ml" data-i18n="hero.meta2L">от веба до игр и AI</div></div>
       <div class="m"><div class="mv" data-i18n="hero.meta3V">24/7</div><div class="ml" data-i18n="hero.meta3L">поддержка продуктов</div></div>
     </div>
   </div>
@@ -1312,7 +1318,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   <div class="wrap">
     <div class="about-grid">
       <div class="founder-photo reveal">
-        <img src="brand/founder-square.jpg" alt="Сариев Алижан Сабитулы — основатель SITS" loading="lazy" />
+        <img src="brand/founder-square.jpg" alt="Сариев Алижан Сабитулы — основатель SITS" loading="lazy" decoding="async" width="800" height="1000" />
         <div class="cap">
           <div><div class="nm">Сариев Алижан Сабитулы</div><div class="rl">Sariyev Alizhan Sabituly</div></div>
           <div class="badge" data-i18n="about.role">Founder</div>
@@ -1324,9 +1330,9 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         <p><span data-i18n="about.p1">SITS — Sariyev IT Solutions — это IT-студия полного цикла. Мы берём проект от идеи и доводим до запуска: </span><span class="em" data-i18n="about.p1Em">сайты и платформы, мобильные приложения, игры на Unity и Unreal, бизнес-автоматизация, AI-контент и поддержка.</span></p>
         <p data-i18n="about.p2">За каждым проектом — внимание к деталям, честные сроки и продукт, которым удобно пользоваться. Вы работаете напрямую с теми, кто его делает.</p>
         <div class="about-stats">
-          <div class="a"><div class="num" data-i18n="about.a1V">9</div><div class="lbl" data-i18n="about.a1L">проектов в продакшене</div></div>
-          <div class="a"><div class="num" data-i18n="about.a2V">6</div><div class="lbl" data-i18n="about.a2L">направлений</div></div>
-          <div class="a"><div class="num" data-i18n="about.a3V">100%</div><div class="lbl" data-i18n="about.a3L">проектов под ключ</div></div>
+          <div class="a"><div class="num" data-count="9" data-i18n="about.a1V">9</div><div class="lbl" data-i18n="about.a1L">проектов в продакшене</div></div>
+          <div class="a"><div class="num" data-count="6" data-i18n="about.a2V">6</div><div class="lbl" data-i18n="about.a2L">направлений</div></div>
+          <div class="a"><div class="num" data-count="100" data-count-suffix="%" data-i18n="about.a3V">100%</div><div class="lbl" data-i18n="about.a3L">проектов под ключ</div></div>
         </div>
       </div>
     </div>
@@ -1835,6 +1841,15 @@ const io = new IntersectionObserver(es => {
 }, { threshold:.12, rootMargin:'0px 0px -7% 0px' });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+/* Назначаем индексы для stagger-анимации — внутри bento, pf-bento, process-rows */
+['.bento', '.pf-bento', '#process'].forEach(sel => {
+  const parent = document.querySelector(sel);
+  if (!parent) return;
+  parent.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.setProperty('--reveal-i', i.toString());
+  });
+});
+
 /* ============ APPLY LANG ============ */
 function applyLang(lang) {
   if (!I18N[lang]) lang = 'en';
@@ -1956,6 +1971,45 @@ form.addEventListener('submit', async e => {
 document.getElementById('year').textContent = new Date().getFullYear();
 // time-trap: фиксируем момент готовности формы для анти-бот проверки
 window.__formLoaded = Date.now();
+
+/* ============ ANIMATED COUNTERS ============ */
+/* Анимация: элементы с data-count считают от 0 до значения при входе в viewport.
+   Финальный текст берётся из textContent — сохраняет суффикс (например "9 проектов"). */
+(function(){
+  const targets = document.querySelectorAll('[data-count]');
+  if (!targets.length) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const animate = (el) => {
+    const target = parseInt(el.dataset.count, 10);
+    if (!Number.isFinite(target)) return;
+    const finalText = el.textContent.trim();
+    // Сохраняем исходное разделение (пробел/без него) — суффикс берём как всё кроме числа
+    const suffix = el.dataset.countSuffix != null
+      ? el.dataset.countSuffix
+      : finalText.replace(/^[\d,.]+/, '');
+    if (reduce) { el.textContent = finalText; return; }
+
+    const duration = Math.min(1400, 600 + target * 60);
+    const start = performance.now();
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / duration);
+      const v = Math.round(target * easeOut(t));
+      el.textContent = `${v}${suffix}`;
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = finalText;
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { animate(e.target); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.5 });
+  targets.forEach(el => io.observe(el));
+})();
 
 /* ============ SCROLL PROGRESS ============ */
 /* Обновляет CSS-переменную --scroll = scrollY / (документ - viewport).

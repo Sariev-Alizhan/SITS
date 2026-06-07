@@ -921,6 +921,47 @@ form.contact-form{border:1px solid var(--line);background:var(--surface);border-
   .scroll-progress{display:none}
 }
 
+/* ============ COMMAND PALETTE (⌘K / Ctrl+K) ============ */
+.cmdk-overlay{position:fixed;inset:0;z-index:80;background:color-mix(in srgb, var(--bg) 60%, transparent);
+  backdrop-filter:blur(10px) saturate(1.3);-webkit-backdrop-filter:blur(10px) saturate(1.3);
+  display:none;align-items:flex-start;justify-content:center;padding:14vh 20px 20px;
+  opacity:0;transition:opacity .18s var(--ease)}
+.cmdk-overlay.open{display:flex;opacity:1}
+.cmdk{width:100%;max-width:560px;background:var(--surface);border:1px solid var(--line-2);
+  border-radius:var(--r-lg);box-shadow:0 24px 80px rgba(0,0,0,.45),0 4px 14px rgba(0,0,0,.25);
+  overflow:hidden;transform:translateY(8px);transition:transform .22s var(--ease)}
+.cmdk-overlay.open .cmdk{transform:translateY(0)}
+.cmdk-header{display:flex;align-items:center;gap:12px;padding:14px 18px;
+  border-bottom:1px solid var(--line)}
+.cmdk-header svg{width:18px;height:18px;color:var(--faint);flex-shrink:0}
+.cmdk-input{flex:1;background:transparent;border:0;outline:0;color:var(--text);
+  font-family:var(--font-body);font-size:15.5px;letter-spacing:.01em;padding:4px 0}
+.cmdk-input::placeholder{color:var(--faint)}
+.cmdk-kbd{font-family:var(--font-body);font-size:11px;font-weight:600;color:var(--muted);
+  background:color-mix(in srgb, var(--text) 7%, transparent);padding:3px 7px;border-radius:4px;
+  border:1px solid var(--line);letter-spacing:.04em}
+.cmdk-list{max-height:380px;overflow-y:auto;padding:8px 0}
+.cmdk-item{display:flex;align-items:center;gap:14px;padding:10px 18px;cursor:pointer;
+  font-size:14.5px;color:var(--text);transition:background .15s,color .15s;
+  border-left:2px solid transparent}
+.cmdk-item:hover,.cmdk-item.active{background:color-mix(in srgb, var(--text) 5%, transparent);
+  border-left-color:var(--red)}
+.cmdk-item .cmdk-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;
+  justify-content:center;color:var(--muted);
+  background:color-mix(in srgb, var(--text) 6%, transparent);flex-shrink:0}
+.cmdk-item .cmdk-ico svg{width:15px;height:15px}
+.cmdk-item .cmdk-body{flex:1;min-width:0}
+.cmdk-item .cmdk-name{font-weight:500;line-height:1.2}
+.cmdk-item .cmdk-hint{font-size:12px;color:var(--faint);margin-top:2px}
+.cmdk-empty{padding:32px 18px;text-align:center;color:var(--faint);font-size:14px}
+.cmdk-footer{display:flex;align-items:center;gap:18px;padding:10px 18px;
+  border-top:1px solid var(--line);color:var(--faint);font-size:11.5px;letter-spacing:.02em}
+.cmdk-footer .sep{flex:1}
+@media (max-width: 600px){
+  .cmdk-overlay{padding:6vh 14px 14px;align-items:flex-start}
+  .cmdk-input{font-size:16px} /* iOS не зумит при 16+ */
+}
+
 /* ============ A11Y ============ */
 /* Skip-to-content link — невидим, появляется при focus с клавиатуры (WCAG 2.4.1) */
 .skip-link{position:fixed;top:12px;left:12px;z-index:100;
@@ -1105,6 +1146,27 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 
 <!-- Scroll progress bar — обновляется через rAF при прокрутке -->
 <div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- Command palette (⌘K / Ctrl+K) — быстрая навигация -->
+<div class="cmdk-overlay" id="cmdkOverlay" role="dialog" aria-modal="true" aria-labelledby="cmdkInput" hidden>
+  <div class="cmdk">
+    <label class="cmdk-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+      </svg>
+      <input class="cmdk-input" id="cmdkInput" type="text" autocomplete="off" spellcheck="false"
+             data-i18n-placeholder="cmdk.placeholder" placeholder="Найти раздел или действие…" aria-label="Search" />
+      <kbd class="cmdk-kbd">ESC</kbd>
+    </label>
+    <ul class="cmdk-list" id="cmdkList" role="listbox"></ul>
+    <div class="cmdk-footer">
+      <span><kbd class="cmdk-kbd">↑↓</kbd> <span data-i18n="cmdk.navigate">навигация</span></span>
+      <span><kbd class="cmdk-kbd">↵</kbd> <span data-i18n="cmdk.select">выбрать</span></span>
+      <span class="sep"></span>
+      <span data-i18n="cmdk.poweredBy">SITS</span>
+    </div>
+  </div>
+</div>
 
 <div class="fx-bg" aria-hidden="true">
   <div class="fx-aurora a1"></div>
@@ -1458,6 +1520,14 @@ const I18N = {
     _meta: { title: 'SITS — IT-студия полного цикла', ogTitle: 'SITS — Превращаем идеи в цифровые продукты', description: 'SITS — Sariyev IT Solutions. IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка.', locale: 'ru_RU' },
     nav: { services:'Услуги', process:'Как работаем', portfolio:'Портфолио', about:'О нас', contact:'Контакты', cta:'Обсудить проект', menu:'Меню', themeToggle:'Сменить тему' },
     a11y: { skipToContent:'Перейти к содержимому' },
+    cmdk: {
+      placeholder:'Найти раздел или действие…', empty:'Ничего не найдено',
+      navigate:'навигация', select:'выбрать',
+      hintServices:'Полный цикл разработки', hintProcess:'Как мы работаем',
+      hintPortfolio:'Избранные проекты', hintAbout:'О студии', hintContact:'Связаться',
+      langRu:'Переключить на русский', langEn:'Switch to English', langKk:'Қазақ тіліне өту',
+      toggleTheme:'Сменить тему', hintTheme:'Светлая / тёмная',
+    },
     hero: {
       kicker: 'Sariyev IT Solutions — IT-студия полного цикла',
       titleA: 'Превращаем', titleB: 'идеи в', titleC: 'продукты',
@@ -1558,6 +1628,14 @@ const I18N = {
     _meta: { title: 'SITS — Full-Cycle IT Studio', ogTitle: 'SITS — Turning ideas into digital products', description: 'SITS — Sariyev IT Solutions. A full-cycle IT studio: websites, mobile apps, games, business automation, AI content and IT support.', locale: 'en_US' },
     nav: { services:'Services', process:'Process', portfolio:'Work', about:'About', contact:'Contact', cta:'Start a project', menu:'Menu', themeToggle:'Toggle theme' },
     a11y: { skipToContent:'Skip to content' },
+    cmdk: {
+      placeholder:'Search a section or action…', empty:'Nothing found',
+      navigate:'navigate', select:'select',
+      hintServices:'Full-cycle services', hintProcess:'How we work',
+      hintPortfolio:'Featured projects', hintAbout:'About the studio', hintContact:'Get in touch',
+      langRu:'Switch to Russian', langEn:'Switch to English', langKk:'Switch to Kazakh',
+      toggleTheme:'Toggle theme', hintTheme:'Light / dark',
+    },
     hero: {
       kicker: 'Sariyev IT Solutions — full-cycle IT studio',
       titleA: 'Turning', titleB: 'ideas into', titleC: 'products',
@@ -1658,6 +1736,14 @@ const I18N = {
     _meta: { title: 'SITS — Толық циклді IT-студия', ogTitle: 'SITS — Идеяларды цифрлық өнімдерге айналдырамыз', description: 'SITS — Sariyev IT Solutions. Толық циклді IT-студия: сайттар, мобильді қосымшалар, ойындар, бизнес-автоматтандыру, AI-контент және IT-қолдау.', locale: 'kk_KZ' },
     nav: { services:'Қызметтер', process:'Жұмыс тәртібі', portfolio:'Жұмыстар', about:'Біз туралы', contact:'Байланыс', cta:'Жобаны талқылау', menu:'Мәзір', themeToggle:'Тақырыпты ауыстыру' },
     a11y: { skipToContent:'Мазмұнға өту' },
+    cmdk: {
+      placeholder:'Бөлім немесе әрекетті іздеу…', empty:'Ештеңе табылмады',
+      navigate:'навигация', select:'таңдау',
+      hintServices:'Толық даму циклі', hintProcess:'Біз қалай жұмыс істейміз',
+      hintPortfolio:'Таңдаулы жобалар', hintAbout:'Студия туралы', hintContact:'Байланысу',
+      langRu:'Орыс тіліне өту', langEn:'English', langKk:'Қазақ тілі',
+      toggleTheme:'Тақырыпты ауыстыру', hintTheme:'Ашық / қара',
+    },
     hero: {
       kicker: 'Sariyev IT Solutions — толық циклді IT-студия',
       titleA: 'Идеяларды', titleB: 'цифрлық өнімдерге', titleC: 'айналдырамыз',
@@ -1972,6 +2058,126 @@ document.getElementById('year').textContent = new Date().getFullYear();
 // time-trap: фиксируем момент готовности формы для анти-бот проверки
 window.__formLoaded = Date.now();
 
+/* ============ COMMAND PALETTE (⌘K / Ctrl+K) ============ */
+(function(){
+  const overlay = document.getElementById('cmdkOverlay');
+  const input = document.getElementById('cmdkInput');
+  const list = document.getElementById('cmdkList');
+  if (!overlay || !input || !list) return;
+
+  /* Команды — фразы локализуются через текущий язык */
+  const commands = () => {
+    const t = I18N[currentLang]?.cmdk || I18N.en.cmdk;
+    const nav = I18N[currentLang]?.nav || I18N.en.nav;
+    return [
+      { id:'services', name: nav.services,   hint: t.hintServices,  icon:'grid',    action:() => location.hash='#services' },
+      { id:'process',  name: nav.process,    hint: t.hintProcess,   icon:'flow',    action:() => location.hash='#process' },
+      { id:'portfolio',name: nav.portfolio,  hint: t.hintPortfolio, icon:'image',   action:() => location.hash='#portfolio' },
+      { id:'about',    name: nav.about,      hint: t.hintAbout,     icon:'user',    action:() => location.hash='#about' },
+      { id:'contact',  name: nav.contact,    hint: t.hintContact,   icon:'send',    action:() => location.hash='#contact' },
+      { id:'ru',       name: t.langRu,       hint: 'Русский',       icon:'globe',   action:() => switchLang('ru') },
+      { id:'en',       name: t.langEn,       hint: 'English',       icon:'globe',   action:() => switchLang('en') },
+      { id:'kk',       name: t.langKk,       hint: 'Қазақша',       icon:'globe',   action:() => switchLang('kk') },
+      { id:'theme',    name: t.toggleTheme,  hint: t.hintTheme,     icon:'moon',    action:() => themeToggle() },
+      { id:'instagram',name: 'Instagram',    hint: '@sariyev.it.solutions', icon:'ext', action:() => open('https://www.instagram.com/sariyev.it.solutions/') },
+      { id:'linkedin', name: 'LinkedIn',     hint: 'Alizhan Sariyev', icon:'ext',   action:() => open('https://www.linkedin.com/in/alizhan-sariyev-5a3804278/') },
+      { id:'email',    name: 'Email',        hint: 'raimzhan1907@gmail.com', icon:'send', action:() => location.href='mailto:raimzhan1907@gmail.com' },
+    ];
+  };
+
+  const ICONS = {
+    grid: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
+    flow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 4v6M5 14v6M19 4v6M19 14v6M5 10h14M5 14h14"/></svg>',
+    image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5L5 20"/></svg>',
+    user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>',
+    send: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>',
+    globe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>',
+    moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>',
+    ext:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M10 14 20 4M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6"/></svg>',
+  };
+
+  let activeIdx = 0;
+  let filtered = [];
+
+  function switchLang(lang){
+    const path = ({ru:'/', en:'/en', kk:'/kz'})[lang];
+    if (path && path !== location.pathname) location.assign(path);
+    else if (typeof applyLang === 'function') applyLang(lang);
+  }
+  function themeToggle(){ document.getElementById('themeToggle')?.click(); }
+
+  function render(filter = '') {
+    const f = filter.trim().toLowerCase();
+    filtered = commands().filter(c =>
+      !f || c.name.toLowerCase().includes(f) || (c.hint || '').toLowerCase().includes(f)
+    );
+    activeIdx = 0;
+    if (!filtered.length) {
+      const t = I18N[currentLang]?.cmdk || I18N.en.cmdk;
+      list.innerHTML = `<li class="cmdk-empty">${t.empty || 'Nothing found'}</li>`;
+      return;
+    }
+    list.innerHTML = filtered.map((c, i) => `
+      <li class="cmdk-item${i === 0 ? ' active' : ''}" data-i="${i}" role="option" aria-selected="${i === 0}">
+        <span class="cmdk-ico">${ICONS[c.icon] || ICONS.ext}</span>
+        <span class="cmdk-body">
+          <span class="cmdk-name">${esc(c.name)}</span>
+          <span class="cmdk-hint">${esc(c.hint || '')}</span>
+        </span>
+      </li>`).join('');
+  }
+  function esc(s){return String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]))}
+
+  function setActive(i){
+    activeIdx = (i + filtered.length) % filtered.length;
+    list.querySelectorAll('.cmdk-item').forEach((el, idx) => {
+      el.classList.toggle('active', idx === activeIdx);
+      el.setAttribute('aria-selected', idx === activeIdx ? 'true' : 'false');
+    });
+    list.children[activeIdx]?.scrollIntoView({ block:'nearest' });
+  }
+  function commit(i){
+    const c = filtered[i ?? activeIdx];
+    if (!c) return;
+    close();
+    setTimeout(() => c.action(), 50);
+  }
+  function open_(){
+    overlay.removeAttribute('hidden');
+    overlay.classList.add('open');
+    render('');
+    input.value = '';
+    setTimeout(() => input.focus(), 30);
+    document.body.style.overflow = 'hidden';
+  }
+  function close(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => overlay.setAttribute('hidden', ''), 200);
+  }
+
+  /* Bindings */
+  addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      overlay.classList.contains('open') ? close() : open_();
+      return;
+    }
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); setActive(activeIdx + 1); }
+    else if (e.key === 'ArrowUp')   { e.preventDefault(); setActive(activeIdx - 1); }
+    else if (e.key === 'Enter')     { e.preventDefault(); commit(); }
+  });
+  input.addEventListener('input', () => render(input.value));
+  list.addEventListener('click', (e) => {
+    const item = e.target.closest('.cmdk-item');
+    if (!item) return;
+    commit(Number(item.dataset.i));
+  });
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+})();
+
 /* ============ ANIMATED COUNTERS ============ */
 /* Анимация: элементы с data-count считают от 0 до значения при входе в viewport.
    Финальный текст берётся из textContent — сохраняет суффикс (например "9 проектов"). */
@@ -2157,6 +2363,16 @@ window.__formLoaded = Date.now();
     const { injectSpeedInsights } = await import('https://esm.sh/@vercel/speed-insights@2.0.0');
     injectSpeedInsights();
   } catch (e) { /* speed insights not critical */ }
+</script>
+
+<!-- Service Worker: офлайн-поддержка + cache static.
+     Регистрируем после load чтобы не конкурировать с критическим путём. -->
+<script>
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    });
+  }
 </script>
 </body>
 </html>

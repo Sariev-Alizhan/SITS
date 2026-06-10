@@ -838,9 +838,9 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
   margin-bottom:48px;flex-wrap:wrap}
 .partners-head .left{max-width:660px}
 .partners-head .desc{color:var(--muted);font-size:17px;line-height:1.55;max-width:440px}
-/* Карточки партнёров — фиксируем max-width 520px, чтобы одна карточка не растягивалась на весь экран */
-.partners-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 520px));
-  gap:28px;justify-content:start}
+/* Карточки партнёров: flex с центровкой — 1 карточка по центру, 2-3+ в ряд */
+.partners-grid{display:flex;flex-wrap:wrap;gap:28px;justify-content:center}
+.partner{flex:1 1 320px;max-width:580px}
 .partner{display:grid;grid-template-columns:160px 1fr;gap:22px;align-items:center;
   background:color-mix(in srgb, var(--surface) 55%, transparent);
   border:1px solid var(--line);border-radius:var(--r-xl);padding:22px;
@@ -1061,20 +1061,20 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 }
 @media(max-width:600px){
   .wrap{padding:0 22px}
-  .section{padding:88px 0}
+  .section{padding:64px 0}
+  .sec-head{margin-bottom:36px}
+  .partners-head{margin-bottom:28px}
   .hero{padding-top:calc(var(--nav-h) + 36px);padding-bottom:48px}
   .kicker{margin-bottom:22px}
   .hero-lower{flex-direction:column;align-items:flex-start;gap:22px;margin-top:26px}
-  /* Meta-row на мобилке — фиксированная 2-рядная сетка для всех языков (как в EN) */
-  .hero-meta{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-    grid-template-areas:"a a" "b c";
-    gap:20px 24px;margin-top:30px;padding-top:18px}
-  .hero-meta .m{padding:0;margin:0;border:none;min-width:0}
-  .hero-meta .m:nth-child(1){grid-area:a;padding-bottom:18px;border-bottom:1px solid var(--line)}
-  .hero-meta .m:nth-child(2){grid-area:b}
-  .hero-meta .m:nth-child(3){grid-area:c;padding-left:20px;border-left:1px solid var(--line)}
-  .hero-meta .mv{font-size:clamp(19px,5.4vw,24px)}
-  .hero-meta .ml{font-size:12px;margin-top:6px}
+  /* Meta-row на мобилке — каждый блок на своей строке, чтобы длинные подписи не ломали сетку */
+  .hero-meta{display:flex;flex-direction:column;gap:14px;margin-top:28px;padding-top:18px;
+    border-top:1px solid var(--line)}
+  .hero-meta .m{padding:0;margin:0;border:none;min-width:0;
+    display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline}
+  .hero-meta .m:not(:last-child){padding-bottom:14px;border-bottom:1px solid var(--line)}
+  .hero-meta .mv{font-size:clamp(20px,5.6vw,26px);white-space:nowrap}
+  .hero-meta .ml{font-size:12.5px;margin-top:0;line-height:1.4}
   .foot-legal{grid-template-columns:1fr;gap:20px;padding:24px 22px;margin:28px 0 22px}
   .foot-legal .lg-item{grid-column:1/-1}
   .bento{grid-template-columns:1fr}
@@ -1101,6 +1101,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .hero-sub{font-size:15.5px}
   .hero-meta{margin-top:24px}
   .hero-meta .m{padding-right:18px;margin-right:18px}
+  .hero-meta{gap:12px}
   .hero-meta .mv{font-size:20px}
 }
 @media(prefers-reduced-motion:reduce){

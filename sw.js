@@ -4,7 +4,7 @@
    Versioned cache name; old caches purged on activate.
    Bypass: ?nosw=1 query param tells SW to skip caching for that request. */
 
-const CACHE = 'sits-v6';
+const CACHE = 'sits-v7';
 
 /* Файлы, которые точно нужны для офлайн-первой загрузки */
 const PRECACHE = [
@@ -14,7 +14,6 @@ const PRECACHE = [
   '/manifest.webmanifest',
   '/brand/favicon.png',
   '/brand/apple-touch-icon.png',
-  '/brand/hero/hero-poster.avif',
 ];
 
 self.addEventListener('install', (event) => {

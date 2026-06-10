@@ -112,6 +112,27 @@
 }
 </script>
 
+<!-- Schema.org Person — Game Design партнёр -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://sits-eta.vercel.app/#partner-yelzhan",
+  "name": "Yelzhan Nurtileu",
+  "jobTitle": "Game Designer · Indie Developer",
+  "url": "https://yelzhanport.netlify.app",
+  "image": "https://sits-eta.vercel.app/brand/partner-yelzhan-square.jpg",
+  "affiliation": [
+    { "@type": "Organization", "name": "Katsumi Games", "url": "https://katsumigames.itch.io/" },
+    { "@type": "EducationalOrganization", "name": "University of the Arts London (UAL)" }
+  ],
+  "knowsAbout": ["Game Design", "Unity", "C#", "Digital Art", "UI/UX"],
+  "knowsLanguage": ["en", "kk", "ru"],
+  "email": "mailto:yelzhannurtleuov@gmail.com",
+  "worksFor": { "@id": "https://sits-eta.vercel.app/#organization" }
+}
+</script>
+
 <!-- Schema.org ItemList — портфолио (CreativeWork × 9) -->
 <script type="application/ld+json">
 {
@@ -893,6 +914,42 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .founder-photo .cap .nm{font-family:var(--font-display);font-weight:500;font-size:15px;letter-spacing:-.01em}
 .founder-photo .cap .rl{font-size:12.5px;color:var(--muted);margin-top:2px}
 .founder-photo .cap .badge{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+
+/* ============ PARTNERS ============ */
+.partners-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;
+  margin-bottom:48px;flex-wrap:wrap}
+.partners-head .left{max-width:660px}
+.partners-head .desc{color:var(--muted);font-size:17px;line-height:1.55;max-width:440px}
+.partners-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:28px}
+.partner{display:grid;grid-template-columns:160px 1fr;gap:22px;align-items:center;
+  background:color-mix(in srgb, var(--surface) 55%, transparent);
+  border:1px solid var(--line);border-radius:var(--r-xl);padding:22px;
+  transition:.3s var(--ease);text-decoration:none;color:inherit;position:relative;overflow:hidden}
+.partner:hover{border-color:var(--line-2);transform:translateY(-2px);
+  background:color-mix(in srgb, var(--surface) 75%, transparent)}
+.partner-photo{aspect-ratio:1/1;width:100%;border-radius:var(--r-md);overflow:hidden;
+  border:1px solid var(--line);background:var(--img-frame)}
+.partner-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.95) contrast(1.02);
+  transition:transform .5s var(--ease)}
+.partner:hover .partner-photo img{transform:scale(1.05)}
+.partner-body{min-width:0}
+.partner-badge{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--red);margin-bottom:8px}
+.partner-name{font-family:var(--font-display);font-weight:500;font-size:21px;letter-spacing:-.01em;
+  line-height:1.15;margin-bottom:4px}
+.partner-role{font-size:13.5px;color:var(--muted);margin-bottom:10px;font-weight:500}
+.partner-brief{font-size:13.5px;color:var(--muted);line-height:1.55;margin-bottom:14px}
+.partner-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.partner-tag{font-size:11px;color:var(--muted);padding:3px 9px;border:1px solid var(--line);
+  border-radius:100px;letter-spacing:.03em}
+.partner-link{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;
+  color:var(--text);transition:gap .25s var(--ease)}
+.partner-link svg{width:13px;height:13px;color:var(--red)}
+.partner:hover .partner-link{gap:11px}
+@media (max-width: 560px){
+  .partner{grid-template-columns:1fr;text-align:left;padding:20px}
+  .partner-photo{width:120px;height:120px;aspect-ratio:1/1}
+}
 .about-text h2{font-family:var(--font-display);font-weight:600;font-size:clamp(28px,4vw,46px);line-height:1.08;letter-spacing:-.03em;margin-bottom:28px}
 .about-text p{color:var(--muted);font-size:17px;margin-bottom:18px;line-height:1.7;max-width:560px}
 .about-text p .em{color:var(--text);font-weight:500}
@@ -1421,6 +1478,42 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   </div>
 </section>
 
+<!-- ============ PARTNERS ============ -->
+<section class="section" id="partners">
+  <div class="wrap">
+    <div class="partners-head reveal">
+      <div class="left">
+        <div class="sec-tag"><i></i><span data-i18n="partners.tag">Партнёры</span></div>
+        <h2 data-i18n="partners.h2">Партнёры по направлениям</h2>
+      </div>
+      <p class="desc" data-i18n="partners.desc">С нами работают независимые специалисты — для направлений, где нужна особая экспертиза.</p>
+    </div>
+    <div class="partners-grid">
+      <a class="partner reveal" href="https://yelzhanport.netlify.app" target="_blank" rel="noopener" aria-label="Yelzhan Nurtileu — Game Design partner">
+        <div class="partner-photo">
+          <img src="brand/partner-yelzhan-square.jpg" alt="Yelzhan Nurtileu — Game Design partner" loading="lazy" decoding="async" width="720" height="720" />
+        </div>
+        <div class="partner-body">
+          <div class="partner-badge" data-i18n="partners.yelzhanBadge">Game Design Partner</div>
+          <div class="partner-name">Yelzhan Nurtileu</div>
+          <div class="partner-role" data-i18n="partners.yelzhanRole">Game Designer · UAL London · Katsumi Games</div>
+          <div class="partner-brief" data-i18n="partners.yelzhanBrief">2D Unity-игры с фольклорным настроением. Полный цикл соло: дизайн, C#, арт, UI/UX, анимация. Studio: Katsumi Games.</div>
+          <div class="partner-tags">
+            <span class="partner-tag">Unity / C#</span>
+            <span class="partner-tag">Game Design</span>
+            <span class="partner-tag">UI / UX</span>
+            <span class="partner-tag">Digital Art</span>
+          </div>
+          <span class="partner-link">
+            <span data-i18n="partners.openPortfolio">Открыть портфолио</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ CONTACT ============ -->
 <section class="section" id="contact">
   <div class="wrap">
@@ -1622,6 +1715,14 @@ const I18N = {
       a2V:'6', a2L:'направлений',
       a3V:'100%', a3L:'проектов под ключ',
     },
+    partners: {
+      tag:'Партнёры', h2:'Партнёры по направлениям',
+      desc:'С нами работают независимые специалисты — для направлений, где нужна особая экспертиза.',
+      openPortfolio:'Открыть портфолио',
+      yelzhanBadge:'Game Design Partner',
+      yelzhanRole:'Геймдизайнер · UAL London · Katsumi Games',
+      yelzhanBrief:'2D Unity-игры с фольклорным настроением. Полный цикл соло: дизайн, C#, арт, UI/UX, анимация. Студия: Katsumi Games.',
+    },
     contact: {
       tag:'Контакты', h2:'Расскажите о проекте',
       desc:'Заполните форму или напишите напрямую — ответим в течение дня и предложим, как реализовать идею.',
@@ -1733,6 +1834,14 @@ const I18N = {
       a2V:'6', a2L:'disciplines',
       a3V:'100%', a3L:'turnkey projects',
     },
+    partners: {
+      tag:'Partners', h2:'Partners by discipline',
+      desc:'We collaborate with independent specialists for directions that require focused expertise.',
+      openPortfolio:'Open portfolio',
+      yelzhanBadge:'Game Design Partner',
+      yelzhanRole:'Game Designer · UAL London · Katsumi Games',
+      yelzhanBrief:'2D Unity games with folklore-inspired themes. Full pipeline solo: design, C#, art, UI/UX, animation. Studio: Katsumi Games.',
+    },
     contact: {
       tag:'Contact', h2:'Tell us about your project',
       desc:'Drop us a line — we reply within a day with a proposal on how to bring your idea to life.',
@@ -1843,6 +1952,14 @@ const I18N = {
       a1V:'10', a1L:'өндірістегі жоба',
       a2V:'6', a2L:'бағыт',
       a3V:'100%', a3L:'«кілт астында» жобалар',
+    },
+    partners: {
+      tag:'Серіктестер', h2:'Бағыттар бойынша серіктестер',
+      desc:'Жекелеген сараптама қажет бағыттарда тәуелсіз мамандармен жұмыс істейміз.',
+      openPortfolio:'Портфолионы ашу',
+      yelzhanBadge:'Game Design Partner',
+      yelzhanRole:'Геймдизайнер · UAL London · Katsumi Games',
+      yelzhanBrief:'Фольклор шабытымен жасалған 2D Unity ойындары. Толық цикл жалғыз: дизайн, C#, арт, UI/UX, анимация. Студия: Katsumi Games.',
     },
     contact: {
       tag:'Байланыс', h2:'Жобаңыз туралы айтып беріңіз',

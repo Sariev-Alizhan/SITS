@@ -54,5 +54,10 @@
       <image:loc>https://sits-eta.vercel.app/portfolio/09_citytorg.webp</image:loc>
       <image:title>Citytorg — Каталог акций и магазинов (Усть-Каменогорск)</image:title>
     </image:image>
+    <image:image>
+      <image:loc>https://sits-eta.vercel.app/portfolio/10_pro-ceramic.webp</image:loc>
+      <image:title>PRO CERAMIC — Премиум-шоурум камня (Астана)</image:title>
+      <image:caption>Спечённый камень SINISO, керамогранит, мрамор, гранит, травертин</image:caption>
+    </image:image>
   </url>
 </urlset>

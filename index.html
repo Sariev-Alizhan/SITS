@@ -920,7 +920,9 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
   margin-bottom:48px;flex-wrap:wrap}
 .partners-head .left{max-width:660px}
 .partners-head .desc{color:var(--muted);font-size:17px;line-height:1.55;max-width:440px}
-.partners-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:28px}
+/* Карточки партнёров — фиксируем max-width 520px, чтобы одна карточка не растягивалась на весь экран */
+.partners-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 520px));
+  gap:28px;justify-content:start}
 .partner{display:grid;grid-template-columns:160px 1fr;gap:22px;align-items:center;
   background:color-mix(in srgb, var(--surface) 55%, transparent);
   border:1px solid var(--line);border-radius:var(--r-xl);padding:22px;

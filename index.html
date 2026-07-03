@@ -512,9 +512,10 @@
   --font-body:'Manrope',system-ui,sans-serif;
   --font-logo:'PT Serif',Georgia,serif;
   --maxw:1180px;
-  --r-sm:14px; --r-md:20px; --r-lg:24px; --r-xl:28px;
+  --r-sm:16px; --r-md:22px; --r-lg:28px; --r-xl:32px;
   --ease:cubic-bezier(.22,.61,.36,1);
-  --nav-h:72px;
+  --nav-h:88px;
+  --glass-blur:blur(22px) saturate(1.75);
 }
 html[data-theme="dark"]{
   --bg:#0c0a0b;
@@ -529,10 +530,14 @@ html[data-theme="dark"]{
   --red:#e23744;
   --red-soft:rgba(226,55,68,.14);
   --shadow:0 30px 70px -40px rgba(0,0,0,.9);
-  --nav-bg:rgba(12,10,11,.72);
+  --nav-bg:rgba(18,15,16,.55);
+  --glass:rgba(255,255,255,.045);
+  --glass-2:rgba(255,255,255,.085);
+  --glass-line:rgba(255,255,255,.11);
+  --glass-hi:rgba(255,255,255,.10);
   --img-frame:#0a0808;
-  --fx-glow-1:rgba(226,55,68,.22);
-  --fx-glow-2:rgba(226,55,68,.13);
+  --fx-glow-1:rgba(226,55,68,.30);
+  --fx-glow-2:rgba(226,55,68,.18);
   --fx-dot:rgba(255,255,255,.055);
   --fx-grain:.06;
   --fx-cursor:rgba(226,55,68,.16);
@@ -550,10 +555,14 @@ html[data-theme="light"]{
   --red:#b31d22;
   --red-soft:rgba(179,29,34,.1);
   --shadow:0 30px 70px -44px rgba(80,20,25,.28);
-  --nav-bg:rgba(246,243,243,.78);
+  --nav-bg:rgba(255,255,255,.52);
+  --glass:rgba(255,255,255,.42);
+  --glass-2:rgba(255,255,255,.68);
+  --glass-line:rgba(20,12,13,.09);
+  --glass-hi:rgba(255,255,255,.9);
   --img-frame:#ece8e8;
-  --fx-glow-1:rgba(226,55,68,.12);
-  --fx-glow-2:rgba(179,29,34,.07);
+  --fx-glow-1:rgba(226,55,68,.17);
+  --fx-glow-2:rgba(179,29,34,.10);
   --fx-dot:rgba(179,29,34,.07);
   --fx-grain:.035;
   --fx-cursor:rgba(179,29,34,.10);
@@ -617,10 +626,16 @@ main, footer{position:relative;z-index:1}
 .pf.fx-active{will-change:transform}
 
 /* ============ NAV ============ */
-.nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:50;display:flex;align-items:center;
-  transition:background .4s var(--ease),border-color .4s,backdrop-filter .4s;border-bottom:1px solid transparent}
-.nav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);border-bottom:1px solid var(--line)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;width:100%}
+/* Liquid glass: плавающая капсула вместо полосы на всю ширину */
+.nav{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;
+  padding:0 16px;pointer-events:none}
+.nav .wrap{pointer-events:auto;display:flex;align-items:center;justify-content:space-between;width:100%;
+  max-width:calc(var(--maxw) - 32px);height:60px;padding:0 10px 0 24px;border-radius:100px;
+  background:var(--nav-bg);border:1px solid var(--glass-line);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi),0 16px 40px -26px rgba(0,0,0,.5);
+  transition:box-shadow .4s var(--ease),background .4s var(--ease)}
+.nav.scrolled .wrap{box-shadow:inset 0 1px 0 var(--glass-hi),0 22px 50px -22px rgba(0,0,0,.55)}
 .logo{font-family:var(--font-logo);font-weight:700;font-size:23px;letter-spacing:.04em;line-height:1;color:var(--text)}
 .logo b{color:var(--red);font-weight:700}
 .nav-links{display:flex;align-items:center;gap:32px}
@@ -629,51 +644,62 @@ main, footer{position:relative;z-index:1}
 .nav-actions{display:flex;align-items:center;gap:12px}
 /* ⌘K discovery hint — отображается только на десктопе с pointer:fine */
 .cmdk-hint{display:none;align-items:center;gap:8px;height:40px;padding:0 11px 0 13px;
-  border:1px solid var(--line);border-radius:100px;background:transparent;color:var(--muted);
-  cursor:pointer;font-family:var(--font-body);transition:.25s var(--ease)}
-.cmdk-hint:hover{border-color:var(--line-2);color:var(--text);background:var(--surface)}
+  border:1px solid var(--glass-line);border-radius:100px;background:var(--glass);color:var(--muted);
+  cursor:pointer;font-family:var(--font-body);transition:.25s var(--ease);
+  box-shadow:inset 0 1px 0 var(--glass-hi)}
+.cmdk-hint:hover{border-color:var(--line-2);color:var(--text);background:var(--glass-2)}
 .cmdk-hint svg{width:15px;height:15px}
 .cmdk-hint kbd{font-family:var(--font-body);font-size:11.5px;font-weight:600;letter-spacing:.02em;
   background:color-mix(in srgb, var(--text) 8%, transparent);padding:2px 6px;border-radius:4px}
 @media (hover: hover) and (pointer: fine) and (min-width: 1100px){
   .cmdk-hint{display:inline-flex}
 }
-.icon-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--text);
-  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.25s var(--ease)}
-.icon-btn:hover{border-color:var(--line-2);background:var(--surface)}
+.icon-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--glass-line);background:var(--glass);color:var(--text);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.25s var(--ease);
+  box-shadow:inset 0 1px 0 var(--glass-hi)}
+.icon-btn:hover{border-color:var(--line-2);background:var(--glass-2)}
 .icon-btn svg{width:18px;height:18px}
 .theme-toggle .moon{display:none}
 html[data-theme="dark"] .theme-toggle .sun{display:none}
 html[data-theme="dark"] .theme-toggle .moon{display:block}
 .btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;border-radius:100px;
   padding:11px 22px;cursor:pointer;border:1px solid transparent;transition:.3s var(--ease);font-family:var(--font-body);white-space:nowrap}
-.btn-primary{background:var(--red);color:#fff}
-.btn-primary:hover{filter:brightness(1.06);transform:translateY(-1px)}
-.btn-line{background:transparent;color:var(--text);border-color:var(--line-2)}
-.btn-line:hover{background:var(--surface);border-color:var(--text)}
+.btn svg{width:17px;height:17px;flex-shrink:0}
+.btn-primary{background:linear-gradient(180deg,color-mix(in srgb,var(--red) 88%,#fff) 0%,var(--red) 55%);color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 12px 28px -12px color-mix(in srgb,var(--red) 65%,transparent)}
+.btn-primary:hover{filter:brightness(1.06);transform:translateY(-1px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 16px 34px -12px color-mix(in srgb,var(--red) 75%,transparent)}
+.btn-line{background:var(--glass);color:var(--text);border-color:var(--glass-line);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi)}
+.btn-line:hover{background:var(--glass-2);border-color:var(--line-2)}
 .burger{display:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:transparent;
   cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px}
 .burger span{display:block;width:17px;height:1.5px;background:var(--text);transition:.3s var(--ease)}
 .burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .burger.open span:nth-child(2){opacity:0}
 .burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-.mobile-menu{position:fixed;inset:0;z-index:45;background:var(--bg);padding:calc(var(--nav-h) + 36px) 32px 40px;
+.mobile-menu{position:fixed;inset:0;z-index:45;
+  background:color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter:blur(28px) saturate(1.6);-webkit-backdrop-filter:blur(28px) saturate(1.6);
+  padding:calc(var(--nav-h) + 36px) 32px 40px;
   display:flex;flex-direction:column;gap:4px;transform:translateY(-100%);transition:transform .5s var(--ease);visibility:hidden}
 .mobile-menu.open{transform:translateY(0);visibility:visible}
 .mobile-menu a{font-family:var(--font-display);font-weight:400;font-size:30px;letter-spacing:-.02em;padding:16px 0;border-bottom:1px solid var(--line)}
 .mobile-menu .mm-soc{display:flex;gap:12px;margin-top:28px}
 
 /* ============ LANG SWITCH ============ */
-.lang-switch{display:inline-flex;align-items:center;gap:1px;border:1px solid var(--line);border-radius:100px;padding:3px;height:40px}
+.lang-switch{display:inline-flex;align-items:center;gap:1px;border:1px solid var(--glass-line);border-radius:100px;padding:3px;height:40px;
+  background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi)}
 .lang-switch button{font-family:var(--font-body);font-size:11.5px;font-weight:600;letter-spacing:.06em;
   background:transparent;border:none;color:var(--muted);padding:6px 10px;border-radius:100px;cursor:pointer;transition:.25s var(--ease);min-width:34px}
 .lang-switch button:hover{color:var(--text)}
-.lang-switch button.on{background:var(--surface);color:var(--text)}
+.lang-switch button.on{background:var(--glass-2);color:var(--text);box-shadow:inset 0 1px 0 var(--glass-hi)}
 .mm-lang{display:flex;gap:10px;margin-top:28px}
-.mm-lang button{flex:1;background:transparent;border:1px solid var(--line);color:var(--muted);
-  font-family:var(--font-body);font-size:14px;font-weight:600;padding:13px;border-radius:14px;cursor:pointer;
-  transition:.25s var(--ease);letter-spacing:.04em}
-.mm-lang button.on{border-color:var(--text);color:var(--text);background:var(--surface)}
+.mm-lang button{flex:1;background:var(--glass);border:1px solid var(--glass-line);color:var(--muted);
+  font-family:var(--font-body);font-size:14px;font-weight:600;padding:13px;border-radius:16px;cursor:pointer;
+  transition:.25s var(--ease);letter-spacing:.04em;box-shadow:inset 0 1px 0 var(--glass-hi)}
+.mm-lang button.on{border-color:var(--text);color:var(--text);background:var(--glass-2)}
 
 /* arrow link */
 .alink{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:var(--text);transition:gap .3s var(--ease)}
@@ -731,21 +757,25 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 /* Stagger для bento и портфолио — каждая следующая карточка появляется чуть позже */
 .bento .reveal{transition-delay:calc(var(--reveal-i, 0) * 80ms)}
 .pf-bento .reveal{transition-delay:calc(var(--reveal-i, 0) * 60ms)}
+.price-grid .reveal,.sup-grid .reveal{transition-delay:calc(var(--reveal-i, 0) * 70ms)}
 .p-row.reveal{transition-delay:calc(var(--reveal-i, 0) * 100ms)}
 
 /* ============ SERVICES BENTO ============ */
 .bento{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;grid-auto-rows:minmax(176px,auto)}
-.b-card{position:relative;border:1px solid var(--line);background:var(--surface);border-radius:var(--r-xl);
+.b-card{position:relative;border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);
   padding:32px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;
-  transition:transform .5s var(--ease),border-color .5s,background .5s}
-.b-card:hover{transform:translateY(-5px);border-color:var(--line-2);background:var(--surface-2)}
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi);
+  transition:transform .5s var(--ease),border-color .5s,background .5s,box-shadow .5s}
+.b-card:hover{transform:translateY(-5px);border-color:var(--line-2);background:var(--glass-2);
+  box-shadow:inset 0 1px 0 var(--glass-hi),var(--shadow)}
 .s-sites{grid-column:span 2;grid-row:span 2}
 .s-mobile{grid-column:span 2}
 .s-ai{grid-column:span 2}
 .s-support{grid-column:span 2}
 .svc-top{display:flex;align-items:flex-start;justify-content:space-between}
-.svc-ico{width:46px;height:46px;border-radius:13px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
-  color:var(--text);transition:.4s var(--ease)}
+.svc-ico{width:46px;height:46px;border-radius:14px;border:1px solid var(--glass-line);display:flex;align-items:center;justify-content:center;
+  color:var(--text);background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi);transition:.4s var(--ease)}
 .b-card:hover .svc-ico{border-color:var(--line-2)}
 .svc-ico svg{width:23px;height:23px;stroke-width:1.5}
 .svc-num{font-family:var(--font-display);font-weight:500;font-size:13px;color:var(--faint)}
@@ -755,13 +785,14 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .b-card p{color:var(--muted);font-size:14.5px;line-height:1.55}
 .s-sites p{font-size:16px;max-width:320px;margin-top:2px}
 .svc-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:24px}
-.svc-tags span{font-size:12px;font-weight:500;color:var(--muted);border:1px solid var(--line);border-radius:100px;padding:5px 12px}
+.svc-tags span{font-size:12px;font-weight:500;color:var(--muted);border:1px solid var(--glass-line);border-radius:100px;padding:5px 12px;
+  background:var(--glass)}
 
 /* ============ PROCESS ============ */
 .process{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line)}
 .p-row{display:grid;grid-template-columns:120px 1fr 1.4fr;gap:40px;align-items:start;padding:38px 8px;
   border-bottom:1px solid var(--line);transition:background .4s var(--ease),padding-left .4s var(--ease)}
-.p-row:hover{background:var(--surface);padding-left:22px}
+.p-row:hover{background:var(--glass);padding-left:22px}
 .p-row .pn{font-family:var(--font-display);font-weight:500;font-size:clamp(34px,4vw,46px);letter-spacing:-.02em;
   color:transparent;-webkit-text-stroke:1px var(--line-2);transition:-webkit-text-stroke .4s}
 .p-row:hover .pn{-webkit-text-stroke:1px var(--red)}
@@ -771,22 +802,25 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 /* Lazy-rendering для секций ниже hero (browser skip paint когда офф-экран).
    contain-intrinsic-size резервирует место → нет CLS. Не трогаем hero и services
    (выше fold или сразу под ним → пользователь видит на первом paint). */
-#process, #approach, #portfolio, #about, #contact, footer{
+#process, #approach, #portfolio, #pricing, #about, #contact, footer{
   content-visibility:auto;
   contain-intrinsic-size:auto 800px;
 }
 
 /* ============ APPROACH ============ */
 .approach{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
-.ap-item{padding:32px;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--surface);
+.ap-item{padding:32px;border:1px solid var(--glass-line);border-radius:var(--r-xl);background:var(--glass);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi);
   transition:transform .5s var(--ease),border-color .5s,background .5s}
-.ap-item:hover{transform:translateY(-4px);border-color:var(--line-2);background:var(--surface-2)}
+.ap-item:hover{transform:translateY(-4px);border-color:var(--line-2);background:var(--glass-2)}
 .ap-num{font-family:var(--font-display);font-weight:500;font-size:34px;letter-spacing:-.02em;line-height:1;
   color:transparent;-webkit-text-stroke:1px var(--line-2);margin-bottom:20px;transition:-webkit-text-stroke .4s}
 .ap-item:hover .ap-num{-webkit-text-stroke:1px var(--red)}
 .ap-item p{color:var(--muted);font-size:15px;line-height:1.6}
 .contact-pricing{font-size:14px;color:var(--muted);line-height:1.55;margin-bottom:16px;
-  padding:14px 18px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface-2)}
+  padding:14px 18px;border:1px solid var(--glass-line);border-radius:var(--r-md);background:var(--glass);
+  box-shadow:inset 0 1px 0 var(--glass-hi)}
 
 /* ============ PORTFOLIO ============ */
 .pf-bento{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;grid-auto-rows:236px}
@@ -822,13 +856,77 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .pf-9{grid-column:span 3}
 .pf-10{grid-column:span 3}
 
+/* ============ PRICING ============ */
+.promo-pill{display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;
+  margin:0 0 40px;padding:16px 24px;border-radius:var(--r-md);
+  border:1px solid color-mix(in srgb, var(--red) 30%, transparent);
+  background:color-mix(in srgb, var(--red) 9%, transparent);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi);
+  font-size:14.5px;font-weight:600;line-height:1.5}
+.promo-pill i{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;
+  box-shadow:0 0 12px var(--red);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.price-card{position:relative;display:flex;flex-direction:column;padding:30px;
+  border:1px solid var(--glass-line);border-radius:var(--r-xl);background:var(--glass);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi);
+  transition:transform .5s var(--ease),border-color .5s,background .5s,box-shadow .5s}
+.price-card:hover{transform:translateY(-5px);border-color:var(--line-2);background:var(--glass-2);
+  box-shadow:inset 0 1px 0 var(--glass-hi),var(--shadow)}
+.price-card.featured{grid-column:1/-1;
+  border-color:color-mix(in srgb, var(--red) 38%, transparent);
+  background:linear-gradient(135deg, color-mix(in srgb, var(--red) 8%, transparent), transparent 55%)}
+.price-card h3{font-family:var(--font-display);font-weight:500;font-size:21px;letter-spacing:-.01em;line-height:1.2}
+.pc-sub{color:var(--muted);font-size:14px;line-height:1.55;margin-top:8px}
+.pc-badge{position:absolute;top:24px;right:24px;font-size:12px;font-weight:700;letter-spacing:.04em;
+  color:var(--red);background:var(--red-soft);border:1px solid color-mix(in srgb, var(--red) 30%, transparent);
+  border-radius:100px;padding:5px 12px}
+.pc-prices{display:flex;flex-direction:column;gap:12px;margin:22px 0 4px;padding-top:18px;border-top:1px solid var(--line)}
+.pc-row{display:flex;flex-direction:column;gap:4px}
+.pc-lbl{font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.pc-vals{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.pc-old{color:var(--faint);font-size:14.5px;text-decoration:line-through;text-decoration-color:color-mix(in srgb, var(--red) 65%, transparent);text-decoration-thickness:1.5px}
+.pc-new{font-family:var(--font-display);font-weight:500;font-size:clamp(22px,2.4vw,27px);letter-spacing:-.02em;white-space:nowrap}
+.pc-chip{font-style:normal;font-size:11.5px;font-weight:700;color:var(--red);background:var(--red-soft);
+  border-radius:100px;padding:3px 9px}
+.pc-per{font-size:13px;color:var(--muted);font-weight:500}
+.pc-list{margin:20px 0 26px;display:flex;flex-direction:column;gap:9px;list-style:none}
+.pc-list li{position:relative;padding-left:26px;font-size:14px;line-height:1.5;color:var(--muted)}
+.pc-list li::before{content:"";position:absolute;left:2px;top:4px;width:14px;height:14px;
+  background:var(--red);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 13 5 5L20 7'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 13 5 5L20 7'/%3E%3C/svg%3E") center/contain no-repeat}
+.price-card.featured .pc-list{display:grid;grid-template-columns:repeat(2,1fr);gap:9px 32px}
+.pc-cta-row{display:flex;gap:10px;margin-top:auto}
+.pc-cta{width:100%;justify-content:center;flex:1;min-width:0}
+.pc-cta svg{width:17px;height:17px;flex-shrink:0}
+.btn-sq{flex:0 0 47px;width:47px;padding:0;justify-content:center;align-self:stretch}
+.btn-sq svg{width:19px;height:19px}
+.cta-all-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.sub-head{font-family:var(--font-display);font-weight:500;font-size:clamp(21px,2.6vw,27px);letter-spacing:-.02em;margin:64px 0 10px}
+.sub-desc{color:var(--muted);font-size:15.5px;line-height:1.55;max-width:560px;margin-bottom:28px}
+.sup-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.price-notes{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
+.price-notes span{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:500;color:var(--muted);
+  border:1px solid var(--glass-line);background:var(--glass);border-radius:100px;padding:9px 16px;
+  box-shadow:inset 0 1px 0 var(--glass-hi)}
+.price-notes span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0}
+.price-cta-all{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:48px;text-align:center}
+.price-cta-all p{color:var(--muted);font-size:15.5px}
+@media(max-width:940px){
+  .price-grid,.sup-grid{grid-template-columns:1fr}
+  .price-card.featured .pc-list{grid-template-columns:1fr}
+}
+
 /* ============ ABOUT ============ */
 .about-grid{display:grid;grid-template-columns:0.82fr 1.18fr;gap:64px;align-items:center}
 .founder-photo{position:relative;border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--line);aspect-ratio:4/5;background:var(--img-frame)}
 .founder-photo img{width:100%;height:100%;object-fit:cover;object-position:55% 18%;filter:saturate(.96) contrast(1.02)}
 .founder-photo .cap{position:absolute;left:18px;bottom:18px;right:18px;z-index:2;display:flex;align-items:center;justify-content:space-between;
-  background:var(--nav-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);
-  border-radius:14px;padding:13px 16px}
+  background:var(--nav-bg);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--glass-line);
+  border-radius:16px;padding:13px 16px;box-shadow:inset 0 1px 0 var(--glass-hi)}
 .founder-photo .cap .nm{font-family:var(--font-display);font-weight:500;font-size:15px;letter-spacing:-.01em}
 .founder-photo .cap .rl{font-size:12.5px;color:var(--muted);margin-top:2px}
 .founder-photo .cap .badge{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
@@ -842,11 +940,13 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .partners-grid{display:flex;flex-wrap:wrap;gap:28px;justify-content:center}
 .partner{flex:1 1 320px;max-width:580px}
 .partner{display:grid;grid-template-columns:160px 1fr;gap:22px;align-items:center;
-  background:color-mix(in srgb, var(--surface) 55%, transparent);
-  border:1px solid var(--line);border-radius:var(--r-xl);padding:22px;
+  background:var(--glass);
+  border:1px solid var(--glass-line);border-radius:var(--r-xl);padding:22px;
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi);
   transition:.3s var(--ease);text-decoration:none;color:inherit;position:relative;overflow:hidden}
 .partner:hover{border-color:var(--line-2);transform:translateY(-2px);
-  background:color-mix(in srgb, var(--surface) 75%, transparent)}
+  background:var(--glass-2)}
 .partner-photo{aspect-ratio:1/1;width:100%;border-radius:var(--r-md);overflow:hidden;
   border:1px solid var(--line);background:var(--img-frame)}
 .partner-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.95) contrast(1.02);
@@ -860,8 +960,8 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .partner-role{font-size:13.5px;color:var(--muted);margin-bottom:10px;font-weight:500}
 .partner-brief{font-size:13.5px;color:var(--muted);line-height:1.55;margin-bottom:14px}
 .partner-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.partner-tag{font-size:11px;color:var(--muted);padding:3px 9px;border:1px solid var(--line);
-  border-radius:100px;letter-spacing:.03em}
+.partner-tag{font-size:11px;color:var(--muted);padding:3px 9px;border:1px solid var(--glass-line);
+  border-radius:100px;letter-spacing:.03em;background:var(--glass)}
 .partner-link{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;
   color:var(--text);transition:gap .25s var(--ease)}
 .partner-link svg{width:13px;height:13px;color:var(--red)}
@@ -893,10 +993,13 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .cinfo .ci-arr{margin-left:auto;color:var(--faint);transition:.3s var(--ease)}
 .cinfo:hover .ci-arr{color:var(--red);transform:translate(2px,-2px)}
 .cinfo .ci-arr svg{width:15px;height:15px}
-form.contact-form{border:1px solid var(--line);background:var(--surface);border-radius:var(--r-xl);padding:40px}
+form.contact-form{border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:40px;
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi)}
 .field{margin-bottom:20px}
 .field label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:9px;letter-spacing:.02em}
-.field input,.field textarea{width:100%;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-sm);
+.field input,.field textarea{width:100%;background:color-mix(in srgb, var(--bg-2) 55%, transparent);
+  border:1px solid var(--glass-line);border-radius:var(--r-sm);
   padding:14px 16px;color:var(--text);font-family:var(--font-body);font-size:15.5px;transition:.25s var(--ease)}
 .field textarea{resize:vertical;min-height:118px}
 .field input:focus,.field textarea:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px var(--red-soft)}
@@ -920,8 +1023,9 @@ form.contact-form{border:1px solid var(--line);background:var(--surface);border-
   display:none;align-items:flex-start;justify-content:center;padding:14vh 20px 20px;
   opacity:0;transition:opacity .18s var(--ease)}
 .cmdk-overlay.open{display:flex;opacity:1}
-.cmdk{width:100%;max-width:560px;background:var(--surface);border:1px solid var(--line-2);
-  border-radius:var(--r-lg);box-shadow:0 24px 80px rgba(0,0,0,.45),0 4px 14px rgba(0,0,0,.25);
+.cmdk{width:100%;max-width:560px;background:color-mix(in srgb, var(--surface) 74%, transparent);border:1px solid var(--glass-line);
+  backdrop-filter:blur(30px) saturate(1.8);-webkit-backdrop-filter:blur(30px) saturate(1.8);
+  border-radius:var(--r-lg);box-shadow:inset 0 1px 0 var(--glass-hi),0 24px 80px rgba(0,0,0,.45),0 4px 14px rgba(0,0,0,.25);
   overflow:hidden;transform:translateY(8px);transition:transform .22s var(--ease)}
 .cmdk-overlay.open .cmdk{transform:translateY(0)}
 .cmdk-header{display:flex;align-items:center;gap:12px;padding:14px 18px;
@@ -1021,8 +1125,10 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 /* Legal info card — grid с явной иерархией: entity на всю ширину, BIN/дата в 2 колонки, адрес внизу */
 .foot-legal{display:grid;grid-template-columns:1fr 1fr;gap:24px 36px;
   padding:30px 32px;margin:36px 0 28px;
-  border:1px solid var(--line);border-radius:var(--r-xl);
-  background:color-mix(in srgb, var(--surface) 55%, transparent)}
+  border:1px solid var(--glass-line);border-radius:var(--r-xl);
+  background:var(--glass);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi)}
 .foot-legal .lg-title{grid-column:1/-1;font-size:11px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--faint);font-weight:600;margin:0 0 4px;
   padding-bottom:14px;border-bottom:1px solid var(--line);
@@ -1109,12 +1215,20 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .hero-title .rise,.hero-lower,.hero-meta{opacity:1!important;transform:none!important}
 }
 
+/* Fallback: без поддержки backdrop-filter стекло превращается в матовую поверхность */
+@supports not ((backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px))){
+  .nav .wrap,.mobile-menu,.cmdk{background:var(--bg-2)}
+  .b-card,.ap-item,.partner,form.contact-form,.foot-legal,.contact-pricing,.btn-line{background:var(--surface)}
+  .field input,.field textarea{background:var(--bg-2)}
+}
+
 /* ============ PRINT ============ */
 /* Print stylesheet — для печати визитки/портфолио в PDF */
 @media print {
   *,*::before,*::after{
     background:#fff!important;color:#000!important;
-    text-shadow:none!important;box-shadow:none!important;animation:none!important;transition:none!important}
+    text-shadow:none!important;box-shadow:none!important;animation:none!important;transition:none!important;
+    backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
   body{font-size:12pt;line-height:1.4}
   .nav,.fx-bg,.fx-cursor,.mobile-menu,.burger,
   .lang-switch,.icon-btn,.theme-toggle,.skip-link,
@@ -1175,6 +1289,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       <a href="#services" data-i18n="nav.services">Услуги</a>
       <a href="#process" data-i18n="nav.process">Как работаем</a>
       <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+      <a href="#pricing" data-i18n="nav.pricing">Прайс</a>
       <a href="#about" data-i18n="nav.about">О нас</a>
       <a href="#contact" data-i18n="nav.contact">Контакты</a>
     </div>
@@ -1202,9 +1317,12 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   <a href="#services" data-i18n="nav.services">Услуги</a>
   <a href="#process" data-i18n="nav.process">Как работаем</a>
   <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+  <a href="#pricing" data-i18n="nav.pricing">Прайс</a>
   <a href="#about" data-i18n="nav.about">О нас</a>
   <a href="#contact" data-i18n="nav.contact">Контакты</a>
   <div class="mm-soc">
+    <a href="https://wa.me/77774961358" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg></a>
+    <a href="https://t.me/zhanmate" target="_blank" rel="noopener" class="icon-btn" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
     <a href="https://www.instagram.com/sariyev.it.solutions/" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
     <a href="https://www.youtube.com/@sariyev.it.solutions" target="_blank" rel="noopener" class="icon-btn" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12zM9.8 15V9l5.2 3-5.2 3z"/></svg></a>
     <a href="https://www.linkedin.com/in/alizhan-sariyev-5a3804278/" target="_blank" rel="noopener" class="icon-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0V8zm7.5 0H12v2.2h.07c.63-1.2 2.17-2.46 4.46-2.46C21.4 7.74 24 10 24 14.6V24h-5v-8.2c0-1.95-.04-4.46-2.7-4.46-2.71 0-3.13 2.12-3.13 4.32V24h-5V8z"/></svg></a>
@@ -1345,9 +1463,237 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         <div class="sec-tag"><i></i><span data-i18n="portfolio.tag">Портфолио</span></div>
         <h2 data-i18n="portfolio.h2">Избранные работы</h2>
       </div>
-      <p class="desc" data-i18n="portfolio.desc">Девять запущенных проектов — от интерьерных бутиков до B2B-платформ и игровых студий.</p>
+      <p class="desc" data-i18n="portfolio.desc">Десять запущенных проектов — от интерьерных бутиков до B2B-платформ и игровых студий.</p>
     </div>
     <div class="pf-bento" id="pfBento"></div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="left">
+        <div class="sec-tag"><i></i><span data-i18n="pricing.tag">Прайс</span></div>
+        <h2 data-i18n="pricing.h2">Пакеты и цены</h2>
+      </div>
+      <p class="desc" data-i18n="pricing.desc">Фиксированные цены и новейшие технологии — AI на базе Claude (Anthropic). Каждый пакет под ключ: от идеи до запуска.</p>
+    </div>
+
+    <div class="promo-pill reveal"><i aria-hidden="true"></i><span data-i18n="pricing.promo">Акция месяца: скидки до −67% на все пакеты — только с 1 июля по 1 августа. Успейте зафиксировать цену.</span></div>
+
+    <div class="price-grid">
+      <!-- 1. Лендинг -->
+      <article class="price-card reveal">
+        <span class="pc-badge" data-i18n="pricing.b1">до −67%</span>
+        <h3 data-i18n="pricing.c1H">Лендинг</h3>
+        <p class="pc-sub" data-i18n="pricing.c1Sub">Сайт-визитка под портфолио, бизнес или услуги — быстрый, современный, продающий.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.c1O1">Без фото и видео</span>
+            <span class="pc-vals"><s class="pc-old">150 000 ₸</s><b class="pc-new">50 000 ₸</b><em class="pc-chip">−67%</em></span>
+          </div>
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.c1O2">С фото и видео</span>
+            <span class="pc-vals"><s class="pc-old">200 000 ₸</s><b class="pc-new">80 000 ₸</b><em class="pc-chip">−60%</em></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.c1F1">Индивидуальный дизайн под ваш бренд</li>
+          <li data-i18n="pricing.c1F2">Адаптив: телефон, планшет, ПК</li>
+          <li data-i18n="pricing.c1F3">Базовое SEO и быстрая загрузка</li>
+          <li data-i18n="pricing.c1F4">Форма заявок + кнопка WhatsApp</li>
+          <li data-i18n="pricing.c1F5">Домен, хостинг и SSL — настроим всё</li>
+          <li data-i18n="pricing.c1F6">Запуск за 3–7 дней</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.wa1" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%20%C2%AB%D0%9B%D0%B5%D0%BD%D0%B4%D0%B8%D0%BD%D0%B3%C2%BB%20%D0%BF%D0%BE%20%D0%B0%D0%BA%D1%86%D0%B8%D0%B8.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- 2. Лендинг + AI -->
+      <article class="price-card reveal">
+        <span class="pc-badge">−40%</span>
+        <h3 data-i18n="pricing.c2H">Лендинг + AI</h3>
+        <p class="pc-sub" data-i18n="pricing.c2Sub">Сайт со встроенным AI-автоответчиком и навигатором на базе Claude — отвечает клиентам за вас, 24/7.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.allIn">Фото и видео включены</span>
+            <span class="pc-vals"><s class="pc-old">200 000 ₸</s><b class="pc-new">120 000 ₸</b><em class="pc-chip">−40%</em></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.c2F1">Всё из пакета «Лендинг»</li>
+          <li data-i18n="pricing.c2F2">AI-автоответчик 24/7 на базе Claude</li>
+          <li data-i18n="pricing.c2F3">AI-навигатор: ведёт клиента по услугам и ценам</li>
+          <li data-i18n="pricing.c2F4">Обучен на данных вашего бизнеса</li>
+          <li data-i18n="pricing.c2F5">Интеграция с WhatsApp</li>
+          <li data-i18n="pricing.c2F6">Профессиональные фото и видео включены</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.wa2" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%20%C2%AB%D0%9B%D0%B5%D0%BD%D0%B4%D0%B8%D0%BD%D0%B3%20%2B%20AI%C2%BB%20%D0%B7%D0%B0%20120%20000%20%E2%82%B8%20%D0%BF%D0%BE%20%D0%B0%D0%BA%D1%86%D0%B8%D0%B8.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- 3. Лендинг + софт -->
+      <article class="price-card reveal">
+        <span class="pc-badge">−52%</span>
+        <h3 data-i18n="pricing.c3H">Лендинг + софт</h3>
+        <p class="pc-sub" data-i18n="pricing.c3Sub">Сайт плюс программа под ваши процессы: учёт, каталог, личный кабинет — что нужно бизнесу.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.priceLbl">Стоимость</span>
+            <span class="pc-vals"><s class="pc-old">250 000 ₸</s><b class="pc-new">120 000 ₸</b><em class="pc-chip">−52%</em></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.c3F1">Всё из пакета «Лендинг»</li>
+          <li data-i18n="pricing.c3F2">Софт под задачу: учёт, каталог, калькулятор, кабинет</li>
+          <li data-i18n="pricing.c3F3">Админ-панель и база данных</li>
+          <li data-i18n="pricing.c3F4">Приём и учёт заявок в одном месте</li>
+          <li data-i18n="pricing.c3F5">Обучим работе с системой</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.wa3" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%20%C2%AB%D0%9B%D0%B5%D0%BD%D0%B4%D0%B8%D0%BD%D0%B3%20%2B%20%D1%81%D0%BE%D1%84%D1%82%C2%BB%20%D0%B7%D0%B0%20120%20000%20%E2%82%B8%20%D0%BF%D0%BE%20%D0%B0%D0%BA%D1%86%D0%B8%D0%B8.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- 4. Лендинг + софт + AI -->
+      <article class="price-card reveal">
+        <span class="pc-badge">−63%</span>
+        <h3 data-i18n="pricing.c4H">Лендинг + софт + AI</h3>
+        <p class="pc-sub" data-i18n="pricing.c4Sub">Максимальный пакет: сайт, софт и AI-автоматизация на базе Claude в одном решении.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.allIn">Фото и видео включены</span>
+            <span class="pc-vals"><s class="pc-old">400 000 ₸</s><b class="pc-new">150 000 ₸</b><em class="pc-chip">−63%</em></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.c4F1">Всё из пакетов «Лендинг» и «Софт»</li>
+          <li data-i18n="pricing.c4F2">AI-ассистент на базе Claude</li>
+          <li data-i18n="pricing.c4F3">Автоматизация заявок и рутинных задач</li>
+          <li data-i18n="pricing.c4F4">Профессиональные фото и видео включены</li>
+          <li data-i18n="pricing.c4F5">Аналитика и отчёты</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.wa4" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%20%C2%AB%D0%9B%D0%B5%D0%BD%D0%B4%D0%B8%D0%BD%D0%B3%20%2B%20%D1%81%D0%BE%D1%84%D1%82%20%2B%20AI%C2%BB%20%D0%B7%D0%B0%20150%20000%20%E2%82%B8%20%D0%BF%D0%BE%20%D0%B0%D0%BA%D1%86%D0%B8%D0%B8.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- 5. Автоматизация под ключ (featured) -->
+      <article class="price-card featured reveal">
+        <span class="pc-badge">−20%</span>
+        <h3 data-i18n="pricing.c5H">Автоматизация бизнеса под ключ</h3>
+        <p class="pc-sub" data-i18n="pricing.c5Sub">Полная цифровизация компании — новейшие технологии и AI-агенты на базе Claude. Разбираем процессы, убираем рутину, ускоряем бизнес.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.priceLbl">Стоимость</span>
+            <span class="pc-vals"><s class="pc-old"><span data-i18n="pricing.from">от</span> 1 000 000 ₸</s><b class="pc-new"><span data-i18n="pricing.from">от</span> 800 000 ₸</b><em class="pc-chip">−20%</em></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.c5F1">Аудит процессов и план автоматизации</li>
+          <li data-i18n="pricing.c5F2">CRM, учёт и внутренние инструменты</li>
+          <li data-i18n="pricing.c5F3">AI-агенты на базе Claude под задачи бизнеса</li>
+          <li data-i18n="pricing.c5F4">Интеграции: WhatsApp, Kaspi, 1C, платёжные системы</li>
+          <li data-i18n="pricing.c5F5">Обучение команды</li>
+          <li data-i18n="pricing.c5F6">Первый месяц поддержки — в подарок</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.wa5" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81%D0%B0%20%D0%BF%D0%BE%D0%B4%20%D0%BA%D0%BB%D1%8E%D1%87.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D0%B8." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <h3 class="sub-head reveal" data-i18n="pricing.supH">Техподдержка</h3>
+    <p class="sub-desc reveal" data-i18n="pricing.supSub">Любой пакет можно взять с ежемесячной поддержкой или без неё — подключается и отключается в любой месяц.</p>
+    <div class="sup-grid">
+      <article class="price-card reveal">
+        <h3 data-i18n="pricing.sup1H">Классическая</h3>
+        <p class="pc-sub" data-i18n="pricing.sup1Sub">Спокойный ритм: собираете пожелания за неделю — мы аккуратно вносим правки.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.monthly">Ежемесячно</span>
+            <span class="pc-vals"><b class="pc-new">50 000 ₸</b><span class="pc-per" data-i18n="pricing.perMonth">/мес</span></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.sup1F1">4 правки в месяц — по одной в неделю</li>
+          <li data-i18n="pricing.sup1F2">В конце недели присылаете список: что поправить, убрать или добавить</li>
+          <li data-i18n="pricing.sup1F3">Мониторинг работоспособности сайта</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-line pc-cta" data-wa="pricing.waSup" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D1%82%D0%B5%D1%85%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+      <article class="price-card reveal">
+        <h3 data-i18n="pricing.sup2H">С особым вниманием</h3>
+        <p class="pc-sub" data-i18n="pricing.sup2Sub">Максимальная скорость: пишете в любой момент — правки уходят в работу сразу.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.monthly">Ежемесячно</span>
+            <span class="pc-vals"><b class="pc-new">150 000 ₸</b><span class="pc-per" data-i18n="pricing.perMonth">/мес</span></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.sup2F1">До 15 правок в месяц</li>
+          <li data-i18n="pricing.sup2F2">Правки можно присылать когда угодно</li>
+          <li data-i18n="pricing.sup2F3">Приоритетный отклик и прямая связь</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-line pc-cta" data-wa="pricing.waSup" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D1%82%D0%B5%D1%85%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <div class="price-notes reveal">
+      <span data-i18n="pricing.n1">Гарантия: 30 дней бесплатных исправлений после запуска</span>
+      <span data-i18n="pricing.n2">Оплата: 50% на старте, 50% при сдаче проекта</span>
+      <span data-i18n="pricing.n3">Бесплатная консультация — 30 минут по вашей задаче</span>
+    </div>
+
+    <div class="price-cta-all reveal">
+      <p data-i18n="pricing.ctaAll">Не знаете, что выбрать? Напишите — подберём пакет под вашу задачу вместе.</p>
+      <div class="cta-all-row">
+        <a class="btn btn-line" data-wa="pricing.waAll" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D1%8E%20%D0%B2%D0%B0%D1%88%20%D0%BF%D1%80%D0%B0%D0%B9%D1%81%20%E2%80%94%20%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B8%D1%82%D0%B5%20%D0%B2%D1%8B%D0%B1%D1%80%D0%B0%D1%82%D1%8C%20%D0%BF%D0%BE%D0%B4%D1%85%D0%BE%D0%B4%D1%8F%D1%89%D0%B8%D0%B9%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:17px;height:17px"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.ctaAllBtn">Написать в WhatsApp</span>
+        </a>
+        <a class="btn btn-line" href="https://t.me/zhanmate" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:17px;height:17px"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg>
+          <span>Telegram — @zhanmate</span>
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1422,6 +1768,16 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         <h2 data-i18n="contact.h2">Расскажите о&nbsp;проекте</h2>
         <p data-i18n="contact.desc">Заполните форму или напишите напрямую — ответим в течение дня и предложим, как реализовать идею.</p>
         <div class="cinfo-list">
+          <a href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20SITS%20%E2%80%94%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82." data-wa="pricing.waAll" target="_blank" rel="noopener" class="cinfo">
+            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg></div>
+            <div><div class="ci-k">WhatsApp</div><div class="ci-v">+7 777 496 13 58</div></div>
+            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+          </a>
+          <a href="https://t.me/zhanmate" target="_blank" rel="noopener" class="cinfo">
+            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></div>
+            <div><div class="ci-k">Telegram</div><div class="ci-v">@zhanmate</div></div>
+            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+          </a>
           <a href="https://www.instagram.com/sariyev.it.solutions/" target="_blank" rel="noopener" class="cinfo">
             <div class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div>
             <div><div class="ci-k">Instagram</div><div class="ci-v">@sariyev.it.solutions</div></div>
@@ -1445,7 +1801,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         </div>
       </div>
       <div class="reveal">
-        <p class="contact-pricing" data-i18n="contact.pricing">Стоимость рассчитываем индивидуально под объём работ — обсудим после того, как с вами свяжется наш администратор</p>
+        <p class="contact-pricing" data-i18n="contact.pricing">Готовые пакеты и цены — в разделе «Прайс». Нестандартные задачи считаем индивидуально под объём работ.</p>
         <form class="contact-form" id="contactForm">
           <div class="form-fields" id="formFields">
             <div class="hp-field" aria-hidden="true">
@@ -1488,11 +1844,14 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
           <a href="#services" data-i18n="nav.services">Услуги</a>
           <a href="#process" data-i18n="nav.process">Как работаем</a>
           <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+          <a href="#pricing" data-i18n="nav.pricing">Прайс</a>
           <a href="#about" data-i18n="nav.about">О нас</a>
           <a href="#contact" data-i18n="nav.contact">Контакты</a>
         </div>
         <div class="foot-col">
           <h5 data-i18n="footer.socTitle">Соцсети</h5>
+          <a href="https://wa.me/77774961358" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://t.me/zhanmate" target="_blank" rel="noopener">Telegram</a>
           <a href="https://www.instagram.com/sariyev.it.solutions/" target="_blank" rel="noopener">Instagram</a>
           <a href="https://www.youtube.com/@sariyev.it.solutions" target="_blank" rel="noopener">YouTube</a>
           <a href="https://www.linkedin.com/in/alizhan-sariyev-5a3804278/" target="_blank" rel="noopener">LinkedIn</a>
@@ -1530,13 +1889,13 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 const I18N = {
   ru: {
     _meta: { title: 'SITS — IT-студия полного цикла', ogTitle: 'SITS — Превращаем идеи в цифровые продукты', description: 'SITS — Sariyev IT Solutions. IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка.', locale: 'ru_RU' },
-    nav: { services:'Услуги', process:'Как работаем', portfolio:'Портфолио', about:'О нас', contact:'Контакты', cta:'Обсудить проект', menu:'Меню', themeToggle:'Сменить тему' },
+    nav: { services:'Услуги', process:'Как работаем', portfolio:'Портфолио', pricing:'Прайс', about:'О нас', contact:'Контакты', cta:'Обсудить проект', menu:'Меню', themeToggle:'Сменить тему' },
     a11y: { skipToContent:'Перейти к содержимому' },
     cmdk: {
       placeholder:'Найти раздел или действие…', empty:'Ничего не найдено',
       navigate:'навигация', select:'выбрать',
       hintServices:'Полный цикл разработки', hintProcess:'Как мы работаем',
-      hintPortfolio:'Избранные проекты', hintAbout:'О студии', hintContact:'Связаться',
+      hintPortfolio:'Избранные проекты', hintPricing:'Пакеты и цены', hintAbout:'О студии', hintContact:'Связаться',
       langRu:'Переключить на русский', langEn:'Switch to English', langKk:'Қазақ тіліне өту',
       toggleTheme:'Сменить тему', hintTheme:'Светлая / тёмная',
       open:'Открыть командную палитру (⌘K)',
@@ -1603,6 +1962,68 @@ const I18N = {
         '10':'Премиум-сайт шоурума камня (Астана). Спечённый камень SINISO, керамогранит, мрамор. Расчёт, 3D-визуализация, монтаж под ключ.',
       },
     },
+    pricing: {
+      tag:'Прайс', h2:'Пакеты и цены',
+      desc:'Фиксированные цены и новейшие технологии — AI на базе Claude (Anthropic). Каждый пакет под ключ: от идеи до запуска.',
+      promo:'Акция месяца: скидки до −67% на все пакеты — только с 1 июля по 1 августа. Успейте зафиксировать цену.',
+      b1:'до −67%', from:'от', perMonth:'/мес', monthly:'Ежемесячно', priceLbl:'Стоимость', allIn:'Фото и видео включены',
+      c1H:'Лендинг', c1Sub:'Сайт-визитка под портфолио, бизнес или услуги — быстрый, современный, продающий.',
+      c1O1:'Без фото и видео', c1O2:'С фото и видео',
+      c1F1:'Индивидуальный дизайн под ваш бренд',
+      c1F2:'Адаптив: телефон, планшет, ПК',
+      c1F3:'Базовое SEO и быстрая загрузка',
+      c1F4:'Форма заявок + кнопка WhatsApp',
+      c1F5:'Домен, хостинг и SSL — настроим всё',
+      c1F6:'Запуск за 3–7 дней',
+      c2H:'Лендинг + AI', c2Sub:'Сайт со встроенным AI-автоответчиком и навигатором на базе Claude — отвечает клиентам за вас, 24/7.',
+      c2F1:'Всё из пакета «Лендинг»',
+      c2F2:'AI-автоответчик 24/7 на базе Claude',
+      c2F3:'AI-навигатор: ведёт клиента по услугам и ценам',
+      c2F4:'Обучен на данных вашего бизнеса',
+      c2F5:'Интеграция с WhatsApp',
+      c2F6:'Профессиональные фото и видео включены',
+      c3H:'Лендинг + софт', c3Sub:'Сайт плюс программа под ваши процессы: учёт, каталог, личный кабинет — что нужно бизнесу.',
+      c3F1:'Всё из пакета «Лендинг»',
+      c3F2:'Софт под задачу: учёт, каталог, калькулятор, кабинет',
+      c3F3:'Админ-панель и база данных',
+      c3F4:'Приём и учёт заявок в одном месте',
+      c3F5:'Обучим работе с системой',
+      c4H:'Лендинг + софт + AI', c4Sub:'Максимальный пакет: сайт, софт и AI-автоматизация на базе Claude в одном решении.',
+      c4F1:'Всё из пакетов «Лендинг» и «Софт»',
+      c4F2:'AI-ассистент на базе Claude',
+      c4F3:'Автоматизация заявок и рутинных задач',
+      c4F4:'Профессиональные фото и видео включены',
+      c4F5:'Аналитика и отчёты',
+      c5H:'Автоматизация бизнеса под ключ', c5Sub:'Полная цифровизация компании — новейшие технологии и AI-агенты на базе Claude. Разбираем процессы, убираем рутину, ускоряем бизнес.',
+      c5F1:'Аудит процессов и план автоматизации',
+      c5F2:'CRM, учёт и внутренние инструменты',
+      c5F3:'AI-агенты на базе Claude под задачи бизнеса',
+      c5F4:'Интеграции: WhatsApp, Kaspi, 1C, платёжные системы',
+      c5F5:'Обучение команды',
+      c5F6:'Первый месяц поддержки — в подарок',
+      supH:'Техподдержка', supSub:'Любой пакет можно взять с ежемесячной поддержкой или без неё — подключается и отключается в любой месяц.',
+      sup1H:'Классическая', sup1Sub:'Спокойный ритм: собираете пожелания за неделю — мы аккуратно вносим правки.',
+      sup1F1:'4 правки в месяц — по одной в неделю',
+      sup1F2:'В конце недели присылаете список: что поправить, убрать или добавить',
+      sup1F3:'Мониторинг работоспособности сайта',
+      sup2H:'С особым вниманием', sup2Sub:'Максимальная скорость: пишете в любой момент — правки уходят в работу сразу.',
+      sup2F1:'До 15 правок в месяц',
+      sup2F2:'Правки можно присылать когда угодно',
+      sup2F3:'Приоритетный отклик и прямая связь',
+      n1:'Гарантия: 30 дней бесплатных исправлений после запуска',
+      n2:'Оплата: 50% на старте, 50% при сдаче проекта',
+      n3:'Бесплатная консультация — 30 минут по вашей задаче',
+      cta:'Обсудить в WhatsApp',
+      ctaAll:'Не знаете, что выбрать? Напишите — подберём пакет под вашу задачу вместе.',
+      ctaAllBtn:'Написать в WhatsApp',
+      wa1:'Здравствуйте! Интересует пакет «Лендинг» по акции. Хочу обсудить проект.',
+      wa2:'Здравствуйте! Интересует пакет «Лендинг + AI» за 120 000 ₸ по акции. Хочу обсудить проект.',
+      wa3:'Здравствуйте! Интересует пакет «Лендинг + софт» за 120 000 ₸ по акции. Хочу обсудить проект.',
+      wa4:'Здравствуйте! Интересует пакет «Лендинг + софт + AI» за 150 000 ₸ по акции. Хочу обсудить проект.',
+      wa5:'Здравствуйте! Интересует автоматизация бизнеса под ключ. Хочу обсудить детали.',
+      waSup:'Здравствуйте! Интересует техподдержка сайта. Хочу обсудить условия.',
+      waAll:'Здравствуйте! Пишу с сайта SITS — хочу обсудить проект.',
+    },
     about: {
       tag:'О нас', role:'Founder',
       h2:'Студия с подходом, а не конвейером',
@@ -1629,7 +2050,7 @@ const I18N = {
       labelType:'Тип проекта', phType:'Сайт, приложение, игра…',
       labelMsg:'О проекте', phMsg:'Пара слов о задаче, сроках и бюджете',
       submit:'Отправить заявку', sending:'Отправляем…',
-      pricing:'Стоимость рассчитываем индивидуально под объём работ — обсудим после того, как с вами свяжется наш администратор',
+      pricing:'Готовые пакеты и цены — в разделе «Прайс». Нестандартные задачи считаем индивидуально под объём работ.',
       note:'Нажимая «Отправить», вы соглашаетесь на обработку данных для связи.',
       successH:'Заявка отправлена', successP:'Спасибо — мы свяжемся с вами в ближайшее время.',
       errorAlert:'Не удалось отправить. Попробуйте ещё раз или напишите нам в Instagram.',
@@ -1648,13 +2069,13 @@ const I18N = {
 
   en: {
     _meta: { title: 'SITS — Full-Cycle IT Studio', ogTitle: 'SITS — Turning ideas into digital products', description: 'SITS — Sariyev IT Solutions. A full-cycle IT studio: websites, mobile apps, games, business automation, AI content and IT support.', locale: 'en_US' },
-    nav: { services:'Services', process:'Process', portfolio:'Work', about:'About', contact:'Contact', cta:'Start a project', menu:'Menu', themeToggle:'Toggle theme' },
+    nav: { services:'Services', process:'Process', portfolio:'Work', pricing:'Pricing', about:'About', contact:'Contact', cta:'Start a project', menu:'Menu', themeToggle:'Toggle theme' },
     a11y: { skipToContent:'Skip to content' },
     cmdk: {
       placeholder:'Search a section or action…', empty:'Nothing found',
       navigate:'navigate', select:'select',
       hintServices:'Full-cycle services', hintProcess:'How we work',
-      hintPortfolio:'Featured projects', hintAbout:'About the studio', hintContact:'Get in touch',
+      hintPortfolio:'Featured projects', hintPricing:'Packages & prices', hintAbout:'About the studio', hintContact:'Get in touch',
       langRu:'Switch to Russian', langEn:'Switch to English', langKk:'Switch to Kazakh',
       toggleTheme:'Toggle theme', hintTheme:'Light / dark',
       open:'Open command palette (⌘K)',
@@ -1721,6 +2142,68 @@ const I18N = {
         '10':'Premium stone showroom site (Astana). SINISO sintered stone, porcelain, marble. Calculation, 3D viz, turn-key installation.',
       },
     },
+    pricing: {
+      tag:'Pricing', h2:'Packages & prices',
+      desc:'Fixed prices and cutting-edge technology — AI powered by Claude (Anthropic). Every package is turnkey: from idea to launch.',
+      promo:'Deal of the month: up to −67% off all packages — July 1 to August 1 only. Lock in your price.',
+      b1:'up to −67%', from:'from', perMonth:'/mo', monthly:'Monthly', priceLbl:'Price', allIn:'Photo & video included',
+      c1H:'Landing page', c1Sub:'A site for your portfolio, business or services — fast, modern and built to sell.',
+      c1O1:'Without photo & video', c1O2:'With photo & video',
+      c1F1:'Custom design for your brand',
+      c1F2:'Responsive: phone, tablet, desktop',
+      c1F3:'Base SEO and fast loading',
+      c1F4:'Lead form + WhatsApp button',
+      c1F5:'Domain, hosting and SSL — all set up for you',
+      c1F6:'Launch in 3–7 days',
+      c2H:'Landing + AI', c2Sub:'A site with a built-in AI auto-responder and navigator powered by Claude — answers your clients 24/7.',
+      c2F1:'Everything in “Landing page”',
+      c2F2:'24/7 AI auto-responder powered by Claude',
+      c2F3:'AI navigator: guides clients through services and prices',
+      c2F4:'Trained on your business data',
+      c2F5:'WhatsApp integration',
+      c2F6:'Professional photo & video included',
+      c3H:'Landing + software', c3Sub:'A site plus software for your workflows: records, catalog, client area — whatever your business needs.',
+      c3F1:'Everything in “Landing page”',
+      c3F2:'Software for your task: records, catalog, calculator, client area',
+      c3F3:'Admin panel and database',
+      c3F4:'All leads collected and tracked in one place',
+      c3F5:'Team onboarding included',
+      c4H:'Landing + software + AI', c4Sub:'The full stack: site, software and Claude-powered AI automation in one solution.',
+      c4F1:'Everything in “Landing” and “Software”',
+      c4F2:'AI assistant powered by Claude',
+      c4F3:'Automated leads and routine tasks',
+      c4F4:'Professional photo & video included',
+      c4F5:'Analytics and reports',
+      c5H:'Turnkey business automation', c5Sub:'Full digitalization of your company — cutting-edge technology and Claude-powered AI agents. We map your processes, remove the routine and speed up the business.',
+      c5F1:'Process audit and automation plan',
+      c5F2:'CRM, records and internal tools',
+      c5F3:'Claude-powered AI agents for your business tasks',
+      c5F4:'Integrations: WhatsApp, Kaspi, 1C, payment systems',
+      c5F5:'Team training',
+      c5F6:'First month of support — free',
+      supH:'Support plans', supSub:'Add monthly support to any package — or go without. Enable or cancel any month.',
+      sup1H:'Classic', sup1Sub:'A calm rhythm: collect your notes during the week — we apply them carefully.',
+      sup1F1:'4 tweaks per month — one per week',
+      sup1F2:'Send a weekly list: what to fix, remove or add',
+      sup1F3:'Site uptime monitoring',
+      sup2H:'Priority care', sup2Sub:'Maximum speed: message any time — changes go straight into work.',
+      sup2F1:'Up to 15 tweaks per month',
+      sup2F2:'Send requests whenever you like',
+      sup2F3:'Priority response and direct contact',
+      n1:'Warranty: 30 days of free fixes after launch',
+      n2:'Payment: 50% upfront, 50% on delivery',
+      n3:'Free 30-minute consultation on your task',
+      cta:'Chat on WhatsApp',
+      ctaAll:'Not sure which package fits? Message me — we’ll pick one together.',
+      ctaAllBtn:'Message on WhatsApp',
+      wa1:'Hi! I’m interested in the “Landing page” package deal. I’d like to discuss a project.',
+      wa2:'Hi! I’m interested in the “Landing + AI” package at 120 000 KZT. I’d like to discuss a project.',
+      wa3:'Hi! I’m interested in the “Landing + software” package at 120 000 KZT. I’d like to discuss a project.',
+      wa4:'Hi! I’m interested in the “Landing + software + AI” package at 150 000 KZT. I’d like to discuss a project.',
+      wa5:'Hi! I’m interested in turnkey business automation. I’d like to discuss the details.',
+      waSup:'Hi! I’m interested in a website support plan. I’d like to discuss the terms.',
+      waAll:'Hi! I’m writing from the SITS website — I’d like to discuss a project.',
+    },
     about: {
       tag:'About', role:'Founder',
       h2:'A studio with craft, not a factory line',
@@ -1747,7 +2230,7 @@ const I18N = {
       labelType:'Project type', phType:'Site, app, game…',
       labelMsg:'About the project', phMsg:'A few words on the task, timeline and budget',
       submit:'Send request', sending:'Sending…',
-      pricing:'Pricing is calculated individually by scope — we’ll discuss it once our administrator reaches out',
+      pricing:'Ready-made packages and prices are in the Pricing section. Custom work is quoted individually by scope.',
       note:'By clicking "Send", you consent to your data being used for contact.',
       successH:'Request sent', successP:'Thanks — we’ll get back to you shortly.',
       errorAlert:'Couldn’t send. Please try again or message us on Instagram.',
@@ -1766,13 +2249,13 @@ const I18N = {
 
   kk: {
     _meta: { title: 'SITS — Толық циклді IT-студия', ogTitle: 'SITS — Идеяларды цифрлық өнімдерге айналдырамыз', description: 'SITS — Sariyev IT Solutions. Толық циклді IT-студия: сайттар, мобильді қосымшалар, ойындар, бизнес-автоматтандыру, AI-контент және IT-қолдау.', locale: 'kk_KZ' },
-    nav: { services:'Қызметтер', process:'Жұмыс тәртібі', portfolio:'Жұмыстар', about:'Біз туралы', contact:'Байланыс', cta:'Жобаны талқылау', menu:'Мәзір', themeToggle:'Тақырыпты ауыстыру' },
+    nav: { services:'Қызметтер', process:'Жұмыс тәртібі', portfolio:'Жұмыстар', pricing:'Бағалар', about:'Біз туралы', contact:'Байланыс', cta:'Жобаны талқылау', menu:'Мәзір', themeToggle:'Тақырыпты ауыстыру' },
     a11y: { skipToContent:'Мазмұнға өту' },
     cmdk: {
       placeholder:'Бөлім немесе әрекетті іздеу…', empty:'Ештеңе табылмады',
       navigate:'навигация', select:'таңдау',
       hintServices:'Толық даму циклі', hintProcess:'Біз қалай жұмыс істейміз',
-      hintPortfolio:'Таңдаулы жобалар', hintAbout:'Студия туралы', hintContact:'Байланысу',
+      hintPortfolio:'Таңдаулы жобалар', hintPricing:'Пакеттер мен бағалар', hintAbout:'Студия туралы', hintContact:'Байланысу',
       langRu:'Орыс тіліне өту', langEn:'English', langKk:'Қазақ тілі',
       toggleTheme:'Тақырыпты ауыстыру', hintTheme:'Ашық / қара',
       open:'Командалық палитраны ашу (⌘K)',
@@ -1839,6 +2322,68 @@ const I18N = {
         '10':'Астана тас шоурумының премиум-сайты. SINISO спечен тас, керамогранит, мрамор. Есептеу, 3D-визуализация, кілт астында монтаж.',
       },
     },
+    pricing: {
+      tag:'Бағалар', h2:'Пакеттер мен бағалар',
+      desc:'Бекітілген бағалар және ең жаңа технологиялар — Claude (Anthropic) негізіндегі AI. Әр пакет — идеядан іске қосуға дейін дайын шешім.',
+      promo:'Ай науқаны: барлық пакеттерге −67%-ға дейін жеңілдік — тек 1 шілдеден 1 тамызға дейін. Бағаны бекітіп үлгеріңіз.',
+      b1:'−67%-ға дейін', from:'бастап', perMonth:'/ай', monthly:'Ай сайын', priceLbl:'Бағасы', allIn:'Фото мен видео кіреді',
+      c1H:'Лендинг', c1Sub:'Портфолио, бизнес немесе қызметтерге арналған сайт — жылдам, заманауи, сатуға бағытталған.',
+      c1O1:'Фото мен видеосыз', c1O2:'Фото және видеомен',
+      c1F1:'Брендіңізге арналған жеке дизайн',
+      c1F2:'Адаптив: телефон, планшет, компьютер',
+      c1F3:'Базалық SEO және жылдам жүктелу',
+      c1F4:'Өтінім формасы + WhatsApp батырмасы',
+      c1F5:'Домен, хостинг және SSL — бәрін баптаймыз',
+      c1F6:'3–7 күнде іске қосу',
+      c2H:'Лендинг + AI', c2Sub:'Claude негізіндегі AI-автожауапбергіші мен навигаторы бар сайт — клиенттерге сіздің орныңызға 24/7 жауап береді.',
+      c2F1:'«Лендинг» пакетіндегінің бәрі',
+      c2F2:'Claude негізіндегі 24/7 AI-автожауапбергіш',
+      c2F3:'AI-навигатор: клиентті қызметтер мен бағалар бойынша бағыттайды',
+      c2F4:'Бизнесіңіздің деректерімен оқытылған',
+      c2F5:'WhatsApp интеграциясы',
+      c2F6:'Кәсіби фото мен видео кіреді',
+      c3H:'Лендинг + софт', c3Sub:'Сайт және процестеріңізге арналған бағдарлама: есеп, каталог, жеке кабинет — бизнеске не қажет болса.',
+      c3F1:'«Лендинг» пакетіндегінің бәрі',
+      c3F2:'Тапсырмаға арналған софт: есеп, каталог, калькулятор, кабинет',
+      c3F3:'Әкімші панелі және дерекқор',
+      c3F4:'Өтінімдерді бір жерде қабылдау және есепке алу',
+      c3F5:'Жүйемен жұмыс істеуге үйретеміз',
+      c4H:'Лендинг + софт + AI', c4Sub:'Максималды пакет: сайт, софт және Claude негізіндегі AI-автоматтандыру бір шешімде.',
+      c4F1:'«Лендинг» және «Софт» пакеттеріндегінің бәрі',
+      c4F2:'Claude негізіндегі AI-ассистент',
+      c4F3:'Өтінімдер мен күнделікті жұмысты автоматтандыру',
+      c4F4:'Кәсіби фото мен видео кіреді',
+      c4F5:'Аналитика және есептер',
+      c5H:'Бизнесті түгел автоматтандыру', c5Sub:'Компанияны толық цифрландыру — ең жаңа технологиялар және Claude негізіндегі AI-агенттер. Процестерді талдап, күнделікті рутинаны алып тастаймыз.',
+      c5F1:'Процестер аудиті және автоматтандыру жоспары',
+      c5F2:'CRM, есеп және ішкі құралдар',
+      c5F3:'Бизнес тапсырмаларына арналған Claude AI-агенттері',
+      c5F4:'Интеграциялар: WhatsApp, Kaspi, 1C, төлем жүйелері',
+      c5F5:'Команданы оқыту',
+      c5F6:'Қолдаудың алғашқы айы — сыйлыққа',
+      supH:'Техникалық қолдау', supSub:'Кез келген пакетті ай сайынғы қолдаумен немесе онсыз алуға болады — кез келген айда қосуға және өшіруге болады.',
+      sup1H:'Классикалық', sup1Sub:'Байсалды ырғақ: апта бойы тілектеріңізді жинайсыз — біз түзетулерді ұқыпты енгіземіз.',
+      sup1F1:'Айына 4 түзету — аптасына біреуден',
+      sup1F2:'Апта соңында тізім жібересіз: нені түзету, алып тастау немесе қосу',
+      sup1F3:'Сайттың жұмысын бақылау',
+      sup2H:'Ерекше назармен', sup2Sub:'Максималды жылдамдық: кез келген уақытта жазасыз — түзетулер бірден жұмысқа кетеді.',
+      sup2F1:'Айына 15 түзетуге дейін',
+      sup2F2:'Түзетулерді кез келген уақытта жіберуге болады',
+      sup2F3:'Басым жауап және тікелей байланыс',
+      n1:'Кепілдік: іске қосылғаннан кейін 30 күн тегін түзетулер',
+      n2:'Төлем: басында 50%, тапсырғанда 50%',
+      n3:'Тегін кеңес — тапсырмаңыз бойынша 30 минут',
+      cta:'WhatsApp-та талқылау',
+      ctaAll:'Қайсысын таңдарыңызды білмейсіз бе? Жазыңыз — пакетті бірге таңдаймыз.',
+      ctaAllBtn:'WhatsApp-қа жазу',
+      wa1:'Сәлеметсіз бе! «Лендинг» пакеті науқан бойынша қызықтырады. Жобаны талқылағым келеді.',
+      wa2:'Сәлеметсіз бе! «Лендинг + AI» пакеті (120 000 ₸, науқан) қызықтырады. Жобаны талқылағым келеді.',
+      wa3:'Сәлеметсіз бе! «Лендинг + софт» пакеті (120 000 ₸, науқан) қызықтырады. Жобаны талқылағым келеді.',
+      wa4:'Сәлеметсіз бе! «Лендинг + софт + AI» пакеті (150 000 ₸, науқан) қызықтырады. Жобаны талқылағым келеді.',
+      wa5:'Сәлеметсіз бе! Бизнесті түгел автоматтандыру қызықтырады. Егжей-тегжейін талқылағым келеді.',
+      waSup:'Сәлеметсіз бе! Сайтқа техникалық қолдау қызықтырады. Шарттарын талқылағым келеді.',
+      waAll:'Сәлеметсіз бе! SITS сайтынан жазып отырмын — жобаны талқылағым келеді.',
+    },
     about: {
       tag:'Біз туралы', role:'Founder',
       h2:'Конвейер емес — өз тәсілі бар студия',
@@ -1865,7 +2410,7 @@ const I18N = {
       labelType:'Жоба түрі', phType:'Сайт, қосымша, ойын…',
       labelMsg:'Жоба туралы', phMsg:'Тапсырма, мерзім мен бюджет туралы бірнеше сөз',
       submit:'Өтінімді жіберу', sending:'Жіберілуде…',
-      pricing:'Құнды жұмыс көлеміне қарай жеке есептейміз — әкімшіміз сізбен байланысқаннан кейін талқылаймыз',
+      pricing:'Дайын пакеттер мен бағалар — «Бағалар» бөлімінде. Бейстандарт тапсырмаларды жұмыс көлеміне қарай жеке есептейміз.',
       note:'«Жіберу» түймесін басу арқылы байланыс үшін деректерді өңдеуге келісім бересіз.',
       successH:'Өтінім жіберілді', successP:'Рахмет — жақын арада хабарласамыз.',
       errorAlert:'Жіберу сәтсіз аяқталды. Қайталап көріңіз немесе Instagram арқылы жазыңыз.',
@@ -1971,7 +2516,7 @@ const io = new IntersectionObserver(es => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* Назначаем индексы для stagger-анимации — внутри bento, pf-bento, process-rows */
-['.bento', '.pf-bento', '#process'].forEach(sel => {
+['.bento', '.pf-bento', '#process', '.price-grid', '.sup-grid'].forEach(sel => {
   const parent = document.querySelector(sel);
   if (!parent) return;
   parent.querySelectorAll('.reveal').forEach((el, i) => {
@@ -1997,6 +2542,11 @@ function applyLang(lang) {
   document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
     const v = pickI18n(lang, el.getAttribute('data-i18n-aria-label'));
     if (v != null) el.setAttribute('aria-label', v);
+  });
+  // WhatsApp-ссылки с готовым сообщением — текст локализуется под язык
+  document.querySelectorAll('[data-wa]').forEach(el => {
+    const v = pickI18n(lang, el.getAttribute('data-wa'));
+    if (v != null) el.setAttribute('href', 'https://wa.me/77774961358?text=' + encodeURIComponent(v));
   });
 
   // <html lang>
@@ -2116,8 +2666,11 @@ window.__formLoaded = Date.now();
       { id:'services', name: nav.services,   hint: t.hintServices,  icon:'grid',    action:() => location.hash='#services' },
       { id:'process',  name: nav.process,    hint: t.hintProcess,   icon:'flow',    action:() => location.hash='#process' },
       { id:'portfolio',name: nav.portfolio,  hint: t.hintPortfolio, icon:'image',   action:() => location.hash='#portfolio' },
+      { id:'pricing',  name: nav.pricing,    hint: t.hintPricing,   icon:'grid',    action:() => location.hash='#pricing' },
       { id:'about',    name: nav.about,      hint: t.hintAbout,     icon:'user',    action:() => location.hash='#about' },
       { id:'contact',  name: nav.contact,    hint: t.hintContact,   icon:'send',    action:() => location.hash='#contact' },
+      { id:'whatsapp', name: 'WhatsApp',     hint: '+7 777 496 13 58', icon:'send', action:() => open('https://wa.me/77774961358') },
+      { id:'telegram', name: 'Telegram',     hint: '@zhanmate',        icon:'send', action:() => open('https://t.me/zhanmate') },
       { id:'ru',       name: t.langRu,       hint: 'Русский',       icon:'globe',   action:() => switchLang('ru') },
       { id:'en',       name: t.langEn,       hint: 'English',       icon:'globe',   action:() => switchLang('en') },
       { id:'kk',       name: t.langKk,       hint: 'Қазақша',       icon:'globe',   action:() => switchLang('kk') },

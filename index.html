@@ -165,7 +165,7 @@
     { "@type": "Service", "name": "Мобильные приложения", "description": "Нативные и кроссплатформенные приложения для iOS и Android.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "Mobile app development" },
     { "@type": "Service", "name": "Разработка игр", "description": "Игры для мобильных и ПК на Unity и Unreal Engine.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "Game development" },
     { "@type": "Service", "name": "Бизнес-автоматизация", "description": "Автоматизация процессов и рутины бизнеса.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "Business process automation" },
-    { "@type": "Service", "name": "AI-контент и видеомонтаж", "description": "AI-ролики для TikTok и Instagram, профессиональный видеомонтаж.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "AI content and video editing" },
+    { "@type": "Service", "name": "AI-контент и видеомонтаж", "description": "Профессиональные съёмки в Астане, монтаж роликов и нарезки, ведение соцсетей, AI-контент.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "Video production, editing and social media" },
     { "@type": "Service", "name": "IT-поддержка 24/7", "description": "Техобслуживание и сопровождение продуктов 24/7.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "IT support" }
   ]
 }
@@ -899,6 +899,21 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 13 5 5L20 7'/%3E%3C/svg%3E") center/contain no-repeat;
           mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 13 5 5L20 7'/%3E%3C/svg%3E") center/contain no-repeat}
 .price-card.featured .pc-list{display:grid;grid-template-columns:repeat(2,1fr);gap:9px 32px}
+.price-card.wide{grid-column:1/-1}
+.price-card.wide .pc-list{display:grid;grid-template-columns:repeat(2,1fr);gap:9px 32px}
+/* Кейс медиа-продакшна — Damn Disn */
+.media-case{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:14px;padding:26px 30px;
+  border:1px solid var(--glass-line);border-radius:var(--r-xl);background:var(--glass);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi)}
+.media-case .mc-ico{width:54px;height:54px;border-radius:16px;flex:0 0 54px;display:flex;align-items:center;justify-content:center;
+  color:var(--red);border:1px solid var(--glass-line);background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi)}
+.media-case .mc-ico svg{width:26px;height:26px}
+.media-case .mc-body{flex:1;min-width:260px}
+.media-case .mc-k{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.media-case .mc-name{font-family:var(--font-display);font-weight:500;font-size:19px;letter-spacing:-.01em;margin-bottom:6px}
+.media-case p{color:var(--muted);font-size:14px;line-height:1.55;max-width:560px}
+.media-case .mc-links{display:flex;gap:22px;flex-wrap:wrap}
 .pc-cta-row{display:flex;gap:10px;margin-top:auto}
 .pc-cta{width:100%;justify-content:center;flex:1;min-width:0}
 .pc-cta svg{width:17px;height:17px;flex-shrink:0}
@@ -917,7 +932,8 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .price-cta-all p{color:var(--muted);font-size:15.5px}
 @media(max-width:940px){
   .price-grid,.sup-grid{grid-template-columns:1fr}
-  .price-card.featured .pc-list{grid-template-columns:1fr}
+  .price-card.featured .pc-list,.price-card.wide .pc-list{grid-template-columns:1fr}
+  .media-case{padding:22px}
 }
 
 /* ============ ABOUT ============ */
@@ -1407,7 +1423,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
           <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4.5 9 8.5v7l6 4v-15z"/><rect x="2.5" y="9.5" width="4.5" height="5" rx="1"/><path d="M18.5 9.5a4 4 0 0 1 0 5"/></svg></div>
           <div class="svc-num">05</div>
         </div>
-        <div class="svc-body"><h3 data-i18n="services.s5H">AI-контент и монтаж</h3><p data-i18n="services.s5P">AI-ролики для TikTok и Instagram, профессиональный видеомонтаж.</p><div class="svc-tags"><span data-i18n="services.s5T1">AI-видео</span><span data-i18n="services.s5T2">Reels / TikTok</span><span data-i18n="services.s5T3">Монтаж</span></div></div>
+        <div class="svc-body"><h3 data-i18n="services.s5H">AI-контент и монтаж</h3><p data-i18n="services.s5P">Съёмки в Астане с проф оборудованием, монтаж и нарезки, ведение соцсетей, AI-контент.</p><div class="svc-tags"><span data-i18n="services.s5T1">AI-видео</span><span data-i18n="services.s5T2">Reels / TikTok</span><span data-i18n="services.s5T3">Монтаж</span></div></div>
       </div>
       <div class="b-card s-support reveal">
         <div class="svc-top">
@@ -1626,6 +1642,163 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       </article>
     </div>
 
+    <h3 class="sub-head reveal" data-i18n="pricing.mH">Медиа-продакшн</h3>
+    <p class="sub-desc reveal" data-i18n="pricing.mSub">Съёмки, монтаж и продвижение — своя команда, профессиональное оборудование и выезд по Астане. Все цены ниже — со скидкой до конца июля.</p>
+    <div class="price-grid media-grid">
+      <!-- M1. Проф съёмка -->
+      <article class="price-card reveal">
+        <span class="pc-badge" data-i18n="pricing.mBadge">до конца июля</span>
+        <h3 data-i18n="pricing.m1H">Проф съёмка по Астане</h3>
+        <p class="pc-sub" data-i18n="pricing.m1Sub">Выездная съёмка с профессиональным оборудованием — фотограф и оператор под вашу задачу.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m1Lbl">Выезд по Астане</span>
+            <span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 150 000 ₸</b></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.m1F1">Проф камеры, свет и звук</li>
+          <li data-i18n="pricing.m1F2">Проф фотограф и оператор</li>
+          <li data-i18n="pricing.m1F3">Реклама, соцсети, каталог, мероприятия</li>
+          <li data-i18n="pricing.m1F4">Материал готов к монтажу и публикации</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.waM1" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- M2. Монтаж -->
+      <article class="price-card reveal">
+        <span class="pc-badge" data-i18n="pricing.mBadge">до конца июля</span>
+        <h3 data-i18n="pricing.m2H">Монтаж видеороликов</h3>
+        <p class="pc-sub" data-i18n="pricing.m2Sub">Монтируем ролики любого формата — от подкастов и YouTube до рекламы.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m2Lbl">Часовой ролик</span>
+            <span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 150 000 ₸</b><span class="pc-per" data-i18n="pricing.perVideo">/ролик</span></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.m2F1">Подкасты и часовые YouTube-ролики</li>
+          <li data-i18n="pricing.m2F2">Цветокоррекция и чистка звука</li>
+          <li data-i18n="pricing.m2F3">Титры, субтитры и графика</li>
+          <li data-i18n="pricing.m2F4">Кейс: подкаст Damn Disn</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.waM2" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- M3. Нарезки -->
+      <article class="price-card reveal">
+        <span class="pc-badge" data-i18n="pricing.mBadge">до конца июля</span>
+        <h3 data-i18n="pricing.m3H">Нарезки на заказ</h3>
+        <p class="pc-sub" data-i18n="pricing.m3Sub">Короткие вертикальные ролики из ваших видео — под Reels, TikTok и Shorts.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m3Lbl1">За 1 нарезку</span>
+            <span class="pc-vals"><b class="pc-new">4 500 ₸</b></span>
+          </div>
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m3Lbl2">Пакет: 12 нарезок с одного ролика</span>
+            <span class="pc-vals"><b class="pc-new">54 000 ₸</b></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.m3F1">Отбираем лучшие моменты</li>
+          <li data-i18n="pricing.m3F2">Субтитры, обложки и динамичный монтаж</li>
+          <li data-i18n="pricing.m3F3">Формат под Reels / TikTok / Shorts</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.waM3" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- M4. Таргет -->
+      <article class="price-card reveal">
+        <span class="pc-badge" data-i18n="pricing.mBadge">до конца июля</span>
+        <h3 data-i18n="pricing.m4H">Таргет-запуски</h3>
+        <p class="pc-sub" data-i18n="pricing.m4Sub">Настраиваем и ведём рекламу так, чтобы заявки шли стабильно.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m4Lbl">Запуск рекламы</span>
+            <span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 150 000 ₸</b></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.m4F1">Реклама в Instagram и TikTok</li>
+          <li data-i18n="pricing.m4F2">Стратегия, креативы и тексты</li>
+          <li data-i18n="pricing.m4F3">Аналитика и прозрачные отчёты</li>
+          <li data-i18n="pricing.m4F4">Оптимизация рекламного бюджета</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.waM4" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- M5. Мобилография и ведение соцсетей (wide) -->
+      <article class="price-card wide reveal">
+        <span class="pc-badge" data-i18n="pricing.mBadge">до конца июля</span>
+        <h3 data-i18n="pricing.m5H">Мобилография и ведение соцсетей</h3>
+        <p class="pc-sub" data-i18n="pricing.m5Sub">Ведём бизнес-аккаунты TikTok и Instagram под ключ — качественно и на высшем уровне, с аналитикой каждый месяц.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m5Lbl1">TikTok + Instagram</span>
+            <span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 200 000 ₸</b><span class="pc-per" data-i18n="pricing.perMonth">/мес</span></span>
+          </div>
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m5Lbl2">С контентом и ведением сторис</span>
+            <span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 300 000 ₸</b><span class="pc-per" data-i18n="pricing.perMonth">/мес</span></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.m5F1">Контент-план и рубрики под ваш бизнес</li>
+          <li data-i18n="pricing.m5F2">Мобилограф на выезд по Астане</li>
+          <li data-i18n="pricing.m5F3">Монтаж Reels и оформление профиля</li>
+          <li data-i18n="pricing.m5F4">Регулярные посты и сторис</li>
+          <li data-i18n="pricing.m5F5">Аналитика и отчёт каждый месяц</li>
+          <li data-i18n="pricing.m5F6">Погружаемся в ваш бизнес и говорим его языком</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.waM5" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Кейс: Damn Disn × Maunfeld -->
+    <div class="media-case reveal">
+      <div class="mc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12zM9.8 15V9l5.2 3-5.2 3z"/></svg></div>
+      <div class="mc-body">
+        <div class="mc-k" data-i18n="pricing.caseK">YouTube-кейс</div>
+        <div class="mc-name">Damn Disn</div>
+        <p data-i18n="pricing.caseP">Подкаст на YouTube, который SITS ведёт под ключ: съёмка, монтаж и нарезки — официально, по контракту с Maunfeld.</p>
+      </div>
+      <div class="mc-links">
+        <a class="alink" href="https://www.youtube.com/@damndisnn" target="_blank" rel="noopener"><span data-i18n="pricing.caseBtn1">Смотреть канал</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        <a class="alink" href="https://www.maunfeld.kz/catalog" target="_blank" rel="noopener"><span>Maunfeld</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+      </div>
+    </div>
+
     <h3 class="sub-head reveal" data-i18n="pricing.supH">Техподдержка</h3>
     <p class="sub-desc reveal" data-i18n="pricing.supSub">Любой пакет можно взять с ежемесячной поддержкой или без неё — подключается и отключается в любой месяц.</p>
     <div class="sup-grid">
@@ -1679,6 +1852,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       <span data-i18n="pricing.n1">Гарантия: 30 дней бесплатных исправлений после запуска</span>
       <span data-i18n="pricing.n2">Оплата: 50% на старте, 50% при сдаче проекта</span>
       <span data-i18n="pricing.n3">Бесплатная консультация — 30 минут по вашей задаче</span>
+      <span data-i18n="pricing.n4">Также: сайты, софт и приложения под заказ, автоматизация любого бизнеса</span>
     </div>
 
     <div class="price-cta-all reveal">
@@ -1920,7 +2094,7 @@ const I18N = {
       s2H:'Мобильные приложения', s2P:'Нативные и кроссплатформенные приложения для iOS и Android.',
       s3H:'Разработка игр', s3P:'Игры для мобильных и ПК на Unity и Unreal Engine.',
       s4H:'Бизнес-автоматизация', s4P:'Автоматизация процессов и рутины бизнеса.',
-      s5H:'AI-контент и монтаж', s5P:'AI-ролики для TikTok и Instagram, профессиональный видеомонтаж.',
+      s5H:'AI-контент и монтаж', s5P:'Съёмки в Астане с проф оборудованием, монтаж и нарезки, ведение соцсетей, AI-контент.',
       s5T1:'AI-видео', s5T2:'Reels / TikTok', s5T3:'Монтаж',
       s6H:'IT-поддержка', s6P:'Техобслуживание и сопровождение продуктов 24/7.',
       s6T1:'SLA', s6T2:'Мониторинг', s6T3:'Сопровождение',
@@ -2001,6 +2175,47 @@ const I18N = {
       c5F4:'Интеграции: WhatsApp, Kaspi, 1C, платёжные системы',
       c5F5:'Обучение команды',
       c5F6:'Первый месяц поддержки — в подарок',
+      mH:'Медиа-продакшн', mSub:'Съёмки, монтаж и продвижение — своя команда, профессиональное оборудование и выезд по Астане. Все цены ниже — со скидкой до конца июля.',
+      mBadge:'до конца июля', perVideo:'/ролик',
+      m1H:'Проф съёмка по Астане', m1Sub:'Выездная съёмка с профессиональным оборудованием — фотограф и оператор под вашу задачу.',
+      m1Lbl:'Выезд по Астане',
+      m1F1:'Проф камеры, свет и звук',
+      m1F2:'Проф фотограф и оператор',
+      m1F3:'Реклама, соцсети, каталог, мероприятия',
+      m1F4:'Материал готов к монтажу и публикации',
+      m2H:'Монтаж видеороликов', m2Sub:'Монтируем ролики любого формата — от подкастов и YouTube до рекламы.',
+      m2Lbl:'Часовой ролик',
+      m2F1:'Подкасты и часовые YouTube-ролики',
+      m2F2:'Цветокоррекция и чистка звука',
+      m2F3:'Титры, субтитры и графика',
+      m2F4:'Кейс: подкаст Damn Disn',
+      m3H:'Нарезки на заказ', m3Sub:'Короткие вертикальные ролики из ваших видео — под Reels, TikTok и Shorts.',
+      m3Lbl1:'За 1 нарезку', m3Lbl2:'Пакет: 12 нарезок с одного ролика',
+      m3F1:'Отбираем лучшие моменты',
+      m3F2:'Субтитры, обложки и динамичный монтаж',
+      m3F3:'Формат под Reels / TikTok / Shorts',
+      m4H:'Таргет-запуски', m4Sub:'Настраиваем и ведём рекламу так, чтобы заявки шли стабильно.',
+      m4Lbl:'Запуск рекламы',
+      m4F1:'Реклама в Instagram и TikTok',
+      m4F2:'Стратегия, креативы и тексты',
+      m4F3:'Аналитика и прозрачные отчёты',
+      m4F4:'Оптимизация рекламного бюджета',
+      m5H:'Мобилография и ведение соцсетей', m5Sub:'Ведём бизнес-аккаунты TikTok и Instagram под ключ — качественно и на высшем уровне, с аналитикой каждый месяц.',
+      m5Lbl1:'TikTok + Instagram', m5Lbl2:'С контентом и ведением сторис',
+      m5F1:'Контент-план и рубрики под ваш бизнес',
+      m5F2:'Мобилограф на выезд по Астане',
+      m5F3:'Монтаж Reels и оформление профиля',
+      m5F4:'Регулярные посты и сторис',
+      m5F5:'Аналитика и отчёт каждый месяц',
+      m5F6:'Погружаемся в ваш бизнес и говорим его языком',
+      caseK:'YouTube-кейс',
+      caseP:'Подкаст на YouTube, который SITS ведёт под ключ: съёмка, монтаж и нарезки — официально, по контракту с Maunfeld.',
+      caseBtn1:'Смотреть канал',
+      waM1:'Здравствуйте! Интересует профессиональная съёмка в Астане. Хочу обсудить задачу.',
+      waM2:'Здравствуйте! Интересует монтаж видеоролика. Хочу обсудить детали.',
+      waM3:'Здравствуйте! Интересуют нарезки видео на заказ. Хочу обсудить детали.',
+      waM4:'Здравствуйте! Интересует запуск таргетированной рекламы. Хочу обсудить задачу.',
+      waM5:'Здравствуйте! Интересует мобилография и ведение соцсетей. Хочу обсудить детали.',
       supH:'Техподдержка', supSub:'Любой пакет можно взять с ежемесячной поддержкой или без неё — подключается и отключается в любой месяц.',
       sup1H:'Классическая', sup1Sub:'Спокойный ритм: собираете пожелания за неделю — мы аккуратно вносим правки.',
       sup1F1:'4 правки в месяц — по одной в неделю',
@@ -2013,6 +2228,7 @@ const I18N = {
       n1:'Гарантия: 30 дней бесплатных исправлений после запуска',
       n2:'Оплата: 50% на старте, 50% при сдаче проекта',
       n3:'Бесплатная консультация — 30 минут по вашей задаче',
+      n4:'Также: сайты, софт и приложения под заказ, автоматизация любого бизнеса',
       cta:'Обсудить в WhatsApp',
       ctaAll:'Не знаете, что выбрать? Напишите — подберём пакет под вашу задачу вместе.',
       ctaAllBtn:'Написать в WhatsApp',
@@ -2100,7 +2316,7 @@ const I18N = {
       s2H:'Mobile apps', s2P:'Native and cross-platform apps for iOS and Android.',
       s3H:'Game development', s3P:'Mobile and PC games on Unity and Unreal Engine.',
       s4H:'Business automation', s4P:'Streamlining routine processes and back-office workflows.',
-      s5H:'AI content & video', s5P:'AI-driven reels for TikTok and Instagram, professional video editing.',
+      s5H:'AI content & video', s5P:'Pro shoots in Astana, editing and short-form cuts, social media management, AI content.',
       s5T1:'AI video', s5T2:'Reels / TikTok', s5T3:'Editing',
       s6H:'IT support', s6P:'Maintenance and 24/7 product care after launch.',
       s6T1:'SLA', s6T2:'Monitoring', s6T3:'Support',
@@ -2181,6 +2397,47 @@ const I18N = {
       c5F4:'Integrations: WhatsApp, Kaspi, 1C, payment systems',
       c5F5:'Team training',
       c5F6:'First month of support — free',
+      mH:'Media production', mSub:'Shoots, editing and promotion — our own team, professional gear and on-location work across Astana. All prices below are discounted until the end of July.',
+      mBadge:'until end of July', perVideo:'/video',
+      m1H:'Pro shoots in Astana', m1Sub:'On-location shoots with professional equipment — a photographer and videographer for your task.',
+      m1Lbl:'On-location, Astana',
+      m1F1:'Pro cameras, lighting and sound',
+      m1F2:'Professional photographer and videographer',
+      m1F3:'Ads, social media, catalogs, events',
+      m1F4:'Footage ready for editing and publishing',
+      m2H:'Video editing', m2Sub:'We edit videos of any format — from podcasts and YouTube to ads.',
+      m2Lbl:'One-hour video',
+      m2F1:'Podcasts and hour-long YouTube videos',
+      m2F2:'Color grading and audio cleanup',
+      m2F3:'Titles, subtitles and graphics',
+      m2F4:'Case: the Damn Disn podcast',
+      m3H:'Custom short-form cuts', m3Sub:'Short vertical videos from your footage — for Reels, TikTok and Shorts.',
+      m3Lbl1:'Per cut', m3Lbl2:'Bundle: 12 cuts from one video',
+      m3F1:'We pick the best moments',
+      m3F2:'Subtitles, covers and dynamic editing',
+      m3F3:'Formatted for Reels / TikTok / Shorts',
+      m4H:'Targeted ads', m4Sub:'We set up and run ads so leads come in steadily.',
+      m4Lbl:'Campaign launch',
+      m4F1:'Instagram and TikTok advertising',
+      m4F2:'Strategy, creatives and copy',
+      m4F3:'Analytics and transparent reports',
+      m4F4:'Ad budget optimization',
+      m5H:'Mobile content & social media', m5Sub:'We run TikTok and Instagram business accounts end to end — top quality, with monthly analytics.',
+      m5Lbl1:'TikTok + Instagram', m5Lbl2:'With content and stories',
+      m5F1:'Content plan tailored to your business',
+      m5F2:'On-location mobile shoots in Astana',
+      m5F3:'Reels editing and profile design',
+      m5F4:'Regular posts and stories',
+      m5F5:'Analytics and a report every month',
+      m5F6:'We dive into your business and speak its language',
+      caseK:'YouTube case',
+      caseP:'A YouTube podcast run by SITS end to end: shooting, editing and cuts — officially, under contract with Maunfeld.',
+      caseBtn1:'Watch the channel',
+      waM1:'Hi! I’m interested in a professional shoot in Astana. I’d like to discuss the task.',
+      waM2:'Hi! I’m interested in video editing. I’d like to discuss the details.',
+      waM3:'Hi! I’m interested in custom short-form cuts. I’d like to discuss the details.',
+      waM4:'Hi! I’m interested in launching targeted ads. I’d like to discuss the task.',
+      waM5:'Hi! I’m interested in mobile content and social media management. I’d like to discuss the details.',
       supH:'Support plans', supSub:'Add monthly support to any package — or go without. Enable or cancel any month.',
       sup1H:'Classic', sup1Sub:'A calm rhythm: collect your notes during the week — we apply them carefully.',
       sup1F1:'4 tweaks per month — one per week',
@@ -2193,6 +2450,7 @@ const I18N = {
       n1:'Warranty: 30 days of free fixes after launch',
       n2:'Payment: 50% upfront, 50% on delivery',
       n3:'Free 30-minute consultation on your task',
+      n4:'Also: custom websites, software and apps, automation for any business',
       cta:'Chat on WhatsApp',
       ctaAll:'Not sure which package fits? Message me — we’ll pick one together.',
       ctaAllBtn:'Message on WhatsApp',
@@ -2280,7 +2538,7 @@ const I18N = {
       s2H:'Мобильді қосымшалар', s2P:'iOS және Android үшін нативті және кроссплатформалық қосымшалар.',
       s3H:'Ойындар жасау', s3P:'Mobile және PC ойындары — Unity мен Unreal Engine негізінде.',
       s4H:'Бизнес-автоматтандыру', s4P:'Бизнестегі процестер мен күнделікті жұмысты автоматтандыру.',
-      s5H:'AI-контент және монтаж', s5P:'TikTok пен Instagram үшін AI-роликтер, кәсіби бейне монтаж.',
+      s5H:'AI-контент және монтаж', s5P:'Астанада кәсіби құрылғылармен түсіру, монтаж бен нарезкалар, әлеуметтік желілерді жүргізу, AI-контент.',
       s5T1:'AI-бейне', s5T2:'Reels / TikTok', s5T3:'Монтаж',
       s6H:'IT-қолдау', s6P:'Өнімдерге 24/7 техникалық қызмет көрсету мен сүйемелдеу.',
       s6T1:'SLA', s6T2:'Мониторинг', s6T3:'Сүйемелдеу',
@@ -2361,6 +2619,47 @@ const I18N = {
       c5F4:'Интеграциялар: WhatsApp, Kaspi, 1C, төлем жүйелері',
       c5F5:'Команданы оқыту',
       c5F6:'Қолдаудың алғашқы айы — сыйлыққа',
+      mH:'Медиа-продакшн', mSub:'Түсірілім, монтаж және жылжыту — өз командамыз, кәсіби құрылғылар және Астана бойынша шығу. Төмендегі барлық бағалар — шілде айының соңына дейін жеңілдікпен.',
+      mBadge:'шілде соңына дейін', perVideo:'/ролик',
+      m1H:'Астанада кәсіби түсірілім', m1Sub:'Кәсіби құрылғылармен шығып түсіру — тапсырмаңызға арналған фотограф пен оператор.',
+      m1Lbl:'Астана бойынша шығу',
+      m1F1:'Кәсіби камералар, жарық және дыбыс',
+      m1F2:'Кәсіби фотограф және оператор',
+      m1F3:'Жарнама, әлеуметтік желілер, каталог, іс-шаралар',
+      m1F4:'Материал монтажға және жариялауға дайын',
+      m2H:'Видео монтаж', m2Sub:'Кез келген форматтағы роликтерді монтаждаймыз — подкасттан YouTube пен жарнамаға дейін.',
+      m2Lbl:'Бір сағаттық ролик',
+      m2F1:'Подкасттар және сағаттық YouTube-роликтер',
+      m2F2:'Түс коррекциясы және дыбысты тазалау',
+      m2F3:'Титрлер, субтитрлер және графика',
+      m2F4:'Кейс: Damn Disn подкасты',
+      m3H:'Тапсырыспен нарезкалар', m3Sub:'Видеоларыңыздан қысқа вертикал роликтер — Reels, TikTok және Shorts үшін.',
+      m3Lbl1:'1 нарезка үшін', m3Lbl2:'Пакет: бір роликтен 12 нарезка',
+      m3F1:'Ең үздік сәттерді таңдаймыз',
+      m3F2:'Субтитрлер, мұқабалар және динамикалық монтаж',
+      m3F3:'Reels / TikTok / Shorts форматында',
+      m4H:'Таргет-жарнама', m4Sub:'Өтінімдер тұрақты келуі үшін жарнаманы баптап, жүргіземіз.',
+      m4Lbl:'Жарнаманы іске қосу',
+      m4F1:'Instagram және TikTok жарнамасы',
+      m4F2:'Стратегия, креативтер және мәтіндер',
+      m4F3:'Аналитика және ашық есептер',
+      m4F4:'Жарнама бюджетін оңтайландыру',
+      m5H:'Мобилография және әлеуметтік желілерді жүргізу', m5Sub:'TikTok пен Instagram бизнес-аккаунттарын толық жүргіземіз — сапалы, жоғары деңгейде, ай сайынғы аналитикамен.',
+      m5Lbl1:'TikTok + Instagram', m5Lbl2:'Контент және сторис жүргізумен',
+      m5F1:'Бизнесіңізге арналған контент-жоспар',
+      m5F2:'Астана бойынша шығатын мобилограф',
+      m5F3:'Reels монтажы және профильді безендіру',
+      m5F4:'Тұрақты посттар мен сторис',
+      m5F5:'Ай сайын аналитика және есеп',
+      m5F6:'Бизнесіңізге терең бойлап, оның тілінде сөйлейміз',
+      caseK:'YouTube-кейс',
+      caseP:'SITS толық жүргізетін YouTube-подкаст: түсірілім, монтаж және нарезкалар — ресми түрде, Maunfeld келісімшарты бойынша.',
+      caseBtn1:'Арнаны көру',
+      waM1:'Сәлеметсіз бе! Астанадағы кәсіби түсірілім қызықтырады. Тапсырманы талқылағым келеді.',
+      waM2:'Сәлеметсіз бе! Видео монтаж қызықтырады. Егжей-тегжейін талқылағым келеді.',
+      waM3:'Сәлеметсіз бе! Тапсырыспен нарезкалар қызықтырады. Егжей-тегжейін талқылағым келеді.',
+      waM4:'Сәлеметсіз бе! Таргет-жарнаманы іске қосу қызықтырады. Тапсырманы талқылағым келеді.',
+      waM5:'Сәлеметсіз бе! Мобилография және әлеуметтік желілерді жүргізу қызықтырады. Егжей-тегжейін талқылағым келеді.',
       supH:'Техникалық қолдау', supSub:'Кез келген пакетті ай сайынғы қолдаумен немесе онсыз алуға болады — кез келген айда қосуға және өшіруге болады.',
       sup1H:'Классикалық', sup1Sub:'Байсалды ырғақ: апта бойы тілектеріңізді жинайсыз — біз түзетулерді ұқыпты енгіземіз.',
       sup1F1:'Айына 4 түзету — аптасына біреуден',
@@ -2373,6 +2672,7 @@ const I18N = {
       n1:'Кепілдік: іске қосылғаннан кейін 30 күн тегін түзетулер',
       n2:'Төлем: басында 50%, тапсырғанда 50%',
       n3:'Тегін кеңес — тапсырмаңыз бойынша 30 минут',
+      n4:'Сондай-ақ: тапсырыспен сайттар, софт пен қосымшалар, кез келген бизнесті автоматтандыру',
       cta:'WhatsApp-та талқылау',
       ctaAll:'Қайсысын таңдарыңызды білмейсіз бе? Жазыңыз — пакетті бірге таңдаймыз.',
       ctaAllBtn:'WhatsApp-қа жазу',

@@ -3,24 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!-- ROOT-REDIRECT-START -->
-<!-- Только на корне /. На /en и /kz build-script этот блок вырезает (URI уважается). -->
-<script>
-(function(){
-  var p = location.pathname;
-  if (p !== '/' && p !== '/index.html') return;
-  var saved = null; try { saved = localStorage.getItem('sits-lang'); } catch(e) {}
-  if (saved === 'en') return location.replace('/en');
-  if (saved === 'kk') return location.replace('/kz');
-  if (saved === 'ru') return;
-  var nl = (navigator.language || '').toLowerCase();
-  if (nl.indexOf('kk') === 0) return location.replace('/kz');
-  if (nl.indexOf('en') === 0) return location.replace('/en');
-})();
-</script>
-<!-- ROOT-REDIRECT-END -->
-<title>SITS — IT-студия полного цикла</title>
-<meta name="description" content="SITS — Sariyev IT Solutions. IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка." />
+<title>Прайс — SITS · Sariyev IT Solutions</title>
+<meta name="description" content="Прайс SITS: сайты и лендинги от 50 000 ₸, AI Video Creator, медиа-продакшн, автоматизация бизнеса и техподдержка. Скидки до конца июля." />
 <link rel="icon" type="image/png" href="brand/favicon.png" />
 <link rel="apple-touch-icon" href="brand/apple-touch-icon.png" />
 <link rel="manifest" href="/manifest.webmanifest" />
@@ -28,23 +12,19 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="SITS" />
 
-<link rel="canonical" href="https://sits-eta.vercel.app/" />
-<link rel="alternate" hreflang="ru" href="https://sits-eta.vercel.app/" />
-<link rel="alternate" hreflang="en" href="https://sits-eta.vercel.app/en" />
-<link rel="alternate" hreflang="kk" href="https://sits-eta.vercel.app/kz" />
-<link rel="alternate" hreflang="x-default" href="https://sits-eta.vercel.app/" />
+<link rel="canonical" href="https://sits-eta.vercel.app/price" />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="SITS — Sariyev IT Solutions" />
-<meta property="og:title" content="SITS — Превращаем идеи в цифровые продукты" />
+<meta property="og:title" content="Прайс SITS — пакеты, медиа-продакшн и AI-видео" />
 <meta property="og:description" content="IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка." />
-<meta property="og:url" content="https://sits-eta.vercel.app/" />
+<meta property="og:url" content="https://sits-eta.vercel.app/price" />
 <meta property="og:image" content="https://sits-eta.vercel.app/brand/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content="ru_RU" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="SITS — Превращаем идеи в цифровые продукты" />
+<meta name="twitter:title" content="Прайс SITS — пакеты, медиа-продакшн и AI-видео" />
 <meta name="twitter:description" content="IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент." />
 <meta name="twitter:image" content="https://sits-eta.vercel.app/brand/og-image.png" />
 <meta name="twitter:image:alt" content="SITS — Sariyev IT Solutions" />
@@ -1301,14 +1281,14 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
   <div class="wrap">
-    <a href="#hero" class="logo">SIT<b>S</b></a>
+    <a href="/" class="logo">SIT<b>S</b></a>
     <div class="nav-links">
-      <a href="#services" data-i18n="nav.services">Услуги</a>
-      <a href="#process" data-i18n="nav.process">Как работаем</a>
-      <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
-      <a href="/price" data-i18n="nav.pricing">Прайс</a>
-      <a href="#about" data-i18n="nav.about">О нас</a>
-      <a href="#contact" data-i18n="nav.contact">Контакты</a>
+      <a href="/#services" data-i18n="nav.services">Услуги</a>
+      <a href="/#process" data-i18n="nav.process">Как работаем</a>
+      <a href="/#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+      <a href="#pricing" data-i18n="nav.pricing">Прайс</a>
+      <a href="/#about" data-i18n="nav.about">О нас</a>
+      <a href="/#contact" data-i18n="nav.contact">Контакты</a>
     </div>
     <div class="nav-actions">
       <button class="cmdk-hint" id="cmdkHint" type="button" aria-label="Open command palette (⌘K)" data-i18n-aria-label="cmdk.open">
@@ -1324,19 +1304,19 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
       </button>
-      <a href="#contact" class="btn btn-primary magnetic" data-i18n="nav.cta">Обсудить проект</a>
+      <a href="/#contact" class="btn btn-primary magnetic" data-i18n="nav.cta">Обсудить проект</a>
     </div>
     <button class="burger" id="burger" data-i18n-aria-label="nav.menu" aria-label="Меню"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#services" data-i18n="nav.services">Услуги</a>
-  <a href="#process" data-i18n="nav.process">Как работаем</a>
-  <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
-  <a href="/price" data-i18n="nav.pricing">Прайс</a>
-  <a href="#about" data-i18n="nav.about">О нас</a>
-  <a href="#contact" data-i18n="nav.contact">Контакты</a>
+  <a href="/#services" data-i18n="nav.services">Услуги</a>
+  <a href="/#process" data-i18n="nav.process">Как работаем</a>
+  <a href="/#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+  <a href="#pricing" data-i18n="nav.pricing">Прайс</a>
+  <a href="/#about" data-i18n="nav.about">О нас</a>
+  <a href="/#contact" data-i18n="nav.contact">Контакты</a>
   <div class="mm-soc">
     <a href="https://wa.me/77774961358" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg></a>
     <a href="https://t.me/zhanmate" target="_blank" rel="noopener" class="icon-btn" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
@@ -1352,307 +1332,428 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 </div>
 
 <main id="main" tabindex="-1">
-<!-- ============ HERO ============ -->
-<section class="hero" id="hero">
-  <div class="wrap">
-    <div class="kicker"><span class="ln"></span><span data-i18n="hero.kicker">Sariyev IT Solutions — IT-студия полного цикла</span></div>
-    <h1 class="hero-title">
-      <span class="ln-mask"><span class="rise" style="animation-delay:.05s" data-i18n="hero.titleA">Превращаем</span></span>
-      <span class="ln-mask"><span class="rise" style="animation-delay:.16s" data-i18n="hero.titleB">идеи в</span></span>
-      <span class="ln-mask"><span class="rise" style="animation-delay:.27s"><span data-i18n="hero.titleC">продукты</span><span class="dot">.</span></span></span>
-    </h1>
-    <div class="hero-lower">
-      <p class="hero-sub"><span data-i18n="hero.sub">Сайты, приложения, игры, автоматизация, AI-контент и поддержка — </span><span class="em" data-i18n="hero.subEm">от идеи до запуска и сопровождения</span><span data-i18n="hero.subTail">, под одной крышей.</span></p>
-      <div class="hero-actions">
-        <a href="#contact" class="alink"><span data-i18n="hero.ctaPrimary">Обсудить проект</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-        <a href="#portfolio" class="alink" style="color:var(--muted)" data-i18n="hero.ctaSecondary">Работы</a>
-      </div>
-    </div>
-    <div class="hero-meta">
-      <div class="m"><div class="mv" data-count="10" data-i18n="hero.meta1V">10 проектов</div><div class="ml" data-i18n="hero.meta1L">запущены в продакшен</div></div>
-      <div class="m"><div class="mv" data-count="6" data-i18n="hero.meta2V">6 направлений</div><div class="ml" data-i18n="hero.meta2L">от веба до игр и AI</div></div>
-      <div class="m"><div class="mv" data-i18n="hero.meta3V">24/7</div><div class="ml" data-i18n="hero.meta3L">поддержка продуктов</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SERVICES ============ -->
-<section class="section" id="services">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="left">
-        <div class="sec-tag"><i></i><span data-i18n="services.tag">Услуги</span></div>
-        <h2 data-i18n="services.h2">Полный цикл разработки</h2>
-      </div>
-      <p class="desc" data-i18n="services.desc">Шесть направлений, которые закрывают весь путь продукта — от первой строки кода до ежедневной поддержки.</p>
-    </div>
-    <div class="bento">
-      <div class="b-card s-sites reveal">
-        <div class="svc-top">
-          <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M2.5 9h19M6 6.7h.01M9 6.7h.01"/></svg></div>
-          <div class="svc-num">01</div>
-        </div>
-        <div class="svc-body">
-          <h3 data-i18n="services.s1H">Сайты и веб-платформы</h3>
-          <p data-i18n="services.s1P">Сайты, лендинги и сложные платформы с нуля. Быстрые, адаптивные, на современном стеке — от визитки до B2B-маркетплейса.</p>
-          <div class="svc-tags"><span data-i18n="services.s1T1">Landing</span><span data-i18n="services.s1T2">Веб-платформы</span><span data-i18n="services.s1T3">E-commerce</span><span data-i18n="services.s1T4">SaaS</span></div>
-        </div>
-      </div>
-      <div class="b-card s-mobile reveal">
-        <div class="svc-top">
-          <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg></div>
-          <div class="svc-num">02</div>
-        </div>
-        <div class="svc-body"><h3 data-i18n="services.s2H">Мобильные приложения</h3><p data-i18n="services.s2P">Нативные и кроссплатформенные приложения для iOS и Android.</p></div>
-      </div>
-      <div class="b-card reveal">
-        <div class="svc-top">
-          <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="10" rx="4"/><path d="M6.5 11v2M5.5 12h2M15.5 11.5h.01M18 13.5h.01"/></svg></div>
-          <div class="svc-num">03</div>
-        </div>
-        <div class="svc-body"><h3 data-i18n="services.s3H">Разработка игр</h3><p data-i18n="services.s3P">Игры для мобильных и ПК на Unity и Unreal Engine.</p></div>
-      </div>
-      <div class="b-card reveal">
-        <div class="svc-top">
-          <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12h2.5M19 12h2.5M5.2 5.2l1.8 1.8M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg></div>
-          <div class="svc-num">04</div>
-        </div>
-        <div class="svc-body"><h3 data-i18n="services.s4H">Бизнес-автоматизация</h3><p data-i18n="services.s4P">Автоматизация процессов и рутины бизнеса.</p></div>
-      </div>
-      <div class="b-card s-ai reveal">
-        <div class="svc-top">
-          <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4.5 9 8.5v7l6 4v-15z"/><rect x="2.5" y="9.5" width="4.5" height="5" rx="1"/><path d="M18.5 9.5a4 4 0 0 1 0 5"/></svg></div>
-          <div class="svc-num">05</div>
-        </div>
-        <div class="svc-body"><h3 data-i18n="services.s5H">AI-контент и монтаж</h3><p data-i18n="services.s5P">Съёмки в Астане с проф оборудованием, монтаж и нарезки, ведение соцсетей, AI-контент.</p><div class="svc-tags"><span data-i18n="services.s5T1">AI-видео</span><span data-i18n="services.s5T2">Reels / TikTok</span><span data-i18n="services.s5T3">Монтаж</span></div></div>
-      </div>
-      <div class="b-card s-support reveal">
-        <div class="svc-top">
-          <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a1.5 1.5 0 0 0 2.1 2.1l6-6a4 4 0 0 0 5.4-5.4l-2.3 2.3-2.1-2.1z"/></svg></div>
-          <div class="svc-num">06</div>
-        </div>
-        <div class="svc-body"><h3 data-i18n="services.s6H">IT-поддержка</h3><p data-i18n="services.s6P">Техобслуживание и сопровождение продуктов 24/7.</p><div class="svc-tags"><span data-i18n="services.s6T1">SLA</span><span data-i18n="services.s6T2">Мониторинг</span><span data-i18n="services.s6T3">Сопровождение</span></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PROCESS ============ -->
-<section class="section" id="process">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="left">
-        <div class="sec-tag"><i></i><span data-i18n="process.tag">Как работаем</span></div>
-        <h2 data-i18n="process.h2">Прозрачный процесс</h2>
-      </div>
-      <p class="desc" data-i18n="process.desc">Четыре этапа от первого созвона до живого продукта. Вы всегда видите, где проект и что дальше.</p>
-    </div>
-    <div class="process">
-      <div class="p-row reveal"><div class="pn">01</div><h4 data-i18n="process.p1H">Бриф и стратегия</h4><p data-i18n="process.p1P">Разбираем задачу, цели и аудиторию. Фиксируем объём, сроки и смету — без сюрпризов по ходу.</p></div>
-      <div class="p-row reveal"><div class="pn">02</div><h4 data-i18n="process.p2H">Дизайн и прототип</h4><p data-i18n="process.p2P">Собираем UX-логику и визуал. Показываем кликабельный прототип ещё до написания кода.</p></div>
-      <div class="p-row reveal"><div class="pn">03</div><h4 data-i18n="process.p3H">Разработка</h4><p data-i18n="process.p3P">Пишем чистый код, тестируем на реальных данных и устройствах. Демонстрируем результат по этапам.</p></div>
-      <div class="p-row reveal"><div class="pn">04</div><h4 data-i18n="process.p4H">Запуск и поддержка</h4><p data-i18n="process.p4P">Публикуем, передаём доступы и сопровождаем продукт после релиза — 24/7.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ APPROACH ============ -->
-<section class="section" id="approach">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="left">
-        <h2 data-i18n="approach.title">Подход и гарантии</h2>
-      </div>
-    </div>
-    <div class="approach">
-      <div class="ap-item reveal"><div class="ap-num">01</div><p data-i18n="approach.1">Индивидуальная разработка — под ваше ТЗ и масштаб задачи, для B2B, B2C и B2G</p></div>
-      <div class="ap-item reveal"><div class="ap-num">02</div><p data-i18n="approach.2">Премиальное качество — основательно и без компромиссов</p></div>
-      <div class="ap-item reveal"><div class="ap-num">03</div><p data-i18n="approach.3">Пожизненная гарантия — сопровождаем и исправляем наши разработки весь срок жизни продукта</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PORTFOLIO ============ -->
-<section class="section" id="portfolio">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="left">
-        <div class="sec-tag"><i></i><span data-i18n="portfolio.tag">Портфолио</span></div>
-        <h2 data-i18n="portfolio.h2">Избранные работы</h2>
-      </div>
-      <p class="desc" data-i18n="portfolio.desc">Десять запущенных проектов — от интерьерных бутиков до B2B-платформ и игровых студий.</p>
-    </div>
-    <div class="pf-bento" id="pfBento"></div>
-  </div>
-</section>
-
-<!-- ============ PRICING (тизер → /price) ============ -->
+<!-- ============ PRICING ============ -->
 <section class="section" id="pricing">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left">
         <div class="sec-tag"><i></i><span data-i18n="pricing.tag">Прайс</span></div>
-        <h2 data-i18n="pricing.h2">Пакеты и цены</h2>
+        <h1 data-i18n="pricing.h2">Пакеты и цены</h1>
       </div>
-      <p class="desc" data-i18n="pricing.teaserP">Все цены собраны на отдельной странице: пакеты сайтов, медиа-продакшн, AI-видео, автоматизация и поддержка.</p>
+      <p class="desc" data-i18n="pricing.desc">Фиксированные цены и новейшие технологии — AI на базе Claude (Anthropic). Каждый пакет под ключ: от идеи до запуска.</p>
     </div>
 
     <div class="promo-pill reveal"><i aria-hidden="true"></i><span data-i18n="pricing.promo">Акция месяца: скидки до −67% на все пакеты — только с 1 июля по 1 августа. Успейте зафиксировать цену.</span></div>
 
+    <div class="price-grid">
+      <!-- 1. Лендинг -->
+      <article class="price-card reveal">
+        <span class="pc-badge" data-i18n="pricing.b1">до −67%</span>
+        <h3 data-i18n="pricing.c1H">Лендинг</h3>
+        <p class="pc-sub" data-i18n="pricing.c1Sub">Сайт-визитка под портфолио, бизнес или услуги — быстрый, современный, продающий.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.c1O1">Без фото и видео</span>
+            <span class="pc-vals"><s class="pc-old">150 000 ₸</s><b class="pc-new">50 000 ₸</b><em class="pc-chip">−67%</em></span>
+          </div>
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.c1O2">С фото и видео</span>
+            <span class="pc-vals"><s class="pc-old">200 000 ₸</s><b class="pc-new">80 000 ₸</b><em class="pc-chip">−60%</em></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.c1F1">Индивидуальный дизайн под ваш бренд</li>
+          <li data-i18n="pricing.c1F2">Адаптив: телефон, планшет, ПК</li>
+          <li data-i18n="pricing.c1F3">Базовое SEO и быстрая загрузка</li>
+          <li data-i18n="pricing.c1F4">Форма заявок + кнопка WhatsApp</li>
+          <li data-i18n="pricing.c1F5">Домен, хостинг и SSL — настроим всё</li>
+          <li data-i18n="pricing.c1F6">Запуск за 3–7 дней</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.wa1" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%20%C2%AB%D0%9B%D0%B5%D0%BD%D0%B4%D0%B8%D0%BD%D0%B3%C2%BB%20%D0%BF%D0%BE%20%D0%B0%D0%BA%D1%86%D0%B8%D0%B8.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- 2. Лендинг + AI -->
+      <article class="price-card reveal">
+        <span class="pc-badge">−40%</span>
+        <h3 data-i18n="pricing.c2H">Лендинг + AI</h3>
+        <p class="pc-sub" data-i18n="pricing.c2Sub">Сайт со встроенным AI-автоответчиком и навигатором на базе Claude — отвечает клиентам за вас, 24/7.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.allIn">Фото и видео включены</span>
+            <span class="pc-vals"><s class="pc-old">200 000 ₸</s><b class="pc-new">120 000 ₸</b><em class="pc-chip">−40%</em></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.c2F1">Всё из пакета «Лендинг»</li>
+          <li data-i18n="pricing.c2F2">AI-автоответчик 24/7 на базе Claude</li>
+          <li data-i18n="pricing.c2F3">AI-навигатор: ведёт клиента по услугам и ценам</li>
+          <li data-i18n="pricing.c2F4">Обучен на данных вашего бизнеса</li>
+          <li data-i18n="pricing.c2F5">Интеграция с WhatsApp</li>
+          <li data-i18n="pricing.c2F6">Профессиональные фото и видео включены</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.wa2" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%20%C2%AB%D0%9B%D0%B5%D0%BD%D0%B4%D0%B8%D0%BD%D0%B3%20%2B%20AI%C2%BB%20%D0%B7%D0%B0%20120%20000%20%E2%82%B8%20%D0%BF%D0%BE%20%D0%B0%D0%BA%D1%86%D0%B8%D0%B8.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- 3. Лендинг + софт -->
+      <article class="price-card reveal">
+        <span class="pc-badge">−52%</span>
+        <h3 data-i18n="pricing.c3H">Лендинг + софт</h3>
+        <p class="pc-sub" data-i18n="pricing.c3Sub">Сайт плюс программа под ваши процессы: учёт, каталог, личный кабинет — что нужно бизнесу.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.priceLbl">Стоимость</span>
+            <span class="pc-vals"><s class="pc-old">250 000 ₸</s><b class="pc-new">120 000 ₸</b><em class="pc-chip">−52%</em></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.c3F1">Всё из пакета «Лендинг»</li>
+          <li data-i18n="pricing.c3F2">Софт под задачу: учёт, каталог, калькулятор, кабинет</li>
+          <li data-i18n="pricing.c3F3">Админ-панель и база данных</li>
+          <li data-i18n="pricing.c3F4">Приём и учёт заявок в одном месте</li>
+          <li data-i18n="pricing.c3F5">Обучим работе с системой</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.wa3" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%20%C2%AB%D0%9B%D0%B5%D0%BD%D0%B4%D0%B8%D0%BD%D0%B3%20%2B%20%D1%81%D0%BE%D1%84%D1%82%C2%BB%20%D0%B7%D0%B0%20120%20000%20%E2%82%B8%20%D0%BF%D0%BE%20%D0%B0%D0%BA%D1%86%D0%B8%D0%B8.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- 4. Лендинг + софт + AI -->
+      <article class="price-card reveal">
+        <span class="pc-badge">−63%</span>
+        <h3 data-i18n="pricing.c4H">Лендинг + софт + AI</h3>
+        <p class="pc-sub" data-i18n="pricing.c4Sub">Максимальный пакет: сайт, софт и AI-автоматизация на базе Claude в одном решении.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.allIn">Фото и видео включены</span>
+            <span class="pc-vals"><s class="pc-old">400 000 ₸</s><b class="pc-new">150 000 ₸</b><em class="pc-chip">−63%</em></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.c4F1">Всё из пакетов «Лендинг» и «Софт»</li>
+          <li data-i18n="pricing.c4F2">AI-ассистент на базе Claude</li>
+          <li data-i18n="pricing.c4F3">Автоматизация заявок и рутинных задач</li>
+          <li data-i18n="pricing.c4F4">Профессиональные фото и видео включены</li>
+          <li data-i18n="pricing.c4F5">Аналитика и отчёты</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.wa4" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%20%C2%AB%D0%9B%D0%B5%D0%BD%D0%B4%D0%B8%D0%BD%D0%B3%20%2B%20%D1%81%D0%BE%D1%84%D1%82%20%2B%20AI%C2%BB%20%D0%B7%D0%B0%20150%20000%20%E2%82%B8%20%D0%BF%D0%BE%20%D0%B0%D0%BA%D1%86%D0%B8%D0%B8.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- 5. Автоматизация под ключ (featured) -->
+      <article class="price-card featured reveal">
+        <span class="pc-badge">−20%</span>
+        <h3 data-i18n="pricing.c5H">Автоматизация бизнеса под ключ</h3>
+        <p class="pc-sub" data-i18n="pricing.c5Sub">Полная цифровизация компании — новейшие технологии и AI-агенты на базе Claude. Разбираем процессы, убираем рутину, ускоряем бизнес.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.priceLbl">Стоимость</span>
+            <span class="pc-vals"><s class="pc-old"><span data-i18n="pricing.from">от</span> 1 000 000 ₸</s><b class="pc-new"><span data-i18n="pricing.from">от</span> 800 000 ₸</b><em class="pc-chip">−20%</em></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.c5F1">Аудит процессов и план автоматизации</li>
+          <li data-i18n="pricing.c5F2">CRM, учёт и внутренние инструменты</li>
+          <li data-i18n="pricing.c5F3">AI-агенты на базе Claude под задачи бизнеса</li>
+          <li data-i18n="pricing.c5F4">Интеграции: WhatsApp, Kaspi, 1C, платёжные системы</li>
+          <li data-i18n="pricing.c5F5">Обучение команды</li>
+          <li data-i18n="pricing.c5F6">Первый месяц поддержки — в подарок</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.wa5" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81%D0%B0%20%D0%BF%D0%BE%D0%B4%20%D0%BA%D0%BB%D1%8E%D1%87.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D0%B8." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <h3 class="sub-head reveal" data-i18n="pricing.mH">Медиа-продакшн</h3>
+    <p class="sub-desc reveal" data-i18n="pricing.mSub">Съёмки, монтаж и продвижение — своя команда, профессиональное оборудование и выезд по Астане. Все цены ниже — со скидкой до конца июля.</p>
+    <div class="price-grid media-grid">
+      <!-- M1. Проф съёмка -->
+      <article class="price-card reveal">
+        <span class="pc-badge" data-i18n="pricing.mBadge">до конца июля</span>
+        <h3 data-i18n="pricing.m1H">Проф съёмка по Астане</h3>
+        <p class="pc-sub" data-i18n="pricing.m1Sub">Выездная съёмка с профессиональным оборудованием — фотограф и оператор под вашу задачу.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m1Lbl">Выезд по Астане</span>
+            <span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 150 000 ₸</b></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.m1F1">Проф камеры, свет и звук</li>
+          <li data-i18n="pricing.m1F2">Проф фотограф и оператор</li>
+          <li data-i18n="pricing.m1F3">Реклама, соцсети, каталог, мероприятия</li>
+          <li data-i18n="pricing.m1F4">Материал готов к монтажу и публикации</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.waM1" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- M2. Монтаж -->
+      <article class="price-card reveal">
+        <span class="pc-badge" data-i18n="pricing.mBadge">до конца июля</span>
+        <h3 data-i18n="pricing.m2H">Монтаж видеороликов</h3>
+        <p class="pc-sub" data-i18n="pricing.m2Sub">Монтируем ролики любого формата — от подкастов и YouTube до рекламы.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m2Lbl">Часовой ролик</span>
+            <span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 150 000 ₸</b><span class="pc-per" data-i18n="pricing.perVideo">/ролик</span></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.m2F1">Подкасты и часовые YouTube-ролики</li>
+          <li data-i18n="pricing.m2F2">Цветокоррекция и чистка звука</li>
+          <li data-i18n="pricing.m2F3">Титры, субтитры и графика</li>
+          <li data-i18n="pricing.m2F4">Кейс: подкаст Damn Disn</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.waM2" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- M3. Нарезки -->
+      <article class="price-card reveal">
+        <span class="pc-badge" data-i18n="pricing.mBadge">до конца июля</span>
+        <h3 data-i18n="pricing.m3H">Нарезки на заказ</h3>
+        <p class="pc-sub" data-i18n="pricing.m3Sub">Короткие вертикальные ролики из ваших видео — под Reels, TikTok и Shorts.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m3Lbl1">За 1 нарезку</span>
+            <span class="pc-vals"><b class="pc-new">4 500 ₸</b></span>
+          </div>
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m3Lbl2">Пакет: 12 нарезок с одного ролика</span>
+            <span class="pc-vals"><b class="pc-new">54 000 ₸</b></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.m3F1">Отбираем лучшие моменты</li>
+          <li data-i18n="pricing.m3F2">Субтитры, обложки и динамичный монтаж</li>
+          <li data-i18n="pricing.m3F3">Формат под Reels / TikTok / Shorts</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.waM3" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- M4. Таргет -->
+      <article class="price-card reveal">
+        <span class="pc-badge" data-i18n="pricing.mBadge">до конца июля</span>
+        <h3 data-i18n="pricing.m4H">Таргет-запуски</h3>
+        <p class="pc-sub" data-i18n="pricing.m4Sub">Настраиваем и ведём рекламу так, чтобы заявки шли стабильно.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m4Lbl">Запуск рекламы</span>
+            <span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 150 000 ₸</b></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.m4F1">Реклама в Instagram и TikTok</li>
+          <li data-i18n="pricing.m4F2">Стратегия, креативы и тексты</li>
+          <li data-i18n="pricing.m4F3">Аналитика и прозрачные отчёты</li>
+          <li data-i18n="pricing.m4F4">Оптимизация рекламного бюджета</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.waM4" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- M6. AI Video Creator (featured wide) -->
+      <article class="price-card featured reveal">
+        <span class="pc-badge" data-i18n="pricing.mAiBadge">новинка</span>
+        <h3 data-i18n="pricing.mAiH">AI Video Creator</h3>
+        <p class="pc-sub" data-i18n="pricing.mAiSub">AI-видео под заказ: реклама, видеоклипы и контент любой сложности — на новейших AI-моделях видео, музыки и голоса.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.mAiLbl">Видеоклип под ключ</span>
+            <span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 500 000 ₸</b></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.mAiF1">Рекламные ролики и клипы, созданные с AI</li>
+          <li data-i18n="pricing.mAiF2">Полный цикл: сценарий, генерация, монтаж, звук</li>
+          <li data-i18n="pricing.mAiF3">Любая сложность — бюджет без потолка</li>
+          <li data-i18n="pricing.mAiF4">Помощь с дистрибуцией и продвижением</li>
+          <li data-i18n="pricing.mAiF5">Новейшие AI-модели видео, музыки и голоса</li>
+          <li data-i18n="pricing.mAiF6">Работаем официально, по договору</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.waAi" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+
+      <!-- M5. Мобилография и ведение соцсетей (wide) -->
+      <article class="price-card wide reveal">
+        <span class="pc-badge" data-i18n="pricing.mBadge">до конца июля</span>
+        <h3 data-i18n="pricing.m5H">Мобилография и ведение соцсетей</h3>
+        <p class="pc-sub" data-i18n="pricing.m5Sub">Ведём бизнес-аккаунты TikTok и Instagram под ключ — качественно и на высшем уровне, с аналитикой каждый месяц.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m5Lbl1">TikTok + Instagram</span>
+            <span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 200 000 ₸</b><span class="pc-per" data-i18n="pricing.perMonth">/мес</span></span>
+          </div>
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.m5Lbl2">С контентом и ведением сторис</span>
+            <span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 300 000 ₸</b><span class="pc-per" data-i18n="pricing.perMonth">/мес</span></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.m5F1">Контент-план и рубрики под ваш бизнес</li>
+          <li data-i18n="pricing.m5F2">Мобилограф на выезд по Астане</li>
+          <li data-i18n="pricing.m5F3">Монтаж Reels и оформление профиля</li>
+          <li data-i18n="pricing.m5F4">Регулярные посты и сторис</li>
+          <li data-i18n="pricing.m5F5">Аналитика и отчёт каждый месяц</li>
+          <li data-i18n="pricing.m5F6">Погружаемся в ваш бизнес и говорим его языком</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-primary pc-cta" data-wa="pricing.waM5" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Кейсы: Damn Disn × Maunfeld, @saddyk0ff -->
+    <div class="case-grid">
+      <div class="media-case reveal">
+        <div class="mc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12zM9.8 15V9l5.2 3-5.2 3z"/></svg></div>
+        <div class="mc-body">
+          <div class="mc-k" data-i18n="pricing.caseK">YouTube-кейс</div>
+          <div class="mc-name">Damn Disn</div>
+          <p data-i18n="pricing.caseP">Подкаст на YouTube, который SITS ведёт под ключ: съёмка, монтаж и нарезки — официально, по контракту с Maunfeld.</p>
+        </div>
+        <div class="mc-links">
+          <a class="alink" href="https://www.youtube.com/@damndisnn" target="_blank" rel="noopener"><span data-i18n="pricing.caseBtn1">Смотреть канал</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <a class="alink" href="https://www.maunfeld.kz/catalog" target="_blank" rel="noopener"><span>Maunfeld</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        </div>
+      </div>
+      <div class="media-case reveal">
+        <div class="mc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div>
+        <div class="mc-body">
+          <div class="mc-k" data-i18n="pricing.caseK2">Instagram-кейс</div>
+          <div class="mc-name">@saddyk0ff</div>
+          <p data-i18n="pricing.caseP2">Съёмки, режиссура и монтаж нашей команды — большие и небольшие проекты, все работы официально по контракту.</p>
+        </div>
+        <div class="mc-links">
+          <a class="alink" href="https://www.instagram.com/saddyk0ff/" target="_blank" rel="noopener"><span data-i18n="pricing.caseBtn2">Смотреть профиль</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub-head reveal" data-i18n="pricing.supH">Техподдержка</h3>
+    <p class="sub-desc reveal" data-i18n="pricing.supSub">Любой пакет можно взять с ежемесячной поддержкой или без неё — подключается и отключается в любой месяц.</p>
+    <div class="sup-grid">
+      <article class="price-card reveal">
+        <h3 data-i18n="pricing.sup1H">Классическая</h3>
+        <p class="pc-sub" data-i18n="pricing.sup1Sub">Спокойный ритм: собираете пожелания за неделю — мы аккуратно вносим правки.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.monthly">Ежемесячно</span>
+            <span class="pc-vals"><b class="pc-new">50 000 ₸</b><span class="pc-per" data-i18n="pricing.perMonth">/мес</span></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.sup1F1">4 правки в месяц — по одной в неделю</li>
+          <li data-i18n="pricing.sup1F2">В конце недели присылаете список: что поправить, убрать или добавить</li>
+          <li data-i18n="pricing.sup1F3">Мониторинг работоспособности сайта</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-line pc-cta" data-wa="pricing.waSup" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D1%82%D0%B5%D1%85%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+      <article class="price-card reveal">
+        <h3 data-i18n="pricing.sup2H">С особым вниманием</h3>
+        <p class="pc-sub" data-i18n="pricing.sup2Sub">Максимальная скорость: пишете в любой момент — правки уходят в работу сразу.</p>
+        <div class="pc-prices">
+          <div class="pc-row">
+            <span class="pc-lbl" data-i18n="pricing.monthly">Ежемесячно</span>
+            <span class="pc-vals"><b class="pc-new">150 000 ₸</b><span class="pc-per" data-i18n="pricing.perMonth">/мес</span></span>
+          </div>
+        </div>
+        <ul class="pc-list">
+          <li data-i18n="pricing.sup2F1">До 15 правок в месяц</li>
+          <li data-i18n="pricing.sup2F2">Правки можно присылать когда угодно</li>
+          <li data-i18n="pricing.sup2F3">Приоритетный отклик и прямая связь</li>
+        </ul>
+        <div class="pc-cta-row">
+        <a class="btn btn-line pc-cta" data-wa="pricing.waSup" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D1%82%D0%B5%D1%85%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.cta">Обсудить в WhatsApp</span>
+        </a>
+        <a class="btn btn-line btn-sq" href="https://t.me/zhanmate" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
+        </div>
+      </article>
+    </div>
+
     <div class="price-notes reveal">
-      <span data-i18n="pricing.tz1">Сайты и лендинги — от 50 000 ₸</span>
-      <span data-i18n="pricing.tz2">Медиа-продакшн: съёмка, монтаж, SMM</span>
-      <span data-i18n="pricing.tz3">AI Video Creator — клипы и реклама с AI</span>
-      <span data-i18n="pricing.tz4">Автоматизация бизнеса под ключ</span>
-      <span data-i18n="pricing.tz5">Техподдержка — от 50 000 ₸/мес</span>
+      <span data-i18n="pricing.n1">Гарантия: 30 дней бесплатных исправлений после запуска</span>
+      <span data-i18n="pricing.n2">Оплата: 50% на старте, 50% при сдаче проекта</span>
+      <span data-i18n="pricing.n3">Бесплатная консультация — 30 минут по вашей задаче</span>
+      <span data-i18n="pricing.n4">Также: сайты, софт и приложения под заказ, автоматизация любого бизнеса</span>
     </div>
 
     <div class="price-cta-all reveal">
+      <p data-i18n="pricing.ctaAll">Не знаете, что выбрать? Напишите — подберём пакет под вашу задачу вместе.</p>
       <div class="cta-all-row">
-        <a class="btn btn-primary" href="/price">
-          <span data-i18n="pricing.teaserBtn">Открыть весь прайс</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-        <a class="btn btn-line" data-wa="pricing.waAll" href="https://wa.me/77774961358" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
-          <span>WhatsApp</span>
+        <a class="btn btn-line" data-wa="pricing.waAll" href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D1%8E%20%D0%B2%D0%B0%D1%88%20%D0%BF%D1%80%D0%B0%D0%B9%D1%81%20%E2%80%94%20%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B8%D1%82%D0%B5%20%D0%B2%D1%8B%D0%B1%D1%80%D0%B0%D1%82%D1%8C%20%D0%BF%D0%BE%D0%B4%D1%85%D0%BE%D0%B4%D1%8F%D1%89%D0%B8%D0%B9%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:17px;height:17px"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
+          <span data-i18n="pricing.ctaAllBtn">Написать в WhatsApp</span>
         </a>
         <a class="btn btn-line" href="https://t.me/zhanmate" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg>
-          <span>Telegram</span>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:17px;height:17px"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg>
+          <span>Telegram — @zhanmate</span>
         </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ ABOUT ============ -->
-<section class="section" id="about">
-  <div class="wrap">
-    <div class="about-grid">
-      <div class="founder-photo reveal">
-        <img src="brand/founder-square.jpg" alt="Сариев Алижан Сабитулы — основатель SITS" loading="lazy" decoding="async" width="800" height="1000" />
-        <div class="cap">
-          <div><div class="nm">Сариев Алижан Сабитулы</div><div class="rl">Sariyev Alizhan Sabituly</div></div>
-          <div class="badge" data-i18n="about.role">Founder</div>
-        </div>
-      </div>
-      <div class="about-text reveal">
-        <div class="sec-tag"><i></i><span data-i18n="about.tag">О нас</span></div>
-        <h2 data-i18n="about.h2">Студия с подходом, а не конвейером</h2>
-        <p><span data-i18n="about.p1">SITS — Sariyev IT Solutions — это IT-студия полного цикла. Мы берём проект от идеи и доводим до запуска: </span><span class="em" data-i18n="about.p1Em">сайты и платформы, мобильные приложения, игры на Unity и Unreal, бизнес-автоматизация, AI-контент и поддержка.</span></p>
-        <p data-i18n="about.p2">За каждым проектом — внимание к деталям, честные сроки и продукт, которым удобно пользоваться. Вы работаете напрямую с теми, кто его делает.</p>
-        <div class="about-stats">
-          <div class="a"><div class="num" data-count="10" data-i18n="about.a1V">10</div><div class="lbl" data-i18n="about.a1L">проектов в продакшене</div></div>
-          <div class="a"><div class="num" data-count="6" data-i18n="about.a2V">6</div><div class="lbl" data-i18n="about.a2L">направлений</div></div>
-          <div class="a"><div class="num" data-count="100" data-count-suffix="%" data-i18n="about.a3V">100%</div><div class="lbl" data-i18n="about.a3L">проектов под ключ</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PARTNERS ============ -->
-<section class="section" id="partners">
-  <div class="wrap">
-    <div class="partners-head reveal">
-      <div class="left">
-        <div class="sec-tag"><i></i><span data-i18n="partners.tag">Партнёры</span></div>
-        <h2 data-i18n="partners.h2">Партнёры по направлениям</h2>
-      </div>
-      <p class="desc" data-i18n="partners.desc">С нами работают независимые специалисты — для направлений, где нужна особая экспертиза.</p>
-    </div>
-    <div class="partners-grid">
-      <a class="partner reveal" href="https://yelzhanport.netlify.app" target="_blank" rel="noopener" aria-label="Yelzhan Nurtileu — Game Design partner">
-        <div class="partner-photo">
-          <img src="brand/partner-yelzhan-square.jpg" alt="Yelzhan Nurtileu — Game Design partner" loading="lazy" decoding="async" width="720" height="720" />
-        </div>
-        <div class="partner-body">
-          <div class="partner-badge" data-i18n="partners.yelzhanBadge">Game Design Partner</div>
-          <div class="partner-name">Yelzhan Nurtileu</div>
-          <div class="partner-role" data-i18n="partners.yelzhanRole">Game Designer · UAL London · Katsumi Games</div>
-          <div class="partner-brief" data-i18n="partners.yelzhanBrief">2D Unity-игры с фольклорным настроением. Полный цикл соло: дизайн, C#, арт, UI/UX, анимация. Studio: Katsumi Games.</div>
-          <div class="partner-tags">
-            <span class="partner-tag">Unity / C#</span>
-            <span class="partner-tag">Game Design</span>
-            <span class="partner-tag">UI / UX</span>
-            <span class="partner-tag">Digital Art</span>
-          </div>
-          <span class="partner-link">
-            <span data-i18n="partners.openPortfolio">Открыть портфолио</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
-          </span>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CONTACT ============ -->
-<section class="section" id="contact">
-  <div class="wrap">
-    <div class="contact-grid">
-      <div class="contact-info reveal">
-        <div class="sec-tag"><i></i><span data-i18n="contact.tag">Контакты</span></div>
-        <h2 data-i18n="contact.h2">Расскажите о&nbsp;проекте</h2>
-        <p data-i18n="contact.desc">Заполните форму или напишите напрямую — ответим в течение дня и предложим, как реализовать идею.</p>
-        <div class="cinfo-list">
-          <a href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20SITS%20%E2%80%94%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82." data-wa="pricing.waAll" target="_blank" rel="noopener" class="cinfo">
-            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg></div>
-            <div><div class="ci-k">WhatsApp</div><div class="ci-v">+7 777 496 13 58</div></div>
-            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-          </a>
-          <a href="https://t.me/zhanmate" target="_blank" rel="noopener" class="cinfo">
-            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></div>
-            <div><div class="ci-k">Telegram</div><div class="ci-v">@zhanmate</div></div>
-            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-          </a>
-          <a href="https://www.instagram.com/sariyev.it.solutions/" target="_blank" rel="noopener" class="cinfo">
-            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div>
-            <div><div class="ci-k">Instagram</div><div class="ci-v">@sariyev.it.solutions</div></div>
-            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-          </a>
-          <a href="https://www.youtube.com/@sariyev.it.solutions" target="_blank" rel="noopener" class="cinfo">
-            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12zM9.8 15V9l5.2 3-5.2 3z"/></svg></div>
-            <div><div class="ci-k">YouTube</div><div class="ci-v">@sariyev.it.solutions</div></div>
-            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-          </a>
-          <a href="https://www.linkedin.com/in/alizhan-sariyev-5a3804278/" target="_blank" rel="noopener" class="cinfo">
-            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0V8zm7.5 0H12v2.2h.07c.63-1.2 2.17-2.46 4.46-2.46C21.4 7.74 24 10 24 14.6V24h-5v-8.2c0-1.95-.04-4.46-2.7-4.46-2.71 0-3.13 2.12-3.13 4.32V24h-5V8z"/></svg></div>
-            <div><div class="ci-k">LinkedIn</div><div class="ci-v">Alizhan Sariyev</div></div>
-            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-          </a>
-          <a href="mailto:raimzhan1907@gmail.com" class="cinfo">
-            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg></div>
-            <div><div class="ci-k">Email</div><div class="ci-v">raimzhan1907@gmail.com</div></div>
-            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-          </a>
-        </div>
-      </div>
-      <div class="reveal">
-        <p class="contact-pricing" data-i18n="contact.pricing">Готовые пакеты и цены — в разделе «Прайс». Нестандартные задачи считаем индивидуально под объём работ.</p>
-        <form class="contact-form" id="contactForm">
-          <div class="form-fields" id="formFields">
-            <div class="hp-field" aria-hidden="true">
-              <label for="f-website">Website (leave empty)</label>
-              <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
-            </div>
-            <div class="form-row">
-              <div class="field"><label for="f-name" data-i18n="contact.labelName">Имя</label><input id="f-name" name="name" type="text" data-i18n-placeholder="contact.phName" placeholder="Как к вам обращаться" required /></div>
-              <div class="field"><label for="f-contact" data-i18n="contact.labelContact">Email или телефон</label><input id="f-contact" name="contact" type="text" data-i18n-placeholder="contact.phContact" placeholder="Куда ответить" required /></div>
-            </div>
-            <div class="field"><label for="f-type" data-i18n="contact.labelType">Тип проекта</label><input id="f-type" name="type" type="text" data-i18n-placeholder="contact.phType" placeholder="Сайт, приложение, игра…" /></div>
-            <div class="field"><label for="f-msg" data-i18n="contact.labelMsg">О проекте</label><textarea id="f-msg" name="message" data-i18n-placeholder="contact.phMsg" placeholder="Пара слов о задаче, сроках и бюджете" required></textarea></div>
-            <button type="submit" class="btn btn-primary"><span data-i18n="contact.submit">Отправить заявку</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
-            <div class="form-error" id="formError" role="alert" aria-live="polite"></div>
-            <div class="form-note" data-i18n="contact.note">Нажимая «Отправить», вы соглашаетесь на обработку данных для связи.</div>
-          </div>
-          <div class="form-success" id="formSuccess">
-            <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></div>
-            <h4 data-i18n="contact.successH">Заявка отправлена</h4>
-            <p data-i18n="contact.successP">Спасибо — мы свяжемся с вами в ближайшее время.</p>
-          </div>
-        </form>
       </div>
     </div>
   </div>
@@ -1670,12 +1771,12 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       <div class="foot-cols">
         <div class="foot-col">
           <h5 data-i18n="footer.navTitle">Навигация</h5>
-          <a href="#services" data-i18n="nav.services">Услуги</a>
-          <a href="#process" data-i18n="nav.process">Как работаем</a>
-          <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
-          <a href="/price" data-i18n="nav.pricing">Прайс</a>
-          <a href="#about" data-i18n="nav.about">О нас</a>
-          <a href="#contact" data-i18n="nav.contact">Контакты</a>
+          <a href="/#services" data-i18n="nav.services">Услуги</a>
+          <a href="/#process" data-i18n="nav.process">Как работаем</a>
+          <a href="/#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+          <a href="#pricing" data-i18n="nav.pricing">Прайс</a>
+          <a href="/#about" data-i18n="nav.about">О нас</a>
+          <a href="/#contact" data-i18n="nav.contact">Контакты</a>
         </div>
         <div class="foot-col">
           <h5 data-i18n="footer.socTitle">Соцсети</h5>
@@ -2601,15 +2702,13 @@ function applyLang(lang) {
    localStorage используется только redirect-скриптом и для запоминания выбора. */
 const LANG_PATH = { ru: '/', en: '/en', kk: '/kz' };
 const PATH_LANG = { '/': 'ru', '/index.html': 'ru', '/en': 'en', '/en.html': 'en', '/kz': 'kk', '/kz.html': 'kk' };
-function langFromPath() { return PATH_LANG[location.pathname] || 'ru'; }
+function langFromPath() { try { var s = localStorage.getItem('sits-lang'); if (s && PATH_LANG['/'+s] !== undefined || ['ru','en','kk'].indexOf(s) >= 0) return s; } catch(e) {} return 'ru'; }
 
 document.querySelectorAll('#langSwitch button, #mmLang button').forEach(b => {
   b.addEventListener('click', () => {
     const lang = b.dataset.lang;
     if (!LANGS.includes(lang)) return;
-    const path = LANG_PATH[lang] || '/';
-    if (location.pathname !== path) history.pushState({ lang }, '', path);
-    applyLang(lang); // меняет тексты, обновляет localStorage и <html lang>
+    applyLang(lang); // на /price язык переключается на месте, без смены URL
   });
 });
 
@@ -2680,12 +2779,12 @@ window.__formLoaded = Date.now();
     const t = I18N[currentLang]?.cmdk || I18N.en.cmdk;
     const nav = I18N[currentLang]?.nav || I18N.en.nav;
     return [
-      { id:'services', name: nav.services,   hint: t.hintServices,  icon:'grid',    action:() => location.hash='#services' },
-      { id:'process',  name: nav.process,    hint: t.hintProcess,   icon:'flow',    action:() => location.hash='#process' },
-      { id:'portfolio',name: nav.portfolio,  hint: t.hintPortfolio, icon:'image',   action:() => location.hash='#portfolio' },
-      { id:'pricing',  name: nav.pricing,    hint: t.hintPricing,   icon:'grid',    action:() => location.href='/price' },
-      { id:'about',    name: nav.about,      hint: t.hintAbout,     icon:'user',    action:() => location.hash='#about' },
-      { id:'contact',  name: nav.contact,    hint: t.hintContact,   icon:'send',    action:() => location.hash='#contact' },
+      { id:'services', name: nav.services,   hint: t.hintServices,  icon:'grid',    action:() => location.href='/#services' },
+      { id:'process',  name: nav.process,    hint: t.hintProcess,   icon:'flow',    action:() => location.href='/#process' },
+      { id:'portfolio',name: nav.portfolio,  hint: t.hintPortfolio, icon:'image',   action:() => location.href='/#portfolio' },
+      { id:'pricing',  name: nav.pricing,    hint: t.hintPricing,   icon:'grid',    action:() => location.hash='#pricing' },
+      { id:'about',    name: nav.about,      hint: t.hintAbout,     icon:'user',    action:() => location.href='/#about' },
+      { id:'contact',  name: nav.contact,    hint: t.hintContact,   icon:'send',    action:() => location.href='/#contact' },
       { id:'whatsapp', name: 'WhatsApp',     hint: '+7 777 496 13 58', icon:'send', action:() => open('https://wa.me/77774961358') },
       { id:'telegram', name: 'Telegram',     hint: '@zhanmate',        icon:'send', action:() => open('https://t.me/zhanmate') },
       { id:'ru',       name: t.langRu,       hint: 'Русский',       icon:'globe',   action:() => switchLang('ru') },

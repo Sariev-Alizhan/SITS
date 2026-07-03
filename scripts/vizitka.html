@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<title>SITS — электронная визитка</title>
+<link rel="stylesheet" href="/fonts/fonts.css" />
+<style>
+@page{size:A4;margin:0}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+:root{
+  --bg:#0c0a0b; --text:#f4f1f1; --muted:#a89fa1; --faint:#6f696a;
+  --red:#e23744; --red-soft:rgba(226,55,68,.14);
+  --glass:rgba(255,255,255,.05); --glass-2:rgba(255,255,255,.09);
+  --glass-line:rgba(255,255,255,.12); --glass-hi:rgba(255,255,255,.10);
+  --fd:'Unbounded','Arial Black',sans-serif;
+  --fb:'Manrope',system-ui,sans-serif;
+  --fl:'PT Serif',Georgia,serif;
+}
+html,body{width:210mm;height:297mm;background:var(--bg);color:var(--text);font-family:var(--fb);overflow:hidden}
+.page{position:relative;width:210mm;height:297mm;padding:11mm 12mm 9mm;display:flex;flex-direction:column;overflow:hidden}
+/* aurora */
+.page::before{content:"";position:absolute;width:150mm;height:150mm;top:-45mm;right:-40mm;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,rgba(226,55,68,.32),transparent 68%);filter:blur(14mm)}
+.page::after{content:"";position:absolute;width:120mm;height:120mm;bottom:-40mm;left:-35mm;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,rgba(226,55,68,.20),transparent 68%);filter:blur(12mm)}
+.z{position:relative;z-index:1}
+/* header */
+.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:7mm}
+.logo{font-family:var(--fl);font-weight:700;font-size:34px;letter-spacing:.04em;line-height:1}
+.logo b{color:var(--red)}
+.head .sub{font-size:9.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:2mm}
+.site-pill{display:inline-flex;align-items:center;gap:2.2mm;border:1px solid var(--glass-line);background:var(--glass);
+  border-radius:100px;padding:2.6mm 4.5mm;font-size:11px;font-weight:700;letter-spacing:.02em;
+  box-shadow:inset 0 1px 0 var(--glass-hi)}
+.site-pill i{width:2mm;height:2mm;border-radius:50%;background:var(--red)}
+/* title */
+h1{font-family:var(--fd);font-weight:600;font-size:31px;line-height:1.08;letter-spacing:-.02em;margin-bottom:3mm}
+h1 .dot{color:var(--red)}
+.lead{color:var(--muted);font-size:12.5px;line-height:1.55;max-width:150mm;margin-bottom:5.5mm}
+.lead .em{color:var(--text);font-weight:600}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-bottom:5.5mm}
+.stat{border:1px solid var(--glass-line);background:var(--glass);border-radius:5mm;padding:3.4mm 4mm;
+  box-shadow:inset 0 1px 0 var(--glass-hi)}
+.stat .v{font-family:var(--fd);font-weight:500;font-size:16px;letter-spacing:-.01em}
+.stat .l{font-size:9px;color:var(--muted);margin-top:1mm;line-height:1.35}
+/* services */
+.sec-tag{display:flex;align-items:center;gap:2.4mm;font-size:9.5px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:3mm}
+.sec-tag i{width:1.8mm;height:1.8mm;border-radius:50%;background:var(--red)}
+.svc{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-bottom:5.5mm}
+.s{border:1px solid var(--glass-line);background:var(--glass);border-radius:5mm;padding:3.6mm 4.2mm;
+  box-shadow:inset 0 1px 0 var(--glass-hi);display:flex;flex-direction:column;gap:1.2mm}
+.s .t{display:flex;align-items:baseline;justify-content:space-between;gap:3mm}
+.s .n{font-family:var(--fd);font-weight:500;font-size:11.5px;letter-spacing:-.01em}
+.s .p{font-size:10px;font-weight:700;color:var(--red);white-space:nowrap}
+.s .d{font-size:9.3px;color:var(--muted);line-height:1.45}
+/* guarantees */
+.guar{display:flex;flex-wrap:wrap;gap:2.4mm;margin-bottom:5.5mm}
+.g{display:inline-flex;align-items:center;gap:2mm;font-size:9.3px;font-weight:600;color:var(--muted);
+  border:1px solid var(--glass-line);background:var(--glass);border-radius:100px;padding:2.2mm 3.6mm;
+  box-shadow:inset 0 1px 0 var(--glass-hi)}
+.g::before{content:"";width:1.6mm;height:1.6mm;border-radius:50%;background:var(--red)}
+/* contacts */
+.contact{display:grid;grid-template-columns:1fr auto auto;gap:4mm;align-items:center;
+  border:1px solid rgba(226,55,68,.35);background:linear-gradient(135deg,rgba(226,55,68,.10),rgba(255,255,255,.04) 60%);
+  border-radius:6mm;padding:5mm 5.5mm;box-shadow:inset 0 1px 0 var(--glass-hi);margin-top:auto}
+.c-rows{display:flex;flex-direction:column;gap:2.6mm}
+.c-row{display:flex;align-items:center;gap:3mm}
+.c-ico{width:7.5mm;height:7.5mm;border-radius:2.4mm;border:1px solid var(--glass-line);background:var(--glass);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:inset 0 1px 0 var(--glass-hi)}
+.c-ico svg{width:4mm;height:4mm}
+.c-k{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.c-v{font-size:11.5px;font-weight:700;letter-spacing:.01em}
+.qr{display:flex;flex-direction:column;align-items:center;gap:1.8mm}
+.qr .box{width:26mm;height:26mm;background:#fff;border-radius:3mm;padding:1.6mm;display:flex;align-items:center;justify-content:center}
+.qr img{width:100%;height:100%}
+.qr .cap{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+/* footer */
+.foot{display:flex;justify-content:space-between;align-items:center;gap:4mm;color:var(--faint);
+  font-size:8.3px;letter-spacing:.02em;margin-top:4.5mm;padding-top:3.5mm;border-top:1px solid var(--glass-line)}
+.foot b{color:var(--muted);font-weight:700}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="z head">
+    <div>
+      <div class="logo">SIT<b>S</b></div>
+      <div class="sub">Sariyev IT Solutions — IT-студия полного цикла</div>
+    </div>
+    <div class="site-pill"><i></i>sits-eta.vercel.app</div>
+  </div>
+
+  <div class="z">
+    <h1>Превращаем идеи<br/>в продукты<span class="dot">.</span></h1>
+    <p class="lead">Сайты, приложения, игры, AI-видео, медиа-продакшн и автоматизация — <span class="em">от идеи до запуска и сопровождения, под одной крышей.</span> Новейшие технологии и AI на базе Claude (Anthropic).</p>
+  </div>
+
+  <div class="z stats">
+    <div class="stat"><div class="v">10+</div><div class="l">проектов запущено в продакшен</div></div>
+    <div class="stat"><div class="v">8</div><div class="l">направлений — от веба до игр и AI</div></div>
+    <div class="stat"><div class="v">24/7</div><div class="l">поддержка продуктов</div></div>
+    <div class="stat"><div class="v">100%</div><div class="l">официально, по договору и NDA</div></div>
+  </div>
+
+  <div class="z">
+    <div class="sec-tag"><i></i>Услуги и цены</div>
+    <div class="svc">
+      <div class="s"><div class="t"><div class="n">Сайты и лендинги</div><div class="p">от 50 000 ₸</div></div><div class="d">Продающие сайты под ключ: дизайн, адаптив, SEO, запуск за 3–7 дней. Вариант с AI-автоответчиком 24/7.</div></div>
+      <div class="s"><div class="t"><div class="n">Мобильные приложения</div><div class="p">от 1 200 000 ₸</div></div><div class="d">iOS и Android под ключ: дизайн, бэкенд, публикация в App Store и Google Play.</div></div>
+      <div class="s"><div class="t"><div class="n">Разработка игр</div><div class="p">от 100 000 ₸</div></div><div class="d">Unity и Unreal: от веб-игр до крупных проектов на мобильные, ПК и PlayStation. Самый крупный кейс — игра за $10 000 000.</div></div>
+      <div class="s"><div class="t"><div class="n">AI Video Creator</div><div class="p">от 500 000 ₸</div></div><div class="d">Реклама и видеоклипы с AI любой сложности: сценарий, генерация, монтаж, звук, помощь с дистрибуцией.</div></div>
+      <div class="s"><div class="t"><div class="n">Медиа-продакшн</div><div class="p">от 4 500 ₸</div></div><div class="d">Проф съёмка по Астане, монтаж часовых роликов, нарезки под Reels и TikTok. Кейс: подкаст Damn Disn × Maunfeld.</div></div>
+      <div class="s"><div class="t"><div class="n">SMM и таргет</div><div class="p">от 150 000 ₸</div></div><div class="d">Ведение TikTok и Instagram под ключ с мобилографом, контентом и аналитикой каждый месяц.</div></div>
+      <div class="s"><div class="t"><div class="n">Автоматизация бизнеса</div><div class="p">от 800 000 ₸</div></div><div class="d">Полная цифровизация под ключ: CRM, AI-агенты на Claude, интеграции с WhatsApp, Kaspi, 1C.</div></div>
+      <div class="s"><div class="t"><div class="n">Интеграции и команда</div><div class="p">от 1 000 000 ₸/год</div></div><div class="d">Международные партнёрства для бизнеса и подбор сильных специалистов в медиа, IT и AI — фокус на Казахстан и СНГ.</div></div>
+    </div>
+  </div>
+
+  <div class="z guar">
+    <span class="g">Оплата 50/50</span>
+    <span class="g">30 дней бесплатных правок</span>
+    <span class="g">Проекты клиентов не публикуем без разрешения</span>
+    <span class="g">Договор и NDA</span>
+    <span class="g">Гарантия сопровождения</span>
+  </div>
+
+  <div class="z contact">
+    <div class="c-rows">
+      <div class="c-row">
+        <div class="c-ico"><svg viewBox="0 0 24 24" fill="#25D366"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg></div>
+        <div><div class="c-k">WhatsApp</div><div class="c-v">+7 777 496 13 58</div></div>
+      </div>
+      <div class="c-row">
+        <div class="c-ico"><svg viewBox="0 0 24 24" fill="#2AABEE"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></div>
+        <div><div class="c-k">Telegram</div><div class="c-v">@zhanmate</div></div>
+      </div>
+      <div class="c-row">
+        <div class="c-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#f4f1f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg></div>
+        <div><div class="c-k">Email</div><div class="c-v">raimzhan1907@gmail.com</div></div>
+      </div>
+      <div class="c-row">
+        <div class="c-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#f4f1f1" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#f4f1f1" stroke="none"/></svg></div>
+        <div><div class="c-k">Instagram</div><div class="c-v">@sariyev.it.solutions</div></div>
+      </div>
+    </div>
+    <div class="qr">
+      <div class="box"><img src="__QR_SITE__" alt="QR — сайт" /></div>
+      <div class="cap">Сайт и прайс</div>
+    </div>
+    <div class="qr">
+      <div class="box"><img src="__QR_WA__" alt="QR — WhatsApp" /></div>
+      <div class="cap">Написать в WhatsApp</div>
+    </div>
+  </div>
+
+  <div class="z foot">
+    <div><b>ТОО «SARIYEV IT SOLUTIONS»</b> · БИН 250440005104 · Казахстан, Алматинская область</div>
+    <div>Основатель — <b>Сариев Алижан Сабитулы</b></div>
+  </div>
+</div>
+</body>
+</html>

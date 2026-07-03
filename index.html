@@ -901,8 +901,9 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .price-card.featured .pc-list{display:grid;grid-template-columns:repeat(2,1fr);gap:9px 32px}
 .price-card.wide{grid-column:1/-1}
 .price-card.wide .pc-list{display:grid;grid-template-columns:repeat(2,1fr);gap:9px 32px}
-/* Кейс медиа-продакшна — Damn Disn */
-.media-case{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:14px;padding:26px 30px;
+/* Кейсы медиа-продакшна — Damn Disn, @saddyk0ff */
+.case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+.media-case{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding:26px 30px;
   border:1px solid var(--glass-line);border-radius:var(--r-xl);background:var(--glass);
   backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
   box-shadow:inset 0 1px 0 var(--glass-hi)}
@@ -931,7 +932,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .price-cta-all{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:48px;text-align:center}
 .price-cta-all p{color:var(--muted);font-size:15.5px}
 @media(max-width:940px){
-  .price-grid,.sup-grid{grid-template-columns:1fr}
+  .price-grid,.sup-grid,.case-grid{grid-template-columns:1fr}
   .price-card.featured .pc-list,.price-card.wide .pc-list{grid-template-columns:1fr}
   .media-case{padding:22px}
 }
@@ -1785,17 +1786,30 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       </article>
     </div>
 
-    <!-- Кейс: Damn Disn × Maunfeld -->
-    <div class="media-case reveal">
-      <div class="mc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12zM9.8 15V9l5.2 3-5.2 3z"/></svg></div>
-      <div class="mc-body">
-        <div class="mc-k" data-i18n="pricing.caseK">YouTube-кейс</div>
-        <div class="mc-name">Damn Disn</div>
-        <p data-i18n="pricing.caseP">Подкаст на YouTube, который SITS ведёт под ключ: съёмка, монтаж и нарезки — официально, по контракту с Maunfeld.</p>
+    <!-- Кейсы: Damn Disn × Maunfeld, @saddyk0ff -->
+    <div class="case-grid">
+      <div class="media-case reveal">
+        <div class="mc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12zM9.8 15V9l5.2 3-5.2 3z"/></svg></div>
+        <div class="mc-body">
+          <div class="mc-k" data-i18n="pricing.caseK">YouTube-кейс</div>
+          <div class="mc-name">Damn Disn</div>
+          <p data-i18n="pricing.caseP">Подкаст на YouTube, который SITS ведёт под ключ: съёмка, монтаж и нарезки — официально, по контракту с Maunfeld.</p>
+        </div>
+        <div class="mc-links">
+          <a class="alink" href="https://www.youtube.com/@damndisnn" target="_blank" rel="noopener"><span data-i18n="pricing.caseBtn1">Смотреть канал</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <a class="alink" href="https://www.maunfeld.kz/catalog" target="_blank" rel="noopener"><span>Maunfeld</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        </div>
       </div>
-      <div class="mc-links">
-        <a class="alink" href="https://www.youtube.com/@damndisnn" target="_blank" rel="noopener"><span data-i18n="pricing.caseBtn1">Смотреть канал</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-        <a class="alink" href="https://www.maunfeld.kz/catalog" target="_blank" rel="noopener"><span>Maunfeld</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+      <div class="media-case reveal">
+        <div class="mc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div>
+        <div class="mc-body">
+          <div class="mc-k" data-i18n="pricing.caseK2">Instagram-кейс</div>
+          <div class="mc-name">@saddyk0ff</div>
+          <p data-i18n="pricing.caseP2">Съёмки, режиссура и монтаж нашей команды — большие и небольшие проекты, все работы официально по контракту.</p>
+        </div>
+        <div class="mc-links">
+          <a class="alink" href="https://www.instagram.com/saddyk0ff/" target="_blank" rel="noopener"><span data-i18n="pricing.caseBtn2">Смотреть профиль</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        </div>
       </div>
     </div>
 
@@ -2211,6 +2225,9 @@ const I18N = {
       caseK:'YouTube-кейс',
       caseP:'Подкаст на YouTube, который SITS ведёт под ключ: съёмка, монтаж и нарезки — официально, по контракту с Maunfeld.',
       caseBtn1:'Смотреть канал',
+      caseK2:'Instagram-кейс',
+      caseP2:'Съёмки, режиссура и монтаж нашей команды — большие и небольшие проекты, все работы официально по контракту.',
+      caseBtn2:'Смотреть профиль',
       waM1:'Здравствуйте! Интересует профессиональная съёмка в Астане. Хочу обсудить задачу.',
       waM2:'Здравствуйте! Интересует монтаж видеоролика. Хочу обсудить детали.',
       waM3:'Здравствуйте! Интересуют нарезки видео на заказ. Хочу обсудить детали.',
@@ -2433,6 +2450,9 @@ const I18N = {
       caseK:'YouTube case',
       caseP:'A YouTube podcast run by SITS end to end: shooting, editing and cuts — officially, under contract with Maunfeld.',
       caseBtn1:'Watch the channel',
+      caseK2:'Instagram case',
+      caseP2:'Our team’s shoots, directing and editing — big and small projects, all work done officially under contract.',
+      caseBtn2:'View profile',
       waM1:'Hi! I’m interested in a professional shoot in Astana. I’d like to discuss the task.',
       waM2:'Hi! I’m interested in video editing. I’d like to discuss the details.',
       waM3:'Hi! I’m interested in custom short-form cuts. I’d like to discuss the details.',
@@ -2655,6 +2675,9 @@ const I18N = {
       caseK:'YouTube-кейс',
       caseP:'SITS толық жүргізетін YouTube-подкаст: түсірілім, монтаж және нарезкалар — ресми түрде, Maunfeld келісімшарты бойынша.',
       caseBtn1:'Арнаны көру',
+      caseK2:'Instagram-кейс',
+      caseP2:'Командамыздың түсірілімдері, режиссурасы және монтажы — үлкен және шағын жобалар, барлық жұмыс ресми келісімшарт бойынша.',
+      caseBtn2:'Профильді көру',
       waM1:'Сәлеметсіз бе! Астанадағы кәсіби түсірілім қызықтырады. Тапсырманы талқылағым келеді.',
       waM2:'Сәлеметсіз бе! Видео монтаж қызықтырады. Егжей-тегжейін талқылағым келеді.',
       waM3:'Сәлеметсіз бе! Тапсырыспен нарезкалар қызықтырады. Егжей-тегжейін талқылағым келеді.',

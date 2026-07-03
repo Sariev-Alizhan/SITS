@@ -1216,6 +1216,8 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .pf:hover img{transform:none}
   .form-row{grid-template-columns:1fr}
   .p-row{grid-template-columns:56px 1fr}
+  /* Бейдж карточки прайса: на узких экранах — над заголовком, а не поверх него */
+  .pc-badge{position:static;align-self:flex-start;margin-bottom:14px;order:-1}
 }
 /* Очень узкие экраны (iPhone SE) — ещё компактнее */
 @media(max-width:400px){

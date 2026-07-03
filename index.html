@@ -808,7 +808,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 }
 
 /* ============ APPROACH ============ */
-.approach{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+.approach{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px}
 .ap-item{padding:32px;border:1px solid var(--glass-line);border-radius:var(--r-xl);background:var(--glass);
   backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
   box-shadow:inset 0 1px 0 var(--glass-hi);
@@ -1474,6 +1474,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       <div class="ap-item reveal"><div class="ap-num">01</div><p data-i18n="approach.1">Индивидуальная разработка — под ваше ТЗ и масштаб задачи, для B2B, B2C и B2G</p></div>
       <div class="ap-item reveal"><div class="ap-num">02</div><p data-i18n="approach.2">Премиальное качество — основательно и без компромиссов</p></div>
       <div class="ap-item reveal"><div class="ap-num">03</div><p data-i18n="approach.3">Пожизненная гарантия — сопровождаем и исправляем наши разработки весь срок жизни продукта</p></div>
+      <div class="ap-item reveal"><div class="ap-num">04</div><p data-i18n="approach.4">Конфиденциальность — все проекты и заказы клиентов защищены: мы ничего не публикуем без разрешения клиента</p></div>
     </div>
   </div>
 </section>
@@ -1560,41 +1561,6 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   </div>
 </section>
 
-<!-- ============ PARTNERS ============ -->
-<section class="section" id="partners">
-  <div class="wrap">
-    <div class="partners-head reveal">
-      <div class="left">
-        <div class="sec-tag"><i></i><span data-i18n="partners.tag">Партнёры</span></div>
-        <h2 data-i18n="partners.h2">Партнёры по направлениям</h2>
-      </div>
-      <p class="desc" data-i18n="partners.desc">С нами работают независимые специалисты — для направлений, где нужна особая экспертиза.</p>
-    </div>
-    <div class="partners-grid">
-      <a class="partner reveal" href="https://yelzhanport.netlify.app" target="_blank" rel="noopener" aria-label="Yelzhan Nurtileu — Game Design partner">
-        <div class="partner-photo">
-          <img src="brand/partner-yelzhan-square.jpg" alt="Yelzhan Nurtileu — Game Design partner" loading="lazy" decoding="async" width="720" height="720" />
-        </div>
-        <div class="partner-body">
-          <div class="partner-badge" data-i18n="partners.yelzhanBadge">Game Design Partner</div>
-          <div class="partner-name">Yelzhan Nurtileu</div>
-          <div class="partner-role" data-i18n="partners.yelzhanRole">Game Designer · UAL London · Katsumi Games</div>
-          <div class="partner-brief" data-i18n="partners.yelzhanBrief">2D Unity-игры с фольклорным настроением. Полный цикл соло: дизайн, C#, арт, UI/UX, анимация. Studio: Katsumi Games.</div>
-          <div class="partner-tags">
-            <span class="partner-tag">Unity / C#</span>
-            <span class="partner-tag">Game Design</span>
-            <span class="partner-tag">UI / UX</span>
-            <span class="partner-tag">Digital Art</span>
-          </div>
-          <span class="partner-link">
-            <span data-i18n="partners.openPortfolio">Открыть портфолио</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
-          </span>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
 
 <!-- ============ CONTACT ============ -->
 <section class="section" id="contact">
@@ -1686,6 +1652,11 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
           <a href="#contact" data-i18n="nav.contact">Контакты</a>
         </div>
         <div class="foot-col">
+          <h5 data-i18n="footer.docsTitle">Документы</h5>
+          <a href="/terms" data-i18n="footer.terms">Условия использования</a>
+          <a href="/privacy" data-i18n="footer.privacy">Политика конфиденциальности</a>
+        </div>
+        <div class="foot-col">
           <h5 data-i18n="footer.socTitle">Соцсети</h5>
           <a href="https://wa.me/77774961358" target="_blank" rel="noopener">WhatsApp</a>
           <a href="https://t.me/zhanmate" target="_blank" rel="noopener">Telegram</a>
@@ -1775,6 +1746,7 @@ const I18N = {
       '1':'Индивидуальная разработка — под ваше ТЗ и масштаб задачи, для B2B, B2C и B2G',
       '2':'Премиальное качество — основательно и без компромиссов',
       '3':'Пожизненная гарантия — сопровождаем и исправляем наши разработки весь срок жизни продукта',
+      '4':'Конфиденциальность — все проекты и заказы клиентов защищены: мы ничего не публикуем без разрешения клиента',
     },
     portfolio: {
       tag:'Портфолио', h2:'Избранные работы',
@@ -1949,6 +1921,7 @@ const I18N = {
       n2:'Оплата: 50% на старте, 50% при сдаче проекта',
       n3:'Бесплатная консультация — 30 минут по вашей задаче',
       n4:'Также: сайты, софт и приложения под заказ, автоматизация любого бизнеса',
+      n5:'Конфиденциальность: работы клиентов не публикуем без их разрешения',
       cta:'Обсудить в WhatsApp',
       ctaAll:'Не знаете, что выбрать? Напишите — подберём пакет под вашу задачу вместе.',
       ctaAllBtn:'Написать в WhatsApp',
@@ -1992,7 +1965,7 @@ const I18N = {
       errorAlert:'Не удалось отправить. Попробуйте ещё раз или напишите нам в Instagram.',
       errorLabel:'Ошибка',
     },
-    footer: { tagline:'IT-студия полного цикла. Превращаем идеи в цифровые продукты.', navTitle:'Навигация', socTitle:'Соцсети', founder:'Основатель —' },
+    footer: { tagline:'IT-студия полного цикла. Превращаем идеи в цифровые продукты.', navTitle:'Навигация', socTitle:'Соцсети', docsTitle:'Документы', terms:'Условия использования', privacy:'Политика конфиденциальности', founder:'Основатель —' },
     legal: {
       title:'Реквизиты компании',
       entityLbl:'Юридическое лицо', entityVal:'ТОО «SARIYEV IT SOLUTIONS»',
@@ -2054,6 +2027,7 @@ const I18N = {
       '1':'Individual development — built to your spec and project scale, for B2B, B2C and B2G',
       '2':'Premium quality — thorough and uncompromising',
       '3':'Lifetime warranty — we support and fix our work for the entire life of the product',
+      '4':'Confidentiality — every client project and order is protected: we never publish anything without the client’s permission',
     },
     portfolio: {
       tag:'Work', h2:'Selected projects',
@@ -2228,6 +2202,7 @@ const I18N = {
       n2:'Payment: 50% upfront, 50% on delivery',
       n3:'Free 30-minute consultation on your task',
       n4:'Also: custom websites, software and apps, automation for any business',
+      n5:'Confidentiality: we never publish client work without permission',
       cta:'Chat on WhatsApp',
       ctaAll:'Not sure which package fits? Message me — we’ll pick one together.',
       ctaAllBtn:'Message on WhatsApp',
@@ -2271,7 +2246,7 @@ const I18N = {
       errorAlert:'Couldn’t send. Please try again or message us on Instagram.',
       errorLabel:'Error',
     },
-    footer: { tagline:'Full-cycle IT studio. Turning ideas into digital products.', navTitle:'Navigation', socTitle:'Social', founder:'Founder —' },
+    footer: { tagline:'Full-cycle IT studio. Turning ideas into digital products.', navTitle:'Navigation', socTitle:'Social', docsTitle:'Legal', terms:'Terms of Service', privacy:'Privacy Policy', founder:'Founder —' },
     legal: {
       title:'Legal information',
       entityLbl:'Registered entity', entityVal:'LLP «SARIYEV IT SOLUTIONS»',
@@ -2333,6 +2308,7 @@ const I18N = {
       '1':'Жеке әзірлеу — сіздің ТЗ мен жобаның ауқымына сай, B2B, B2C және B2G үшін',
       '2':'Премиум сапа — мұқият әрі ымырасыз',
       '3':'Өмір бойы кепілдік — өз әзірлемелерімізді өнімнің қызмет ету мерзімі бойы сүйемелдеп, түзетеміз',
+      '4':'Құпиялылық — клиенттердің барлық жобалары мен тапсырыстары қорғалған: клиенттің рұқсатынсыз ештеңе жарияламаймыз',
     },
     portfolio: {
       tag:'Жұмыстар', h2:'Таңдаулы жобалар',
@@ -2507,6 +2483,7 @@ const I18N = {
       n2:'Төлем: басында 50%, тапсырғанда 50%',
       n3:'Тегін кеңес — тапсырмаңыз бойынша 30 минут',
       n4:'Сондай-ақ: тапсырыспен сайттар, софт пен қосымшалар, кез келген бизнесті автоматтандыру',
+      n5:'Құпиялылық: клиенттердің жұмыстарын рұқсатынсыз жарияламаймыз',
       cta:'WhatsApp-та талқылау',
       ctaAll:'Қайсысын таңдарыңызды білмейсіз бе? Жазыңыз — пакетті бірге таңдаймыз.',
       ctaAllBtn:'WhatsApp-қа жазу',
@@ -2550,7 +2527,7 @@ const I18N = {
       errorAlert:'Жіберу сәтсіз аяқталды. Қайталап көріңіз немесе Instagram арқылы жазыңыз.',
       errorLabel:'Қате',
     },
-    footer: { tagline:'Толық циклді IT-студия. Идеяларды цифрлық өнімдерге айналдырамыз.', navTitle:'Навигация', socTitle:'Әлеуметтік желілер', founder:'Негізін қалаушы —' },
+    footer: { tagline:'Толық циклді IT-студия. Идеяларды цифрлық өнімдерге айналдырамыз.', navTitle:'Навигация', socTitle:'Әлеуметтік желілер', docsTitle:'Құжаттар', terms:'Пайдалану шарттары', privacy:'Құпиялылық саясаты', founder:'Негізін қалаушы —' },
     legal: {
       title:'Деректемелер',
       entityLbl:'Заңды тұлға', entityVal:'«SARIYEV IT SOLUTIONS» ЖШС',

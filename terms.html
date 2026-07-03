@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark" data-lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Условия использования — SITS · Sariyev IT Solutions</title>
+<meta name="description" content="Условия использования и оказания услуг SITS — ТОО «SARIYEV IT SOLUTIONS». Порядок работы, оплата, интеллектуальная собственность, конфиденциальность проектов клиентов." />
+<link rel="canonical" href="https://sits-eta.vercel.app/terms" />
+<link rel="icon" type="image/png" href="/brand/favicon.png" />
+<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+<meta name="theme-color" content="#0c0a0b" />
+<link rel="stylesheet" href="/fonts/fonts.css" />
+<script>
+(function(){
+  try { var t = localStorage.getItem('sits-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch(e){}
+  try { var l = localStorage.getItem('sits-lang'); if (l==='en'||l==='kk'||l==='ru') document.documentElement.setAttribute('data-lang', l); } catch(e){}
+})();
+</script>
+<style>
+:root{
+  --font-display:'Unbounded','Arial Black',system-ui,sans-serif;
+  --font-body:'Manrope',system-ui,sans-serif;
+  --font-logo:'PT Serif',Georgia,serif;
+  --maxw:860px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --glass-blur:blur(22px) saturate(1.75);
+}
+html[data-theme="dark"]{
+  --bg:#0c0a0b; --text:#f4f1f1; --muted:#a39d9e; --faint:#6f696a;
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  --red:#e23744; --red-soft:rgba(226,55,68,.14);
+  --nav-bg:rgba(18,15,16,.55);
+  --glass:rgba(255,255,255,.045); --glass-2:rgba(255,255,255,.085);
+  --glass-line:rgba(255,255,255,.11); --glass-hi:rgba(255,255,255,.10);
+  --fx-glow:rgba(226,55,68,.24);
+}
+html[data-theme="light"]{
+  --bg:#f6f3f3; --text:#171314; --muted:#6a6364; --faint:#9b9495;
+  --line:rgba(20,12,13,.1); --line-2:rgba(20,12,13,.18);
+  --red:#b31d22; --red-soft:rgba(179,29,34,.1);
+  --nav-bg:rgba(255,255,255,.52);
+  --glass:rgba(255,255,255,.42); --glass-2:rgba(255,255,255,.68);
+  --glass-line:rgba(20,12,13,.09); --glass-hi:rgba(255,255,255,.9);
+  --fx-glow:rgba(226,55,68,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16.5px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .55s var(--ease),color .55s var(--ease)}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--red);color:#fff}
+.fx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.fx::before{content:"";position:absolute;width:56vw;height:56vw;max-width:680px;max-height:680px;top:-16%;right:-8%;
+  border-radius:50%;filter:blur(90px);background:radial-gradient(circle at 50% 50%,var(--fx-glow),transparent 70%)}
+.fx::after{content:"";position:absolute;width:44vw;height:44vw;max-width:500px;max-height:500px;bottom:-14%;left:-10%;
+  border-radius:50%;filter:blur(80px);background:radial-gradient(circle at 50% 50%,var(--fx-glow),transparent 70%);opacity:.55}
+.nav{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:0 16px;pointer-events:none}
+.nav .bar{pointer-events:auto;display:flex;align-items:center;justify-content:space-between;width:100%;max-width:calc(var(--maxw) + 120px);
+  height:58px;padding:0 10px 0 22px;border-radius:100px;background:var(--nav-bg);border:1px solid var(--glass-line);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi),0 16px 40px -26px rgba(0,0,0,.5)}
+.logo{font-family:var(--font-logo);font-weight:700;font-size:22px;letter-spacing:.04em;color:var(--text)}
+.logo b{color:var(--red)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.lang-switch{display:inline-flex;align-items:center;gap:1px;border:1px solid var(--glass-line);border-radius:100px;padding:3px;height:38px;
+  background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi)}
+.lang-switch button{font-family:var(--font-body);font-size:11.5px;font-weight:600;letter-spacing:.06em;background:transparent;border:none;
+  color:var(--muted);padding:6px 10px;border-radius:100px;cursor:pointer;transition:.25s var(--ease);min-width:34px}
+.lang-switch button:hover{color:var(--text)}
+.lang-switch button.on{background:var(--glass-2);color:var(--text);box-shadow:inset 0 1px 0 var(--glass-hi)}
+.icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--glass-line);background:var(--glass);color:var(--text);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.25s var(--ease);box-shadow:inset 0 1px 0 var(--glass-hi)}
+.icon-btn:hover{background:var(--glass-2)}
+.icon-btn svg{width:17px;height:17px}
+.theme-toggle .moon{display:none}
+html[data-theme="dark"] .theme-toggle .sun{display:none}
+html[data-theme="dark"] .theme-toggle .moon{display:block}
+main{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:130px 24px 40px}
+.kicker{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.kicker i{width:6px;height:6px;border-radius:50%;background:var(--red)}
+h1{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,5vw,44px);line-height:1.08;letter-spacing:-.03em;margin-bottom:12px}
+.updated{color:var(--faint);font-size:13.5px;margin-bottom:34px}
+.doc{display:none}
+html[data-lang="ru"] .doc[data-l="ru"]{display:block}
+html[data-lang="en"] .doc[data-l="en"]{display:block}
+html[data-lang="kk"] .doc[data-l="kk"]{display:block}
+.card{border:1px solid var(--glass-line);border-radius:28px;background:var(--glass);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi);padding:38px 40px}
+.card h2{font-family:var(--font-display);font-weight:500;font-size:18px;letter-spacing:-.01em;margin:30px 0 10px}
+.card h2:first-child{margin-top:0}
+.card p, .card li{color:var(--muted);font-size:15px;line-height:1.7}
+.card ul{margin:8px 0 0 20px}
+.card li{margin-bottom:6px}
+.card .em{color:var(--text);font-weight:600}
+.card .hl{display:block;margin-top:14px;padding:16px 20px;border:1px solid color-mix(in srgb, var(--red) 30%, transparent);
+  border-radius:16px;background:var(--red-soft);color:var(--text);font-weight:500;font-size:14.5px;line-height:1.6}
+.doc-foot{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;color:var(--faint);font-size:13.5px;align-items:center}
+.doc-foot a{color:var(--muted);font-weight:600;transition:color .25s}
+.doc-foot a:hover{color:var(--text)}
+footer{max-width:var(--maxw);margin:0 auto;padding:10px 24px 40px;color:var(--faint);font-size:13px}
+@media(max-width:600px){
+  main{padding:110px 18px 30px}
+  .card{padding:26px 22px;border-radius:22px}
+  .lang-switch button{min-width:30px;padding:6px 8px}
+}
+</style>
+</head>
+<body>
+<div class="fx" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="bar">
+    <a class="logo" href="/">SIT<b>S</b></a>
+    <div class="nav-right">
+      <div class="lang-switch" id="langSwitch" role="group" aria-label="Language">
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="kk">KZ</button>
+      </div>
+      <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Theme">
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- ================= RU ================= -->
+  <div class="doc" data-l="ru">
+    <div class="kicker"><i></i>Документы</div>
+    <h1>Условия использования</h1>
+    <p class="updated">Обновлено: 4 июля 2026 г.</p>
+    <div class="card">
+      <h2>1. Общие положения</h2>
+      <p>Настоящие условия регулируют использование сайта и заказ услуг студии <span class="em">SITS</span>. Владелец сайта и исполнитель услуг — <span class="em">ТОО «SARIYEV IT SOLUTIONS»</span>, БИН 250440005104, Республика Казахстан (далее — «Студия»). Используя сайт или заказывая услуги, вы соглашаетесь с настоящими условиями.</p>
+      <h2>2. Услуги</h2>
+      <p>Студия оказывает услуги полного цикла: разработка сайтов, приложений и игр, медиа-продакшн (съёмка, монтаж, нарезки), AI-видео и AI-контент, ведение соцсетей и таргетированная реклама, бизнес-автоматизация, международные интеграции, подбор специалистов и техническая поддержка. Точный состав работ, сроки и стоимость по каждому проекту фиксируются в договоре.</p>
+      <h2>3. Цены и акции</h2>
+      <p>Цены на сайте указаны в тенге (₸), являются ориентировочными («от») и не являются публичной офертой. Акционные цены действуют в указанные на сайте сроки. Финальная стоимость фиксируется в договоре или счёте.</p>
+      <h2>4. Порядок работы и оплата</h2>
+      <ul>
+        <li>Заявка через сайт, WhatsApp или Telegram → бесплатная консультация и обсуждение задачи.</li>
+        <li>Заключение договора с фиксацией объёма, сроков и стоимости.</li>
+        <li>Стандартная схема оплаты: 50% на старте, 50% при сдаче проекта, если договором не согласовано иное.</li>
+      </ul>
+      <h2>5. Интеллектуальная собственность</h2>
+      <p>После полной оплаты права на результат работ передаются клиенту в объёме, определённом договором. Материалы, дизайн и код сайта SITS принадлежат Студии; их копирование без разрешения запрещено.</p>
+      <h2>6. Конфиденциальность проектов</h2>
+      <p><span class="hl">Все проекты и заказы клиентов защищены. Студия не публикует работы, материалы, данные или сам факт сотрудничества без письменного разрешения клиента. В портфолио и кейсы попадают только проекты, на публикацию которых клиент дал согласие. По запросу подписываем NDA.</span></p>
+      <h2>7. Гарантии</h2>
+      <p>30 дней бесплатных исправлений после запуска. На собственные разработки действует гарантия сопровождения; ежемесячная поддержка — по отдельным тарифам, подключается и отключается в любой месяц.</p>
+      <h2>8. Ответственность</h2>
+      <p>Студия не несёт ответственности за сбои сторонних сервисов и платформ (хостинги, соцсети, платёжные системы и т.п.), а также за контент, предоставленный клиентом. Совокупная ответственность Студии ограничена суммой соответствующего договора.</p>
+      <h2>9. Применимое право</h2>
+      <p>Настоящие условия регулируются законодательством Республики Казахстан. Споры разрешаются переговорами, а при недостижении согласия — в суде по месту регистрации Студии.</p>
+      <h2>10. Контакты</h2>
+      <p>WhatsApp: +7 777 496 13 58 · Telegram: @zhanmate · Email: raimzhan1907@gmail.com<br/>Юридический адрес: 041609, Алматинская область, Талгарский район, с. Бесагаш, ул. Торғай, 32.</p>
+    </div>
+    <div class="doc-foot"><a href="/">Главная</a><a href="/price">Прайс</a><a href="/privacy">Политика конфиденциальности</a></div>
+  </div>
+
+  <!-- ================= EN ================= -->
+  <div class="doc" data-l="en">
+    <div class="kicker"><i></i>Legal</div>
+    <h1>Terms of Service</h1>
+    <p class="updated">Last updated: July 4, 2026</p>
+    <div class="card">
+      <h2>1. General</h2>
+      <p>These terms govern the use of this website and the ordering of services from the <span class="em">SITS</span> studio. The website is owned and services are provided by <span class="em">SARIYEV IT SOLUTIONS LLP</span>, BIN 250440005104, Republic of Kazakhstan (the “Studio”). By using the website or ordering services you agree to these terms.</p>
+      <h2>2. Services</h2>
+      <p>The Studio provides full-cycle services: website, app and game development, media production (shoots, editing, short-form cuts), AI video and AI content, social media management and targeted advertising, business automation, international integrations, talent recruiting and technical support. The exact scope, timeline and price of each project are fixed in a contract.</p>
+      <h2>3. Prices and promotions</h2>
+      <p>Prices on the website are in Kazakhstani tenge (₸), indicative (“from”) and do not constitute a public offer. Promotional prices apply within the periods stated on the website. The final price is fixed in the contract or invoice.</p>
+      <h2>4. Workflow and payment</h2>
+      <ul>
+        <li>Request via the website, WhatsApp or Telegram → free consultation and scoping.</li>
+        <li>A contract fixing the scope, timeline and price.</li>
+        <li>Standard payment: 50% upfront, 50% on delivery, unless agreed otherwise in the contract.</li>
+      </ul>
+      <h2>5. Intellectual property</h2>
+      <p>Upon full payment, rights to the work results are transferred to the client to the extent defined in the contract. The SITS website materials, design and code belong to the Studio; copying without permission is prohibited.</p>
+      <h2>6. Project confidentiality</h2>
+      <p><span class="hl">Every client project and order is protected. The Studio never publishes client work, materials, data or even the fact of cooperation without the client’s written permission. Only projects the client has approved for publication appear in our portfolio and cases. We sign an NDA on request.</span></p>
+      <h2>7. Warranty</h2>
+      <p>30 days of free fixes after launch. Our own builds are covered by ongoing care; monthly support plans can be enabled or cancelled any month.</p>
+      <h2>8. Liability</h2>
+      <p>The Studio is not liable for failures of third-party services and platforms (hosting, social networks, payment systems, etc.) or for content provided by the client. The Studio’s aggregate liability is limited to the amount of the relevant contract.</p>
+      <h2>9. Governing law</h2>
+      <p>These terms are governed by the laws of the Republic of Kazakhstan. Disputes are resolved through negotiations, and failing that, in court at the Studio’s place of registration.</p>
+      <h2>10. Contact</h2>
+      <p>WhatsApp: +7 777 496 13 58 · Telegram: @zhanmate · Email: raimzhan1907@gmail.com<br/>Registered address: 041609, Almaty region, Talgar district, Besagash, Torgay str., 32, Kazakhstan.</p>
+    </div>
+    <div class="doc-foot"><a href="/">Home</a><a href="/price">Pricing</a><a href="/privacy">Privacy Policy</a></div>
+  </div>
+
+  <!-- ================= KK ================= -->
+  <div class="doc" data-l="kk">
+    <div class="kicker"><i></i>Құжаттар</div>
+    <h1>Пайдалану шарттары</h1>
+    <p class="updated">Жаңартылды: 2026 жылғы 4 шілде</p>
+    <div class="card">
+      <h2>1. Жалпы ережелер</h2>
+      <p>Осы шарттар сайтты пайдалануды және <span class="em">SITS</span> студиясының қызметтеріне тапсырыс беруді реттейді. Сайт иесі және қызмет көрсетуші — <span class="em">«SARIYEV IT SOLUTIONS» ЖШС</span>, БСН 250440005104, Қазақстан Республикасы (бұдан әрі — «Студия»). Сайтты пайдалана отырып немесе қызметтерге тапсырыс бере отырып, сіз осы шарттармен келісесіз.</p>
+      <h2>2. Қызметтер</h2>
+      <p>Студия толық циклді қызметтер көрсетеді: сайттар, қосымшалар мен ойындар жасау, медиа-продакшн (түсірілім, монтаж, нарезкалар), AI-видео және AI-контент, әлеуметтік желілерді жүргізу мен таргет жарнама, бизнес-автоматтандыру, халықаралық интеграциялар, мамандарды іріктеу және техникалық қолдау. Әр жобаның нақты көлемі, мерзімі мен бағасы келісімшартта бекітіледі.</p>
+      <h2>3. Бағалар мен акциялар</h2>
+      <p>Сайттағы бағалар теңгемен (₸) көрсетілген, болжамды («бастап») және жария оферта болып табылмайды. Акциялық бағалар сайтта көрсетілген мерзімде қолданылады. Соңғы баға келісімшартта немесе шотта бекітіледі.</p>
+      <h2>4. Жұмыс тәртібі және төлем</h2>
+      <ul>
+        <li>Сайт, WhatsApp немесе Telegram арқылы өтінім → тегін кеңес және тапсырманы талқылау.</li>
+        <li>Көлемді, мерзімді және бағаны бекітетін келісімшарт жасалады.</li>
+        <li>Стандартты төлем: басында 50%, жобаны тапсырғанда 50% (келісімшартта өзгеше келісілмесе).</li>
+      </ul>
+      <h2>5. Зияткерлік меншік</h2>
+      <p>Толық төлемнен кейін жұмыс нәтижесіне құқықтар келісімшартта белгіленген көлемде клиентке өтеді. SITS сайтының материалдары, дизайны мен коды Студияға тиесілі; рұқсатсыз көшіруге тыйым салынады.</p>
+      <h2>6. Жобалардың құпиялылығы</h2>
+      <p><span class="hl">Клиенттердің барлық жобалары мен тапсырыстары қорғалған. Студия клиенттің жазбаша рұқсатынсыз жұмыстарды, материалдарды, деректерді немесе ынтымақтастық фактісін жарияламайды. Портфолио мен кейстерге тек клиент жариялауға келісім берген жобалар ғана енеді. Сұраныс бойынша NDA-ға қол қоямыз.</span></p>
+      <h2>7. Кепілдіктер</h2>
+      <p>Іске қосылғаннан кейін 30 күн тегін түзетулер. Өз әзірлемелерімізге сүйемелдеу кепілдігі қолданылады; ай сайынғы қолдау — жеке тарифтер бойынша, кез келген айда қосылады және өшіріледі.</p>
+      <h2>8. Жауапкершілік</h2>
+      <p>Студия үшінші тарап сервистері мен платформаларының (хостинг, әлеуметтік желілер, төлем жүйелері және т.б.) іркілістері үшін және клиент ұсынған контент үшін жауап бермейді. Студияның жиынтық жауапкершілігі тиісті келісімшарт сомасымен шектеледі.</p>
+      <h2>9. Қолданылатын құқық</h2>
+      <p>Осы шарттар Қазақстан Республикасының заңнамасымен реттеледі. Даулар келіссөздер арқылы, келісімге қол жеткізілмесе — Студияның тіркелген жері бойынша сотта шешіледі.</p>
+      <h2>10. Байланыс</h2>
+      <p>WhatsApp: +7 777 496 13 58 · Telegram: @zhanmate · Email: raimzhan1907@gmail.com<br/>Заңды мекенжай: 041609, Алматы облысы, Талғар ауданы, Бесағаш ауылы, Торғай көшесі, 32.</p>
+    </div>
+    <div class="doc-foot"><a href="/">Басты бет</a><a href="/price">Бағалар</a><a href="/privacy">Құпиялылық саясаты</a></div>
+  </div>
+</main>
+
+<footer>© <span id="y"></span> SITS — ТОО «SARIYEV IT SOLUTIONS» · БИН 250440005104</footer>
+
+<script>
+document.getElementById('y').textContent = new Date().getFullYear();
+document.getElementById('themeToggle').addEventListener('click', function(){
+  var r = document.documentElement;
+  var next = r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  r.setAttribute('data-theme', next);
+  try { localStorage.setItem('sits-theme', next); } catch(e){}
+});
+(function(){
+  var sw = document.getElementById('langSwitch');
+  function apply(l){
+    document.documentElement.setAttribute('data-lang', l);
+    document.documentElement.setAttribute('lang', l === 'kk' ? 'kk' : l);
+    sw.querySelectorAll('button').forEach(function(b){ b.classList.toggle('on', b.dataset.lang === l); });
+    try { localStorage.setItem('sits-lang', l); } catch(e){}
+  }
+  sw.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click', function(){ apply(b.dataset.lang); });
+  });
+  apply(document.documentElement.getAttribute('data-lang') || 'ru');
+})();
+</script>
+</body>
+</html>

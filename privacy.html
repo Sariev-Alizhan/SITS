@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark" data-lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Политика конфиденциальности — SITS · Sariyev IT Solutions</title>
+<meta name="description" content="Политика конфиденциальности SITS — ТОО «SARIYEV IT SOLUTIONS»: какие данные мы собираем, как защищаем проекты клиентов и ничего не публикуем без разрешения." />
+<link rel="canonical" href="https://sits-eta.vercel.app/privacy" />
+<link rel="icon" type="image/png" href="/brand/favicon.png" />
+<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+<meta name="theme-color" content="#0c0a0b" />
+<link rel="stylesheet" href="/fonts/fonts.css" />
+<script>
+(function(){
+  try { var t = localStorage.getItem('sits-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch(e){}
+  try { var l = localStorage.getItem('sits-lang'); if (l==='en'||l==='kk'||l==='ru') document.documentElement.setAttribute('data-lang', l); } catch(e){}
+})();
+</script>
+<style>
+:root{
+  --font-display:'Unbounded','Arial Black',system-ui,sans-serif;
+  --font-body:'Manrope',system-ui,sans-serif;
+  --font-logo:'PT Serif',Georgia,serif;
+  --maxw:860px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --glass-blur:blur(22px) saturate(1.75);
+}
+html[data-theme="dark"]{
+  --bg:#0c0a0b; --text:#f4f1f1; --muted:#a39d9e; --faint:#6f696a;
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  --red:#e23744; --red-soft:rgba(226,55,68,.14);
+  --nav-bg:rgba(18,15,16,.55);
+  --glass:rgba(255,255,255,.045); --glass-2:rgba(255,255,255,.085);
+  --glass-line:rgba(255,255,255,.11); --glass-hi:rgba(255,255,255,.10);
+  --fx-glow:rgba(226,55,68,.24);
+}
+html[data-theme="light"]{
+  --bg:#f6f3f3; --text:#171314; --muted:#6a6364; --faint:#9b9495;
+  --line:rgba(20,12,13,.1); --line-2:rgba(20,12,13,.18);
+  --red:#b31d22; --red-soft:rgba(179,29,34,.1);
+  --nav-bg:rgba(255,255,255,.52);
+  --glass:rgba(255,255,255,.42); --glass-2:rgba(255,255,255,.68);
+  --glass-line:rgba(20,12,13,.09); --glass-hi:rgba(255,255,255,.9);
+  --fx-glow:rgba(226,55,68,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16.5px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .55s var(--ease),color .55s var(--ease)}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--red);color:#fff}
+.fx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.fx::before{content:"";position:absolute;width:56vw;height:56vw;max-width:680px;max-height:680px;top:-16%;right:-8%;
+  border-radius:50%;filter:blur(90px);background:radial-gradient(circle at 50% 50%,var(--fx-glow),transparent 70%)}
+.fx::after{content:"";position:absolute;width:44vw;height:44vw;max-width:500px;max-height:500px;bottom:-14%;left:-10%;
+  border-radius:50%;filter:blur(80px);background:radial-gradient(circle at 50% 50%,var(--fx-glow),transparent 70%);opacity:.55}
+.nav{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:0 16px;pointer-events:none}
+.nav .bar{pointer-events:auto;display:flex;align-items:center;justify-content:space-between;width:100%;max-width:calc(var(--maxw) + 120px);
+  height:58px;padding:0 10px 0 22px;border-radius:100px;background:var(--nav-bg);border:1px solid var(--glass-line);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi),0 16px 40px -26px rgba(0,0,0,.5)}
+.logo{font-family:var(--font-logo);font-weight:700;font-size:22px;letter-spacing:.04em;color:var(--text)}
+.logo b{color:var(--red)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.lang-switch{display:inline-flex;align-items:center;gap:1px;border:1px solid var(--glass-line);border-radius:100px;padding:3px;height:38px;
+  background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi)}
+.lang-switch button{font-family:var(--font-body);font-size:11.5px;font-weight:600;letter-spacing:.06em;background:transparent;border:none;
+  color:var(--muted);padding:6px 10px;border-radius:100px;cursor:pointer;transition:.25s var(--ease);min-width:34px}
+.lang-switch button:hover{color:var(--text)}
+.lang-switch button.on{background:var(--glass-2);color:var(--text);box-shadow:inset 0 1px 0 var(--glass-hi)}
+.icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--glass-line);background:var(--glass);color:var(--text);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.25s var(--ease);box-shadow:inset 0 1px 0 var(--glass-hi)}
+.icon-btn:hover{background:var(--glass-2)}
+.icon-btn svg{width:17px;height:17px}
+.theme-toggle .moon{display:none}
+html[data-theme="dark"] .theme-toggle .sun{display:none}
+html[data-theme="dark"] .theme-toggle .moon{display:block}
+main{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:130px 24px 40px}
+.kicker{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.kicker i{width:6px;height:6px;border-radius:50%;background:var(--red)}
+h1{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,5vw,44px);line-height:1.08;letter-spacing:-.03em;margin-bottom:12px}
+.updated{color:var(--faint);font-size:13.5px;margin-bottom:34px}
+.doc{display:none}
+html[data-lang="ru"] .doc[data-l="ru"]{display:block}
+html[data-lang="en"] .doc[data-l="en"]{display:block}
+html[data-lang="kk"] .doc[data-l="kk"]{display:block}
+.card{border:1px solid var(--glass-line);border-radius:28px;background:var(--glass);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:inset 0 1px 0 var(--glass-hi);padding:38px 40px}
+.card h2{font-family:var(--font-display);font-weight:500;font-size:18px;letter-spacing:-.01em;margin:30px 0 10px}
+.card h2:first-child{margin-top:0}
+.card p, .card li{color:var(--muted);font-size:15px;line-height:1.7}
+.card ul{margin:8px 0 0 20px}
+.card li{margin-bottom:6px}
+.card .em{color:var(--text);font-weight:600}
+.card .hl{display:block;margin-top:14px;padding:16px 20px;border:1px solid color-mix(in srgb, var(--red) 30%, transparent);
+  border-radius:16px;background:var(--red-soft);color:var(--text);font-weight:500;font-size:14.5px;line-height:1.6}
+.doc-foot{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;color:var(--faint);font-size:13.5px;align-items:center}
+.doc-foot a{color:var(--muted);font-weight:600;transition:color .25s}
+.doc-foot a:hover{color:var(--text)}
+footer{max-width:var(--maxw);margin:0 auto;padding:10px 24px 40px;color:var(--faint);font-size:13px}
+@media(max-width:600px){
+  main{padding:110px 18px 30px}
+  .card{padding:26px 22px;border-radius:22px}
+  .lang-switch button{min-width:30px;padding:6px 8px}
+}
+</style>
+</head>
+<body>
+<div class="fx" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="bar">
+    <a class="logo" href="/">SIT<b>S</b></a>
+    <div class="nav-right">
+      <div class="lang-switch" id="langSwitch" role="group" aria-label="Language">
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="kk">KZ</button>
+      </div>
+      <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Theme">
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- ================= RU ================= -->
+  <div class="doc" data-l="ru">
+    <div class="kicker"><i></i>Документы</div>
+    <h1>Политика конфиденциальности</h1>
+    <p class="updated">Обновлено: 4 июля 2026 г.</p>
+    <div class="card">
+      <h2>1. Оператор данных</h2>
+      <p>Оператор персональных данных — <span class="em">ТОО «SARIYEV IT SOLUTIONS»</span>, БИН 250440005104, юридический адрес: 041609, Алматинская область, Талгарский район, с. Бесагаш, ул. Торғай, 32 (далее — «Студия»).</p>
+      <h2>2. Какие данные мы собираем</h2>
+      <ul>
+        <li>Данные из формы заявки: имя, email или телефон, описание проекта.</li>
+        <li>Обезличенная статистика посещений (Vercel Analytics) — без рекламных трекеров.</li>
+        <li>Настройки сайта (тема, язык) — хранятся только в вашем браузере (localStorage) и не передаются нам.</li>
+      </ul>
+      <h2>3. Зачем мы используем данные</h2>
+      <p>Чтобы связаться с вами по заявке, подготовить предложение и исполнить договор. Мы не используем данные для рассылок без вашего согласия и не продаём их.</p>
+      <h2>4. Правовое основание</h2>
+      <p>Обработка ведётся на основании вашего согласия (отправка формы) и для заключения/исполнения договора, в соответствии с Законом РК «О персональных данных и их защите».</p>
+      <h2>5. Защита проектов и материалов клиентов</h2>
+      <p><span class="hl">Все проекты и заказы клиентов защищены. Файлы, доступы, исходники и любые материалы проектов строго конфиденциальны. Мы ничего не публикуем — ни работы, ни данные, ни факт сотрудничества — без письменного разрешения клиента. По запросу подписываем NDA.</span></p>
+      <h2>6. Хранение и защита</h2>
+      <p>Данные хранятся на защищённой инфраструктуре (Vercel) с шифрованием при передаче (HTTPS/HSTS). Доступ к данным имеет только команда Студии. Данные хранятся, пока это необходимо для целей обработки или требуется законом.</p>
+      <h2>7. Передача третьим лицам</h2>
+      <p>Мы не продаём и не передаём ваши данные третьим лицам. Исключения: инфраструктурные провайдеры, обрабатывающие данные по нашему поручению (хостинг Vercel), и случаи, прямо предусмотренные законом.</p>
+      <h2>8. Cookies и localStorage</h2>
+      <p>Мы не используем рекламные cookies. В браузере сохраняются только ваши настройки (тема, язык) и обезличенная статистика посещаемости.</p>
+      <h2>9. Ваши права</h2>
+      <p>Вы можете запросить доступ к своим данным, их исправление или удаление — напишите нам любым удобным способом, ответим и выполним запрос в разумный срок.</p>
+      <h2>10. Изменения и контакты</h2>
+      <p>Актуальная версия политики всегда опубликована на этой странице. Вопросы: WhatsApp +7 777 496 13 58 · Telegram @zhanmate · Email raimzhan1907@gmail.com.</p>
+    </div>
+    <div class="doc-foot"><a href="/">Главная</a><a href="/price">Прайс</a><a href="/terms">Условия использования</a></div>
+  </div>
+
+  <!-- ================= EN ================= -->
+  <div class="doc" data-l="en">
+    <div class="kicker"><i></i>Legal</div>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: July 4, 2026</p>
+    <div class="card">
+      <h2>1. Data controller</h2>
+      <p>The personal data controller is <span class="em">SARIYEV IT SOLUTIONS LLP</span>, BIN 250440005104, registered address: 041609, Almaty region, Talgar district, Besagash, Torgay str., 32, Kazakhstan (the “Studio”).</p>
+      <h2>2. What data we collect</h2>
+      <ul>
+        <li>Contact form data: name, email or phone, project description.</li>
+        <li>Anonymised visit statistics (Vercel Analytics) — no advertising trackers.</li>
+        <li>Site preferences (theme, language) — stored only in your browser (localStorage) and never sent to us.</li>
+      </ul>
+      <h2>3. Why we use it</h2>
+      <p>To contact you about your request, prepare a proposal and perform the contract. We do not use your data for mailings without consent and never sell it.</p>
+      <h2>4. Legal basis</h2>
+      <p>Processing is based on your consent (submitting the form) and on entering into/performing a contract, in line with the Law of the Republic of Kazakhstan “On Personal Data and Its Protection”.</p>
+      <h2>5. Protection of client projects and materials</h2>
+      <p><span class="hl">Every client project and order is protected. Files, credentials, sources and any project materials are strictly confidential. We publish nothing — no work, no data, not even the fact of cooperation — without the client’s written permission. We sign an NDA on request.</span></p>
+      <h2>6. Storage and security</h2>
+      <p>Data is stored on secure infrastructure (Vercel) with encryption in transit (HTTPS/HSTS). Only the Studio team has access. Data is kept as long as needed for the processing purposes or as required by law.</p>
+      <h2>7. Sharing with third parties</h2>
+      <p>We do not sell or share your data with third parties, except infrastructure providers processing data on our behalf (Vercel hosting) and cases directly required by law.</p>
+      <h2>8. Cookies and localStorage</h2>
+      <p>We use no advertising cookies. Your browser stores only your preferences (theme, language) and anonymised visit statistics are collected.</p>
+      <h2>9. Your rights</h2>
+      <p>You may request access to, correction or deletion of your data — contact us any convenient way and we will respond and fulfil the request within a reasonable time.</p>
+      <h2>10. Changes and contact</h2>
+      <p>The current version of this policy is always published on this page. Questions: WhatsApp +7 777 496 13 58 · Telegram @zhanmate · Email raimzhan1907@gmail.com.</p>
+    </div>
+    <div class="doc-foot"><a href="/">Home</a><a href="/price">Pricing</a><a href="/terms">Terms of Service</a></div>
+  </div>
+
+  <!-- ================= KK ================= -->
+  <div class="doc" data-l="kk">
+    <div class="kicker"><i></i>Құжаттар</div>
+    <h1>Құпиялылық саясаты</h1>
+    <p class="updated">Жаңартылды: 2026 жылғы 4 шілде</p>
+    <div class="card">
+      <h2>1. Деректер операторы</h2>
+      <p>Дербес деректер операторы — <span class="em">«SARIYEV IT SOLUTIONS» ЖШС</span>, БСН 250440005104, заңды мекенжайы: 041609, Алматы облысы, Талғар ауданы, Бесағаш ауылы, Торғай көшесі, 32 (бұдан әрі — «Студия»).</p>
+      <h2>2. Қандай деректерді жинаймыз</h2>
+      <ul>
+        <li>Өтінім формасының деректері: аты, email немесе телефон, жоба сипаттамасы.</li>
+        <li>Иесіздендірілген кіру статистикасы (Vercel Analytics) — жарнамалық трекерлерсіз.</li>
+        <li>Сайт баптаулары (тақырып, тіл) — тек сіздің браузеріңізде (localStorage) сақталады, бізге жіберілмейді.</li>
+      </ul>
+      <h2>3. Деректерді не үшін қолданамыз</h2>
+      <p>Өтініміңіз бойынша байланысу, ұсыныс дайындау және келісімшартты орындау үшін. Келісіміңізсіз хабарлама таратпаймыз және деректерді сатпаймыз.</p>
+      <h2>4. Құқықтық негіз</h2>
+      <p>Өңдеу сіздің келісіміңізге (форманы жіберу) және келісімшарт жасау/орындауға негізделеді, ҚР «Дербес деректер және оларды қорғау туралы» Заңына сәйкес жүргізіледі.</p>
+      <h2>5. Клиент жобалары мен материалдарын қорғау</h2>
+      <p><span class="hl">Клиенттердің барлық жобалары мен тапсырыстары қорғалған. Файлдар, қолжетімдер, бастапқы кодтар және кез келген жоба материалдары қатаң құпия. Клиенттің жазбаша рұқсатынсыз ештеңе жарияламаймыз — жұмыстарды да, деректерді де, ынтымақтастық фактісін де. Сұраныс бойынша NDA-ға қол қоямыз.</span></p>
+      <h2>6. Сақтау және қорғау</h2>
+      <p>Деректер қорғалған инфрақұрылымда (Vercel) сақталады, беру кезінде шифрланады (HTTPS/HSTS). Деректерге тек Студия командасының қолжетімі бар. Деректер өңдеу мақсаттарына қажет болғанша немесе заң талап еткенше сақталады.</p>
+      <h2>7. Үшінші тұлғаларға беру</h2>
+      <p>Деректеріңізді үшінші тұлғаларға сатпаймыз және бермейміз. Ерекшеліктер: біздің тапсырмамыз бойынша деректерді өңдейтін инфрақұрылым провайдерлері (Vercel хостингі) және заңда тікелей көзделген жағдайлар.</p>
+      <h2>8. Cookies және localStorage</h2>
+      <p>Жарнамалық cookies қолданбаймыз. Браузеріңізде тек баптауларыңыз (тақырып, тіл) сақталады, иесіздендірілген кіру статистикасы жиналады.</p>
+      <h2>9. Сіздің құқықтарыңыз</h2>
+      <p>Деректеріңізге қолжетімділік сұрай аласыз, оларды түзетуді немесе жоюды талап ете аласыз — кез келген ыңғайлы тәсілмен жазыңыз, орынды мерзімде жауап беріп, орындаймыз.</p>
+      <h2>10. Өзгерістер және байланыс</h2>
+      <p>Саясаттың өзекті нұсқасы әрқашан осы бетте жарияланады. Сұрақтар: WhatsApp +7 777 496 13 58 · Telegram @zhanmate · Email raimzhan1907@gmail.com.</p>
+    </div>
+    <div class="doc-foot"><a href="/">Басты бет</a><a href="/price">Бағалар</a><a href="/terms">Пайдалану шарттары</a></div>
+  </div>
+</main>
+
+<footer>© <span id="y"></span> SITS — ТОО «SARIYEV IT SOLUTIONS» · БИН 250440005104</footer>
+
+<script>
+document.getElementById('y').textContent = new Date().getFullYear();
+document.getElementById('themeToggle').addEventListener('click', function(){
+  var r = document.documentElement;
+  var next = r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  r.setAttribute('data-theme', next);
+  try { localStorage.setItem('sits-theme', next); } catch(e){}
+});
+(function(){
+  var sw = document.getElementById('langSwitch');
+  function apply(l){
+    document.documentElement.setAttribute('data-lang', l);
+    document.documentElement.setAttribute('lang', l === 'kk' ? 'kk' : l);
+    sw.querySelectorAll('button').forEach(function(b){ b.classList.toggle('on', b.dataset.lang === l); });
+    try { localStorage.setItem('sits-lang', l); } catch(e){}
+  }
+  sw.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click', function(){ apply(b.dataset.lang); });
+  });
+  apply(document.documentElement.getAttribute('data-lang') || 'ru');
+})();
+</script>
+</body>
+</html>

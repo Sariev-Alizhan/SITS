@@ -931,6 +931,10 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .price-notes span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0}
 .price-cta-all{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:48px;text-align:center}
 .price-cta-all p{color:var(--muted);font-size:15.5px}
+/* Бейдж: на средних ширинах (2 колонки с узкими карточками) — тоже над заголовком */
+@media(min-width:941px) and (max-width:1199px){
+  .pc-badge{position:static;align-self:flex-start;margin-bottom:14px;order:-1}
+}
 @media(max-width:940px){
   .price-grid,.sup-grid,.case-grid{grid-template-columns:1fr}
   .price-card.featured .pc-list,.price-card.wide .pc-list{grid-template-columns:1fr}
@@ -1287,7 +1291,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       <span><kbd class="cmdk-kbd">↑↓</kbd> <span data-i18n="cmdk.navigate">навигация</span></span>
       <span><kbd class="cmdk-kbd">↵</kbd> <span data-i18n="cmdk.select">выбрать</span></span>
       <span class="sep"></span>
-      <span data-i18n="cmdk.poweredBy">SITS</span>
+      <span>SITS</span>
     </div>
   </div>
 </div>

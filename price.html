@@ -1083,6 +1083,8 @@ form.contact-form{border:1px solid var(--glass-line);background:var(--glass);bor
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 form .btn-primary{width:100%;justify-content:center;margin-top:6px}
 .form-note{font-size:12.5px;color:var(--faint);margin-top:16px;text-align:center}
+.form-note a{color:var(--muted);text-decoration:underline;text-underline-offset:3px;transition:color .25s}
+.form-note a:hover{color:var(--text)}
 /* honeypot — невидим людям, но боты заполнят */
 .hp-field{position:absolute !important;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
 .form-success{display:none;text-align:center;padding:36px 0}
@@ -2219,7 +2221,7 @@ const I18N = {
       labelMsg:'О проекте', phMsg:'Пара слов о задаче, сроках и бюджете',
       submit:'Отправить заявку', sending:'Отправляем…',
       pricing:'Готовые пакеты и цены — в разделе «Прайс». Нестандартные задачи считаем индивидуально под объём работ.',
-      note:'Нажимая «Отправить», вы соглашаетесь на обработку данных для связи.',
+      note2:'Нажимая «Отправить», вы соглашаетесь с', noteLink:'политикой конфиденциальности',
       successH:'Заявка отправлена', successP:'Спасибо — мы свяжемся с вами в ближайшее время.',
       errorAlert:'Не удалось отправить. Попробуйте ещё раз или напишите нам в Instagram.',
       errorLabel:'Ошибка',
@@ -2500,7 +2502,7 @@ const I18N = {
       labelMsg:'About the project', phMsg:'A few words on the task, timeline and budget',
       submit:'Send request', sending:'Sending…',
       pricing:'Ready-made packages and prices are in the Pricing section. Custom work is quoted individually by scope.',
-      note:'By clicking "Send", you consent to your data being used for contact.',
+      note2:'By clicking "Send" you agree to the', noteLink:'Privacy Policy',
       successH:'Request sent', successP:'Thanks — we’ll get back to you shortly.',
       errorAlert:'Couldn’t send. Please try again or message us on Instagram.',
       errorLabel:'Error',
@@ -2781,7 +2783,7 @@ const I18N = {
       labelMsg:'Жоба туралы', phMsg:'Тапсырма, мерзім мен бюджет туралы бірнеше сөз',
       submit:'Өтінімді жіберу', sending:'Жіберілуде…',
       pricing:'Дайын пакеттер мен бағалар — «Бағалар» бөлімінде. Бейстандарт тапсырмаларды жұмыс көлеміне қарай жеке есептейміз.',
-      note:'«Жіберу» түймесін басу арқылы байланыс үшін деректерді өңдеуге келісім бересіз.',
+      note2:'«Жіберу» батырмасын баса отырып, сіз мынамен келісесіз:', noteLink:'құпиялылық саясаты',
       successH:'Өтінім жіберілді', successP:'Рахмет — жақын арада хабарласамыз.',
       errorAlert:'Жіберу сәтсіз аяқталды. Қайталап көріңіз немесе Instagram арқылы жазыңыз.',
       errorLabel:'Қате',

@@ -1,7 +1,5 @@
-# Security Policy (RFC 9116)
-# https://sits-eta.vercel.app/.well-known/security.txt
-
 Contact: mailto:raimzhan1907@gmail.com
-Expires: 2027-06-07T00:00:00.000Z
+Contact: https://sits-eta.vercel.app/#contact
+Expires: 2027-07-04T00:00:00.000Z
 Preferred-Languages: ru, en, kk
 Canonical: https://sits-eta.vercel.app/.well-known/security.txt

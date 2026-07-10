@@ -30,8 +30,8 @@
 <meta name="twitter:image:alt" content="SITS — Sariyev IT Solutions" />
 <meta name="author" content="Alizhan Sariyev (Сариев Алижан Сабитулы)" />
 <meta name="publisher" content="ТОО «SARIYEV IT SOLUTIONS»" />
-<meta name="theme-color" content="#131314" media="(prefers-color-scheme: dark)" />
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0c0a0b" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f6f3f3" media="(prefers-color-scheme: light)" />
 <meta name="color-scheme" content="dark light" />
 
 <!-- Schema.org Organization (юр. данные) -->
@@ -155,10 +155,10 @@
 <link rel="preconnect" href="https://esm.sh" crossorigin />
 
 <!-- Self-hosted fonts — woff2 в /fonts/, грузятся напрямую без обращения к Google. -->
-<link rel="preload" href="/fonts/manrope-600-latin.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="/fonts/manrope-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="/fonts/manrope-700-latin.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="/fonts/manrope-700-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/unbounded-600-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/unbounded-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/unbounded-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/unbounded-700-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
 <style>
 /* ============ FONTS (self-hosted) ============ */
 /* cyrillic-ext */
@@ -341,12 +341,154 @@
   src: url('/fonts/pt-serif-700-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/unbounded-400-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/unbounded-400-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/unbounded-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/unbounded-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/unbounded-500-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/unbounded-500-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/unbounded-500-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/unbounded-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/unbounded-600-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/unbounded-600-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/unbounded-600-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/unbounded-600-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/unbounded-700-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/unbounded-700-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/unbounded-700-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/unbounded-700-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 /* ============ TOKENS ============ */
-/* Палитра и типографика в стиле Gemini: глубокий графит, синее амбиент-свечение,
-   фирменный градиент blue → purple → coral на акцентах */
 :root{
-  --font-display:'Manrope','Helvetica Neue',system-ui,sans-serif;
+  --font-display:'Unbounded','Arial Black','Helvetica Neue',system-ui,sans-serif;
   --font-body:'Manrope',system-ui,sans-serif;
   --font-logo:'PT Serif',Georgia,serif;
   --maxw:1180px;
@@ -354,62 +496,56 @@
   --ease:cubic-bezier(.22,.61,.36,1);
   --nav-h:88px;
   --glass-blur:blur(22px) saturate(1.75);
-  --g-blue:#4796e3; --g-purple:#9177c7; --g-coral:#d6644d;
-  --grad:linear-gradient(90deg,#4796e3 0%,#9177c7 52%,#d6644d 100%);
 }
 html[data-theme="dark"]{
-  --bg:#131314;
-  --bg-2:#1b1c1d;
-  --surface:#1e1f20;
-  --surface-2:#282a2c;
-  --text:#e8eaed;
-  --muted:#a2a9b3;
-  --faint:#8e959e;
+  --bg:#0c0a0b;
+  --bg-2:#100d0e;
+  --surface:#141112;
+  --surface-2:#181516;
+  --text:#f4f1f1;
+  --muted:#a39d9e;
+  --faint:#8f8889;
   --line:rgba(255,255,255,.08);
   --line-2:rgba(255,255,255,.14);
-  --accent:#8ab4f8;
-  --accent-soft:rgba(138,180,248,.13);
+  --red:#e23744;
+  --red-soft:rgba(226,55,68,.14);
   --shadow:0 30px 70px -40px rgba(0,0,0,.9);
-  --nav-bg:rgba(24,25,27,.55);
+  --nav-bg:rgba(18,15,16,.55);
   --glass:rgba(255,255,255,.045);
   --glass-2:rgba(255,255,255,.085);
   --glass-line:rgba(255,255,255,.11);
   --glass-hi:rgba(255,255,255,.10);
-  --img-frame:#0e0f10;
-  --fx-glow-1:rgba(66,133,244,.26);
-  --fx-glow-2:rgba(145,119,199,.20);
-  --fx-hero:rgba(38,80,190,.30);
+  --img-frame:#0a0808;
+  --fx-glow-1:rgba(226,55,68,.30);
+  --fx-glow-2:rgba(226,55,68,.18);
   --fx-dot:rgba(255,255,255,.055);
   --fx-grain:.06;
-  --fx-cursor:rgba(87,134,255,.13);
-  --err:#f28b82;
+  --fx-cursor:rgba(226,55,68,.16);
 }
 html[data-theme="light"]{
-  --bg:#ffffff;
-  --bg-2:#f8fafd;
-  --surface:#f0f4f9;
-  --surface-2:#e9eef6;
-  --text:#1f1f1f;
-  --muted:#575b60;
-  --faint:#5f6368;
-  --line:rgba(12,18,28,.1);
-  --line-2:rgba(12,18,28,.18);
-  --accent:#0b57d0;
-  --accent-soft:rgba(11,87,208,.09);
-  --shadow:0 30px 70px -44px rgba(20,40,80,.26);
+  --bg:#f6f3f3;
+  --bg-2:#ffffff;
+  --surface:#ffffff;
+  --surface-2:#fbf8f8;
+  --text:#171314;
+  --muted:#6a6364;
+  --faint:#716b6c;
+  --line:rgba(20,12,13,.1);
+  --line-2:rgba(20,12,13,.18);
+  --red:#b31d22;
+  --red-soft:rgba(179,29,34,.1);
+  --shadow:0 30px 70px -44px rgba(80,20,25,.28);
   --nav-bg:rgba(255,255,255,.52);
   --glass:rgba(255,255,255,.42);
   --glass-2:rgba(255,255,255,.68);
-  --glass-line:rgba(12,18,28,.09);
+  --glass-line:rgba(20,12,13,.09);
   --glass-hi:rgba(255,255,255,.9);
-  --img-frame:#e9eef6;
-  --fx-glow-1:rgba(66,133,244,.15);
-  --fx-glow-2:rgba(145,119,199,.11);
-  --fx-hero:rgba(66,133,244,.10);
-  --fx-dot:rgba(11,87,208,.07);
+  --img-frame:#ece8e8;
+  --fx-glow-1:rgba(226,55,68,.17);
+  --fx-glow-2:rgba(179,29,34,.10);
+  --fx-dot:rgba(179,29,34,.07);
   --fx-grain:.035;
-  --fx-cursor:rgba(11,87,208,.08);
-  --err:#d93025;
+  --fx-cursor:rgba(179,29,34,.10);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
@@ -419,7 +555,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-si
   -webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .55s var(--ease),color .55s var(--ease)}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
-::selection{background:var(--accent);color:var(--bg)}
+::selection{background:var(--red);color:#fff}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
 
 /* ============ AMBIENT FX ============ */
@@ -433,11 +569,6 @@ img{display:block;max-width:100%}
   animation:drift2 32s ease-in-out infinite alternate}
 @keyframes drift1{from{transform:translate(0,0) scale(1)}to{transform:translate(-7%,9%) scale(1.12)}}
 @keyframes drift2{from{transform:translate(0,0) scale(1)}to{transform:translate(8%,-7%) scale(1.1)}}
-/* Центральное глубокое свечение — фирменный «ambient glow» главного экрана Gemini */
-.fx-bg::after{content:"";position:absolute;left:50%;top:44%;width:min(1200px,110vw);height:min(760px,80vh);
-  transform:translate(-50%,-50%);pointer-events:none;
-  background:radial-gradient(ellipse 50% 50% at 50% 50%,var(--fx-hero),transparent 70%);
-  filter:blur(48px)}
 .fx-dots{position:absolute;inset:0;
   background-image:radial-gradient(var(--fx-dot) 1px,transparent 1.4px);background-size:26px 26px;
   -webkit-mask-image:radial-gradient(ellipse 75% 55% at 50% 18%,#000 0%,transparent 72%);
@@ -486,7 +617,7 @@ main, footer{position:relative;z-index:1}
   transition:box-shadow .4s var(--ease),background .4s var(--ease)}
 .nav.scrolled .wrap{box-shadow:inset 0 1px 0 var(--glass-hi),0 22px 50px -22px rgba(0,0,0,.55)}
 .logo{font-family:var(--font-logo);font-weight:700;font-size:23px;letter-spacing:.04em;line-height:1;color:var(--text)}
-.logo b{font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo b{color:var(--red);font-weight:700}
 .nav-links{display:flex;align-items:center;gap:32px}
 .nav-links a{font-size:14px;font-weight:500;color:var(--muted);transition:color .25s}
 .nav-links a:hover{color:var(--text)}
@@ -514,10 +645,10 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
 .btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;border-radius:100px;
   padding:11px 22px;cursor:pointer;border:1px solid transparent;transition:.3s var(--ease);font-family:var(--font-body);white-space:nowrap}
 .btn svg{width:17px;height:17px;flex-shrink:0}
-.btn-primary{background:linear-gradient(96deg,#3d7ff0 0%,#7a63d8 55%,#c05f7c 100%);color:#fff;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 12px 28px -12px rgba(76,120,240,.60)}
-.btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 16px 36px -12px rgba(110,105,225,.70)}
+.btn-primary{background:linear-gradient(180deg,color-mix(in srgb,var(--red) 88%,#fff) 0%,var(--red) 55%);color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 12px 28px -12px color-mix(in srgb,var(--red) 65%,transparent)}
+.btn-primary:hover{filter:brightness(1.06);transform:translateY(-1px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 16px 34px -12px color-mix(in srgb,var(--red) 75%,transparent)}
 .btn-line{background:var(--glass);color:var(--text);border-color:var(--glass-line);
   backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
   box-shadow:inset 0 1px 0 var(--glass-hi)}
@@ -552,7 +683,7 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
 
 /* arrow link */
 .alink{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:var(--text);transition:gap .3s var(--ease)}
-.alink svg{width:15px;height:15px;color:var(--accent);transition:transform .3s var(--ease)}
+.alink svg{width:15px;height:15px;color:var(--red);transition:transform .3s var(--ease)}
 .alink:hover{gap:12px}
 .alink:hover svg{transform:translate(2px,-2px)}
 
@@ -564,10 +695,10 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
   text-transform:uppercase;color:var(--muted);margin-bottom:32px}
 .kicker .ln{width:38px;height:1px;background:var(--line-2)}
 .hero-grid{display:grid;grid-template-columns:1fr;gap:0}
-h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;letter-spacing:-.03em;
-  font-size:clamp(2rem,4.6vw,62px);max-width:13ch;hyphens:none}
-/* Градиентный текст в стиле приветствия Gemini — на каждой строке blue → purple → coral */
-.hero-title .rise{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;letter-spacing:-.03em;
+  font-size:clamp(2rem,4.6vw,62px);max-width:13ch;hyphens:none;
+  text-shadow:0 2px 30px color-mix(in srgb, var(--bg) 70%, transparent),
+              0 1px 2px color-mix(in srgb, var(--bg) 85%, transparent)}
 /* Длинные слова в KZ требуют больше места — даём чуть шире и чуть мельче шрифт */
 :root[data-lang="kk"] h1.hero-title{font-size:clamp(1.8rem,4vw,52px);max-width:15ch}
 :root[data-lang="ru"] h1.hero-title{max-width:12ch}
@@ -577,7 +708,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
 .hero-title .ln-mask{display:block;overflow:hidden;padding-bottom:.04em}
 .hero-title .rise{display:block;transform:translateY(108%);opacity:0;animation:rise 1s var(--ease) forwards}
 @keyframes rise{to{transform:translateY(0);opacity:1}}
-.dot{color:inherit}
+.dot{color:var(--red)}
 .hero-lower{display:flex;justify-content:space-between;align-items:flex-end;gap:48px;margin-top:36px;flex-wrap:wrap;
   opacity:0;animation:fade 1s var(--ease) .55s forwards}
 @keyframes fade{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
@@ -597,9 +728,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
 .sec-head .left{max-width:660px}
 .sec-tag{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;letter-spacing:.14em;
   text-transform:uppercase;color:var(--muted);margin-bottom:22px}
-/* Четырёхлучевая «искра» Gemini вместо точки */
-.sec-tag i{width:12px;height:12px;background:var(--grad);display:block;
-  clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+.sec-tag i{width:6px;height:6px;border-radius:50%;background:var(--red);display:block}
 .sec-head h2,.sec-head h1{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,4.6vw,52px);line-height:1.04;letter-spacing:-.03em}
 .sec-head .desc{color:var(--muted);font-size:17px;max-width:380px;line-height:1.55}
 
@@ -646,7 +775,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
 .p-row:hover{background:var(--glass);padding-left:22px}
 .p-row .pn{font-family:var(--font-display);font-weight:500;font-size:clamp(34px,4vw,46px);letter-spacing:-.02em;
   color:transparent;-webkit-text-stroke:1px var(--line-2);transition:-webkit-text-stroke .4s}
-.p-row:hover .pn{-webkit-text-stroke:1px var(--accent)}
+.p-row:hover .pn{-webkit-text-stroke:1px var(--red)}
 .p-row h3{font-family:var(--font-display);font-weight:500;font-size:21px;letter-spacing:-.01em;line-height:1.2}
 .p-row p{color:var(--muted);font-size:16px;line-height:1.6;max-width:520px}
 
@@ -667,7 +796,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
 .ap-item:hover{transform:translateY(-4px);border-color:var(--line-2);background:var(--glass-2)}
 .ap-num{font-family:var(--font-display);font-weight:500;font-size:34px;letter-spacing:-.02em;line-height:1;
   color:transparent;-webkit-text-stroke:1px var(--line-2);margin-bottom:20px;transition:-webkit-text-stroke .4s}
-.ap-item:hover .ap-num{-webkit-text-stroke:1px var(--accent)}
+.ap-item:hover .ap-num{-webkit-text-stroke:1px var(--red)}
 .ap-item p{color:var(--muted);font-size:15px;line-height:1.6}
 .contact-pricing{font-size:14px;color:var(--muted);line-height:1.55;margin-bottom:16px;
   padding:14px 18px;border:1px solid var(--glass-line);border-radius:var(--r-md);background:var(--glass);
@@ -694,7 +823,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
 .pf .pf-open{display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-weight:600;font-size:13.5px;color:#fff;
   align-self:flex-start;transform:translateY(8px);opacity:0;transition:.45s var(--ease)}
 .pf:hover .pf-open{transform:none;opacity:1}
-.pf .pf-open svg{width:14px;height:14px;color:var(--accent);transition:transform .3s}
+.pf .pf-open svg{width:14px;height:14px;color:var(--red);transition:transform .3s}
 .pf:hover .pf-open:hover svg{transform:translate(2px,-2px)}
 .pf-1{grid-column:span 3;grid-row:span 2}
 .pf-2{grid-column:span 3}
@@ -708,16 +837,16 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
 .pf-10{grid-column:span 3}
 
 /* ============ PRICING ============ */
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .promo-pill{display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;
   margin:0 0 40px;padding:16px 24px;border-radius:var(--r-md);
-  border:1px solid color-mix(in srgb, var(--accent) 30%, transparent);
-  background:color-mix(in srgb, var(--accent) 9%, transparent);
+  border:1px solid color-mix(in srgb, var(--red) 30%, transparent);
+  background:color-mix(in srgb, var(--red) 9%, transparent);
   backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
   box-shadow:inset 0 1px 0 var(--glass-hi);
   font-size:14.5px;font-weight:600;line-height:1.5}
-.promo-pill i{width:13px;height:13px;background:var(--grad);flex-shrink:0;
-  clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);
-  animation:pulse 1.6s ease-in-out infinite}
+.promo-pill i{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;
+  box-shadow:0 0 12px var(--red);animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
 .price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .price-card{position:relative;display:flex;flex-direction:column;padding:30px;
@@ -728,26 +857,26 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
 .price-card:hover{transform:translateY(-5px);border-color:var(--line-2);background:var(--glass-2);
   box-shadow:inset 0 1px 0 var(--glass-hi),var(--shadow)}
 .price-card.featured{grid-column:1/-1;
-  border-color:color-mix(in srgb, var(--accent) 38%, transparent);
-  background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent 55%)}
+  border-color:color-mix(in srgb, var(--red) 38%, transparent);
+  background:linear-gradient(135deg, color-mix(in srgb, var(--red) 8%, transparent), transparent 55%)}
 .price-card h3{font-family:var(--font-display);font-weight:500;font-size:21px;letter-spacing:-.01em;line-height:1.2}
 .pc-sub{color:var(--muted);font-size:14px;line-height:1.55;margin-top:8px}
 .pc-badge{position:absolute;top:24px;right:24px;font-size:12px;font-weight:700;letter-spacing:.04em;
-  color:var(--accent);background:var(--accent-soft);border:1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  color:var(--red);background:var(--red-soft);border:1px solid color-mix(in srgb, var(--red) 30%, transparent);
   border-radius:100px;padding:5px 12px}
 .pc-prices{display:flex;flex-direction:column;gap:12px;margin:22px 0 4px;padding-top:18px;border-top:1px solid var(--line)}
 .pc-row{display:flex;flex-direction:column;gap:4px}
 .pc-lbl{font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
 .pc-vals{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.pc-old{color:var(--faint);font-size:14.5px;text-decoration:line-through;text-decoration-color:color-mix(in srgb, var(--accent) 65%, transparent);text-decoration-thickness:1.5px}
+.pc-old{color:var(--faint);font-size:14.5px;text-decoration:line-through;text-decoration-color:color-mix(in srgb, var(--red) 65%, transparent);text-decoration-thickness:1.5px}
 .pc-new{font-family:var(--font-display);font-weight:500;font-size:clamp(22px,2.4vw,27px);letter-spacing:-.02em;white-space:nowrap}
-.pc-chip{font-style:normal;font-size:11.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);
+.pc-chip{font-style:normal;font-size:11.5px;font-weight:700;color:var(--red);background:var(--red-soft);
   border-radius:100px;padding:3px 9px}
 .pc-per{font-size:13px;color:var(--muted);font-weight:500}
 .pc-list{margin:20px 0 26px;display:flex;flex-direction:column;gap:9px;list-style:none}
 .pc-list li{position:relative;padding-left:26px;font-size:14px;line-height:1.5;color:var(--muted)}
 .pc-list li::before{content:"";position:absolute;left:2px;top:4px;width:14px;height:14px;
-  background:var(--accent);
+  background:var(--red);
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 13 5 5L20 7'/%3E%3C/svg%3E") center/contain no-repeat;
           mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 13 5 5L20 7'/%3E%3C/svg%3E") center/contain no-repeat}
 .price-card.featured .pc-list{display:grid;grid-template-columns:repeat(2,1fr);gap:9px 32px}
@@ -760,10 +889,10 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
   backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
   box-shadow:inset 0 1px 0 var(--glass-hi)}
 .media-case .mc-ico{width:54px;height:54px;border-radius:16px;flex:0 0 54px;display:flex;align-items:center;justify-content:center;
-  color:var(--accent);border:1px solid var(--glass-line);background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi)}
+  color:var(--red);border:1px solid var(--glass-line);background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi)}
 .media-case .mc-ico svg{width:26px;height:26px}
 .media-case .mc-body{flex:1;min-width:260px}
-.media-case .mc-k{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.media-case .mc-k{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
 .media-case .mc-name{font-family:var(--font-display);font-weight:500;font-size:19px;letter-spacing:-.01em;margin-bottom:6px}
 .media-case p{color:var(--muted);font-size:14px;line-height:1.55;max-width:560px}
 .media-case .mc-links{display:flex;gap:22px;flex-wrap:wrap}
@@ -780,7 +909,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
 .price-notes span{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:500;color:var(--muted);
   border:1px solid var(--glass-line);background:var(--glass);border-radius:100px;padding:9px 16px;
   box-shadow:inset 0 1px 0 var(--glass-hi)}
-.price-notes span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.price-notes span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0}
 .price-cta-all{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:48px;text-align:center}
 .price-cta-all p{color:var(--muted);font-size:15.5px}
 /* Бейдж: на средних ширинах (2 колонки с узкими карточками) — тоже над заголовком */
@@ -802,7 +931,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
   border-radius:16px;padding:13px 16px;box-shadow:inset 0 1px 0 var(--glass-hi)}
 .founder-photo .cap .nm{font-family:var(--font-display);font-weight:500;font-size:15px;letter-spacing:-.01em}
 .founder-photo .cap .rl{font-size:12.5px;color:var(--muted);margin-top:2px}
-.founder-photo .cap .badge{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.founder-photo .cap .badge{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
 
 /* ============ PARTNERS ============ */
 .partners-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;
@@ -827,7 +956,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
 .partner:hover .partner-photo img{transform:scale(1.05)}
 .partner-body{min-width:0}
 .partner-badge{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:8px}
+  color:var(--red);margin-bottom:8px}
 .partner-name{font-family:var(--font-display);font-weight:500;font-size:21px;letter-spacing:-.01em;
   line-height:1.15;margin-bottom:4px}
 .partner-role{font-size:13.5px;color:var(--muted);margin-bottom:10px;font-weight:500}
@@ -837,7 +966,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
   border-radius:100px;letter-spacing:.03em;background:var(--glass)}
 .partner-link{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;
   color:var(--text);transition:gap .25s var(--ease)}
-.partner-link svg{width:13px;height:13px;color:var(--accent)}
+.partner-link svg{width:13px;height:13px;color:var(--red)}
 .partner:hover .partner-link{gap:11px}
 @media (max-width: 560px){
   .partner{grid-template-columns:1fr;text-align:left;padding:20px}
@@ -864,7 +993,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.08;l
 .cinfo .ci-k{font-size:12px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
 .cinfo .ci-v{font-weight:500;font-size:15.5px;margin-top:2px}
 .cinfo .ci-arr{margin-left:auto;color:var(--faint);transition:.3s var(--ease)}
-.cinfo:hover .ci-arr{color:var(--accent);transform:translate(2px,-2px)}
+.cinfo:hover .ci-arr{color:var(--red);transform:translate(2px,-2px)}
 .cinfo .ci-arr svg{width:15px;height:15px}
 form.contact-form{border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:40px;
   backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
@@ -875,17 +1004,17 @@ form.contact-form{border:1px solid var(--glass-line);background:var(--glass);bor
   border:1px solid var(--glass-line);border-radius:var(--r-sm);
   padding:14px 16px;color:var(--text);font-family:var(--font-body);font-size:15.5px;transition:.25s var(--ease)}
 .field textarea{resize:vertical;min-height:118px}
-.field input:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px var(--red-soft)}
 
 /* ============ SCROLL PROGRESS ============ */
 /* Тонкая полоска прогресса сверху страницы — показывает % прокрутки */
 .scroll-progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;
   background:transparent;pointer-events:none}
 .scroll-progress::before{content:"";display:block;height:100%;
-  background:var(--grad);
+  background:linear-gradient(90deg, var(--red), color-mix(in srgb, var(--red) 60%, var(--text)));
   transform-origin:left;transform:scaleX(var(--scroll, 0));
   transition:transform .12s linear;
-  box-shadow:0 0 12px color-mix(in srgb, var(--g-purple) 60%, transparent)}
+  box-shadow:0 0 12px color-mix(in srgb, var(--red) 60%, transparent)}
 @media (prefers-reduced-motion: reduce){
   .scroll-progress{display:none}
 }
@@ -915,7 +1044,7 @@ form.contact-form{border:1px solid var(--glass-line);background:var(--glass);bor
   font-size:14.5px;color:var(--text);transition:background .15s,color .15s;
   border-left:2px solid transparent}
 .cmdk-item:hover,.cmdk-item.active{background:color-mix(in srgb, var(--text) 5%, transparent);
-  border-left-color:var(--accent)}
+  border-left-color:var(--red)}
 .cmdk-item .cmdk-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;
   justify-content:center;color:var(--muted);
   background:color-mix(in srgb, var(--text) 6%, transparent);flex-shrink:0}
@@ -941,14 +1070,14 @@ form.contact-form{border:1px solid var(--glass-line);background:var(--glass);bor
   text-decoration:none;transform:translateY(-200%);
   transition:transform .2s var(--ease);
   box-shadow:0 8px 24px rgba(0,0,0,.25)}
-.skip-link:focus-visible,.skip-link:focus{transform:translateY(0);outline:2px solid var(--accent);outline-offset:2px}
+.skip-link:focus-visible,.skip-link:focus{transform:translateY(0);outline:2px solid var(--red);outline-offset:2px}
 
 /* Focus-visible — единый стиль для всех интерактивных элементов */
 :where(a,button,input,textarea,select,[tabindex]):focus-visible{
-  outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+  outline:2px solid var(--red);outline-offset:3px;border-radius:4px}
 .btn:focus-visible,.icon-btn:focus-visible,.lang-switch button:focus-visible,
 .alink:focus-visible{
-  outline:2px solid var(--accent);outline-offset:3px}
+  outline:2px solid var(--red);outline-offset:3px}
 /* Поля формы — кастомный focus уже есть выше, не дублируем */
 .field input:focus-visible,.field textarea:focus-visible{outline:none}
 .field input::placeholder,.field textarea::placeholder{color:var(--faint)}
@@ -961,8 +1090,8 @@ form .btn-primary{width:100%;justify-content:center;margin-top:6px}
 .hp-field{position:absolute !important;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
 .form-success{display:none;text-align:center;padding:36px 0}
 .form-success.show{display:block;animation:fade .6s var(--ease) forwards}
-.form-success .chk{width:60px;height:60px;border-radius:50%;border:1px solid var(--accent);
-  color:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;
+.form-success .chk{width:60px;height:60px;border-radius:50%;border:1px solid var(--red);
+  color:var(--red);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;
   position:relative}
 .form-success.show .chk{animation:chk-pop .55s cubic-bezier(.34,1.56,.64,1) .15s backwards}
 .form-success .chk svg{animation:chk-draw .5s var(--ease) .5s backwards;
@@ -980,12 +1109,12 @@ form .btn-primary{width:100%;justify-content:center;margin-top:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* Inline form error (вместо alert) */
-.form-error{display:none;background:color-mix(in srgb, var(--err) 12%, transparent);
-  border:1px solid color-mix(in srgb, var(--err) 35%, transparent);
+.form-error{display:none;background:color-mix(in srgb, var(--red) 12%, transparent);
+  border:1px solid color-mix(in srgb, var(--red) 35%, transparent);
   border-radius:var(--r-sm);padding:12px 14px;color:var(--text);font-size:13.5px;
   line-height:1.45;margin-top:14px}
 .form-error.show{display:block;animation:fade .35s var(--ease) forwards}
-.form-error strong{color:var(--err);font-weight:600}
+.form-error strong{color:var(--red);font-weight:600}
 
 /* ============ FOOTER ============ */
 footer{border-top:1px solid var(--line);padding:64px 0 38px}
@@ -1008,7 +1137,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   text-transform:uppercase;color:var(--faint);font-weight:600;margin:0 0 4px;
   padding-bottom:14px;border-bottom:1px solid var(--line);
   display:flex;align-items:center;gap:10px}
-.foot-legal .lg-title::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.foot-legal .lg-title::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red)}
 .foot-legal .lg-entity-row{grid-column:1/-1}
 .foot-legal .lg-address{grid-column:1/-1}
 .foot-legal .lg-item{display:flex;flex-direction:column;gap:7px;min-width:0}
@@ -1119,7 +1248,6 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .pf img{max-width:50%;height:auto}
   .foot-legal{border:1pt solid #000;padding:14pt;page-break-inside:avoid}
 }
-.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 </style>
 </head>
 <body>
@@ -3029,7 +3157,7 @@ window.__formLoaded = Date.now();
 /* Маленький easter egg для разработчиков, открывших DevTools */
 (function(){
   if (typeof console === 'undefined' || !console.log) return;
-  const style = 'background:#3d7ff0;color:#fff;font:600 14px/1.3 system-ui,sans-serif;padding:8px 14px;border-radius:6px';
+  const style = 'background:#e23744;color:#fff;font:600 14px/1.3 system-ui,sans-serif;padding:8px 14px;border-radius:6px';
   const sub = 'color:#a39d9e;font:13px/1.5 system-ui,sans-serif;padding:2px 0';
   console.log('%cSITS — Sariyev IT Solutions', style);
   console.log('%cIT-студия полного цикла · Almaty, KZ\nrun "⌘K" anywhere for quick nav\ncontact: raimzhan1907@gmail.com', sub);

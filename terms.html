@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://sits-eta.vercel.app/terms" />
 <link rel="icon" type="image/png" href="/brand/favicon.png" />
 <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
-<meta name="theme-color" content="#131314" />
+<meta name="theme-color" content="#0c0a0b" />
 <link rel="stylesheet" href="/fonts/fonts.css" />
 <script>
 (function(){
@@ -18,8 +18,7 @@
 </script>
 <style>
 :root{
-  --font-display:'Manrope',system-ui,sans-serif;
-  --grad:linear-gradient(90deg,#4796e3 0%,#9177c7 52%,#d6644d 100%);
+  --font-display:'Unbounded','Arial Black',system-ui,sans-serif;
   --font-body:'Manrope',system-ui,sans-serif;
   --font-logo:'PT Serif',Georgia,serif;
   --maxw:860px;
@@ -27,29 +26,29 @@
   --glass-blur:blur(22px) saturate(1.75);
 }
 html[data-theme="dark"]{
-  --bg:#131314; --text:#e8eaed; --muted:#a2a9b3; --faint:#8e959e;
+  --bg:#0c0a0b; --text:#f4f1f1; --muted:#a39d9e; --faint:#8f8889;
   --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
-  --red:#8ab4f8; --red-soft:rgba(138,180,248,.13);
-  --nav-bg:rgba(24,25,27,.55);
+  --red:#e23744; --red-soft:rgba(226,55,68,.14);
+  --nav-bg:rgba(18,15,16,.55);
   --glass:rgba(255,255,255,.045); --glass-2:rgba(255,255,255,.085);
   --glass-line:rgba(255,255,255,.11); --glass-hi:rgba(255,255,255,.10);
-  --fx-glow:rgba(66,133,244,.24);
+  --fx-glow:rgba(226,55,68,.24);
 }
 html[data-theme="light"]{
-  --bg:#ffffff; --text:#1f1f1f; --muted:#575b60; --faint:#5f6368;
-  --line:rgba(12,18,28,.1); --line-2:rgba(12,18,28,.18);
-  --red:#0b57d0; --red-soft:rgba(11,87,208,.09);
+  --bg:#f6f3f3; --text:#171314; --muted:#6a6364; --faint:#716b6c;
+  --line:rgba(20,12,13,.1); --line-2:rgba(20,12,13,.18);
+  --red:#b31d22; --red-soft:rgba(179,29,34,.1);
   --nav-bg:rgba(255,255,255,.52);
   --glass:rgba(255,255,255,.42); --glass-2:rgba(255,255,255,.68);
-  --glass-line:rgba(12,18,28,.09); --glass-hi:rgba(255,255,255,.9);
-  --fx-glow:rgba(66,133,244,.13);
+  --glass-line:rgba(20,12,13,.09); --glass-hi:rgba(255,255,255,.9);
+  --fx-glow:rgba(226,55,68,.14);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16.5px;line-height:1.65;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .55s var(--ease),color .55s var(--ease)}
 a{color:inherit;text-decoration:none}
-::selection{background:var(--red);color:var(--bg)}
+::selection{background:var(--red);color:#fff}
 .fx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .fx::before{content:"";position:absolute;width:56vw;height:56vw;max-width:680px;max-height:680px;top:-16%;right:-8%;
   border-radius:50%;filter:blur(90px);background:radial-gradient(circle at 50% 50%,var(--fx-glow),transparent 70%)}
@@ -61,7 +60,7 @@ a{color:inherit;text-decoration:none}
   backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
   box-shadow:inset 0 1px 0 var(--glass-hi),0 16px 40px -26px rgba(0,0,0,.5)}
 .logo{font-family:var(--font-logo);font-weight:700;font-size:22px;letter-spacing:.04em;color:var(--text)}
-.logo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo b{color:var(--red)}
 .nav-right{display:flex;align-items:center;gap:10px}
 .lang-switch{display:inline-flex;align-items:center;gap:1px;border:1px solid var(--glass-line);border-radius:100px;padding:3px;height:38px;
   background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi)}

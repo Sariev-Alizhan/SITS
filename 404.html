@@ -7,36 +7,35 @@
 <meta name="robots" content="noindex" />
 <link rel="icon" type="image/png" href="/brand/favicon.png" />
 <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
-<meta name="theme-color" content="#131314" />
+<meta name="theme-color" content="#0c0a0b" />
 <link rel="stylesheet" href="/fonts/fonts.css" />
 <style>
 :root{
-  --font-display:'Manrope',system-ui,sans-serif;
-  --grad:linear-gradient(90deg,#4796e3 0%,#9177c7 52%,#d6644d 100%);
+  --font-display:'Unbounded',sans-serif;
   --font-body:'Manrope',system-ui,sans-serif;
   --font-logo:'PT Serif',Georgia,serif;
   --ease:cubic-bezier(.22,.61,.36,1);
 }
 html[data-theme="dark"]{
-  --bg:#131314; --surface:#1e1f20; --text:#e8eaed; --muted:#a2a9b3; --faint:#8e959e;
+  --bg:#0c0a0b; --surface:#141112; --text:#f4f1f1; --muted:#a39d9e; --faint:#8f8889;
   --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
-  --red:#8ab4f8; --red-soft:rgba(138,180,248,.13);
+  --red:#e23744; --red-soft:rgba(226,55,68,.14);
   --glass:rgba(255,255,255,.045); --glass-line:rgba(255,255,255,.11); --glass-hi:rgba(255,255,255,.10);
-  --fx-glow:rgba(66,133,244,.26);
+  --fx-glow:rgba(226,55,68,.28);
 }
 html[data-theme="light"]{
-  --bg:#ffffff; --surface:#f0f4f9; --text:#1f1f1f; --muted:#575b60; --faint:#5f6368;
+  --bg:#f6f3f3; --surface:#ffffff; --text:#171314; --muted:#6a6364; --faint:#716b6c;
   --line:rgba(20,12,13,.1); --line-2:rgba(20,12,13,.18);
-  --red:#0b57d0; --red-soft:rgba(11,87,208,.09);
+  --red:#b31d22; --red-soft:rgba(179,29,34,.1);
   --glass:rgba(255,255,255,.42); --glass-line:rgba(20,12,13,.09); --glass-hi:rgba(255,255,255,.9);
-  --fx-glow:rgba(66,133,244,.14);
+  --fx-glow:rgba(226,55,68,.16);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;
   display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;
   -webkit-font-smoothing:antialiased;text-align:center}
 .logo{position:fixed;top:24px;left:32px;font-family:var(--font-logo);font-weight:700;font-size:22px;letter-spacing:.04em;color:var(--text)}
-.logo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo b{color:var(--red)}
 .fx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .fx::before{content:"";position:absolute;width:60vw;height:60vw;max-width:700px;max-height:700px;
   top:-18%;right:-10%;border-radius:50%;filter:blur(90px);
@@ -57,8 +56,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 h1{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;margin-bottom:14px}
 p{color:var(--muted);font-size:16px;line-height:1.6;margin-bottom:36px}
 .btn{display:inline-flex;align-items:center;gap:10px;color:#fff;font-weight:600;font-size:14.5px;
-  background:linear-gradient(96deg,#3d7ff0 0%,#7a63d8 55%,#c05f7c 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 12px 28px -12px rgba(76,120,240,.60);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--red) 88%,#fff) 0%,var(--red) 55%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 12px 28px -12px color-mix(in srgb,var(--red) 65%,transparent);
   border-radius:100px;padding:13px 26px;text-decoration:none;transition:.3s var(--ease)}
 .btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
 .btn svg{width:14px;height:14px;transition:transform .3s var(--ease)}

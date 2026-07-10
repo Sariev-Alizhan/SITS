@@ -504,7 +504,7 @@ html[data-theme="dark"]{
   --surface-2:#181516;
   --text:#f4f1f1;
   --muted:#a39d9e;
-  --faint:#6f696a;
+  --faint:#8f8889;
   --line:rgba(255,255,255,.08);
   --line-2:rgba(255,255,255,.14);
   --red:#e23744;
@@ -529,7 +529,7 @@ html[data-theme="light"]{
   --surface-2:#fbf8f8;
   --text:#171314;
   --muted:#6a6364;
-  --faint:#9b9495;
+  --faint:#716b6c;
   --line:rgba(20,12,13,.1);
   --line-2:rgba(20,12,13,.18);
   --red:#b31d22;
@@ -776,7 +776,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .p-row .pn{font-family:var(--font-display);font-weight:500;font-size:clamp(34px,4vw,46px);letter-spacing:-.02em;
   color:transparent;-webkit-text-stroke:1px var(--line-2);transition:-webkit-text-stroke .4s}
 .p-row:hover .pn{-webkit-text-stroke:1px var(--red)}
-.p-row h4{font-family:var(--font-display);font-weight:500;font-size:21px;letter-spacing:-.01em;line-height:1.2}
+.p-row h3{font-family:var(--font-display);font-weight:500;font-size:21px;letter-spacing:-.01em;line-height:1.2}
 .p-row p{color:var(--muted);font-size:16px;line-height:1.6;max-width:520px}
 
 /* Lazy-rendering для секций ниже hero (browser skip paint когда офф-экран).
@@ -837,6 +837,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .pf-10{grid-column:span 3}
 
 /* ============ PRICING ============ */
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .promo-pill{display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;
   margin:0 0 40px;padding:16px 24px;border-radius:var(--r-md);
   border:1px solid color-mix(in srgb, var(--red) 30%, transparent);
@@ -1097,7 +1098,7 @@ form .btn-primary{width:100%;justify-content:center;margin-top:6px}
   stroke-dasharray:24;stroke-dashoffset:0}
 @keyframes chk-pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
 @keyframes chk-draw{from{stroke-dashoffset:24}to{stroke-dashoffset:0}}
-.form-success h4{font-family:var(--font-display);font-size:21px;font-weight:500;margin-bottom:8px;
+.form-success h3{font-family:var(--font-display);font-size:21px;font-weight:500;margin-bottom:8px;
   animation:fade .6s var(--ease) .6s backwards}
 .form-success p{color:var(--muted);animation:fade .6s var(--ease) .75s backwards}
 
@@ -1122,7 +1123,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 .foot-brand .logo{font-size:27px;margin-bottom:14px}
 .foot-brand p{color:var(--muted);font-size:14.5px;line-height:1.6}
 .foot-cols{display:flex;gap:64px;flex-wrap:wrap}
-.foot-col h5{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:16px;font-weight:600}
+.foot-col h3{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:16px;font-weight:600}
 .foot-col a{display:block;color:var(--muted);font-size:14.5px;margin-bottom:11px;transition:color .25s}
 .foot-col a:hover{color:var(--text)}
 /* Legal info card — grid с явной иерархией: entity на всю ширину, BIN/дата в 2 колонки, адрес внизу */
@@ -1353,6 +1354,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 
     <div class="promo-pill reveal"><i aria-hidden="true"></i><span data-i18n="pricing.promo">Акция месяца: скидки до −67% на все пакеты — только с 1 июля по 1 августа. Успейте зафиксировать цену.</span></div>
 
+    <h2 class="sr-only" data-i18n="pricing.packH">Пакеты сайтов</h2>
     <div class="price-grid">
       <!-- 1. Лендинг -->
       <article class="price-card reveal">
@@ -1497,7 +1499,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       </article>
     </div>
 
-    <h3 class="sub-head reveal" data-i18n="pricing.dH">Приложения и игры</h3>
+    <h2 class="sub-head reveal" data-i18n="pricing.dH">Приложения и игры</h2>
     <p class="sub-desc reveal" data-i18n="pricing.dSub">Пишем мобильные приложения и делаем игры любой сложности — от веб-мини-игр до крупных проектов. Скидки действуют до конца июля.</p>
     <div class="price-grid">
       <!-- D1. Мобильное приложение -->
@@ -1562,7 +1564,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       </article>
     </div>
 
-    <h3 class="sub-head reveal" data-i18n="pricing.mH">Медиа-продакшн</h3>
+    <h2 class="sub-head reveal" data-i18n="pricing.mH">Медиа-продакшн</h2>
     <p class="sub-desc reveal" data-i18n="pricing.mSub">Съёмки, монтаж и продвижение — своя команда, профессиональное оборудование и выезд по Астане. Все цены ниже — со скидкой до конца июля.</p>
     <div class="price-grid media-grid">
       <!-- M1. Проф съёмка -->
@@ -1760,7 +1762,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       </div>
     </div>
 
-    <h3 class="sub-head reveal" data-i18n="pricing.pH">Партнёрства и команда</h3>
+    <h2 class="sub-head reveal" data-i18n="pricing.pH">Партнёрства и команда</h2>
     <p class="sub-desc reveal" data-i18n="pricing.pSub">Соединяем бизнес с партнёрами и людьми: международные интеграции и подбор сильных специалистов. Скидка действует прямо сейчас.</p>
     <div class="price-grid">
       <!-- P1. Международные интеграции -->
@@ -1820,7 +1822,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       </article>
     </div>
 
-    <h3 class="sub-head reveal" data-i18n="pricing.supH">Техподдержка</h3>
+    <h2 class="sub-head reveal" data-i18n="pricing.supH">Техподдержка</h2>
     <p class="sub-desc reveal" data-i18n="pricing.supSub">Любой пакет можно взять с ежемесячной поддержкой или без неё — подключается и отключается в любой месяц.</p>
     <div class="sup-grid">
       <article class="price-card reveal">
@@ -1904,7 +1906,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       </div>
       <div class="foot-cols">
         <div class="foot-col">
-          <h5 data-i18n="footer.navTitle">Навигация</h5>
+          <h3 data-i18n="footer.navTitle">Навигация</h3>
           <a href="/#services" data-i18n="nav.services">Услуги</a>
           <a href="/#process" data-i18n="nav.process">Как работаем</a>
           <a href="/#portfolio" data-i18n="nav.portfolio">Портфолио</a>
@@ -1913,12 +1915,12 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
           <a href="/#contact" data-i18n="nav.contact">Контакты</a>
         </div>
         <div class="foot-col">
-          <h5 data-i18n="footer.docsTitle">Документы</h5>
+          <h3 data-i18n="footer.docsTitle">Документы</h3>
           <a href="/terms" data-i18n="footer.terms">Условия использования</a>
           <a href="/privacy" data-i18n="footer.privacy">Политика конфиденциальности</a>
         </div>
         <div class="foot-col">
-          <h5 data-i18n="footer.socTitle">Соцсети</h5>
+          <h3 data-i18n="footer.socTitle">Соцсети</h3>
           <a href="https://wa.me/77774961358" target="_blank" rel="noopener">WhatsApp</a>
           <a href="https://t.me/zhanmate" target="_blank" rel="noopener">Telegram</a>
           <a href="https://www.instagram.com/sariyev.it.solutions/" target="_blank" rel="noopener">Instagram</a>
@@ -1928,7 +1930,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       </div>
     </div>
     <section class="foot-legal" data-i18n-aria-label="legal.title" aria-label="Реквизиты компании">
-      <h5 class="lg-title" data-i18n="legal.title">Реквизиты компании</h5>
+      <h3 class="lg-title" data-i18n="legal.title">Реквизиты компании</h3>
       <div class="lg-item lg-entity-row">
         <div class="lg-lbl" data-i18n="legal.entityLbl">Юридическое лицо</div>
         <div class="lg-val lg-entity" data-i18n="legal.entityVal">ТОО «SARIYEV IT SOLUTIONS»</div>
@@ -2104,6 +2106,7 @@ const I18N = {
       m5F4:'Регулярные посты и сторис',
       m5F5:'Аналитика и отчёт каждый месяц',
       m5F6:'Погружаемся в ваш бизнес и говорим его языком',
+      packH:'Пакеты сайтов',
       dH:'Приложения и игры',
       dSub:'Пишем мобильные приложения и делаем игры любой сложности — от веб-мини-игр до крупных проектов. Скидки действуют до конца июля.',
       d1H:'Мобильное приложение', d1Sub:'Приложения под iOS и Android под ключ — от идеи и дизайна до публикации в сторах.',
@@ -2385,6 +2388,7 @@ const I18N = {
       m5F4:'Regular posts and stories',
       m5F5:'Analytics and a report every month',
       m5F6:'We dive into your business and speak its language',
+      packH:'Website packages',
       dH:'Apps & games',
       dSub:'We build mobile apps and games of any complexity — from web mini-games to large-scale projects. Discounts until the end of July.',
       d1H:'Mobile app', d1Sub:'Turnkey iOS and Android apps — from idea and design to store release.',
@@ -2666,6 +2670,7 @@ const I18N = {
       m5F4:'Тұрақты посттар мен сторис',
       m5F5:'Ай сайын аналитика және есеп',
       m5F6:'Бизнесіңізге терең бойлап, оның тілінде сөйлейміз',
+      packH:'Сайт пакеттері',
       dH:'Қосымшалар мен ойындар',
       dSub:'Кез келген күрделіліктегі мобильді қосымшалар мен ойындар жасаймыз — веб мини-ойындардан ірі жобаларға дейін. Жеңілдіктер шілде соңына дейін.',
       d1H:'Мобильді қосымша', d1Sub:'iOS және Android қосымшалары толық дайын күйінде — идеядан сторға жариялауға дейін.',

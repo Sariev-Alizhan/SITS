@@ -1,6 +1,9 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    { "source": "/favicon.ico", "destination": "/brand/favicon.png" }
+  ],
   "buildCommand": "node scripts/build-i18n.mjs",
   "outputDirectory": ".",
   "headers": [

@@ -391,7 +391,11 @@
 
   $('#loginForm').addEventListener('submit', async (e)=>{
     e.preventDefault();
-    const login=($('#login').value || _mLogin).trim().toLowerCase(), pass=($('#pass').value || _mPass);
+    // Читаем максимально надёжно: FormData (видит автозаполнение) → .value → зеркало
+    let fd; try{ fd=new FormData(e.target); }catch(_){ fd=null; }
+    const rawLogin = (fd && fd.get('fc_user_x')) || $('#login').value || _mLogin || '';
+    const rawPass  = (fd && fd.get('fc_key_x'))  || $('#pass').value  || _mPass  || '';
+    const login=String(rawLogin).trim().toLowerCase(), pass=String(rawPass);
     if(!login || !pass){ $('#loginErr').textContent='Введите логин и пароль'; return; }
     $('#loginErr').textContent=''; $('#loginBtn').textContent='Проверяю…';
     try{ await tryLogin(login, pass); showApp(); }

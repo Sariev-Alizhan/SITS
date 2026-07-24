@@ -19,6 +19,13 @@ const HKEY = 'crm-deals';
 
 const sha256 = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
 
+// Обёртка над KV: не роняет запрос, если хранилище недоступно.
+async function kvSafe(fn) {
+  if (!process.env.KV_REST_API_URL) return { ok: false };
+  try { return { ok: true, val: await fn() }; }
+  catch (e) { console.error('KV down:', e?.message || e); return { ok: false }; }
+}
+
 // Возвращает {login,name} при успехе, иначе null.
 function authUser(req) {
   const login = String(req.headers['x-crm-login'] || req.query.u || '').trim().toLowerCase();
@@ -100,18 +107,16 @@ export default async function handler(req, res) {
     return res.status(401).json({ ok: false, error: 'Неверный логин или пароль' });
   }
 
-  if (!process.env.KV_REST_API_URL) {
-    return res.status(503).json({ ok: false, error: 'Хранилище не подключено (KV)' });
-  }
-
   try {
     if (req.method === 'GET') {
-      const map = (await kv.hgetall(HKEY)) || {};
+      const r = await kvSafe(() => kv.hgetall(HKEY));
+      if (!r.ok) return res.status(200).json({ ok: true, deals: [], user, cloud: false });
+      const map = r.val || {};
       const deals = Object.values(map)
         .map((v) => { try { return typeof v === 'string' ? JSON.parse(v) : v; } catch { return null; } })
         .filter(Boolean)
         .sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
-      return res.status(200).json({ ok: true, deals, user });
+      return res.status(200).json({ ok: true, deals, user, cloud: true });
     }
 
     if (req.method === 'POST') {
@@ -127,14 +132,14 @@ export default async function handler(req, res) {
       if (action === 'delete') {
         const id = str(body.id, 40);
         if (!id) return res.status(400).json({ ok: false, error: 'Не передан id' });
-        await kv.hdel(HKEY, id);
-        return res.status(200).json({ ok: true });
+        const r = await kvSafe(() => kv.hdel(HKEY, id));
+        return res.status(200).json({ ok: true, cloud: r.ok });
       }
 
       if (action === 'save') {
         const deal = sanitizeDeal(body.deal || {});
-        await kv.hset(HKEY, { [deal.id]: JSON.stringify(deal) });
-        return res.status(200).json({ ok: true, deal });
+        const r = await kvSafe(() => kv.hset(HKEY, { [deal.id]: JSON.stringify(deal) }));
+        return res.status(200).json({ ok: true, deal, cloud: r.ok });
       }
 
       return res.status(400).json({ ok: false, error: 'Неизвестное действие' });

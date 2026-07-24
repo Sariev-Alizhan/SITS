@@ -212,6 +212,10 @@
     </div>
   </div>
 
+  <div id="cloudBanner" style="display:none;margin:0;padding:10px 22px;background:color-mix(in srgb,var(--warn) 16%,var(--ink));border-bottom:1px solid color-mix(in srgb,var(--warn) 45%,transparent);color:#e6b48f;font-size:13px;text-align:center">
+    ⚠ Облачное хранилище не подключено — сделки сохраняются <b>локально на этом устройстве</b>. Чтобы данные были общими для команды, подключите бесплатное хранилище (см. инструкцию).
+  </div>
+
   <div class="tabs">
     <button class="tab active" data-view="deals">Сделки</button>
     <button class="tab" data-view="kp">Новое КП</button>
@@ -317,7 +321,9 @@
   const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
   const fmt = (n)=> (Math.round(n)||0).toLocaleString('ru-RU') + ' ₸';
   const esc = (s)=> String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  const KEY_PASS='sits_crm_pass', KEY_LOGIN='sits_crm_login', KEY_MGR='sits_crm_mgr';
+  const KEY_PASS='sits_crm_pass', KEY_LOGIN='sits_crm_login', KEY_MGR='sits_crm_mgr', KEY_CACHE='sits_crm_deals_cache';
+  const loadCache=()=>{ try{ return JSON.parse(localStorage.getItem(KEY_CACHE)||'[]'); }catch{ return []; } };
+  const saveCache=(arr)=>{ try{ localStorage.setItem(KEY_CACHE, JSON.stringify(arr)); }catch{} };
 
   const SITS = {
     company:'ТОО «SARIYEV IT SOLUTIONS»',
@@ -336,7 +342,16 @@
   let PASS = sessionStorage.getItem(KEY_PASS) || '';
   let LOGIN = sessionStorage.getItem(KEY_LOGIN) || '';
   let DEALS = [];
+  let CLOUD = true;
   let editId = null;
+
+  function updateCloud(cloud){ CLOUD = cloud!==false; const b=$('#cloudBanner'); if(b) b.style.display = CLOUD ? 'none' : 'block'; }
+  // применяем ответ сервера: если облако живо — берём серверные данные; иначе — локальный кэш
+  function applyServer(data){
+    if(data && data.cloud!==false){ DEALS = data.deals||[]; saveCache(DEALS); updateCloud(true); }
+    else { DEALS = loadCache(); updateCloud(false); }
+  }
+  function persistLocal(){ saveCache(DEALS); }
 
   // ---------- toast ----------
   let toT;
@@ -357,7 +372,7 @@
   async function tryLogin(login, pass){
     LOGIN = login; PASS = pass;
     const data = await api('GET'); // 401 → throw
-    DEALS = data.deals||[];
+    applyServer(data);
     sessionStorage.setItem(KEY_PASS, pass);
     sessionStorage.setItem(KEY_LOGIN, login);
     if(data.user && data.user.name) localStorage.setItem(KEY_MGR, data.user.name);
@@ -441,8 +456,8 @@
   $$('#statusFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#statusFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); filterStatus=b.dataset.f; renderDeals(); }));
 
   const ORDER=['new','in_progress','kp_sent','invoice','won'];
-  async function cycleStatus(d){ const i=ORDER.indexOf(d.status); d.status=ORDER[(i+1)%ORDER.length]; try{ await api('POST',{action:'save',deal:d}); toast('Статус: '+ST_LABEL[d.status],'ok'); renderDeals(); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
-  async function delDeal(id){ if(!confirm('Удалить сделку?')) return; try{ await api('POST',{action:'delete',id}); DEALS=DEALS.filter(x=>x.id!==id); renderDeals(); toast('Удалено','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  async function cycleStatus(d){ const i=ORDER.indexOf(d.status); d.status=ORDER[(i+1)%ORDER.length]; try{ const r=await api('POST',{action:'save',deal:d}); persistLocal(); updateCloud(r.cloud); toast('Статус: '+ST_LABEL[d.status],'ok'); renderDeals(); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  async function delDeal(id){ if(!confirm('Удалить сделку?')) return; try{ const r=await api('POST',{action:'delete',id}); DEALS=DEALS.filter(x=>x.id!==id); persistLocal(); updateCloud(r.cloud); renderDeals(); toast('Удалено','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
 
   // ---------- KP GENERATOR ----------
   function itemRow(name='',qty=1,price=''){
@@ -531,7 +546,8 @@
       const i=DEALS.findIndex(x=>x.id===saved.id);
       if(i>=0) DEALS[i]=saved; else DEALS.unshift(saved);
       editId=saved.id; $('#kpNoLabel').dataset.no=saved.no; $('#kpNoLabel').textContent=saved.no;
-      toast('Сделка сохранена','ok'); renderDeals();
+      persistLocal(); updateCloud(data.cloud);
+      toast(data.cloud===false?'Сохранено локально (облако выкл.)':'Сделка сохранена', data.cloud===false?'':'ok'); renderDeals();
     }catch(err){ toast('Ошибка: '+err.message,'err'); }
   });
 
@@ -594,7 +610,7 @@
     if(location.hash.includes('doc')){ openDoc(); }
   }
   // auto-login if session creds present
-  if(PASS && LOGIN){ (async()=>{ try{ const d=await api('GET'); DEALS=d.deals||[]; showApp(); }catch(_){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); PASS=''; LOGIN=''; } })(); }
+  if(PASS && LOGIN){ (async()=>{ try{ const d=await api('GET'); applyServer(d); showApp(); }catch(_){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); PASS=''; LOGIN=''; } })(); }
 })();
 </script>
 </body>

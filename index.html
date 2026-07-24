@@ -1151,6 +1151,12 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 .foot-col h3{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:16px;font-weight:600}
 .foot-col a{display:block;color:var(--muted);font-size:14.5px;margin-bottom:11px;transition:color .25s}
 .foot-col a:hover{color:var(--text)}
+.foot-col a.foot-crm{display:inline-flex;align-items:center;gap:7px;margin-top:8px;color:var(--faint);font-weight:600;font-size:13.5px}
+.foot-col a.foot-crm::before{content:"";width:13px;height:13px;flex-shrink:0;background:currentColor;
+  -webkit-mask:no-repeat center/contain;mask:no-repeat center/contain;
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='11' width='16' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E");
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='11' width='16' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E")}
+.foot-col a.foot-crm:hover{color:var(--red)}
 /* Legal info card — grid с явной иерархией: entity на всю ширину, BIN/дата в 2 колонки, адрес внизу */
 .foot-legal{display:grid;grid-template-columns:1fr 1fr;gap:24px 36px;
   padding:30px 32px;margin:36px 0 28px;
@@ -1719,6 +1725,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
           <h3 data-i18n="footer.docsTitle">Документы</h3>
           <a href="/terms" data-i18n="footer.terms">Условия использования</a>
           <a href="/privacy" data-i18n="footer.privacy">Политика конфиденциальности</a>
+          <a href="/crm" rel="nofollow" class="foot-crm">CRM · вход для команды</a>
         </div>
         <div class="foot-col">
           <h3 data-i18n="footer.socTitle">Соцсети</h3>

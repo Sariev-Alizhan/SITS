@@ -177,6 +177,13 @@
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .items-head,.item-row{display:grid;grid-template-columns:1fr 70px 110px 110px 32px;gap:8px;align-items:center}
   .items-head{font-size:11px;color:var(--slate);text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px;padding:0 2px}
+  .preset-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 14px}
+  .preset-lbl{font-size:12px;color:var(--slate)}
+  .preset-chips{display:flex;gap:8px;flex-wrap:wrap}
+  .preset-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;font-size:12.5px;font-weight:500;color:var(--fg);
+    background:var(--surface-2);border:1px solid var(--line-2);border-radius:999px;cursor:pointer;transition:all .18s var(--ease);white-space:nowrap}
+  .preset-chip:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px);box-shadow:0 6px 18px -10px var(--gold)}
+  .preset-chip:active{transform:translateY(0)}
   .item-row{margin-bottom:8px}
   .i-pick{display:flex;flex-direction:column;gap:6px;min-width:0}
   .i-pick .i-select{padding:11px 12px;cursor:pointer}
@@ -371,6 +378,10 @@
         </div>
 
         <h3 style="margin-top:20px">🧩 Позиции (услуги)</h3>
+        <div class="preset-bar">
+          <span class="preset-lbl">Быстрый шаблон:</span>
+          <div class="preset-chips" id="presetChips"></div>
+        </div>
         <div class="items-head"><span>Услуга</span><span>Кол-во</span><span>Цена, ₸</span><span style="text-align:right">Сумма</span><span></span></div>
         <div id="itemsBox"></div>
         <button class="btn btn-ghost btn-sm add-item" id="addItemBtn">+ Добавить позицию</button>
@@ -693,6 +704,34 @@
   }
   function addItem(name,qty,price){ $('#itemsBox').appendChild(itemRow(name,qty,price)); recalc(); }
   $('#addItemBtn').addEventListener('click',()=>addItem());
+
+  // ---------- быстрые шаблоны КП (пресеты пакетов услуг) ----------
+  const catPrice = (name)=>{ const h=CATALOG.find(c=>c[0]===name); return h?h[1]:''; };
+  const PRESETS = [
+    { label:'⚡ Автоматизация под ключ',
+      note:'Предоплата 50%, остаток по факту запуска. Срок внедрения — 2–3 недели. Обучение сотрудников и первый месяц поддержки включены в стоимость.',
+      items:['Аудит и настройка бизнес-процессов','Внедрение CRM Fibonacci Control','Интеграция (WhatsApp/Instagram/API)','Бизнес-автоматизация процессов','Настройка/поддержка CRM (мес)'] },
+    { label:'🌐 Сайт + AI',
+      note:'Предоплата 50%, остаток при сдаче. Срок запуска 5–10 дней. Гарантия — 30 дней бесплатных правок.',
+      items:['Лендинг + софт + AI','Техподдержка «Классическая» (мес)'] },
+    { label:'📱 Соцсети + медиа',
+      note:'Оплата помесячно. Контент-план, съёмка, монтаж и ежемесячная аналитика включены.',
+      items:['Соцсети: TikTok + Instagram (мес)','Проф съёмка по Астане','Пакет нарезок (12 шт)','Таргет-запуск рекламы'] },
+    { label:'🎬 AI-видео',
+      note:'Полный цикл: сценарий, генерация, монтаж, звук. Предоплата 50%.',
+      items:['AI Video Creator (клип)'] },
+  ];
+  function applyPreset(p){
+    $('#itemsBox').innerHTML='';
+    p.items.forEach(n=>addItem(n,1,catPrice(n)));
+    if(p.note && !$('#f_note').value.trim()) $('#f_note').value=p.note;
+    recalc();
+    toast('Шаблон подставлен — укажите клиента и сохраните','ok');
+  }
+  (function renderPresets(){
+    const box=$('#presetChips'); if(!box) return;
+    PRESETS.forEach(p=>{ const b=document.createElement('button'); b.type='button'; b.className='preset-chip'; b.textContent=p.label; b.addEventListener('click',()=>applyPreset(p)); box.appendChild(b); });
+  })();
 
   // ---------- AI assistant ----------
   async function aiGenerate(){

@@ -4,7 +4,7 @@
 // Чтобы сменить пароль/добавить сотрудника — сгенерировать новый salt+hash и заменить запись.
 
 export const USERS = [
-  { login: 'alizhan',  name: 'Алижан',      salt: '657b32a95b7d34f32e8b4bf1', hash: '2d9a1eab929c195b2fe7161b96806248420be76471cf1e765a06c00a89627fec' },
-  { login: 'manager1', name: 'Менеджер 1',  salt: '70b0c37cda812945e65eca6b', hash: '018ab1f77f14071b81940c8b204af38072669a951d07e66f3410c880ed562291' },
-  { login: 'manager2', name: 'Менеджер 2',  salt: 'cbdacc4d6b3bfaa877d8f8a8', hash: '0182b3b2ad44ad22fbd9e0ef9ca7a159302fe49ea57757051ee7222fbd5988ea' },
+  { login: 'alizhan',  name: 'Алижан',      salt: '7212368c04daddd3e2a0bdd0', hash: 'e4dd4beff0fbd8bd7e3b5b7043ffc9b7b5e523d7018799af87dfe561ed6027c5' },
+  { login: 'manager1', name: 'Менеджер 1',  salt: '5b728ec23edd0beebcfbfcf7', hash: '19d32da25a2a5735016cc71155244b1946182ac2e9f7a315dc79fa683d57fc95' },
+  { login: 'manager2', name: 'Менеджер 2',  salt: '1f06f2e7dee76bf2a1842088', hash: 'c3812d8763133e2a8bf0b91b27216ad175ec5de18d42136e1c5bb99dfe1eded2' },
 ];

@@ -136,6 +136,16 @@
   .kp-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:start}
   .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px}
   .card h3{font-family:var(--font-display);font-weight:500;font-size:16px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .ai-box{margin-bottom:18px;padding:16px;border-radius:14px;border:1px solid color-mix(in srgb,var(--gold) 32%,var(--line));
+    background:linear-gradient(180deg,color-mix(in srgb,var(--gold) 8%,var(--surface)),var(--ink))}
+  .ai-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  .ai-badge{font-size:12px;font-weight:700;letter-spacing:.04em;color:#241a06;background:linear-gradient(180deg,var(--gold-lit),var(--gold));padding:4px 11px;border-radius:100px}
+  .ai-hint{font-size:12.5px;color:var(--dim)}
+  .ai-box textarea{background:var(--ink);border-color:var(--line-2);resize:vertical;min-height:52px}
+  .ai-actions{display:flex;align-items:center;gap:12px;margin-top:10px}
+  .ai-status{font-size:12.5px;color:var(--dim)}
+  .ai-status.err{color:#e5675e} .ai-status.ok{color:#6cc39a}
+  #aiGenBtn.loading{opacity:.7;pointer-events:none}
   .field{margin-bottom:14px}
   .field label{display:block;font-size:12px;color:var(--dim);margin-bottom:6px}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -175,41 +185,49 @@
   .kp-overlay{position:fixed;inset:0;z-index:100;background:rgba(4,7,12,.75);display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:28px 16px}
   .kp-overlay.show{display:flex}
   .kp-toolbar{position:sticky;top:0;display:flex;gap:10px;justify-content:center;margin-bottom:16px;width:100%;max-width:820px}
-  .kp-doc{background:#fff;color:#0D1420;width:100%;max-width:820px;border-radius:6px;padding:52px 56px;font-family:var(--font-body);box-shadow:0 30px 90px -30px #000}
-  .kp-doc .d-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-bottom:22px;border-bottom:2px solid #0D1420}
-  .kp-doc .d-brand{display:flex;align-items:center;gap:11px}
-  .kp-doc .d-brand img{height:40px}
-  .kp-doc .d-brand .bn{font-family:var(--font-display);font-weight:700;font-size:22px;color:#0D1420;letter-spacing:.02em}
-  .kp-doc .d-brand .bs{font-size:12px;color:#6B7688;margin-top:2px}
-  .kp-doc .d-meta{text-align:right;font-size:13px;color:#333}
-  .kp-doc .d-meta .no{font-family:var(--font-display);font-weight:600;font-size:16px;color:#0D1420}
-  .kp-doc h2{font-family:var(--font-display);font-weight:600;font-size:26px;color:#0D1420;margin:26px 0 20px;letter-spacing:-.01em}
+  .kp-doc{position:relative;background:#fff;color:#141A24;width:100%;max-width:820px;border-radius:10px;padding:0;overflow:hidden;font-family:var(--font-body);box-shadow:0 30px 90px -30px #000;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .kp-doc .d-bar{height:6px;background:linear-gradient(90deg,#EFC97E,#D2A24C 45%,#9A6F1E)}
+  .kp-doc .d-inner{padding:46px 54px}
+  .kp-doc .d-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-bottom:22px;border-bottom:1px solid #ECE7DA}
+  .kp-doc .d-brand img{height:38px;width:auto;display:block;margin-bottom:6px}
+  .kp-doc .d-brand .bs{font-size:12px;color:#8a93a0;letter-spacing:.02em}
+  .kp-doc .d-meta{text-align:right;font-size:13px;color:#8a93a0}
+  .kp-doc .d-meta .no{font-family:var(--font-display);font-weight:600;font-size:17px;color:#141A24;letter-spacing:.03em}
+  .kp-doc .d-meta .dt{margin-top:3px}
+  .kp-doc h2{font-family:var(--font-display);font-weight:600;font-size:27px;color:#141A24;margin:28px 0 22px;letter-spacing:-.01em}
   .kp-doc h2 span{color:#B8862B}
-  .kp-parties{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
-  .kp-parties .p .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#9aa3b0;margin-bottom:6px}
-  .kp-parties .p .v{font-size:14px;color:#0D1420;line-height:1.6}
+  .kp-parties{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:26px}
+  .kp-parties .p{padding:16px 18px;background:#FAF8F2;border:1px solid #EFEADD;border-radius:12px}
+  .kp-parties .p .lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:#B8862B;margin-bottom:7px;font-weight:700}
+  .kp-parties .p .v{font-size:14px;color:#141A24;line-height:1.65}
   .kp-parties .p .v b{font-weight:700}
   table.kp-tbl{width:100%;border-collapse:collapse;margin:8px 0 4px}
-  table.kp-tbl th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#8a93a0;padding:10px 8px;border-bottom:1.5px solid #0D1420}
+  table.kp-tbl th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:#B8862B;font-weight:700;padding:10px 8px;border-bottom:1.5px solid #D2A24C}
   table.kp-tbl th.r,table.kp-tbl td.r{text-align:right}
-  table.kp-tbl td{padding:12px 8px;border-bottom:1px solid #E7EAF0;font-size:14px;color:#0D1420;vertical-align:top}
+  table.kp-tbl td{padding:13px 8px;border-bottom:1px solid #EEEAE0;font-size:14px;color:#141A24;vertical-align:top}
+  table.kp-tbl tr:last-child td{border-bottom:none}
   table.kp-tbl td.mono{font-family:var(--mono);font-size:13px}
-  .kp-total{display:flex;justify-content:flex-end;margin-top:16px}
-  .kp-total .box{min-width:280px}
-  .kp-total .tr{display:flex;justify-content:space-between;padding:7px 0;font-size:14px;color:#333}
-  .kp-total .grand{border-top:2px solid #0D1420;margin-top:8px;padding-top:12px;font-size:16px;color:#0D1420;font-weight:700}
-  .kp-total .grand .amt{font-family:var(--font-display);font-size:22px;color:#B8862B}
-  .kp-note{margin-top:26px;padding:16px 18px;background:#FBF6EA;border:1px solid #EAD9AE;border-radius:8px;font-size:13.5px;color:#5c4a1e;line-height:1.6;white-space:pre-wrap}
-  .kp-foot{margin-top:32px;padding-top:20px;border-top:1px solid #E7EAF0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12.5px;color:#6B7688}
-  .kp-foot a{color:#B8862B}
-  .kp-terms{margin-top:14px;font-size:12.5px;color:#8a93a0}
+  .kp-total{display:flex;justify-content:flex-end;margin-top:14px}
+  .kp-total .box{min-width:300px}
+  .kp-total .tr{display:flex;justify-content:space-between;padding:7px 0;font-size:14px;color:#6B7688}
+  .kp-total .grand{border-top:2px solid #141A24;margin-top:8px;padding-top:12px;font-size:16px;color:#141A24;font-weight:700;align-items:baseline}
+  .kp-total .grand .amt{font-family:var(--font-display);font-size:23px;color:#B8862B}
+  .kp-note{margin-top:26px;padding:16px 18px;background:#FBF6EA;border:1px solid #EAD9AE;border-radius:12px;font-size:13.5px;color:#6b581f;line-height:1.6;white-space:pre-wrap}
+  .kp-note .nl{font-weight:700;color:#B8862B;text-transform:uppercase;letter-spacing:.06em;font-size:10.5px;display:block;margin-bottom:6px}
+  .kp-terms{margin-top:16px;font-size:12.5px;color:#9aa3b0;line-height:1.55}
+  .kp-foot{margin-top:30px;padding:18px 54px;background:#141A24;color:#98A3B4;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px}
+  .kp-foot a{color:#EFC97E}
+  .kp-foot .fb{display:flex;align-items:center;gap:8px}
+  .kp-foot .fb img{height:16px}
 
   @media print{
     body{background:#fff!important}
     #app,#login,.kp-toolbar,.topbar,.toast{display:none!important}
     .kp-overlay{position:static;display:block!important;background:#fff;padding:0;overflow:visible}
-    .kp-doc{box-shadow:none;max-width:100%;border-radius:0;padding:0 6mm}
-    @page{margin:14mm}
+    .kp-doc{box-shadow:none;max-width:100%;border-radius:0}
+    .kp-doc .d-inner{padding:2mm 4mm}
+    .kp-doc .d-foot,.kp-doc .kp-foot{padding-left:4mm;padding-right:4mm}
+    @page{margin:12mm}
   }
 </style>
 </head>
@@ -273,6 +291,11 @@
     <div class="kp-grid">
       <div class="card">
         <h3>📄 Данные КП <span id="kpNoLabel" class="mono gold" style="font-size:13px;margin-left:auto"></span></h3>
+        <div class="ai-box">
+          <div class="ai-head"><span class="ai-badge">✦ ИИ-ассистент</span><span class="ai-hint">Опишите задачу — соберу позиции и цены</span></div>
+          <textarea id="ai_prompt" rows="2" placeholder="Напр.: автоматизация заявок из Instagram и WhatsApp + внедрение CRM для мебельной компании"></textarea>
+          <div class="ai-actions"><button class="btn btn-gold btn-sm" id="aiGenBtn" type="button">✦ Собрать КП с ИИ</button><span id="aiStatus" class="ai-status"></span></div>
+        </div>
         <div class="grid2">
           <div class="field"><label>Клиент (имя)</label><input id="f_client" placeholder="Имя контакта" /></div>
           <div class="field"><label>Компания</label><input id="f_company" placeholder="Название компании" /></div>
@@ -537,6 +560,31 @@
   function addItem(name,qty,price){ $('#itemsBox').appendChild(itemRow(name,qty,price)); recalc(); }
   $('#addItemBtn').addEventListener('click',()=>addItem());
 
+  // ---------- AI assistant ----------
+  async function aiGenerate(){
+    const prompt=$('#ai_prompt').value.trim();
+    if(!prompt){ $('#aiStatus').textContent='Опишите задачу'; $('#aiStatus').className='ai-status err'; return; }
+    const btn=$('#aiGenBtn'); btn.classList.add('loading'); btn.textContent='✦ Думаю…';
+    $('#aiStatus').textContent='ИИ собирает КП…'; $('#aiStatus').className='ai-status';
+    try{
+      const r=await fetch('/api/crm-ai',{method:'POST',headers:{'Content-Type':'application/json','x-crm-login':LOGIN,'x-crm-pass':PASS},body:JSON.stringify({prompt})});
+      const data=await r.json().catch(()=>({ok:false,error:'Ошибка ответа'}));
+      if(data.code==='no_key'){ $('#aiStatus').textContent='ИИ не настроен (нужен ключ в Vercel)'; $('#aiStatus').className='ai-status err'; return; }
+      if(!data.ok){ $('#aiStatus').textContent=data.error||'Ошибка ИИ'; $('#aiStatus').className='ai-status err'; return; }
+      const k=data.kp;
+      if(k.client) $('#f_client').value=k.client;
+      if(k.company) $('#f_company').value=k.company;
+      if(k.contact) $('#f_contact').value=k.contact;
+      if(k.note) $('#f_note').value=k.note;
+      if(k.validity) $('#f_validity').value=k.validity;
+      $('#itemsBox').innerHTML=''; (k.items&&k.items.length?k.items:[{}]).forEach(it=>addItem(it.name,it.qty||1,it.price||''));
+      recalc();
+      $('#aiStatus').textContent='Готово — проверьте и сохраните'; $('#aiStatus').className='ai-status ok';
+    }catch(err){ $('#aiStatus').textContent='Ошибка: '+err.message; $('#aiStatus').className='ai-status err'; }
+    finally{ btn.classList.remove('loading'); btn.textContent='✦ Собрать КП с ИИ'; }
+  }
+  $('#aiGenBtn').addEventListener('click',aiGenerate);
+
   function readItems(){
     return $$('#itemsBox .item-row').map(r=>({
       name:r.querySelector('.i-name').value.trim(),
@@ -617,28 +665,31 @@
     const rows=items.map((it,i)=>`<tr><td class="mono" style="color:#8a93a0">${i+1}</td><td>${esc(it.name)}</td><td class="r mono">${it.qty}</td><td class="r mono">${fmt(it.price)}</td><td class="r mono"><b>${fmt(it.qty*it.price)}</b></td></tr>`).join('');
     const note=$('#f_note').value.trim();
     $('#kpDoc').innerHTML=`
-      <div class="d-head">
-        <div class="d-brand"><img src="/brand/sits-mark-red.png" alt=""/><div><div class="bn">SITS</div><div class="bs">Sariyev IT Solutions</div></div></div>
-        <div class="d-meta"><div class="no">${esc(no)}</div><div>${today}</div></div>
+      <div class="d-bar"></div>
+      <div class="d-inner">
+        <div class="d-head">
+          <div class="d-brand"><img src="/brand/fibonacci-logo.svg" alt="Fibonacci Control"/><div class="bs">Автоматизация бизнеса · CRM · направление SITS</div></div>
+          <div class="d-meta"><div class="no">${esc(no)}</div><div class="dt">${today}</div></div>
+        </div>
+        <h2>Коммерческое <span>предложение</span></h2>
+        <div class="kp-parties">
+          <div class="p"><div class="lbl">Кому</div><div class="v"><b>${esc($('#f_client').value||'—')}</b>${$('#f_company').value?'<br/>'+esc($('#f_company').value):''}${$('#f_contact').value?'<br/>'+esc($('#f_contact').value):''}</div></div>
+          <div class="p"><div class="lbl">От кого</div><div class="v"><b>Fibonacci Control</b><br/>${esc(SITS.wa)} · ${esc(SITS.tg)}<br/>${esc(SITS.email)}${$('#f_manager').value?'<br/>Менеджер: '+esc($('#f_manager').value):''}</div></div>
+        </div>
+        <table class="kp-tbl">
+          <thead><tr><th style="width:34px">№</th><th>Услуга</th><th class="r" style="width:70px">Кол-во</th><th class="r" style="width:120px">Цена</th><th class="r" style="width:130px">Сумма</th></tr></thead>
+          <tbody>${rows||'<tr><td colspan="5" style="color:#9aa3b0">Позиции не добавлены</td></tr>'}</tbody>
+        </table>
+        <div class="kp-total"><div class="box">
+          <div class="tr"><span>Позиций</span><span class="mono">${items.length}</span></div>
+          <div class="tr grand"><span>Итого</span><span class="amt">${fmt(total)}</span></div>
+        </div></div>
+        ${note?`<div class="kp-note"><span class="nl">Условия</span>${esc(note)}</div>`:''}
+        <div class="kp-terms">Предложение действительно: ${esc($('#f_validity').value||'14 дней')}. Все цены указаны в тенге (₸) и могут уточняться после детализации задачи. Внедрение CRM выполняется на собственной платформе Fibonacci Control.</div>
       </div>
-      <h2>Коммерческое <span>предложение</span></h2>
-      <div class="kp-parties">
-        <div class="p"><div class="lbl">Кому</div><div class="v"><b>${esc($('#f_client').value||'—')}</b>${$('#f_company').value?'<br/>'+esc($('#f_company').value):''}${$('#f_contact').value?'<br/>'+esc($('#f_contact').value):''}</div></div>
-        <div class="p"><div class="lbl">От кого</div><div class="v"><b>${esc(SITS.company)}</b><br/>${esc(SITS.wa)} · ${esc(SITS.tg)}<br/>${esc(SITS.email)}${$('#f_manager').value?'<br/>Менеджер: '+esc($('#f_manager').value):''}</div></div>
-      </div>
-      <table class="kp-tbl">
-        <thead><tr><th style="width:34px">№</th><th>Услуга</th><th class="r" style="width:70px">Кол-во</th><th class="r" style="width:120px">Цена</th><th class="r" style="width:130px">Сумма</th></tr></thead>
-        <tbody>${rows||'<tr><td colspan="5" style="color:#9aa3b0">Позиции не добавлены</td></tr>'}</tbody>
-      </table>
-      <div class="kp-total"><div class="box">
-        <div class="tr"><span>Позиций</span><span class="mono">${items.length}</span></div>
-        <div class="tr grand"><span>Итого</span><span class="amt">${fmt(total)}</span></div>
-      </div></div>
-      ${note?`<div class="kp-note">${esc(note)}</div>`:''}
-      <div class="kp-terms">Предложение действительно: ${esc($('#f_validity').value||'14 дней')}. Цены указаны в тенге (₸). Итоговая стоимость может уточняться после детализации задачи.</div>
       <div class="kp-foot">
-        <div>${esc(SITS.company)}</div>
-        <div><a href="https://${SITS.site}">${SITS.site}</a> · <a href="https://${SITS.product}">${SITS.product}</a></div>
+        <div class="fb"><img src="/brand/fibonacci-mark.svg" alt=""/> ${esc(SITS.company)}</div>
+        <div><a href="https://${SITS.product}">${SITS.product}</a> · <a href="https://${SITS.site}">${SITS.site}</a> · ${esc(SITS.wa)}</div>
       </div>`;
   }
   function openDoc(){ buildDoc(); $('#kpOverlay').classList.add('show'); }
@@ -660,7 +711,7 @@
   if(location.hash.startsWith('#demo') && /^(localhost|127|0)/.test(location.hostname)){
     localStorage.setItem(KEY_MGR,'Алижан');
     DEALS=[
-      {id:'d1',no:'КП-260725-A1B',client:'Асхат',company:'Кухни Модерн',contact:'+7 701 000 00 00',manager:'Алижан',source:'Instagram',status:'kp_sent',items:[{name:'Корпоративный сайт',qty:1,price:150000},{name:'Внедрение CRM Fibonacci Control',qty:1,price:150000}],total:300000,createdAt:'2026-07-25T10:00:00Z'},
+      {id:'d1',no:'КП-260725-A1B',client:'Асхат Нурланов',company:'ТОО «Кухни Модерн»',contact:'+7 701 000 00 00 · @kuhni_modern',manager:'Алижан',source:'Instagram',status:'kp_sent',validity:'14 дней',note:'Предоплата 50%, остаток по факту запуска. Срок внедрения — 2 недели. Обучение сотрудников и месяц поддержки включены.',items:[{name:'Аудит и настройка бизнес-процессов',qty:1,price:120000},{name:'Внедрение CRM Fibonacci Control',qty:1,price:150000},{name:'Интеграция Instagram + WhatsApp в CRM',qty:1,price:60000},{name:'Автоматизация заявок и напоминаний',qty:1,price:80000},{name:'Поддержка и сопровождение (мес)',qty:1,price:50000}],total:460000,createdAt:'2026-07-25T10:00:00Z'},
       {id:'d2',no:'КП-260725-C3D',client:'Мегастрой',company:'ТОО «Мегастрой»',manager:'Алижан',source:'OLX',status:'won',items:[{name:'Бизнес-автоматизация процессов',qty:1,price:200000}],total:200000,createdAt:'2026-07-24T09:00:00Z'}
     ];
     showApp();

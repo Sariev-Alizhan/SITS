@@ -193,8 +193,8 @@
     <div class="brand"><img src="/brand/sits-mark-red.png" alt="" /><b>Fibonacci Control</b></div>
     <h1>CRM · вход</h1>
     <p>Внутренняя система SITS. Доступ только для команды.</p>
-    <label for="mgr">Ваше имя (менеджер)</label>
-    <input type="text" id="mgr" placeholder="Напр. Алижан" autocomplete="off" />
+    <label for="login">Логин</label>
+    <input type="text" id="login" placeholder="ваш логин" autocomplete="username" autocapitalize="none" spellcheck="false" />
     <label for="pass">Пароль доступа</label>
     <input type="password" id="pass" placeholder="••••••••" autocomplete="current-password" />
     <button class="btn btn-gold" type="submit" id="loginBtn">Войти</button>
@@ -317,7 +317,7 @@
   const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
   const fmt = (n)=> (Math.round(n)||0).toLocaleString('ru-RU') + ' ₸';
   const esc = (s)=> String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  const KEY_PASS='sits_crm_pass', KEY_MGR='sits_crm_mgr';
+  const KEY_PASS='sits_crm_pass', KEY_LOGIN='sits_crm_login', KEY_MGR='sits_crm_mgr';
 
   const SITS = {
     company:'ТОО «SARIYEV IT SOLUTIONS»',
@@ -334,6 +334,7 @@
   const ST_LABEL = {new:'Новая',in_progress:'В работе',kp_sent:'КП отправлено',invoice:'Счёт',won:'Выиграно',lost:'Проиграно'};
 
   let PASS = sessionStorage.getItem(KEY_PASS) || '';
+  let LOGIN = sessionStorage.getItem(KEY_LOGIN) || '';
   let DEALS = [];
   let editId = null;
 
@@ -343,10 +344,9 @@
 
   // ---------- API ----------
   async function api(method, body){
-    const url = '/api/crm-deals?key='+encodeURIComponent(PASS);
-    const opt = { method };
-    if(body){ opt.headers={'Content-Type':'application/json'}; opt.body=JSON.stringify(body); }
-    const r = await fetch(url, opt);
+    const opt = { method, headers:{ 'x-crm-login':LOGIN, 'x-crm-pass':PASS } };
+    if(body){ opt.headers['Content-Type']='application/json'; opt.body=JSON.stringify(body); }
+    const r = await fetch('/api/crm-deals', opt);
     const data = await r.json().catch(()=>({ok:false,error:'Ошибка ответа'}));
     if(r.status===401){ throw new Error('401'); }
     if(!r.ok || !data.ok){ throw new Error(data.error||('HTTP '+r.status)); }
@@ -354,26 +354,28 @@
   }
 
   // ---------- auth ----------
-  async function tryLogin(pass){
-    PASS = pass;
+  async function tryLogin(login, pass){
+    LOGIN = login; PASS = pass;
     const data = await api('GET'); // 401 → throw
     DEALS = data.deals||[];
     sessionStorage.setItem(KEY_PASS, pass);
+    sessionStorage.setItem(KEY_LOGIN, login);
+    if(data.user && data.user.name) localStorage.setItem(KEY_MGR, data.user.name);
   }
   function showApp(){
     $('#login').style.display='none'; $('#app').style.display='block';
     $('#whoName').textContent = localStorage.getItem(KEY_MGR)||'—';
     renderDeals();
   }
-  function logout(){ sessionStorage.removeItem(KEY_PASS); PASS=''; location.reload(); }
+  function logout(){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); PASS=''; LOGIN=''; location.reload(); }
 
   $('#loginForm').addEventListener('submit', async (e)=>{
     e.preventDefault();
-    const mgr=$('#mgr').value.trim(), pass=$('#pass').value;
-    if(mgr) localStorage.setItem(KEY_MGR,mgr);
+    const login=$('#login').value.trim().toLowerCase(), pass=$('#pass').value;
+    if(!login || !pass){ $('#loginErr').textContent='Введите логин и пароль'; return; }
     $('#loginErr').textContent=''; $('#loginBtn').textContent='Проверяю…';
-    try{ await tryLogin(pass); showApp(); }
-    catch(err){ $('#loginErr').textContent = err.message==='401' ? 'Неверный пароль' : ('Ошибка: '+err.message); }
+    try{ await tryLogin(login, pass); showApp(); }
+    catch(err){ $('#loginErr').textContent = err.message==='401' ? 'Неверный логин или пароль' : ('Ошибка: '+err.message); }
     finally{ $('#loginBtn').textContent='Войти'; }
   });
   $('#logoutBtn').addEventListener('click', logout);
@@ -578,7 +580,7 @@
 
   // ---------- init ----------
   $('#f_manager') && ($('#f_manager').value=localStorage.getItem(KEY_MGR)||'');
-  if($('#mgr')) $('#mgr').value=localStorage.getItem(KEY_MGR)||'';
+  if($('#login')) $('#login').value = LOGIN || '';
   newKp();
   // localhost-only visual demo (safe: no real data, API still needs password in prod)
   if(location.hash.startsWith('#demo') && /^(localhost|127|0)/.test(location.hostname)){
@@ -591,8 +593,8 @@
     if(location.hash.includes('kp')||location.hash.includes('doc')){ loadIntoGenerator(DEALS[0]); gotoView('kp'); }
     if(location.hash.includes('doc')){ openDoc(); }
   }
-  // auto-login if session pass present
-  if(PASS){ (async()=>{ try{ const d=await api('GET'); DEALS=d.deals||[]; showApp(); }catch(_){ sessionStorage.removeItem(KEY_PASS); PASS=''; } })(); }
+  // auto-login if session creds present
+  if(PASS && LOGIN){ (async()=>{ try{ const d=await api('GET'); DEALS=d.deals||[]; showApp(); }catch(_){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); PASS=''; LOGIN=''; } })(); }
 })();
 </script>
 </body>

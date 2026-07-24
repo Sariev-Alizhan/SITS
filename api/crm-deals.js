@@ -6,7 +6,9 @@
 // Хранилище: Vercel KV, hash 'crm-deals' (поле = id, значение = JSON сделки).
 
 import { kv } from '@vercel/kv';
+import crypto from 'node:crypto';
 import { rateLimit, getClientIp, timingSafeEqual, checkOrigin, parseBody } from './_security.js';
+import { USERS } from './_crm-users.js';
 
 const ALLOWED_ORIGINS = [
   'https://sits-eta.vercel.app',
@@ -15,10 +17,31 @@ const ALLOWED_ORIGINS = [
 const STATUSES = new Set(['new', 'in_progress', 'kp_sent', 'invoice', 'won', 'lost']);
 const HKEY = 'crm-deals';
 
-function authed(req) {
-  const provided = req.query.key || (req.headers.authorization || '').replace('Bearer ', '');
-  const expected = process.env.ADMIN_PASSWORD || '';
-  return expected && timingSafeEqual(String(provided), expected);
+const sha256 = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
+
+// Возвращает {login,name} при успехе, иначе null.
+function authUser(req) {
+  const login = String(req.headers['x-crm-login'] || req.query.u || '').trim().toLowerCase();
+  const pass = String(
+    req.headers['x-crm-pass'] ||
+    req.query.key ||
+    (req.headers.authorization || '').replace('Bearer ', '')
+  );
+  if (!pass) return null;
+
+  // Мастер-доступ владельца через env (совместимость с админкой)
+  const master = process.env.ADMIN_PASSWORD || '';
+  if (master && timingSafeEqual(pass, master)) {
+    const u = USERS.find((x) => x.login === login);
+    return { login: u ? u.login : (login || 'admin'), name: u ? u.name : 'Владелец' };
+  }
+
+  // Учётки команды: salted SHA-256, сравнение в постоянное время
+  const u = USERS.find((x) => x.login === login);
+  if (u && timingSafeEqual(sha256(u.salt + pass), u.hash)) {
+    return { login: u.login, name: u.name };
+  }
+  return null;
 }
 
 function num(v, max = 1e12) {
@@ -67,13 +90,14 @@ export default async function handler(req, res) {
     return res.status(429).json({ ok: false, error: 'Слишком много запросов' });
   }
 
-  if (!authed(req)) {
-    const failRl = await rateLimit({ key: `crm-fail:${ip}`, limit: 5, windowSec: 300 });
+  const user = authUser(req);
+  if (!user) {
+    const failRl = await rateLimit({ key: `crm-fail:${ip}`, limit: 8, windowSec: 300 });
     if (!failRl.ok) {
       res.setHeader('Retry-After', String(failRl.resetSec || 60));
       return res.status(429).json({ ok: false, error: 'Слишком много неудачных попыток. Подождите.' });
     }
-    return res.status(401).json({ ok: false, error: 'Неверный пароль' });
+    return res.status(401).json({ ok: false, error: 'Неверный логин или пароль' });
   }
 
   if (!process.env.KV_REST_API_URL) {
@@ -87,7 +111,7 @@ export default async function handler(req, res) {
         .map((v) => { try { return typeof v === 'string' ? JSON.parse(v) : v; } catch { return null; } })
         .filter(Boolean)
         .sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
-      return res.status(200).json({ ok: true, deals });
+      return res.status(200).json({ ok: true, deals, user });
     }
 
     if (req.method === 'POST') {

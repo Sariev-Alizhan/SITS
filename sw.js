@@ -54,6 +54,7 @@ self.addEventListener('fetch', (event) => {
   /* API, админ, _vercel (analytics/insights) — без кэша */
   if (url.pathname.startsWith('/api/') ||
       url.pathname.startsWith('/admin') ||
+      url.pathname.startsWith('/crm') ||
       url.pathname.startsWith('/_vercel')) return;
 
   if (isHtmlRequest(req)) {

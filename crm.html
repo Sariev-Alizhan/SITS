@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SITS · CRM — Fibonacci Control</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/png" href="/brand/favicon.png?v=10" />
+<meta name="theme-color" content="#070A10" />
+<link rel="stylesheet" href="/fonts/fonts.css" />
+<style>
+  :root{
+    --void:#070A10; --ink:#0D1420; --surface:#121A26; --surface-2:#16212F; --line:#1E2836; --line-2:#28374A;
+    --fg:#FBFBFC; --dim:#98A3B4; --slate:#6B7688;
+    --gold:#D2A24C; --gold-lit:#EFC97E; --gold-deep:#9A6F1E; --gold-soft:rgba(210,162,76,.12);
+    --ok:#2E7D5B; --warn:#B8542A; --err:#A32118; --info:#35618E;
+    --font-display:'Unbounded',system-ui,sans-serif;
+    --font-body:'Manrope',system-ui,sans-serif;
+    --mono:ui-monospace,'SFMono-Regular',Menlo,monospace;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --r:14px; --r-lg:20px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--void);color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer}
+  input,select,textarea{font-family:inherit;font-size:14px;color:var(--fg);background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:11px 13px;width:100%;outline:none;transition:border-color .2s}
+  input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+  ::placeholder{color:var(--slate)}
+  .mono{font-family:var(--mono)}
+  .gold{color:var(--gold)}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14px;border-radius:10px;padding:11px 18px;border:1px solid transparent;transition:.2s var(--ease);white-space:nowrap}
+  .btn-gold{background:linear-gradient(180deg,var(--gold-lit),var(--gold));color:#241a06;box-shadow:0 8px 22px -10px rgba(210,162,76,.6)}
+  .btn-gold:hover{filter:brightness(1.05);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;border-color:var(--line-2);color:var(--fg)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .btn-sm{padding:8px 12px;font-size:13px;border-radius:9px}
+  .btn-danger:hover{border-color:var(--err);color:#e5675e}
+
+  /* login */
+  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+    background:radial-gradient(60% 50% at 50% 0%, rgba(210,162,76,.10), transparent 60%), var(--void)}
+  .login{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:38px 34px;box-shadow:0 30px 80px -40px #000}
+  .login .brand{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .login .brand img{height:34px}
+  .login .brand b{font-family:var(--font-display);font-weight:600;font-size:19px}
+  .login h1{font-family:var(--font-display);font-weight:600;font-size:20px;margin:18px 0 4px}
+  .login p{color:var(--dim);font-size:13.5px;margin-bottom:22px}
+  .login label{display:block;font-size:12px;color:var(--dim);margin:14px 0 6px;letter-spacing:.02em}
+  .login .btn{width:100%;margin-top:20px}
+  .err-msg{color:#e5675e;font-size:13px;margin-top:12px;min-height:18px}
+
+  /* app shell */
+  #app{display:none;min-height:100vh}
+  .topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:14px 22px;background:rgba(13,20,32,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .topbar .brand{display:flex;align-items:center;gap:10px}
+  .topbar .brand img{height:30px}
+  .topbar .brand b{font-family:var(--font-display);font-weight:600;font-size:16px}
+  .topbar .brand span{color:var(--gold);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border:1px solid var(--gold-soft);background:var(--gold-soft);border-radius:100px}
+  .topbar-right{display:flex;align-items:center;gap:12px}
+  .who{font-size:13px;color:var(--dim)}
+  .who b{color:var(--fg)}
+
+  .tabs{display:flex;gap:6px;padding:16px 22px 0;max-width:1200px;margin:0 auto;width:100%}
+  .tab{padding:10px 18px;border-radius:10px 10px 0 0;font-weight:600;font-size:14.5px;color:var(--dim);border:1px solid transparent;border-bottom:none}
+  .tab.active{color:var(--gold);background:var(--surface);border-color:var(--line)}
+  .wrap{max-width:1200px;margin:0 auto;padding:22px;width:100%}
+  .view{display:none}
+  .view.active{display:block}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+  .stat .k{font-size:12px;color:var(--dim);letter-spacing:.03em;text-transform:uppercase;margin-bottom:8px}
+  .stat .v{font-family:var(--font-display);font-weight:600;font-size:24px}
+  .stat .v.g{color:var(--gold)}
+
+  /* filters */
+  .bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:18px}
+  .bar .grow{flex:1;min-width:180px}
+  .seg{display:inline-flex;background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:3px}
+  .seg button{background:transparent;border:none;color:var(--dim);padding:7px 12px;border-radius:8px;font-size:13px;font-weight:600}
+  .seg button.on{background:var(--surface-2);color:var(--gold)}
+
+  /* deals grid */
+  .deals{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .deal{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;transition:.2s var(--ease);cursor:pointer}
+  .deal:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  .deal .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
+  .deal .cl{font-family:var(--font-display);font-weight:500;font-size:16px}
+  .deal .co{color:var(--dim);font-size:13px;margin-top:2px}
+  .deal .sum{font-family:var(--font-display);font-weight:600;font-size:18px;color:var(--gold);margin:10px 0}
+  .deal .meta{display:flex;flex-wrap:wrap;gap:6px 12px;color:var(--slate);font-size:12px;margin-top:8px}
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:100px;border:1px solid var(--line-2)}
+  .st-new{color:var(--info);border-color:color-mix(in srgb,var(--info) 45%,transparent);background:color-mix(in srgb,var(--info) 12%,transparent)}
+  .st-in_progress{color:var(--gold);border-color:var(--gold-soft);background:var(--gold-soft)}
+  .st-kp_sent{color:var(--gold-lit);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--gold-soft)}
+  .st-invoice{color:#c99;border-color:color-mix(in srgb,var(--warn) 45%,transparent);background:color-mix(in srgb,var(--warn) 12%,transparent)}
+  .st-won{color:#6cc39a;border-color:color-mix(in srgb,var(--ok) 50%,transparent);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+  .st-lost{color:#b98;border-color:color-mix(in srgb,var(--err) 45%,transparent);background:color-mix(in srgb,var(--err) 10%,transparent)}
+  .deal .row-actions{display:flex;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+  .empty{color:var(--slate);text-align:center;padding:60px 20px;border:1px dashed var(--line-2);border-radius:var(--r)}
+
+  /* КП generator */
+  .kp-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:start}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px}
+  .card h3{font-family:var(--font-display);font-weight:500;font-size:16px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:12px;color:var(--dim);margin-bottom:6px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .items-head,.item-row{display:grid;grid-template-columns:1fr 70px 110px 110px 32px;gap:8px;align-items:center}
+  .items-head{font-size:11px;color:var(--slate);text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px;padding:0 2px}
+  .item-row{margin-bottom:8px}
+  .item-row .sum-cell{font-family:var(--mono);font-size:13px;text-align:right;color:var(--gold);padding-right:4px}
+  .item-del{background:transparent;border:1px solid var(--line);border-radius:8px;color:var(--slate);height:38px;font-size:16px}
+  .item-del:hover{border-color:var(--err);color:#e5675e}
+  .add-item{margin-top:6px}
+  .total-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+  .total-row .l{color:var(--dim);font-size:14px}
+  .total-row .v{font-family:var(--font-display);font-weight:600;font-size:26px;color:var(--gold)}
+  .gen-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+
+  /* КП live preview (dark) */
+  .prev{position:sticky;top:80px}
+  .prev .card{padding:0;overflow:hidden}
+  .prev-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .prev-head .t{font-family:var(--font-display);font-size:14px}
+  .prev-body{padding:22px;max-height:60vh;overflow:auto}
+  .pv-line{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .pv-line .n{color:var(--fg)} .pv-line .m{color:var(--dim);font-family:var(--mono);font-size:12.5px}
+  .pv-meta{color:var(--dim);font-size:13px;margin-bottom:14px}
+  .pv-meta b{color:var(--fg)}
+
+  /* toast */
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface-2);border:1px solid var(--line-2);color:var(--fg);
+    padding:12px 20px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:.3s var(--ease);z-index:60;box-shadow:0 20px 50px -20px #000}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast.ok{border-color:var(--ok)} .toast.err{border-color:var(--err)}
+
+  @media(max-width:900px){.kp-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.prev{position:static}}
+  @media(max-width:560px){.item-row,.items-head{grid-template-columns:1fr 54px 90px 90px 30px}}
+
+  /* ===================== КП ДОКУМЕНТ (печать / PDF) — светлый ===================== */
+  .kp-overlay{position:fixed;inset:0;z-index:100;background:rgba(4,7,12,.75);display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:28px 16px}
+  .kp-overlay.show{display:flex}
+  .kp-toolbar{position:sticky;top:0;display:flex;gap:10px;justify-content:center;margin-bottom:16px;width:100%;max-width:820px}
+  .kp-doc{background:#fff;color:#0D1420;width:100%;max-width:820px;border-radius:6px;padding:52px 56px;font-family:var(--font-body);box-shadow:0 30px 90px -30px #000}
+  .kp-doc .d-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-bottom:22px;border-bottom:2px solid #0D1420}
+  .kp-doc .d-brand{display:flex;align-items:center;gap:11px}
+  .kp-doc .d-brand img{height:40px}
+  .kp-doc .d-brand .bn{font-family:var(--font-display);font-weight:700;font-size:22px;color:#0D1420;letter-spacing:.02em}
+  .kp-doc .d-brand .bs{font-size:12px;color:#6B7688;margin-top:2px}
+  .kp-doc .d-meta{text-align:right;font-size:13px;color:#333}
+  .kp-doc .d-meta .no{font-family:var(--font-display);font-weight:600;font-size:16px;color:#0D1420}
+  .kp-doc h2{font-family:var(--font-display);font-weight:600;font-size:26px;color:#0D1420;margin:26px 0 20px;letter-spacing:-.01em}
+  .kp-doc h2 span{color:#B8862B}
+  .kp-parties{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+  .kp-parties .p .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#9aa3b0;margin-bottom:6px}
+  .kp-parties .p .v{font-size:14px;color:#0D1420;line-height:1.6}
+  .kp-parties .p .v b{font-weight:700}
+  table.kp-tbl{width:100%;border-collapse:collapse;margin:8px 0 4px}
+  table.kp-tbl th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#8a93a0;padding:10px 8px;border-bottom:1.5px solid #0D1420}
+  table.kp-tbl th.r,table.kp-tbl td.r{text-align:right}
+  table.kp-tbl td{padding:12px 8px;border-bottom:1px solid #E7EAF0;font-size:14px;color:#0D1420;vertical-align:top}
+  table.kp-tbl td.mono{font-family:var(--mono);font-size:13px}
+  .kp-total{display:flex;justify-content:flex-end;margin-top:16px}
+  .kp-total .box{min-width:280px}
+  .kp-total .tr{display:flex;justify-content:space-between;padding:7px 0;font-size:14px;color:#333}
+  .kp-total .grand{border-top:2px solid #0D1420;margin-top:8px;padding-top:12px;font-size:16px;color:#0D1420;font-weight:700}
+  .kp-total .grand .amt{font-family:var(--font-display);font-size:22px;color:#B8862B}
+  .kp-note{margin-top:26px;padding:16px 18px;background:#FBF6EA;border:1px solid #EAD9AE;border-radius:8px;font-size:13.5px;color:#5c4a1e;line-height:1.6;white-space:pre-wrap}
+  .kp-foot{margin-top:32px;padding-top:20px;border-top:1px solid #E7EAF0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12.5px;color:#6B7688}
+  .kp-foot a{color:#B8862B}
+  .kp-terms{margin-top:14px;font-size:12.5px;color:#8a93a0}
+
+  @media print{
+    body{background:#fff!important}
+    #app,#login,.kp-toolbar,.topbar,.toast{display:none!important}
+    .kp-overlay{position:static;display:block!important;background:#fff;padding:0;overflow:visible}
+    .kp-doc{box-shadow:none;max-width:100%;border-radius:0;padding:0 6mm}
+    @page{margin:14mm}
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== LOGIN ==================== -->
+<div id="login" class="login-wrap">
+  <form class="login" id="loginForm" autocomplete="off">
+    <div class="brand"><img src="/brand/sits-mark-red.png" alt="" /><b>Fibonacci Control</b></div>
+    <h1>CRM · вход</h1>
+    <p>Внутренняя система SITS. Доступ только для команды.</p>
+    <label for="mgr">Ваше имя (менеджер)</label>
+    <input type="text" id="mgr" placeholder="Напр. Алижан" autocomplete="off" />
+    <label for="pass">Пароль доступа</label>
+    <input type="password" id="pass" placeholder="••••••••" autocomplete="current-password" />
+    <button class="btn btn-gold" type="submit" id="loginBtn">Войти</button>
+    <div class="err-msg" id="loginErr"></div>
+  </form>
+</div>
+
+<!-- ==================== APP ==================== -->
+<div id="app">
+  <div class="topbar">
+    <div class="brand"><img src="/brand/sits-mark-red.png" alt="" /><b>Fibonacci Control</b> <span>CRM</span></div>
+    <div class="topbar-right">
+      <div class="who">Менеджер: <b id="whoName">—</b></div>
+      <button class="btn btn-ghost btn-sm" id="logoutBtn">Выйти</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-view="deals">Сделки</button>
+    <button class="tab" data-view="kp">Новое КП</button>
+  </div>
+
+  <!-- ---- DEALS ---- -->
+  <div class="wrap view active" id="view-deals">
+    <div class="stats" id="stats"></div>
+    <div class="bar">
+      <input class="grow" type="search" id="dealSearch" placeholder="Поиск по клиенту, компании…" />
+      <div class="seg" id="statusFilter">
+        <button class="on" data-f="all">Все</button>
+        <button data-f="new">Новые</button>
+        <button data-f="in_progress">В работе</button>
+        <button data-f="kp_sent">КП отправлено</button>
+        <button data-f="won">Выиграно</button>
+      </div>
+      <button class="btn btn-gold btn-sm" id="newDealBtn">+ Новое КП</button>
+    </div>
+    <div class="deals" id="dealsList"></div>
+  </div>
+
+  <!-- ---- KP GENERATOR ---- -->
+  <div class="wrap view" id="view-kp">
+    <div class="kp-grid">
+      <div class="card">
+        <h3>📄 Данные КП <span id="kpNoLabel" class="mono gold" style="font-size:13px;margin-left:auto"></span></h3>
+        <div class="grid2">
+          <div class="field"><label>Клиент (имя)</label><input id="f_client" placeholder="Имя контакта" /></div>
+          <div class="field"><label>Компания</label><input id="f_company" placeholder="Название компании" /></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label>Контакт (тел / @ / email)</label><input id="f_contact" placeholder="+7… / @… / email" /></div>
+          <div class="field"><label>Менеджер (с кем сделка)</label><input id="f_manager" placeholder="Ваше имя" /></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label>Источник</label>
+            <select id="f_source">
+              <option value="">—</option><option>Instagram</option><option>WhatsApp</option><option>Сайт</option>
+              <option>OLX</option><option>Telegram</option><option>Рекомендация</option><option>Другое</option>
+            </select>
+          </div>
+          <div class="field"><label>Статус</label>
+            <select id="f_status">
+              <option value="new">Новая</option><option value="in_progress">В работе</option>
+              <option value="kp_sent">КП отправлено</option><option value="invoice">Счёт</option>
+              <option value="won">Выиграно</option><option value="lost">Проиграно</option>
+            </select>
+          </div>
+        </div>
+
+        <h3 style="margin-top:20px">🧩 Позиции (услуги)</h3>
+        <div class="items-head"><span>Услуга</span><span>Кол-во</span><span>Цена, ₸</span><span style="text-align:right">Сумма</span><span></span></div>
+        <div id="itemsBox"></div>
+        <button class="btn btn-ghost btn-sm add-item" id="addItemBtn">+ Добавить позицию</button>
+
+        <div class="grid2" style="margin-top:18px">
+          <div class="field"><label>Срок действия КП</label><input id="f_validity" placeholder="14 дней" value="14 дней" /></div>
+          <div class="field"><label>&nbsp;</label></div>
+        </div>
+        <div class="field"><label>Примечание / условия</label><textarea id="f_note" rows="3" placeholder="Например: предоплата 50%, срок 2 недели, гарантия…"></textarea></div>
+
+        <div class="total-row"><span class="l">Итого</span><span class="v" id="totalOut">0 ₸</span></div>
+
+        <div class="gen-actions">
+          <button class="btn btn-gold" id="saveDealBtn">💾 Сохранить сделку</button>
+          <button class="btn btn-ghost" id="previewKpBtn">👁 Предпросмотр КП</button>
+          <button class="btn btn-ghost" id="printKpBtn">⬇ Скачать КП (PDF)</button>
+          <button class="btn btn-ghost" id="resetKpBtn" style="margin-left:auto">Очистить</button>
+        </div>
+      </div>
+
+      <div class="prev">
+        <div class="card">
+          <div class="prev-head"><div class="t">Живой предпросмотр</div><div class="mono gold" id="prevTotal">0 ₸</div></div>
+          <div class="prev-body">
+            <div class="pv-meta"><b id="pv_client">—</b> <span id="pv_company"></span><br/><span id="pv_contact" style="color:var(--slate)"></span></div>
+            <div id="pvItems"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== КП ДОКУМЕНТ (модалка / печать) ==================== -->
+<div class="kp-overlay" id="kpOverlay">
+  <div style="width:100%;max-width:820px">
+    <div class="kp-toolbar">
+      <button class="btn btn-gold" id="doPrintBtn">⬇ Печать / Сохранить PDF</button>
+      <button class="btn btn-ghost" id="closeKpBtn">Закрыть</button>
+    </div>
+    <div class="kp-doc" id="kpDoc"><!-- rendered --></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  'use strict';
+  const $ = (s,r=document)=>r.querySelector(s);
+  const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+  const fmt = (n)=> (Math.round(n)||0).toLocaleString('ru-RU') + ' ₸';
+  const esc = (s)=> String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const KEY_PASS='sits_crm_pass', KEY_MGR='sits_crm_mgr';
+
+  const SITS = {
+    company:'ТОО «SARIYEV IT SOLUTIONS»',
+    site:'sits-eta.vercel.app', product:'fibonaccicontrol.com',
+    wa:'+7 777 496 13 58', tg:'@zhanmate', email:'raimzhan1907@gmail.com'
+  };
+  const CATALOG = [
+    ['Лендинг / одностраничный сайт',50000],['Корпоративный сайт',150000],['Интернет-магазин',250000],
+    ['Веб-платформа / SaaS',500000],['Мобильное приложение (iOS/Android)',300000],['Разработка игры',400000],
+    ['Бизнес-автоматизация процессов',200000],['Внедрение CRM Fibonacci Control',150000],['Настройка/поддержка CRM (мес)',50000],
+    ['AI-контент / видео-монтаж',80000],['Съёмка + монтаж (медиа-продакшн)',120000],['SMM / ведение соцсетей (мес)',100000],
+    ['IT-поддержка (мес)',50000],['Интеграция (WhatsApp/Instagram/API)',60000]
+  ];
+  const ST_LABEL = {new:'Новая',in_progress:'В работе',kp_sent:'КП отправлено',invoice:'Счёт',won:'Выиграно',lost:'Проиграно'};
+
+  let PASS = sessionStorage.getItem(KEY_PASS) || '';
+  let DEALS = [];
+  let editId = null;
+
+  // ---------- toast ----------
+  let toT;
+  function toast(msg, kind){ const t=$('#toast'); t.textContent=msg; t.className='toast show '+(kind||''); clearTimeout(toT); toT=setTimeout(()=>t.className='toast',2600); }
+
+  // ---------- API ----------
+  async function api(method, body){
+    const url = '/api/crm-deals?key='+encodeURIComponent(PASS);
+    const opt = { method };
+    if(body){ opt.headers={'Content-Type':'application/json'}; opt.body=JSON.stringify(body); }
+    const r = await fetch(url, opt);
+    const data = await r.json().catch(()=>({ok:false,error:'Ошибка ответа'}));
+    if(r.status===401){ throw new Error('401'); }
+    if(!r.ok || !data.ok){ throw new Error(data.error||('HTTP '+r.status)); }
+    return data;
+  }
+
+  // ---------- auth ----------
+  async function tryLogin(pass){
+    PASS = pass;
+    const data = await api('GET'); // 401 → throw
+    DEALS = data.deals||[];
+    sessionStorage.setItem(KEY_PASS, pass);
+  }
+  function showApp(){
+    $('#login').style.display='none'; $('#app').style.display='block';
+    $('#whoName').textContent = localStorage.getItem(KEY_MGR)||'—';
+    renderDeals();
+  }
+  function logout(){ sessionStorage.removeItem(KEY_PASS); PASS=''; location.reload(); }
+
+  $('#loginForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const mgr=$('#mgr').value.trim(), pass=$('#pass').value;
+    if(mgr) localStorage.setItem(KEY_MGR,mgr);
+    $('#loginErr').textContent=''; $('#loginBtn').textContent='Проверяю…';
+    try{ await tryLogin(pass); showApp(); }
+    catch(err){ $('#loginErr').textContent = err.message==='401' ? 'Неверный пароль' : ('Ошибка: '+err.message); }
+    finally{ $('#loginBtn').textContent='Войти'; }
+  });
+  $('#logoutBtn').addEventListener('click', logout);
+
+  // ---------- tabs ----------
+  $$('.tab').forEach(t=>t.addEventListener('click',()=>{
+    $$('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
+    $$('.view').forEach(v=>v.classList.remove('active'));
+    $('#view-'+t.dataset.view).classList.add('active');
+  }));
+  function gotoView(v){ $$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.view===v)); $$('.view').forEach(x=>x.classList.remove('active')); $('#view-'+v).classList.add('active'); }
+
+  // ---------- DEALS render ----------
+  let filterStatus='all', searchQ='';
+  function renderStats(){
+    const total = DEALS.reduce((s,d)=>s+(d.total||0),0);
+    const won = DEALS.filter(d=>d.status==='won');
+    const wonSum = won.reduce((s,d)=>s+(d.total||0),0);
+    $('#stats').innerHTML =
+      stat('Сделок', DEALS.length) +
+      stat('Сумма пайплайна', fmt(total), true) +
+      stat('Выиграно', won.length) +
+      stat('Сумма выигранных', fmt(wonSum), true);
+  }
+  const stat=(k,v,g)=>`<div class="stat"><div class="k">${k}</div><div class="v${g?' g':''}">${esc(v)}</div></div>`;
+
+  function renderDeals(){
+    renderStats();
+    let list = DEALS.slice();
+    if(filterStatus!=='all') list=list.filter(d=>d.status===filterStatus);
+    if(searchQ){ const q=searchQ.toLowerCase(); list=list.filter(d=>(d.client+' '+d.company+' '+d.no).toLowerCase().includes(q)); }
+    const box=$('#dealsList');
+    if(!list.length){ box.innerHTML='<div class="empty">Пока нет сделок. Создайте первое КП →</div>'; return; }
+    box.innerHTML = list.map(d=>`
+      <div class="deal" data-id="${d.id}">
+        <div class="top">
+          <div><div class="cl">${esc(d.client||'Без имени')}</div><div class="co">${esc(d.company||'')}</div></div>
+          <span class="pill st-${d.status}">${ST_LABEL[d.status]||d.status}</span>
+        </div>
+        <div class="sum">${fmt(d.total)}</div>
+        <div class="meta">
+          ${d.no?`<span class="mono">${esc(d.no)}</span>`:''}
+          ${d.manager?`<span>👤 ${esc(d.manager)}</span>`:''}
+          ${d.source?`<span>${esc(d.source)}</span>`:''}
+          <span>${new Date(d.createdAt).toLocaleDateString('ru-RU')}</span>
+        </div>
+        <div class="row-actions">
+          <button class="btn btn-ghost btn-sm act-edit">Открыть / КП</button>
+          <button class="btn btn-ghost btn-sm act-status">Статус →</button>
+          <button class="btn btn-ghost btn-sm btn-danger act-del" style="margin-left:auto">Удалить</button>
+        </div>
+      </div>`).join('');
+  }
+  // deal actions (delegated)
+  $('#dealsList').addEventListener('click',(e)=>{
+    const card=e.target.closest('.deal'); if(!card) return; const id=card.dataset.id;
+    const d=DEALS.find(x=>x.id===id); if(!d) return;
+    if(e.target.classList.contains('act-del')){ delDeal(id); return; }
+    if(e.target.classList.contains('act-status')){ cycleStatus(d); return; }
+    loadIntoGenerator(d); gotoView('kp');
+  });
+  $('#dealSearch').addEventListener('input',e=>{ searchQ=e.target.value.trim(); renderDeals(); });
+  $$('#statusFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#statusFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); filterStatus=b.dataset.f; renderDeals(); }));
+
+  const ORDER=['new','in_progress','kp_sent','invoice','won'];
+  async function cycleStatus(d){ const i=ORDER.indexOf(d.status); d.status=ORDER[(i+1)%ORDER.length]; try{ await api('POST',{action:'save',deal:d}); toast('Статус: '+ST_LABEL[d.status],'ok'); renderDeals(); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  async function delDeal(id){ if(!confirm('Удалить сделку?')) return; try{ await api('POST',{action:'delete',id}); DEALS=DEALS.filter(x=>x.id!==id); renderDeals(); toast('Удалено','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+
+  // ---------- KP GENERATOR ----------
+  function itemRow(name='',qty=1,price=''){
+    const div=document.createElement('div'); div.className='item-row';
+    div.innerHTML=`
+      <input class="i-name" list="catalog" placeholder="Услуга" value="${esc(name)}" />
+      <input class="i-qty" type="number" min="0" step="1" value="${qty}" />
+      <input class="i-price" type="number" min="0" step="1000" placeholder="0" value="${price}" />
+      <div class="sum-cell">0 ₸</div>
+      <button class="item-del" title="Удалить" type="button">×</button>`;
+    div.querySelector('.item-del').addEventListener('click',()=>{ div.remove(); recalc(); });
+    div.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{
+      const nm=div.querySelector('.i-name');
+      if(inp.classList.contains('i-name')){ const hit=CATALOG.find(c=>c[0]===inp.value); if(hit){ const p=div.querySelector('.i-price'); if(!p.value) p.value=hit[1]; } }
+      recalc();
+    }));
+    return div;
+  }
+  function addItem(name,qty,price){ $('#itemsBox').appendChild(itemRow(name,qty,price)); recalc(); }
+  $('#addItemBtn').addEventListener('click',()=>addItem());
+
+  function readItems(){
+    return $$('#itemsBox .item-row').map(r=>({
+      name:r.querySelector('.i-name').value.trim(),
+      qty:Number(r.querySelector('.i-qty').value)||0,
+      price:Number(r.querySelector('.i-price').value)||0
+    })).filter(it=>it.name||it.price);
+  }
+  function recalc(){
+    let total=0;
+    $$('#itemsBox .item-row').forEach(r=>{
+      const q=Number(r.querySelector('.i-qty').value)||0, p=Number(r.querySelector('.i-price').value)||0;
+      const s=q*p; total+=s; r.querySelector('.sum-cell').textContent=fmt(s);
+    });
+    $('#totalOut').textContent=fmt(total); $('#prevTotal').textContent=fmt(total);
+    // live preview
+    $('#pv_client').textContent=$('#f_client').value||'—';
+    $('#pv_company').textContent=$('#f_company').value?(' · '+$('#f_company').value):'';
+    $('#pv_contact').textContent=$('#f_contact').value||'';
+    $('#pvItems').innerHTML=readItems().map(it=>`<div class="pv-line"><span class="n">${esc(it.name)} <span class="m">×${it.qty}</span></span><span class="m">${fmt(it.qty*it.price)}</span></div>`).join('')||'<div class="pv-line"><span class="n" style="color:var(--slate)">Добавьте позиции…</span></div>';
+    return total;
+  }
+  ['f_client','f_company','f_contact'].forEach(id=>$('#'+id).addEventListener('input',recalc));
+
+  function genNo(){ const d=new Date(); const p=n=>String(n).padStart(2,'0'); return 'КП-'+String(d.getFullYear()).slice(2)+p(d.getMonth()+1)+p(d.getDate())+'-'+Math.random().toString(36).slice(2,5).toUpperCase(); }
+
+  function newKp(){
+    editId=null;
+    $('#f_client').value=''; $('#f_company').value=''; $('#f_contact').value='';
+    $('#f_manager').value=localStorage.getItem(KEY_MGR)||''; $('#f_source').value=''; $('#f_status').value='new';
+    $('#f_validity').value='14 дней'; $('#f_note').value='';
+    $('#itemsBox').innerHTML=''; addItem();
+    const no=genNo(); $('#kpNoLabel').textContent=no; $('#kpNoLabel').dataset.no=no;
+    recalc();
+  }
+  $('#newDealBtn').addEventListener('click',()=>{ newKp(); gotoView('kp'); });
+  $('#resetKpBtn').addEventListener('click',newKp);
+
+  function loadIntoGenerator(d){
+    editId=d.id;
+    $('#f_client').value=d.client||''; $('#f_company').value=d.company||''; $('#f_contact').value=d.contact||'';
+    $('#f_manager').value=d.manager||localStorage.getItem(KEY_MGR)||''; $('#f_source').value=d.source||''; $('#f_status').value=d.status||'new';
+    $('#f_validity').value=d.validity||'14 дней'; $('#f_note').value=d.note||'';
+    $('#kpNoLabel').textContent=d.no||''; $('#kpNoLabel').dataset.no=d.no||genNo();
+    $('#itemsBox').innerHTML=''; (d.items&&d.items.length?d.items:[{}]).forEach(it=>addItem(it.name,it.qty||1,it.price||''));
+    recalc();
+  }
+
+  function collectDeal(){
+    return {
+      id: editId || undefined,
+      no: $('#kpNoLabel').dataset.no || genNo(),
+      client:$('#f_client').value.trim(), company:$('#f_company').value.trim(), contact:$('#f_contact').value.trim(),
+      manager:$('#f_manager').value.trim(), source:$('#f_source').value, status:$('#f_status').value,
+      items:readItems(), validity:$('#f_validity').value.trim(), note:$('#f_note').value.trim(),
+      createdAt: editId ? (DEALS.find(x=>x.id===editId)?.createdAt) : undefined
+    };
+  }
+
+  $('#saveDealBtn').addEventListener('click', async ()=>{
+    const deal=collectDeal();
+    if(!deal.client && !deal.company){ toast('Укажите клиента или компанию','err'); return; }
+    try{
+      const data=await api('POST',{action:'save',deal});
+      const saved=data.deal;
+      const i=DEALS.findIndex(x=>x.id===saved.id);
+      if(i>=0) DEALS[i]=saved; else DEALS.unshift(saved);
+      editId=saved.id; $('#kpNoLabel').dataset.no=saved.no; $('#kpNoLabel').textContent=saved.no;
+      toast('Сделка сохранена','ok'); renderDeals();
+    }catch(err){ toast('Ошибка: '+err.message,'err'); }
+  });
+
+  // ---------- КП DOCUMENT ----------
+  function buildDoc(){
+    const items=readItems(); const total=items.reduce((s,it)=>s+it.qty*it.price,0);
+    const no=$('#kpNoLabel').dataset.no||genNo();
+    const today=new Date().toLocaleDateString('ru-RU',{day:'2-digit',month:'long',year:'numeric'});
+    const rows=items.map((it,i)=>`<tr><td class="mono" style="color:#8a93a0">${i+1}</td><td>${esc(it.name)}</td><td class="r mono">${it.qty}</td><td class="r mono">${fmt(it.price)}</td><td class="r mono"><b>${fmt(it.qty*it.price)}</b></td></tr>`).join('');
+    const note=$('#f_note').value.trim();
+    $('#kpDoc').innerHTML=`
+      <div class="d-head">
+        <div class="d-brand"><img src="/brand/sits-mark-red.png" alt=""/><div><div class="bn">SITS</div><div class="bs">Sariyev IT Solutions</div></div></div>
+        <div class="d-meta"><div class="no">${esc(no)}</div><div>${today}</div></div>
+      </div>
+      <h2>Коммерческое <span>предложение</span></h2>
+      <div class="kp-parties">
+        <div class="p"><div class="lbl">Кому</div><div class="v"><b>${esc($('#f_client').value||'—')}</b>${$('#f_company').value?'<br/>'+esc($('#f_company').value):''}${$('#f_contact').value?'<br/>'+esc($('#f_contact').value):''}</div></div>
+        <div class="p"><div class="lbl">От кого</div><div class="v"><b>${esc(SITS.company)}</b><br/>${esc(SITS.wa)} · ${esc(SITS.tg)}<br/>${esc(SITS.email)}${$('#f_manager').value?'<br/>Менеджер: '+esc($('#f_manager').value):''}</div></div>
+      </div>
+      <table class="kp-tbl">
+        <thead><tr><th style="width:34px">№</th><th>Услуга</th><th class="r" style="width:70px">Кол-во</th><th class="r" style="width:120px">Цена</th><th class="r" style="width:130px">Сумма</th></tr></thead>
+        <tbody>${rows||'<tr><td colspan="5" style="color:#9aa3b0">Позиции не добавлены</td></tr>'}</tbody>
+      </table>
+      <div class="kp-total"><div class="box">
+        <div class="tr"><span>Позиций</span><span class="mono">${items.length}</span></div>
+        <div class="tr grand"><span>Итого</span><span class="amt">${fmt(total)}</span></div>
+      </div></div>
+      ${note?`<div class="kp-note">${esc(note)}</div>`:''}
+      <div class="kp-terms">Предложение действительно: ${esc($('#f_validity').value||'14 дней')}. Цены указаны в тенге (₸). Итоговая стоимость может уточняться после детализации задачи.</div>
+      <div class="kp-foot">
+        <div>${esc(SITS.company)}</div>
+        <div><a href="https://${SITS.site}">${SITS.site}</a> · <a href="https://${SITS.product}">${SITS.product}</a></div>
+      </div>`;
+  }
+  function openDoc(){ buildDoc(); $('#kpOverlay').classList.add('show'); }
+  $('#previewKpBtn').addEventListener('click',openDoc);
+  $('#closeKpBtn').addEventListener('click',()=>$('#kpOverlay').classList.remove('show'));
+  $('#kpOverlay').addEventListener('click',e=>{ if(e.target.id==='kpOverlay') $('#kpOverlay').classList.remove('show'); });
+  $('#printKpBtn').addEventListener('click',()=>{ openDoc(); setTimeout(()=>window.print(),120); });
+  $('#doPrintBtn').addEventListener('click',()=>window.print());
+
+  // ---------- catalog datalist ----------
+  const dl=document.createElement('datalist'); dl.id='catalog';
+  dl.innerHTML=CATALOG.map(c=>`<option value="${esc(c[0])}">`).join(''); document.body.appendChild(dl);
+
+  // ---------- init ----------
+  $('#f_manager') && ($('#f_manager').value=localStorage.getItem(KEY_MGR)||'');
+  if($('#mgr')) $('#mgr').value=localStorage.getItem(KEY_MGR)||'';
+  newKp();
+  // localhost-only visual demo (safe: no real data, API still needs password in prod)
+  if(location.hash.startsWith('#demo') && /^(localhost|127|0)/.test(location.hostname)){
+    localStorage.setItem(KEY_MGR,'Алижан');
+    DEALS=[
+      {id:'d1',no:'КП-260725-A1B',client:'Асхат',company:'Кухни Модерн',contact:'+7 701 000 00 00',manager:'Алижан',source:'Instagram',status:'kp_sent',items:[{name:'Корпоративный сайт',qty:1,price:150000},{name:'Внедрение CRM Fibonacci Control',qty:1,price:150000}],total:300000,createdAt:'2026-07-25T10:00:00Z'},
+      {id:'d2',no:'КП-260725-C3D',client:'Мегастрой',company:'ТОО «Мегастрой»',manager:'Алижан',source:'OLX',status:'won',items:[{name:'Бизнес-автоматизация процессов',qty:1,price:200000}],total:200000,createdAt:'2026-07-24T09:00:00Z'}
+    ];
+    showApp();
+    if(location.hash.includes('kp')||location.hash.includes('doc')){ loadIntoGenerator(DEALS[0]); gotoView('kp'); }
+    if(location.hash.includes('doc')){ openDoc(); }
+  }
+  // auto-login if session pass present
+  if(PASS){ (async()=>{ try{ const d=await api('GET'); DEALS=d.deals||[]; showApp(); }catch(_){ sessionStorage.removeItem(KEY_PASS); PASS=''; } })(); }
+})();
+</script>
+</body>
+</html>

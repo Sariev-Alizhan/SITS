@@ -19,10 +19,18 @@ const HKEY = 'crm-deals';
 
 const sha256 = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
 
-// Обёртка над KV: не роняет запрос, если хранилище недоступно.
+// Быстрый таймаут: мёртвый KV может висеть ~20с на таймауте соединения.
+function withTimeout(promise, ms) {
+  return Promise.race([
+    promise,
+    new Promise((_, rej) => setTimeout(() => rej(new Error('kv timeout')), ms)),
+  ]);
+}
+
+// Обёртка над KV: не роняет запрос и быстро отвечает, если хранилище недоступно.
 async function kvSafe(fn) {
   if (!process.env.KV_REST_API_URL) return { ok: false };
-  try { return { ok: true, val: await fn() }; }
+  try { return { ok: true, val: await withTimeout(fn(), 1500) }; }
   catch (e) { console.error('KV down:', e?.message || e); return { ok: false }; }
 }
 

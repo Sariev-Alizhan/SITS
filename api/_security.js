@@ -20,9 +20,13 @@ export async function rateLimit({ key, limit, windowSec, failOpen = true }) {
   }
   const bucket = Math.floor(Date.now() / (windowSec * 1000));
   const k = `rl:${key}:${bucket}`;
+  // Быстрый таймаут: если KV недоступен, он висит ~20с на таймауте соединения.
+  const withTimeout = (p, ms) => Promise.race([
+    p, new Promise((_, rej) => setTimeout(() => rej(new Error('kv timeout')), ms)),
+  ]);
   try {
-    const count = await kv.incr(k);
-    if (count === 1) await kv.expire(k, windowSec + 1);
+    const count = await withTimeout(kv.incr(k), 1200);
+    if (count === 1) await withTimeout(kv.expire(k, windowSec + 1), 1200).catch(() => {});
     return {
       ok: count <= limit,
       remaining: Math.max(0, limit - count),

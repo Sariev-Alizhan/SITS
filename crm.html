@@ -194,9 +194,9 @@
     <h1>CRM · вход</h1>
     <p>Внутренняя система SITS. Доступ только для команды.</p>
     <label for="login">Логин</label>
-    <input type="text" id="login" placeholder="ваш логин" autocomplete="username" autocapitalize="none" spellcheck="false" />
+    <input type="text" id="login" name="fc_user_x" placeholder="ваш логин" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" />
     <label for="pass">Пароль доступа</label>
-    <input type="password" id="pass" placeholder="••••••••" autocomplete="current-password" />
+    <input type="password" id="pass" name="fc_key_x" placeholder="••••••••" autocomplete="new-password" autocapitalize="none" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" />
     <button class="btn btn-gold" type="submit" id="loginBtn">Войти</button>
     <div class="err-msg" id="loginErr"></div>
   </form>
@@ -384,9 +384,14 @@
   }
   function logout(){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); PASS=''; LOGIN=''; location.reload(); }
 
+  // Подстраховка от автозаполнения: запоминаем то, что реально печатали
+  let _mLogin='', _mPass='';
+  $('#login').addEventListener('input', e=>{ _mLogin=e.target.value; });
+  $('#pass').addEventListener('input', e=>{ _mPass=e.target.value; });
+
   $('#loginForm').addEventListener('submit', async (e)=>{
     e.preventDefault();
-    const login=$('#login').value.trim().toLowerCase(), pass=$('#pass').value;
+    const login=($('#login').value || _mLogin).trim().toLowerCase(), pass=($('#pass').value || _mPass);
     if(!login || !pass){ $('#loginErr').textContent='Введите логин и пароль'; return; }
     $('#loginErr').textContent=''; $('#loginBtn').textContent='Проверяю…';
     try{ await tryLogin(login, pass); showApp(); }

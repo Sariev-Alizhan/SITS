@@ -18,7 +18,9 @@
   body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
   .wrap{max-width:1180px;margin:0 auto;padding:32px 22px;}
   header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px;}
-  .logo{display:flex;flex-direction:column;line-height:1;}
+  .logo{display:flex;flex-direction:row;align-items:center;gap:11px;line-height:1;}
+  .logo-mark{height:2.1rem;width:auto;display:block;flex-shrink:0;}
+  .logo-text{display:flex;flex-direction:column;line-height:1;}
   .logo-word{font-family:'PT Serif',serif;font-weight:700;font-size:1.5rem;color:var(--logo);letter-spacing:.07em;}
   .logo-tag{font-family:'PT Serif',serif;font-size:.56rem;color:var(--logo);letter-spacing:.02em;opacity:.9;}
   h1{font-family:'Unbounded';font-size:1.1rem;font-weight:600;}
@@ -65,7 +67,7 @@
 
 <!-- ЛОГИН -->
 <div class="login" id="loginBox">
-  <div class="logo" style="margin-bottom:18px;"><span class="logo-word">SITS</span><span class="logo-tag">Sariyev IT Solutions</span></div>
+  <div class="logo" style="margin-bottom:18px;"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240"><div class="logo-text"><span class="logo-word">SITS</span><span class="logo-tag">Sariyev IT Solutions</span></div></div>
   <h2>CRM · вход</h2>
   <p>Введите пароль администратора, чтобы посмотреть заявки.</p>
   <input type="password" id="pass" placeholder="Пароль" autocomplete="current-password">
@@ -76,7 +78,7 @@
 <!-- ПАНЕЛЬ -->
 <div class="wrap hidden" id="panel">
   <header>
-    <div class="logo"><span class="logo-word">SITS</span><span class="logo-tag">Sariyev IT Solutions · CRM</span></div>
+    <div class="logo"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240"><div class="logo-text"><span class="logo-word">SITS</span><span class="logo-tag">Sariyev IT Solutions · CRM</span></div></div>
     <div class="stat" id="stat"></div>
   </header>
   <div class="controls">

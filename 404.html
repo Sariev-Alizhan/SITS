@@ -34,8 +34,9 @@ html[data-theme="light"]{
 body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;
   display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;
   -webkit-font-smoothing:antialiased;text-align:center}
-.logo{position:fixed;top:24px;left:32px;font-family:var(--font-logo);font-weight:700;font-size:22px;letter-spacing:.04em;color:var(--text)}
+.logo{position:fixed;top:24px;left:32px;display:inline-flex;align-items:center;gap:9px;font-family:var(--font-logo);font-weight:700;font-size:22px;letter-spacing:.04em;color:var(--text)}
 .logo b{color:var(--red)}
+.logo-mark{height:.92em;width:auto;display:block;flex-shrink:0}
 .fx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .fx::before{content:"";position:absolute;width:60vw;height:60vw;max-width:700px;max-height:700px;
   top:-18%;right:-10%;border-radius:50%;filter:blur(90px);
@@ -66,7 +67,7 @@ p{color:var(--muted);font-size:16px;line-height:1.6;margin-bottom:36px}
 </style>
 </head>
 <body>
-<a class="logo" href="/">SIT<b>S</b></a>
+<a class="logo" href="/"><img src="/brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" />SIT<b>S</b></a>
 <div class="fx" aria-hidden="true"></div>
 
 <div class="wrap">

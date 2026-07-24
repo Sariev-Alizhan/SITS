@@ -59,8 +59,9 @@ a{color:inherit;text-decoration:none}
   height:58px;padding:0 10px 0 22px;border-radius:100px;background:var(--nav-bg);border:1px solid var(--glass-line);
   backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
   box-shadow:inset 0 1px 0 var(--glass-hi),0 16px 40px -26px rgba(0,0,0,.5)}
-.logo{font-family:var(--font-logo);font-weight:700;font-size:22px;letter-spacing:.04em;color:var(--text)}
+.logo{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-logo);font-weight:700;font-size:22px;letter-spacing:.04em;color:var(--text)}
 .logo b{color:var(--red)}
+.logo-mark{height:.92em;width:auto;display:block;flex-shrink:0}
 .nav-right{display:flex;align-items:center;gap:10px}
 .lang-switch{display:inline-flex;align-items:center;gap:1px;border:1px solid var(--glass-line);border-radius:100px;padding:3px;height:38px;
   background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi)}
@@ -111,7 +112,7 @@ footer{max-width:var(--maxw);margin:0 auto;padding:10px 24px 40px;color:var(--fa
 
 <nav class="nav">
   <div class="bar">
-    <a class="logo" href="/">SIT<b>S</b></a>
+    <a class="logo" href="/"><img src="/brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" />SIT<b>S</b></a>
     <div class="nav-right">
       <div class="lang-switch" id="langSwitch" role="group" aria-label="Language">
         <button type="button" data-lang="ru">RU</button>

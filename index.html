@@ -616,8 +616,9 @@ main, footer{position:relative;z-index:1}
   box-shadow:inset 0 1px 0 var(--glass-hi),0 16px 40px -26px rgba(0,0,0,.5);
   transition:box-shadow .4s var(--ease),background .4s var(--ease)}
 .nav.scrolled .wrap{box-shadow:inset 0 1px 0 var(--glass-hi),0 22px 50px -22px rgba(0,0,0,.55)}
-.logo{font-family:var(--font-logo);font-weight:700;font-size:23px;letter-spacing:.04em;line-height:1;color:var(--text)}
+.logo{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-logo);font-weight:700;font-size:23px;letter-spacing:.04em;line-height:1;color:var(--text)}
 .logo b{color:var(--red);font-weight:700}
+.logo-mark{height:.92em;width:auto;display:block;flex-shrink:0}
 .nav-links{display:flex;align-items:center;gap:32px}
 .nav-links a{font-size:14px;font-weight:500;color:var(--muted);transition:color .25s}
 .nav-links a:hover{color:var(--text)}
@@ -1289,7 +1290,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
   <div class="wrap">
-    <a href="#hero" class="logo">SIT<b>S</b></a>
+    <a href="#hero" class="logo"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" />SIT<b>S</b></a>
     <div class="nav-links">
       <a href="#services" data-i18n="nav.services">Услуги</a>
       <a href="#process" data-i18n="nav.process">Как работаем</a>
@@ -1405,7 +1406,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
           <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12h2.5M19 12h2.5M5.2 5.2l1.8 1.8M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg></div>
           <div class="svc-num">04</div>
         </div>
-        <div class="svc-body"><h3 data-i18n="services.s4H">Бизнес-автоматизация</h3><p data-i18n="services.s4P">Автоматизация процессов и рутины бизнеса.</p></div>
+        <div class="svc-body"><h3 data-i18n="services.s4H">Бизнес-автоматизация</h3><p data-i18n="services.s4P">Автоматизируем процессы и рутину бизнеса. Мы написали собственную CRM-систему — это отдельное направление SITS, Fibonacci Control.</p><div class="svc-tags"><span data-i18n="services.s4T1">Собственная CRM</span><span data-i18n="services.s4T2">Fibonacci Control</span></div><a href="https://fibonaccicontrol.com" target="_blank" rel="noopener" class="alink" style="margin-top:16px;font-size:14px"><span data-i18n="services.s4Link">Открыть Fibonacci Control</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div>
       </div>
       <div class="b-card s-ai reveal">
         <div class="svc-top">
@@ -1620,7 +1621,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   <div class="wrap">
     <div class="foot-top">
       <div class="foot-brand">
-        <div class="logo">SIT<b>S</b></div>
+        <div class="logo"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" />SIT<b>S</b></div>
         <p data-i18n="footer.tagline">IT-студия полного цикла. Превращаем идеи в цифровые продукты.</p>
       </div>
       <div class="foot-cols">
@@ -1709,7 +1710,8 @@ const I18N = {
       s1T1:'Landing', s1T2:'Веб-платформы', s1T3:'E-commerce', s1T4:'SaaS',
       s2H:'Мобильные приложения', s2P:'Нативные и кроссплатформенные приложения для iOS и Android.',
       s3H:'Разработка игр', s3P:'Игры для мобильных и ПК на Unity и Unreal Engine.',
-      s4H:'Бизнес-автоматизация', s4P:'Автоматизация процессов и рутины бизнеса.',
+      s4H:'Бизнес-автоматизация', s4P:'Автоматизируем процессы и рутину бизнеса. Мы написали собственную CRM-систему — это отдельное направление SITS, Fibonacci Control.',
+      s4T1:'Собственная CRM', s4T2:'Fibonacci Control', s4Link:'Открыть Fibonacci Control',
       s5H:'AI-контент и монтаж', s5P:'Съёмки в Астане с проф оборудованием, монтаж и нарезки, ведение соцсетей, AI-контент.',
       s5T1:'AI-видео', s5T2:'Reels / TikTok', s5T3:'Монтаж',
       s6H:'IT-поддержка', s6P:'Техобслуживание и сопровождение продуктов 24/7.',
@@ -1991,7 +1993,8 @@ const I18N = {
       s1T1:'Landing', s1T2:'Web platforms', s1T3:'E-commerce', s1T4:'SaaS',
       s2H:'Mobile apps', s2P:'Native and cross-platform apps for iOS and Android.',
       s3H:'Game development', s3P:'Mobile and PC games on Unity and Unreal Engine.',
-      s4H:'Business automation', s4P:'Streamlining routine processes and back-office workflows.',
+      s4H:'Business automation', s4P:'Streamlining routine processes and back-office workflows. We built our own CRM system — a dedicated SITS division, Fibonacci Control.',
+      s4T1:'In-house CRM', s4T2:'Fibonacci Control', s4Link:'Open Fibonacci Control',
       s5H:'AI content & video', s5P:'Pro shoots in Astana, editing and short-form cuts, social media management, AI content.',
       s5T1:'AI video', s5T2:'Reels / TikTok', s5T3:'Editing',
       s6H:'IT support', s6P:'Maintenance and 24/7 product care after launch.',
@@ -2273,7 +2276,8 @@ const I18N = {
       s1T1:'Landing', s1T2:'Веб-платформалар', s1T3:'E-commerce', s1T4:'SaaS',
       s2H:'Мобильді қосымшалар', s2P:'iOS және Android үшін нативті және кроссплатформалық қосымшалар.',
       s3H:'Ойындар жасау', s3P:'Mobile және PC ойындары — Unity мен Unreal Engine негізінде.',
-      s4H:'Бизнес-автоматтандыру', s4P:'Бизнестегі процестер мен күнделікті жұмысты автоматтандыру.',
+      s4H:'Бизнес-автоматтандыру', s4P:'Бизнестегі процестер мен күнделікті жұмысты автоматтандырамыз. Өз CRM-жүйемізді жаздық — бұл SITS-тің жеке бағыты, Fibonacci Control.',
+      s4T1:'Меншікті CRM', s4T2:'Fibonacci Control', s4Link:'Fibonacci Control-ды ашу',
       s5H:'AI-контент және монтаж', s5P:'Астанада кәсіби құрылғылармен түсіру, монтаж бен нарезкалар, әлеуметтік желілерді жүргізу, AI-контент.',
       s5T1:'AI-бейне', s5T2:'Reels / TikTok', s5T3:'Монтаж',
       s6H:'IT-қолдау', s6P:'Өнімдерге 24/7 техникалық қызмет көрсету мен сүйемелдеу.',

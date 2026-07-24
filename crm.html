@@ -205,7 +205,24 @@
   .toast.ok{border-color:var(--ok)} .toast.err{border-color:var(--err)}
 
   @media(max-width:900px){.kp-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.prev{position:static}}
-  @media(max-width:560px){.item-row,.items-head{grid-template-columns:1fr 54px 90px 90px 30px}}
+  @media(max-width:560px){
+    .item-row,.items-head{grid-template-columns:1fr 48px 84px 84px 28px;gap:6px}
+    .grid2{grid-template-columns:1fr}
+    .stats{grid-template-columns:1fr;gap:12px}
+    .topbar{padding:12px 16px}
+    .topbar .brand b{font-size:14px}
+    .topbar .who{display:none}
+    .wrap{padding:16px}
+    .tabs{padding:16px 16px 0}
+    .bar{gap:8px}
+    .gen-actions{flex-direction:column}
+    .gen-actions .btn{width:100%}
+    .gen-actions #resetKpBtn{margin-left:0}
+    .kp-doc .d-inner{padding:28px 20px}
+    .kp-doc h2{font-size:22px}
+    .kp-parties{grid-template-columns:1fr}
+    .kp-foot{padding:16px 20px}
+  }
 
   /* ===================== КП ДОКУМЕНТ (печать / PDF) — светлый ===================== */
   .kp-overlay{position:fixed;inset:0;z-index:100;background:rgba(4,7,12,.75);display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:28px 16px}

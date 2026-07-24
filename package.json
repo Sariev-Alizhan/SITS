@@ -3,8 +3,5 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "SITS — Sariyev IT Solutions website + lead CRM",
-  "dependencies": {
-    "@vercel/kv": "^1.0.1"
-  }
+  "description": "SITS — Sariyev IT Solutions website + CRM (Supabase)"
 }

@@ -1,8 +1,8 @@
 // /api/leads.js — отдаёт список заявок для CRM-админки.
 // Защита: пароль ADMIN_PASSWORD сравнивается timing-safe, попытки rate-limit'нуты по IP.
 
-import { kv } from '@vercel/kv';
 import { rateLimit, getClientIp, timingSafeEqual } from './_security.js';
+import { db, dbReady } from './_db.js';
 
 export default async function handler(req, res) {
   // --- Rate-limit любых попыток (success или нет): 30 / 5 мин на IP ---
@@ -30,18 +30,12 @@ export default async function handler(req, res) {
 
   try {
     let leads = [];
-    if (process.env.KV_REST_API_URL) {
-      const [raw, statuses] = await Promise.all([
-        kv.lrange('leads', 0, 1000),
-        kv.hgetall('lead-statuses').catch(() => ({})),
-      ]);
-      leads = (raw || [])
-        .map((r) => {
-          try { return typeof r === 'string' ? JSON.parse(r) : r; }
-          catch { return null; }
-        })
-        .filter(Boolean)
-        .map((l) => ({ ...l, status: (statuses && statuses[l.id]) || l.status || 'new' }));
+    if (dbReady()) {
+      const rows = await db.select('leads', 'select=*&order=created_at.desc&limit=2000');
+      leads = (rows || []).map((r) => {
+        const { created_at, ...rest } = r;
+        return { ...rest, createdAt: created_at, status: r.status || 'new' };
+      });
     }
     return res.status(200).json({ ok: true, leads });
   } catch (e) {

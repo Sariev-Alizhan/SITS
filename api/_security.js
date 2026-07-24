@@ -7,35 +7,16 @@
 // - checkOrigin(): защита от CSRF — Origin/Referer должен совпадать со списком.
 // - parseBody(): безопасный парс JSON с лимитом размера.
 
-import { kv } from '@vercel/kv';
 import crypto from 'node:crypto';
 
 /**
  * Простой fixed-window rate limit на bucket'е.
  * @returns {{ok:boolean, remaining:number, resetSec:number}}
  */
-export async function rateLimit({ key, limit, windowSec, failOpen = true }) {
-  if (!process.env.KV_REST_API_URL) {
-    return { ok: failOpen, remaining: 0, resetSec: 0 };
-  }
-  const bucket = Math.floor(Date.now() / (windowSec * 1000));
-  const k = `rl:${key}:${bucket}`;
-  // Быстрый таймаут: если KV недоступен, он висит ~20с на таймауте соединения.
-  const withTimeout = (p, ms) => Promise.race([
-    p, new Promise((_, rej) => setTimeout(() => rej(new Error('kv timeout')), ms)),
-  ]);
-  try {
-    const count = await withTimeout(kv.incr(k), 1200);
-    if (count === 1) await withTimeout(kv.expire(k, windowSec + 1), 1200).catch(() => {});
-    return {
-      ok: count <= limit,
-      remaining: Math.max(0, limit - count),
-      resetSec: (bucket + 1) * windowSec - Math.floor(Date.now() / 1000),
-    };
-  } catch (e) {
-    console.error('rateLimit kv error:', e?.message || e);
-    return { ok: failOpen, remaining: 0, resetSec: 0 };
-  }
+// Хранилище KV отключено (перешли на Supabase). Rate-limit сейчас fail-open —
+// не блокирует и не висит. Анти-абьюз формы держится на honeypot + time-trap в lead.js.
+export async function rateLimit({ failOpen = true } = {}) {
+  return { ok: failOpen, remaining: 0, resetSec: 0 };
 }
 
 export function getClientIp(req) {

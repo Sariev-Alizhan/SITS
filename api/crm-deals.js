@@ -3,35 +3,29 @@
 // POST ?key=PASS  {action:'save', deal} → создать/обновить сделку (по deal.id)
 // POST ?key=PASS  {action:'delete', id} → удалить сделку
 // Защита: timing-safe пароль ADMIN_PASSWORD, rate-limit, Origin-check, лимит размера.
-// Хранилище: Vercel KV, hash 'crm-deals' (поле = id, значение = JSON сделки).
+// Хранилище: Supabase Postgres, таблица 'deals' (PK = id).
 
-import { kv } from '@vercel/kv';
 import crypto from 'node:crypto';
 import { rateLimit, getClientIp, timingSafeEqual, checkOrigin, parseBody } from './_security.js';
 import { USERS } from './_crm-users.js';
+import { db, dbReady } from './_db.js';
 
 const ALLOWED_ORIGINS = [
   'https://sits-eta.vercel.app',
 ];
 
 const STATUSES = new Set(['new', 'in_progress', 'kp_sent', 'invoice', 'won', 'lost']);
-const HKEY = 'crm-deals';
 
 const sha256 = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
 
-// Быстрый таймаут: мёртвый KV может висеть ~20с на таймауте соединения.
-function withTimeout(promise, ms) {
-  return Promise.race([
-    promise,
-    new Promise((_, rej) => setTimeout(() => rej(new Error('kv timeout')), ms)),
-  ]);
+// Маппинг camelCase (JS/фронт) ↔ snake_case (колонки Postgres)
+function toRow(d) {
+  const { createdAt, updatedAt, ...rest } = d;
+  return { ...rest, created_at: createdAt, updated_at: updatedAt };
 }
-
-// Обёртка над KV: не роняет запрос и быстро отвечает, если хранилище недоступно.
-async function kvSafe(fn) {
-  if (!process.env.KV_REST_API_URL) return { ok: false };
-  try { return { ok: true, val: await withTimeout(fn(), 1500) }; }
-  catch (e) { console.error('KV down:', e?.message || e); return { ok: false }; }
+function fromRow(r) {
+  const { created_at, updated_at, ...rest } = r;
+  return { ...rest, createdAt: created_at, updatedAt: updated_at };
 }
 
 // Возвращает {login,name} при успехе, иначе null.
@@ -117,14 +111,15 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET') {
-      const r = await kvSafe(() => kv.hgetall(HKEY));
-      if (!r.ok) return res.status(200).json({ ok: true, deals: [], user, cloud: false });
-      const map = r.val || {};
-      const deals = Object.values(map)
-        .map((v) => { try { return typeof v === 'string' ? JSON.parse(v) : v; } catch { return null; } })
-        .filter(Boolean)
-        .sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
-      return res.status(200).json({ ok: true, deals, user, cloud: true });
+      if (!dbReady()) return res.status(200).json({ ok: true, deals: [], user, cloud: false });
+      try {
+        const rows = await db.select('deals', 'select=*&order=created_at.desc&limit=2000');
+        const deals = (rows || []).map(fromRow);
+        return res.status(200).json({ ok: true, deals, user, cloud: true });
+      } catch (e) {
+        console.error('db read error:', e?.message || e);
+        return res.status(200).json({ ok: true, deals: [], user, cloud: false });
+      }
     }
 
     if (req.method === 'POST') {
@@ -140,14 +135,22 @@ export default async function handler(req, res) {
       if (action === 'delete') {
         const id = str(body.id, 40);
         if (!id) return res.status(400).json({ ok: false, error: 'Не передан id' });
-        const r = await kvSafe(() => kv.hdel(HKEY, id));
-        return res.status(200).json({ ok: true, cloud: r.ok });
+        let cloud = false;
+        if (dbReady()) {
+          try { await db.remove('deals', `id=eq.${encodeURIComponent(id)}`); cloud = true; }
+          catch (e) { console.error('db delete error:', e?.message || e); }
+        }
+        return res.status(200).json({ ok: true, cloud });
       }
 
       if (action === 'save') {
         const deal = sanitizeDeal(body.deal || {});
-        const r = await kvSafe(() => kv.hset(HKEY, { [deal.id]: JSON.stringify(deal) }));
-        return res.status(200).json({ ok: true, deal, cloud: r.ok });
+        let cloud = false;
+        if (dbReady()) {
+          try { const saved = await db.upsert('deals', toRow(deal)); if (Array.isArray(saved) && saved[0]) Object.assign(deal, fromRow(saved[0])); cloud = true; }
+          catch (e) { console.error('db save error:', e?.message || e); }
+        }
+        return res.status(200).json({ ok: true, deal, cloud });
       }
 
       return res.status(400).json({ ok: false, error: 'Неизвестное действие' });

@@ -1,8 +1,8 @@
 // /api/lead-status.js — обновление статуса заявки в CRM.
 // Защита: timing-safe пароль, rate-limit на провалы.
 
-import { kv } from '@vercel/kv';
 import { rateLimit, getClientIp, timingSafeEqual, parseBody } from './_security.js';
+import { db, dbReady } from './_db.js';
 
 const ALLOWED = new Set(['new', 'in_progress', 'closed']);
 
@@ -45,8 +45,8 @@ export default async function handler(req, res) {
       return res.status(400).json({ ok: false, error: 'Недопустимый статус' });
     }
 
-    if (process.env.KV_REST_API_URL) {
-      await kv.hset('lead-statuses', { [id]: status });
+    if (dbReady()) {
+      await db.update('leads', `id=eq.${encodeURIComponent(id)}`, { status });
     }
     return res.status(200).json({ ok: true });
   } catch (e) {

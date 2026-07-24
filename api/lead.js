@@ -4,8 +4,8 @@
 // 3) Уведомляет в Telegram
 // Обе интеграции опциональны: если переменная не задана — шаг просто пропускается.
 
-import { kv } from '@vercel/kv';
 import { rateLimit, getClientIp, checkOrigin, parseBody } from './_security.js';
+import { db, dbReady } from './_db.js';
 
 const ALLOWED_ORIGINS = [
   'https://sits-eta.vercel.app',
@@ -62,13 +62,17 @@ export default async function handler(req, res) {
       status: 'new',
     };
 
-    // --- 1. Сохранить в KV (если подключено) ---
+    // --- 1. Сохранить в Supabase (если подключено) ---
     try {
-      if (process.env.KV_REST_API_URL) {
-        await kv.lpush('leads', JSON.stringify(lead));
+      if (dbReady()) {
+        await db.insert('leads', {
+          id: lead.id, name: lead.name, contact: lead.contact,
+          service: lead.service, details: lead.details,
+          status: lead.status, created_at: lead.createdAt,
+        });
       }
     } catch (e) {
-      console.error('KV error:', e?.message || e);
+      console.error('DB error:', e?.message || e);
     }
 
     // --- 2. Уведомление в Telegram (если подключено) ---

@@ -1,8 +1,8 @@
 // /api/lead-delete.js — удаление заявки из CRM.
 // Защита: timing-safe пароль, rate-limit на провалы.
 
-import { kv } from '@vercel/kv';
 import { rateLimit, getClientIp, timingSafeEqual, parseBody } from './_security.js';
+import { db, dbReady } from './_db.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -40,28 +40,11 @@ export default async function handler(req, res) {
       return res.status(400).json({ ok: false, error: 'Не передан id заявки' });
     }
 
-    if (!process.env.KV_REST_API_URL) {
-      return res.status(503).json({ ok: false, error: 'KV не подключён' });
+    if (!dbReady()) {
+      return res.status(503).json({ ok: false, error: 'База не подключена' });
     }
-
-    // Найти точную JSON-строку записи (нужна для LREM по значению)
-    const raw = await kv.lrange('leads', 0, 5000);
-    let target = null;
-    for (const r of raw || []) {
-      try {
-        const item = typeof r === 'string' ? JSON.parse(r) : r;
-        if (item && item.id === id) {
-          target = typeof r === 'string' ? r : JSON.stringify(r);
-          break;
-        }
-      } catch { /* skip malformed */ }
-    }
-
-    let removed = 0;
-    if (target != null) removed = await kv.lrem('leads', 1, target);
-    try { await kv.hdel('lead-statuses', id); } catch { /* ok */ }
-
-    return res.status(200).json({ ok: true, removed });
+    await db.remove('leads', `id=eq.${encodeURIComponent(id)}`);
+    return res.status(200).json({ ok: true });
   } catch (e) {
     console.error(e?.message || e);
     return res.status(500).json({ ok: false, error: 'Внутренняя ошибка сервера' });

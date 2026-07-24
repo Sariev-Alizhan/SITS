@@ -14,12 +14,13 @@
   .inner{position:relative;z-index:1;width:100%;height:100%;
       padding:72px 76px;display:flex;flex-direction:column;justify-content:space-between}
   /* logo lockup */
-  .brand{display:flex;align-items:center;gap:22px}
-  .brand-mark{height:94px;width:auto;display:block}
-  .brand-word{font-family:'PT Serif',Georgia,serif;font-weight:700;font-size:92px;
-      line-height:.92;letter-spacing:.02em;color:#e23744}
-  .brand-tag{font-family:'Manrope',sans-serif;font-weight:600;font-size:28px;
-      letter-spacing:.01em;color:#e23744;margin-top:8px}
+  .brand{display:flex;flex-direction:column;gap:12px}
+  .lockup{display:flex;align-items:center;gap:24px}
+  .brand-mark{height:98px;width:auto;display:block}
+  .brand-word{font-family:'PT Serif',Georgia,serif;font-weight:700;font-size:90px;
+      line-height:.86;letter-spacing:.02em;color:#e23744}
+  .brand-tag{font-family:'Manrope',sans-serif;font-weight:600;font-size:27px;
+      letter-spacing:.02em;color:#e23744;padding-left:104px}
   /* headline */
   .headline{font-family:'Manrope',sans-serif;font-weight:600;font-size:66px;
       line-height:1.12;letter-spacing:-.015em;color:#f4f1f1}
@@ -36,11 +37,11 @@
 <div class="og">
   <div class="inner">
     <div class="brand">
-      <img class="brand-mark" src="/brand/sits-mark-red.png" alt="" />
-      <div>
+      <div class="lockup">
+        <img class="brand-mark" src="/brand/sits-mark-red.png" alt="" />
         <div class="brand-word">SITS</div>
-        <div class="brand-tag">Sariyev IT Solutions</div>
       </div>
+      <div class="brand-tag">Sariyev IT Solutions</div>
     </div>
     <div class="headline">Превращаем идеи<br/>в цифровые продукты</div>
     <div class="foot">

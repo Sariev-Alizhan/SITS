@@ -33,11 +33,14 @@ function toRow(d = {}) {
     pain: str(d.pain, 600),
     recommendation: str(d.recommendation, 800),
     action_plan: str(d.actionPlan || d.action_plan, 1500),
+    budget_tier: str(d.budgetTier || d.budget_tier, 20),
+    qual_reason: str(d.qualReason || d.qual_reason, 400),
     created_at: d.createdAt || d.created_at || new Date().toISOString(),
     updated_at: new Date().toISOString(),
   };
   if (d.ready !== undefined) row.ready = !!d.ready;
   if (d.verified !== undefined) row.verified = !!d.verified;
+  if (d.qualified !== undefined) row.qualified = !!d.qualified;
   if (d.channels && typeof d.channels === 'object') {
     const c = {}; const keys = ['instagram', 'whatsapp', 'phone', 'website', 'twogis', 'telegram', 'email'];
     for (const k of keys) if (d.channels[k]) c[k] = String(d.channels[k]).slice(0, 300);
@@ -52,6 +55,7 @@ function fromRow(r) {
     assignee: r.assignee, status: r.status, note: r.note,
     strengths: r.strengths, weaknesses: r.weaknesses, gap: r.gap, pain: r.pain,
     recommendation: r.recommendation, actionPlan: r.action_plan, channels: r.channels || {},
+    budgetTier: r.budget_tier, qualReason: r.qual_reason, qualified: r.qualified,
     ready: r.ready, verified: r.verified,
     createdAt: r.created_at, updatedAt: r.updated_at,
   };

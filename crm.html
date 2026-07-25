@@ -216,6 +216,10 @@
   .out-item.open .b-name .chev{transform:rotate(90deg)}
   .out-row .b-name .vbadge{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--ok);color:#fff;font-size:9px;vertical-align:1px}
   .out-row .b-name .nrbadge{font-size:9.5px;color:var(--err);border:1px solid var(--err);border-radius:6px;padding:0 4px;text-transform:uppercase;letter-spacing:.03em;vertical-align:1px}
+  .out-row .b-name .tier{font-size:9.5px;font-weight:700;border-radius:6px;padding:1px 6px;text-transform:uppercase;letter-spacing:.03em;vertical-align:1px}
+  .out-row .b-name .tier-hi{color:var(--gold);background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent)}
+  .out-row .b-name .tier-mid{color:var(--info);background:color-mix(in srgb,var(--info) 10%,transparent);border:1px solid color-mix(in srgb,var(--info) 35%,transparent)}
+  .out-row .b-name .tier-lo{color:var(--slate);border:1px solid var(--line-2)}
   .out-row .b-name small{display:block;color:var(--slate);font-size:11px;font-weight:400;margin-top:2px}
   .out-row .b-name small.pain{color:var(--gold);font-weight:500}
   .out-detail{padding:2px 16px 14px 16px;min-width:1000px;font-size:12.5px;line-height:1.5;color:var(--dim);background:color-mix(in srgb,var(--fg) 2%,transparent)}
@@ -777,6 +781,7 @@
   // ---------- ОБЗВОН ----------
   const TEAM = ['Алижан','Аблай','Алишер','Айжан'];
   const OUT_ST = {new:'Новый', in_progress:'В работе', done:'Выполнено', rejected:'Отказ'};
+  const TIER_CLS = {'высокий':'hi','средний':'mid','низкий':'lo'};
   let OUT=[], outLoaded=false, outSearch='', outFilter='all', outMine='all', outWho='';
   async function apiOut(method, body){
     const opt={ method, headers:{ 'x-crm-login':LOGIN, 'x-crm-pass':PASS } };
@@ -841,7 +846,7 @@
       return `<div class="out-item ${it.status}${it.ready===false?' notready':''}" data-id="${esc(it.id)}">
         <div class="out-row">
           <div class="b-name${hasDetail?' expandable':''}">
-            <span class="nm">${esc(it.name)}${it.verified?' <span class="vbadge" title="Контакт проверен">✓</span>':''}${it.ready===false?' <span class="nrbadge">не готов</span>':''}${hasDetail?' <span class="chev">▸</span>':''}</span>
+            <span class="nm">${esc(it.name)}${it.verified?' <span class="vbadge" title="Контакт проверен">✓</span>':''}${it.budgetTier?` <span class="tier tier-${TIER_CLS[it.budgetTier]||'mid'}" title="Оценка бюджета">${esc(it.budgetTier)}</span>`:''}${it.ready===false?' <span class="nrbadge">не готов</span>':''}${hasDetail?' <span class="chev">▸</span>':''}</span>
             ${teaser?`<small class="${it.pain?'pain':''}">${esc(teaser)}</small>`:''}
           </div>
           <div class="b-cat">${esc(cat)}</div>
@@ -857,6 +862,7 @@
           ${it.weaknesses?`<div class="dl"><b>Слабые:</b> ${esc(it.weaknesses)}</div>`:''}
           ${it.gap?`<div class="dl"><b>Не хватает:</b> ${esc(it.gap)}</div>`:''}
           ${it.recommendation?`<div class="dl rec"><b>Как зайти:</b> ${esc(it.recommendation)}</div>`:''}
+          ${it.qualReason?`<div class="dl"><b>Оценка лида:</b> ${esc(it.qualReason)}${it.budgetTier?` · бюджет: <b>${esc(it.budgetTier)}</b>`:''}</div>`:''}
           ${it.actionPlan?`<div class="dl plan"><b>Что сделать:</b> ${esc(it.actionPlan)}</div>`:''}
           ${(!it.pain&&it.why)?`<div class="dl">${esc(it.why)}</div>`:''}
           ${srcUrl?`<div class="dl"><a href="${esc(srcUrl)}" target="_blank" rel="noopener">источник ↗</a></div>`:''}

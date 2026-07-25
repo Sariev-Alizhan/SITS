@@ -222,7 +222,21 @@
   .out-detail .dl{padding:3px 0}
   .out-detail .dl b{color:var(--fg)}
   .out-detail .dl.rec b{color:var(--gold)}
+  .out-detail .dl.plan{margin-top:4px;padding:8px 10px;border-radius:8px;background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--gold) 22%,transparent)}
+  .out-detail .dl.plan b{color:var(--gold)}
   .out-detail a{color:var(--gold)}
+  /* контакты по каналам */
+  .b-contact .chs{display:flex;flex-wrap:wrap;gap:5px}
+  .b-contact .ch{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:3px 9px;border-radius:7px;border:1px solid var(--line-2);color:var(--fg);text-decoration:none;white-space:nowrap;transition:.15s var(--ease)}
+  .b-contact .ch:hover{transform:translateY(-1px)}
+  .b-contact .ch-whatsapp{color:#1a9c4c;border-color:color-mix(in srgb,#1a9c4c 42%,var(--line))}
+  .b-contact .ch-whatsapp:hover{background:color-mix(in srgb,#1a9c4c 12%,transparent)}
+  .b-contact .ch-instagram{color:#c1348a;border-color:color-mix(in srgb,#c1348a 38%,var(--line))}
+  .b-contact .ch-instagram:hover{background:color-mix(in srgb,#c1348a 10%,transparent)}
+  .b-contact .ch-phone{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 42%,var(--line))}
+  .b-contact .ch-telegram{color:#2f8fd0;border-color:color-mix(in srgb,#2f8fd0 40%,var(--line))}
+  .b-contact .ch-website,.b-contact .ch-twogis{color:var(--info);border-color:color-mix(in srgb,var(--info) 40%,var(--line))}
+  .b-contact .ch-email{color:var(--slate)}
   .out-row .b-cat{color:var(--dim);font-size:12px}
   .out-row .b-contact{font-size:12px;line-height:1.4;word-break:break-word}
   .out-row .b-contact a{color:var(--gold);text-decoration:none}
@@ -785,6 +799,19 @@
     if(phone.length>=10) return `<a href="https://wa.me/${phone.replace(/\D/g,'')}" target="_blank" rel="noopener">${esc(c)}</a>`;
     return esc(c||'—');
   };
+  const CH_LABEL={whatsapp:'WhatsApp',instagram:'Instagram',phone:'Позвонить',telegram:'Telegram',website:'Сайт',twogis:'2ГИС',email:'Email'};
+  const CH_ORDER=['whatsapp','instagram','phone','telegram','website','twogis','email'];
+  function channelsHtml(it){
+    const ch=it.channels||{};
+    const parts=CH_ORDER.filter(k=>ch[k]).map(k=>{
+      let href=String(ch[k]);
+      if(k==='phone') href='tel:'+href.replace(/[^\d+]/g,'');
+      else if(k==='email') href='mailto:'+href;
+      const label = (k==='phone'&&/^[+\d]/.test(ch[k])) ? esc(ch[k]) : CH_LABEL[k];
+      return `<a class="ch ch-${k}" href="${esc(href)}" target="_blank" rel="noopener" title="${esc(ch[k])}">${label}</a>`;
+    });
+    return parts.length ? `<div class="chs">${parts.join('')}</div>` : contactLink(it);
+  }
   function outStats(){
     const box=$('#outStats'); if(!box) return;
     const by=s=>OUT.filter(x=>x.status===s).length;
@@ -818,7 +845,7 @@
             ${teaser?`<small class="${it.pain?'pain':''}">${esc(teaser)}</small>`:''}
           </div>
           <div class="b-cat">${esc(cat)}</div>
-          <div class="b-contact">${it.contactType?`<span class="ct">${esc(it.contactType)}</span>`:''}${contactLink(it)}</div>
+          <div class="b-contact">${channelsHtml(it)}</div>
           <select class="o-assignee">${opts}</select>
           <select class="o-status st-${it.status}">${st}</select>
           <input class="b-note" value="${esc(it.note||'')}" placeholder="Заметка…" />
@@ -830,6 +857,7 @@
           ${it.weaknesses?`<div class="dl"><b>Слабые:</b> ${esc(it.weaknesses)}</div>`:''}
           ${it.gap?`<div class="dl"><b>Не хватает:</b> ${esc(it.gap)}</div>`:''}
           ${it.recommendation?`<div class="dl rec"><b>Как зайти:</b> ${esc(it.recommendation)}</div>`:''}
+          ${it.actionPlan?`<div class="dl plan"><b>Что сделать:</b> ${esc(it.actionPlan)}</div>`:''}
           ${(!it.pain&&it.why)?`<div class="dl">${esc(it.why)}</div>`:''}
           ${srcUrl?`<div class="dl"><a href="${esc(srcUrl)}" target="_blank" rel="noopener">источник ↗</a></div>`:''}
         </div>

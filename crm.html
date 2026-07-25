@@ -214,6 +214,22 @@
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   .toast.ok{border-color:var(--ok)} .toast.err{border-color:var(--err)}
 
+  /* смена пароля */
+  .pass-overlay{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;padding:20px;
+    background:rgba(6,8,12,.7);backdrop-filter:blur(6px)}
+  .pass-overlay.show{display:flex}
+  .pass-modal{width:100%;max-width:420px;background:var(--surface-2);border:1px solid var(--line-2);border-radius:18px;padding:24px;
+    box-shadow:0 30px 80px -30px #000;animation:passIn .25s var(--ease)}
+  @keyframes passIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+  .pass-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .pass-head b{font-family:var(--font-display);font-size:17px}
+  .pass-x{background:transparent;border:none;color:var(--slate);font-size:24px;line-height:1;cursor:pointer;padding:0 4px}
+  .pass-x:hover{color:var(--fg)}
+  .pass-sub{font-size:13px;color:var(--dim);margin:0 0 16px}
+  .pass-err{min-height:18px;font-size:12.5px;color:#e5675e;margin:2px 0 12px}
+  .pass-actions{display:flex;gap:10px}
+  .pass-actions .btn{flex:1}
+
   @media(max-width:900px){.kp-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.prev{position:static}}
   @media(max-width:560px){
     .item-row,.items-head{grid-template-columns:1fr 48px 84px 84px 28px;gap:6px}
@@ -307,6 +323,7 @@
     <div class="brand"><img src="/brand/sits-mark-red.png" alt="" /><b>Fibonacci Control</b> <span>CRM</span></div>
     <div class="topbar-right">
       <div class="who"><span class="av" id="whoAv">•</span>Менеджер: <b id="whoName">—</b></div>
+      <button class="btn btn-ghost btn-sm" id="changePassBtn" title="Сменить свой пароль">🔑 Пароль</button>
       <button class="btn btn-ghost btn-sm" id="logoutBtn">Выйти</button>
     </div>
   </div>
@@ -423,6 +440,25 @@
       <button class="btn btn-ghost" id="closeKpBtn">Закрыть</button>
     </div>
     <div class="kp-doc" id="kpDoc"><!-- rendered --></div>
+  </div>
+</div>
+
+<!-- ==================== СМЕНА ПАРОЛЯ ==================== -->
+<div class="pass-overlay" id="passOverlay">
+  <div class="pass-modal">
+    <div class="pass-head"><b>🔑 Смена пароля</b><button class="pass-x" id="passCloseBtn" type="button">×</button></div>
+    <p class="pass-sub">Меняете пароль для <b id="passWho">—</b>. Минимум 6 символов.</p>
+    <form id="passForm" autocomplete="off">
+      <div class="field"><label>Новый пароль</label>
+        <input type="password" id="np1" name="fc_np1_x" placeholder="новый пароль" autocomplete="new-password" data-1p-ignore data-lpignore="true" /></div>
+      <div class="field"><label>Повторите пароль</label>
+        <input type="password" id="np2" name="fc_np2_x" placeholder="ещё раз" autocomplete="new-password" data-1p-ignore data-lpignore="true" /></div>
+      <div class="pass-err" id="passErr"></div>
+      <div class="pass-actions">
+        <button class="btn btn-gold" id="passSaveBtn" type="submit">Сохранить</button>
+        <button class="btn btn-ghost" id="passCancelBtn" type="button">Отмена</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -561,6 +597,37 @@
     finally{ $('#loginBtn').textContent='Войти'; }
   });
   $('#logoutBtn').addEventListener('click', logout);
+
+  // ---------- смена пароля ----------
+  function openPass(){
+    $('#np1').value=''; $('#np2').value=''; $('#passErr').textContent='';
+    $('#passWho').textContent = (localStorage.getItem(KEY_MGR)||LOGIN||'—');
+    $('#passOverlay').classList.add('show'); setTimeout(()=>$('#np1').focus(),50);
+  }
+  function closePass(){ $('#passOverlay').classList.remove('show'); }
+  $('#changePassBtn').addEventListener('click', openPass);
+  $('#passCloseBtn').addEventListener('click', closePass);
+  $('#passCancelBtn').addEventListener('click', closePass);
+  $('#passOverlay').addEventListener('click', e=>{ if(e.target.id==='passOverlay') closePass(); });
+  $('#passForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    let fd; try{ fd=new FormData(e.target); }catch(_){ fd=null; }
+    const p1 = (fd && fd.get('fc_np1_x')) || $('#np1').value || '';
+    const p2 = (fd && fd.get('fc_np2_x')) || $('#np2').value || '';
+    const err=$('#passErr');
+    if(p1.length<6){ err.textContent='Минимум 6 символов'; return; }
+    if(p1!==p2){ err.textContent='Пароли не совпадают'; return; }
+    err.textContent=''; const btn=$('#passSaveBtn'); btn.textContent='Сохраняю…'; btn.disabled=true;
+    try{
+      const r=await fetch('/api/crm-password',{method:'POST',headers:{'Content-Type':'application/json','x-crm-login':LOGIN,'x-crm-pass':PASS},body:JSON.stringify({newPass:p1})});
+      const data=await r.json().catch(()=>({ok:false,error:'Ошибка ответа'}));
+      if(!r.ok || !data.ok){ err.textContent=data.error||('Ошибка '+r.status); return; }
+      // обновляем текущую сессию на новый пароль, чтобы запросы не отвалились
+      PASS=p1; sessionStorage.setItem(KEY_PASS, p1);
+      closePass(); toast(data.message||'Пароль изменён','ok');
+    }catch(ex){ err.textContent='Ошибка: '+ex.message; }
+    finally{ btn.textContent='Сохранить'; btn.disabled=false; }
+  });
 
   // ---------- tabs ----------
   $$('.tab').forEach(t=>t.addEventListener('click',()=>{

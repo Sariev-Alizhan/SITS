@@ -4,22 +4,10 @@
 // Требует env ANTHROPIC_API_KEY. Модель: CRM_AI_MODEL (по умолчанию claude-opus-4-8).
 // Без ключа возвращает {ok:false, code:'no_key'} — фича мягко отключена.
 
-import crypto from 'node:crypto';
-import { rateLimit, getClientIp, timingSafeEqual, checkOrigin, parseBody } from './_security.js';
-import { USERS } from './_crm-users.js';
+import { rateLimit, getClientIp, checkOrigin, parseBody } from './_security.js';
+import { authUser } from './_crm-auth.js';
 
 const ALLOWED_ORIGINS = ['https://sits-eta.vercel.app'];
-const sha256 = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
-
-function authed(req) {
-  const login = String(req.headers['x-crm-login'] || '').trim().toLowerCase();
-  const pass = String(req.headers['x-crm-pass'] || '');
-  if (!pass) return false;
-  const master = process.env.ADMIN_PASSWORD || '';
-  if (master && timingSafeEqual(pass, master)) return true;
-  const u = USERS.find((x) => x.login === login);
-  return !!(u && timingSafeEqual(sha256(u.salt + pass), u.hash));
-}
 
 const CATALOG_HINT = `Ориентиры цен (₸, синхронизированы с прайсом сайта; можно корректировать под объём):
 Лендинг 50000; Лендинг с фото/видео 80000; Лендинг+AI 120000; Лендинг+софт 120000; Лендинг+софт+AI 150000; Автоматизация бизнеса под ключ 800000;
@@ -50,7 +38,7 @@ export default async function handler(req, res) {
   if (!rl.ok) { res.setHeader('Retry-After', String(rl.resetSec || 60)); return res.status(429).json({ ok: false, error: 'Слишком много запросов' }); }
 
   if (!checkOrigin(req, ALLOWED_ORIGINS)) return res.status(403).json({ ok: false, error: 'Forbidden origin' });
-  if (!authed(req)) return res.status(401).json({ ok: false, error: 'Неверный логин или пароль' });
+  if (!(await authUser(req))) return res.status(401).json({ ok: false, error: 'Неверный логин или пароль' });
 
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) return res.status(200).json({ ok: false, code: 'no_key', error: 'ИИ-ассистент не настроен: добавьте ANTHROPIC_API_KEY в Vercel.' });

@@ -5,9 +5,8 @@
 // Защита: timing-safe пароль ADMIN_PASSWORD, rate-limit, Origin-check, лимит размера.
 // Хранилище: Supabase Postgres, таблица 'deals' (PK = id).
 
-import crypto from 'node:crypto';
-import { rateLimit, getClientIp, timingSafeEqual, checkOrigin, parseBody } from './_security.js';
-import { USERS } from './_crm-users.js';
+import { rateLimit, getClientIp, checkOrigin, parseBody } from './_security.js';
+import { authUser } from './_crm-auth.js';
 import { db, dbReady } from './_db.js';
 
 const ALLOWED_ORIGINS = [
@@ -15,8 +14,6 @@ const ALLOWED_ORIGINS = [
 ];
 
 const STATUSES = new Set(['new', 'in_progress', 'kp_sent', 'invoice', 'won', 'lost']);
-
-const sha256 = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
 
 // Маппинг camelCase (JS/фронт) ↔ snake_case (колонки Postgres)
 function toRow(d) {
@@ -26,31 +23,6 @@ function toRow(d) {
 function fromRow(r) {
   const { created_at, updated_at, ...rest } = r;
   return { ...rest, createdAt: created_at, updatedAt: updated_at };
-}
-
-// Возвращает {login,name} при успехе, иначе null.
-function authUser(req) {
-  const login = String(req.headers['x-crm-login'] || req.query.u || '').trim().toLowerCase();
-  const pass = String(
-    req.headers['x-crm-pass'] ||
-    req.query.key ||
-    (req.headers.authorization || '').replace('Bearer ', '')
-  );
-  if (!pass) return null;
-
-  // Мастер-доступ владельца через env (совместимость с админкой)
-  const master = process.env.ADMIN_PASSWORD || '';
-  if (master && timingSafeEqual(pass, master)) {
-    const u = USERS.find((x) => x.login === login);
-    return { login: u ? u.login : (login || 'admin'), name: u ? u.name : 'Владелец' };
-  }
-
-  // Учётки команды: salted SHA-256, сравнение в постоянное время
-  const u = USERS.find((x) => x.login === login);
-  if (u && timingSafeEqual(sha256(u.salt + pass), u.hash)) {
-    return { login: u.login, name: u.name };
-  }
-  return null;
 }
 
 function num(v, max = 1e12) {
@@ -99,7 +71,7 @@ export default async function handler(req, res) {
     return res.status(429).json({ ok: false, error: 'Слишком много запросов' });
   }
 
-  const user = authUser(req);
+  const user = await authUser(req);
   if (!user) {
     const failRl = await rateLimit({ key: `crm-fail:${ip}`, limit: 8, windowSec: 300 });
     if (!failRl.ok) {

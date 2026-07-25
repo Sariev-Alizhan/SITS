@@ -20,15 +20,16 @@ export default async function handler(req, res) {
 
   if (!checkOrigin(req, ALLOWED_ORIGINS)) return res.status(403).json({ ok: false, error: 'Forbidden origin' });
 
-  const user = await authUser(req);
-  if (!user) return res.status(401).json({ ok: false, error: 'Неверный логин или пароль' });
-  if (!dbReady()) return res.status(503).json({ ok: false, error: 'База недоступна — смена пароля временно невозможна' });
-
+  // ВАЖНО: читаем body ДО любого сетевого await (authUser ходит в БД) — иначе тело теряется.
   let body;
   try { body = parseBody(req, 4 * 1024); } catch { return res.status(400).json({ ok: false, error: 'Bad request' }); }
   const newPass = String(body.newPass || '');
   if (newPass.length < 6) return res.status(400).json({ ok: false, error: 'Новый пароль — минимум 6 символов' });
   if (newPass.length > 200) return res.status(400).json({ ok: false, error: 'Слишком длинный пароль' });
+
+  const user = await authUser(req);
+  if (!user) return res.status(401).json({ ok: false, error: 'Неверный логин или пароль' });
+  if (!dbReady()) return res.status(503).json({ ok: false, error: 'База недоступна — смена пароля временно невозможна' });
 
   const salt = crypto.randomBytes(12).toString('hex');
   const hash = sha256(salt + newPass);

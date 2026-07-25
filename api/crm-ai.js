@@ -38,14 +38,17 @@ export default async function handler(req, res) {
   if (!rl.ok) { res.setHeader('Retry-After', String(rl.resetSec || 60)); return res.status(429).json({ ok: false, error: 'Слишком много запросов' }); }
 
   if (!checkOrigin(req, ALLOWED_ORIGINS)) return res.status(403).json({ ok: false, error: 'Forbidden origin' });
+
+  // ВАЖНО: тело читаем ДО сетевого authUser (ходит в БД) — иначе тело теряется.
+  let body;
+  try { body = parseBody(req, 8 * 1024); } catch { return res.status(400).json({ ok: false, error: 'Bad request' }); }
+  const prompt = String(body.prompt || '').trim().slice(0, 3000);
+
   if (!(await authUser(req))) return res.status(401).json({ ok: false, error: 'Неверный логин или пароль' });
 
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) return res.status(200).json({ ok: false, code: 'no_key', error: 'ИИ-ассистент не настроен: добавьте ANTHROPIC_API_KEY в Vercel.' });
 
-  let body;
-  try { body = parseBody(req, 8 * 1024); } catch { return res.status(400).json({ ok: false, error: 'Bad request' }); }
-  const prompt = String(body.prompt || '').trim().slice(0, 3000);
   if (!prompt) return res.status(400).json({ ok: false, error: 'Опишите задачу для КП' });
 
   const model = process.env.CRM_AI_MODEL || 'claude-opus-4-8';

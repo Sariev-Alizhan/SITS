@@ -71,6 +71,16 @@ export default async function handler(req, res) {
     return res.status(429).json({ ok: false, error: 'Слишком много запросов' });
   }
 
+  // ВАЖНО: тело POST читаем ДО сетевого authUser (ходит в БД) — иначе поток тела теряется.
+  let body = {};
+  if (req.method === 'POST') {
+    if (!checkOrigin(req, ALLOWED_ORIGINS)) {
+      return res.status(403).json({ ok: false, error: 'Forbidden origin' });
+    }
+    try { body = parseBody(req, 32 * 1024); }
+    catch { return res.status(400).json({ ok: false, error: 'Bad request' }); }
+  }
+
   const user = await authUser(req);
   if (!user) {
     const failRl = await rateLimit({ key: `crm-fail:${ip}`, limit: 8, windowSec: 300 });
@@ -95,12 +105,6 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-      if (!checkOrigin(req, ALLOWED_ORIGINS)) {
-        return res.status(403).json({ ok: false, error: 'Forbidden origin' });
-      }
-      let body;
-      try { body = parseBody(req, 32 * 1024); }
-      catch { return res.status(400).json({ ok: false, error: 'Bad request' }); }
 
       const action = body.action;
 

@@ -420,9 +420,9 @@
       <div class="card">
         <h3><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h1"/></svg> Данные КП <span id="kpNoLabel" class="mono gold" style="font-size:13px;margin-left:auto"></span></h3>
         <div class="ai-box">
-          <div class="ai-head"><span class="ai-badge">✦ ИИ-ассистент</span><span class="ai-hint">Опишите задачу — соберу позиции и цены</span></div>
+          <div class="ai-head"><span class="ai-badge"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.9 5.6L19.5 9.5 13.9 11.4 12 17l-1.9-5.6L4.5 9.5l5.6-1.9z"/><path d="M19 15l.8 2.4L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.6z"/></svg> ИИ-ассистент</span><span class="ai-hint">Опишите задачу — соберу позиции и цены</span></div>
           <textarea id="ai_prompt" rows="2" placeholder="Напр.: автоматизация заявок из Instagram и WhatsApp + внедрение CRM для мебельной компании"></textarea>
-          <div class="ai-actions"><button class="btn btn-gold btn-sm" id="aiGenBtn" type="button">✦ Собрать КП с ИИ</button><span id="aiStatus" class="ai-status"></span></div>
+          <div class="ai-actions"><button class="btn btn-gold btn-sm" id="aiGenBtn" type="button"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.9 5.6L19.5 9.5 13.9 11.4 12 17l-1.9-5.6L4.5 9.5l5.6-1.9z"/></svg> <span class="ai-lbl">Собрать КП с ИИ</span></button><span id="aiStatus" class="ai-status"></span></div>
         </div>
         <div class="grid2">
           <div class="field"><label>Клиент (имя)</label><input id="f_client" placeholder="Имя контакта" /></div>
@@ -793,7 +793,7 @@
           <button class="out-del" title="Удалить">×</button>
         </div>
         <div class="out-detail" hidden>
-          ${it.pain?`<div class="dl"><b>🎯 Боль:</b> ${esc(it.pain)}</div>`:''}
+          ${it.pain?`<div class="dl pain-dl"><b>Боль:</b> ${esc(it.pain)}</div>`:''}
           ${it.strengths?`<div class="dl"><b>Сильные:</b> ${esc(it.strengths)}</div>`:''}
           ${it.weaknesses?`<div class="dl"><b>Слабые:</b> ${esc(it.weaknesses)}</div>`:''}
           ${it.gap?`<div class="dl"><b>Не хватает:</b> ${esc(it.gap)}</div>`:''}
@@ -940,7 +940,7 @@
         <select class="i-select" title="Выберите услугу из каталога">
           <option value=""${!name?' selected':''}>— выбрать услугу —</option>
           ${CATALOG_OPTIONS(name)}
-          <option value="__custom__"${isCustom?' selected':''}>✏️ Другое (вписать вручную)…</option>
+          <option value="__custom__"${isCustom?' selected':''}>＋ Другое (вписать вручную)…</option>
         </select>
         <input class="i-name" type="text" placeholder="Название услуги" value="${esc(name)}"${isCustom?'':' style="display:none"'} />
       </div>
@@ -966,17 +966,21 @@
 
   // ---------- быстрые шаблоны КП (пресеты пакетов услуг) ----------
   const catPrice = (name)=>{ const h=CATALOG.find(c=>c[0]===name); return h?h[1]:''; };
+  const IC_BOLT='<svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>';
+  const IC_GLOBE='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg>';
+  const IC_CAM='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="3"/><circle cx="12" cy="14" r="3.4"/><path d="M8 7l1.4-3h5L16 7"/></svg>';
+  const IC_FILM='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 4v5M17 4v5M7 20v-5M17 20v-5"/></svg>';
   const PRESETS = [
-    { label:'⚡ Автоматизация под ключ',
+    { icon:IC_BOLT, label:'Автоматизация под ключ',
       note:'Предоплата 50%, остаток по факту запуска. Срок внедрения — 2–3 недели. Обучение сотрудников и первый месяц поддержки включены в стоимость.',
       items:['Аудит и настройка бизнес-процессов','Внедрение CRM Fibonacci Control','Интеграция (WhatsApp/Instagram/API)','Бизнес-автоматизация процессов','Настройка/поддержка CRM (мес)'] },
-    { label:'🌐 Сайт + AI',
+    { icon:IC_GLOBE, label:'Сайт + AI',
       note:'Предоплата 50%, остаток при сдаче. Срок запуска 5–10 дней. Гарантия — 30 дней бесплатных правок.',
       items:['Лендинг + софт + AI','Техподдержка «Классическая» (мес)'] },
-    { label:'📱 Соцсети + медиа',
+    { icon:IC_CAM, label:'Соцсети + медиа',
       note:'Оплата помесячно. Контент-план, съёмка, монтаж и ежемесячная аналитика включены.',
       items:['Соцсети: TikTok + Instagram (мес)','Проф съёмка по Астане','Пакет нарезок (12 шт)','Таргет-запуск рекламы'] },
-    { label:'🎬 AI-видео',
+    { icon:IC_FILM, label:'AI-видео',
       note:'Полный цикл: сценарий, генерация, монтаж, звук. Предоплата 50%.',
       items:['AI Video Creator (клип)'] },
   ];
@@ -989,14 +993,14 @@
   }
   (function renderPresets(){
     const box=$('#presetChips'); if(!box) return;
-    PRESETS.forEach(p=>{ const b=document.createElement('button'); b.type='button'; b.className='preset-chip'; b.textContent=p.label; b.addEventListener('click',()=>applyPreset(p)); box.appendChild(b); });
+    PRESETS.forEach(p=>{ const b=document.createElement('button'); b.type='button'; b.className='preset-chip'; b.innerHTML=(p.icon||'')+' '+esc(p.label); b.addEventListener('click',()=>applyPreset(p)); box.appendChild(b); });
   })();
 
   // ---------- AI assistant ----------
   async function aiGenerate(){
     const prompt=$('#ai_prompt').value.trim();
     if(!prompt){ $('#aiStatus').textContent='Опишите задачу'; $('#aiStatus').className='ai-status err'; return; }
-    const btn=$('#aiGenBtn'); btn.classList.add('loading'); btn.textContent='✦ Думаю…';
+    const btn=$('#aiGenBtn'); btn.classList.add('loading'); const lbl=btn.querySelector('.ai-lbl'); if(lbl) lbl.textContent='Думаю…';
     $('#aiStatus').textContent='ИИ собирает КП…'; $('#aiStatus').className='ai-status';
     try{
       const r=await fetch('/api/crm-ai',{method:'POST',headers:{'Content-Type':'application/json','x-crm-login':LOGIN,'x-crm-pass':PASS},body:JSON.stringify({prompt})});
@@ -1013,7 +1017,7 @@
       recalc();
       $('#aiStatus').textContent='Готово — проверьте и сохраните'; $('#aiStatus').className='ai-status ok';
     }catch(err){ $('#aiStatus').textContent='Ошибка: '+err.message; $('#aiStatus').className='ai-status err'; }
-    finally{ btn.classList.remove('loading'); btn.textContent='✦ Собрать КП с ИИ'; }
+    finally{ btn.classList.remove('loading'); const l=btn.querySelector('.ai-lbl'); if(l) l.textContent='Собрать КП с ИИ'; }
   }
   $('#aiGenBtn').addEventListener('click',aiGenerate);
 

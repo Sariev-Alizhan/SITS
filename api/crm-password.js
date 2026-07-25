@@ -4,7 +4,7 @@
 // Защита: авторизация текущим паролём, rate-limit, Origin-check, лимит длины.
 
 import crypto from 'node:crypto';
-import { rateLimit, getClientIp, checkOrigin, parseBody } from './_security.js';
+import { rateLimit, getClientIp, checkOrigin, readBody } from './_security.js';
 import { authUser, sha256 } from './_crm-auth.js';
 import { db, dbReady } from './_db.js';
 
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
   // ВАЖНО: читаем body ДО любого сетевого await (authUser ходит в БД) — иначе тело теряется.
   let body;
-  try { body = parseBody(req, 4 * 1024); } catch { return res.status(400).json({ ok: false, error: 'Bad request' }); }
+  try { body = await readBody(req, 4 * 1024); } catch { return res.status(400).json({ ok: false, error: 'Bad request' }); }
   const newPass = String(body.newPass || '');
   if (newPass.length < 6) return res.status(400).json({ ok: false, error: 'Новый пароль — минимум 6 символов' });
   if (newPass.length > 200) return res.status(400).json({ ok: false, error: 'Слишком длинный пароль' });

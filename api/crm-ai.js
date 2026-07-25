@@ -4,7 +4,7 @@
 // Требует env ANTHROPIC_API_KEY. Модель: CRM_AI_MODEL (по умолчанию claude-opus-4-8).
 // Без ключа возвращает {ok:false, code:'no_key'} — фича мягко отключена.
 
-import { rateLimit, getClientIp, checkOrigin, parseBody } from './_security.js';
+import { rateLimit, getClientIp, checkOrigin, readBody } from './_security.js';
 import { authUser } from './_crm-auth.js';
 
 const ALLOWED_ORIGINS = ['https://sits-eta.vercel.app'];
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
 
   // ВАЖНО: тело читаем ДО сетевого authUser (ходит в БД) — иначе тело теряется.
   let body;
-  try { body = parseBody(req, 8 * 1024); } catch { return res.status(400).json({ ok: false, error: 'Bad request' }); }
+  try { body = await readBody(req, 8 * 1024); } catch { return res.status(400).json({ ok: false, error: 'Bad request' }); }
   const prompt = String(body.prompt || '').trim().slice(0, 3000);
 
   if (!(await authUser(req))) return res.status(401).json({ ok: false, error: 'Неверный логин или пароль' });

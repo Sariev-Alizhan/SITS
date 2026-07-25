@@ -62,3 +62,25 @@ export function parseBody(req, maxBytes = 16 * 1024) {
   try { return typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {}); }
   catch { return {}; }
 }
+
+/**
+ * Надёжное чтение JSON-body: сначала req.body (если рантайм распарсил),
+ * иначе читаем сырой поток запроса. Работает независимо от рантайма Vercel.
+ * ВАЖНО: вызывать ДО любого сетевого await, чтобы поток не потерялся.
+ */
+export async function readBody(req, maxBytes = 16 * 1024) {
+  const b = req.body;
+  if (b !== undefined && b !== null) {
+    if (typeof b === 'string') { try { return JSON.parse(b || '{}'); } catch { return {}; } }
+    if (Buffer.isBuffer(b)) { try { return JSON.parse(b.toString('utf8') || '{}'); } catch { return {}; } }
+    if (typeof b === 'object') return b;
+  }
+  let data = '';
+  try {
+    for await (const chunk of req) {
+      data += typeof chunk === 'string' ? chunk : chunk.toString('utf8');
+      if (data.length > maxBytes) { const e = new Error('Body too large'); e.code = 413; throw e; }
+    }
+  } catch (e) { if (e && e.code === 413) throw e; return {}; }
+  try { return JSON.parse(data || '{}'); } catch { return {}; }
+}

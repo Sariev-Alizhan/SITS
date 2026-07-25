@@ -5,7 +5,7 @@
 // Защита: timing-safe пароль ADMIN_PASSWORD, rate-limit, Origin-check, лимит размера.
 // Хранилище: Supabase Postgres, таблица 'deals' (PK = id).
 
-import { rateLimit, getClientIp, checkOrigin, parseBody } from './_security.js';
+import { rateLimit, getClientIp, checkOrigin, readBody } from './_security.js';
 import { authUser } from './_crm-auth.js';
 import { db, dbReady } from './_db.js';
 
@@ -77,7 +77,7 @@ export default async function handler(req, res) {
     if (!checkOrigin(req, ALLOWED_ORIGINS)) {
       return res.status(403).json({ ok: false, error: 'Forbidden origin' });
     }
-    try { body = parseBody(req, 32 * 1024); }
+    try { body = await readBody(req, 32 * 1024); }
     catch { return res.status(400).json({ ok: false, error: 'Bad request' }); }
   }
 

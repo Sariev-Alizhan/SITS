@@ -79,12 +79,6 @@ export default async function handler(req, res) {
     }
     try { body = await readBody(req, 32 * 1024); }
     catch { return res.status(400).json({ ok: false, error: 'Bad request' }); }
-    if (req.headers['x-diag']) {
-      return res.status(200).json({
-        bodyType: typeof body, bodyKeys: body && typeof body === 'object' ? Object.keys(body) : [],
-        reqBodyType: typeof req.body, reqBodyKeys: req.body && typeof req.body === 'object' ? Object.keys(req.body) : [],
-      });
-    }
   }
 
   const user = await authUser(req);

@@ -73,7 +73,15 @@ export async function readBody(req, maxBytes = 16 * 1024) {
   if (b !== undefined && b !== null) {
     if (typeof b === 'string') { try { return JSON.parse(b || '{}'); } catch { return {}; } }
     if (Buffer.isBuffer(b)) { try { return JSON.parse(b.toString('utf8') || '{}'); } catch { return {}; } }
-    if (typeof b === 'object') return b;
+    if (typeof b === 'object') {
+      // Защита от неверного Content-Type: JSON-тело распарсилось как urlencoded
+      // и всё попало в единственный ключ ('{"a":1}' → { '{"a":1}': '' }).
+      const ks = Object.keys(b);
+      if (ks.length === 1 && b[ks[0]] === '' && /^[[{]/.test(ks[0].trim())) {
+        try { return JSON.parse(ks[0]); } catch { /* оставим как есть */ }
+      }
+      return b;
+    }
   }
   let data = '';
   try {

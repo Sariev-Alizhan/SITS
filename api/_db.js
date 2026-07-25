@@ -30,6 +30,7 @@ export const db = {
   // query — строка PostgREST, напр. 'select=*&order=created_at.desc&limit=1000'
   select: (table, query = 'select=*') => req(`${table}?${query}`),
   upsert: (table, row) => req(table, { method: 'POST', body: [row], prefer: 'resolution=merge-duplicates,return=representation' }),
+  upsertMany: (table, rows) => req(table, { method: 'POST', body: rows, prefer: 'resolution=merge-duplicates,return=minimal' }),
   insert: (table, row) => req(table, { method: 'POST', body: [row], prefer: 'return=representation' }),
   update: (table, query, patch) => req(`${table}?${query}`, { method: 'PATCH', body: patch, prefer: 'return=minimal' }),
   remove: (table, query) => req(`${table}?${query}`, { method: 'DELETE', prefer: 'return=minimal' }),

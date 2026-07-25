@@ -177,6 +177,29 @@
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .items-head,.item-row{display:grid;grid-template-columns:1fr 70px 110px 110px 32px;gap:8px;align-items:center}
   .items-head{font-size:11px;color:var(--slate);text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px;padding:0 2px}
+  /* Обзвон */
+  .out-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+  .out-head,.out-row{display:grid;grid-template-columns:1.6fr 1fr 1.3fr 128px 140px 1.5fr 32px;gap:12px;align-items:center;padding:11px 16px;min-width:1000px}
+  .out-head{font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--slate);border-bottom:1px solid var(--line-2);position:sticky;top:0;background:var(--surface-2);z-index:1}
+  .out-row{border-bottom:1px solid var(--line);font-size:13.5px;transition:background .15s}
+  .out-row:last-child{border-bottom:none}
+  .out-row:hover{background:rgba(255,255,255,.02)}
+  .out-row.done{opacity:.62} .out-row.rejected{opacity:.5}
+  .out-row .b-name{font-weight:600;color:var(--fg);line-height:1.3}
+  .out-row .b-name small{display:block;color:var(--slate);font-size:11px;font-weight:400;margin-top:2px}
+  .out-row .b-cat{color:var(--dim);font-size:12px}
+  .out-row .b-contact{font-size:12px;line-height:1.4;word-break:break-word}
+  .out-row .b-contact a{color:var(--gold);text-decoration:none}
+  .out-row .b-contact a:hover{text-decoration:underline}
+  .out-row .b-contact .ct{display:block;color:var(--slate);font-size:10.5px;text-transform:uppercase;letter-spacing:.03em}
+  .out-row select,.out-row .b-note{padding:8px 10px;font-size:12.5px;border-radius:9px}
+  .out-row select{cursor:pointer}
+  .out-row .st-new{color:var(--fg)} .out-row .st-in_progress{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 45%,var(--line))}
+  .out-row .st-done{color:#6cc39a;border-color:#2e7d5b} .out-row .st-rejected{color:#e5675e;border-color:#8a2a25}
+  .out-del{background:transparent;border:1px solid var(--line);border-radius:8px;color:var(--slate);height:34px;font-size:15px}
+  .out-del:hover{border-color:var(--err);color:#e5675e}
+  .out-empty{padding:48px 20px;text-align:center;color:var(--slate);font-size:14px}
+  #outMineFilter .on{color:var(--gold)}
   .preset-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 14px}
   .preset-lbl{font-size:12px;color:var(--slate)}
   .preset-chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -336,6 +359,7 @@
     <div class="tabseg">
       <button class="tab active" data-view="deals">Сделки</button>
       <button class="tab" data-view="kp">Новое КП</button>
+      <button class="tab" data-view="outreach">📞 Обзвон</button>
     </div>
   </div>
 
@@ -429,6 +453,33 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ---- ОБЗВОН (база бизнесов для проработки) ---- -->
+  <div class="wrap view" id="view-outreach">
+    <div class="stats" id="outStats"></div>
+    <div class="bar">
+      <input class="grow" type="search" id="outSearch" placeholder="Поиск: бизнес, категория, контакт…" />
+      <div class="seg" id="outStatusFilter">
+        <button class="on" data-f="all">Все</button>
+        <button data-f="new">Новые</button>
+        <button data-f="in_progress">В работе</button>
+        <button data-f="done">Выполнено</button>
+        <button data-f="rejected">Отказ</button>
+      </div>
+      <div class="seg" id="outMineFilter">
+        <button class="on" data-m="all">Все</button>
+        <button data-m="mine">Мои</button>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="outReloadBtn" title="Обновить">↻</button>
+    </div>
+    <div class="out-wrap">
+      <div class="out-head">
+        <span>Бизнес</span><span>Категория</span><span>Контакт</span><span>Кто ведёт</span><span>Статус</span><span>Заметка</span><span></span>
+      </div>
+      <div id="outList"></div>
+    </div>
+    <div id="outEmpty" class="out-empty" style="display:none">Список пуст. Здесь появится база бизнесов Астаны из ресёрча — их можно будет распределять и прорабатывать.</div>
   </div>
 </div>
 
@@ -634,8 +685,88 @@
     $$('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
     $$('.view').forEach(v=>v.classList.remove('active'));
     $('#view-'+t.dataset.view).classList.add('active');
+    if(t.dataset.view==='outreach') ensureOutreach();
   }));
-  function gotoView(v){ $$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.view===v)); $$('.view').forEach(x=>x.classList.remove('active')); $('#view-'+v).classList.add('active'); }
+  function gotoView(v){ $$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.view===v)); $$('.view').forEach(x=>x.classList.remove('active')); $('#view-'+v).classList.add('active'); if(v==='outreach') ensureOutreach(); }
+
+  // ---------- ОБЗВОН ----------
+  const TEAM = ['Алижан','Аблай','Алишер','Айжан'];
+  const OUT_ST = {new:'Новый', in_progress:'В работе', done:'Выполнено', rejected:'Отказ'};
+  let OUT=[], outLoaded=false, outSearch='', outFilter='all', outMine='all';
+  async function apiOut(method, body){
+    const opt={ method, headers:{ 'x-crm-login':LOGIN, 'x-crm-pass':PASS } };
+    if(body){ opt.headers['Content-Type']='application/json'; opt.body=JSON.stringify(body); }
+    const r=await fetch('/api/crm-outreach', opt);
+    const data=await r.json().catch(()=>({ok:false,error:'Ошибка ответа'}));
+    if(!r.ok || !data.ok) throw new Error(data.error||('HTTP '+r.status));
+    return data;
+  }
+  async function ensureOutreach(){ if(outLoaded) return; outLoaded=true; await loadOutreach(); }
+  async function loadOutreach(){
+    try{ const d=await apiOut('GET'); OUT=d.items||[]; renderOutreach(); }
+    catch(err){ $('#outList').innerHTML=''; $('#outEmpty').style.display='block'; $('#outEmpty').textContent='Не удалось загрузить: '+err.message; }
+  }
+  const contactLink=(it)=>{
+    const c=(it.contact||'').trim();
+    const url=(c.match(/https?:\/\/[^\s]+/)||[])[0];
+    if(url) return `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(c)}</a>`;
+    const phone=c.replace(/[^\d+]/g,'');
+    if(phone.length>=10) return `<a href="https://wa.me/${phone.replace(/\D/g,'')}" target="_blank" rel="noopener">${esc(c)}</a>`;
+    return esc(c||'—');
+  };
+  function outStats(){
+    const box=$('#outStats'); if(!box) return;
+    const by=s=>OUT.filter(x=>x.status===s).length;
+    const mine=OUT.filter(x=>x.assignee===(localStorage.getItem(KEY_MGR)||'')).length;
+    box.innerHTML=[
+      ['Всего', OUT.length],['В работе', by('in_progress')],['Выполнено', by('done')],['Мои', mine],
+    ].map(([l,v])=>`<div class="stat"><div class="stat-ic">📞</div><div class="stat-l">${l}</div><div class="stat-v">${v}</div></div>`).join('');
+  }
+  function renderOutreach(){
+    const me=localStorage.getItem(KEY_MGR)||'';
+    let list=OUT.slice();
+    if(outFilter!=='all') list=list.filter(x=>x.status===outFilter);
+    if(outMine==='mine') list=list.filter(x=>x.assignee===me);
+    if(outSearch){ const q=outSearch.toLowerCase(); list=list.filter(x=>((x.name||'')+(x.category||'')+(x.contact||'')+(x.segment||'')).toLowerCase().includes(q)); }
+    outStats();
+    const box=$('#outList');
+    $('#outEmpty').style.display = OUT.length ? 'none' : 'block';
+    box.innerHTML = list.map(it=>{
+      const opts=['<option value="">— не назначен</option>'].concat(TEAM.map(n=>`<option value="${esc(n)}"${it.assignee===n?' selected':''}>${esc(n)}</option>`)).join('');
+      const st=Object.keys(OUT_ST).map(s=>`<option value="${s}"${it.status===s?' selected':''}>${OUT_ST[s]}</option>`).join('');
+      return `<div class="out-row ${it.status}" data-id="${esc(it.id)}">
+        <div class="b-name">${esc(it.name)}${it.segment?`<small>${esc(it.segment)}</small>`:''}</div>
+        <div class="b-cat">${esc((it.category||'').replace(/\s*—\s*Астана.*/,'').replace(/\s*\(Астана\)/,''))}</div>
+        <div class="b-contact">${it.contactType?`<span class="ct">${esc(it.contactType)}</span>`:''}${contactLink(it)}</div>
+        <select class="o-assignee">${opts}</select>
+        <select class="o-status st-${it.status}">${st}</select>
+        <input class="b-note" value="${esc(it.note||'')}" placeholder="Заметка…" />
+        <button class="out-del" title="Удалить">×</button>
+      </div>`;
+    }).join('') || `<div class="out-empty">Ничего не найдено по фильтру.</div>`;
+    box.querySelectorAll('.out-row').forEach(row=>{
+      const id=row.dataset.id; const it=OUT.find(x=>x.id===id); if(!it) return;
+      row.querySelector('.o-assignee').addEventListener('change',e=>saveOut(it,{assignee:e.target.value}));
+      row.querySelector('.o-status').addEventListener('change',e=>saveOut(it,{status:e.target.value},true));
+      const note=row.querySelector('.b-note');
+      note.addEventListener('change',e=>saveOut(it,{note:e.target.value}));
+      row.querySelector('.out-del').addEventListener('click',()=>delOut(it));
+    });
+  }
+  async function saveOut(it, patch, rerender){
+    Object.assign(it, patch);
+    try{ await apiOut('POST',{action:'save', item:it}); toast('Сохранено','ok'); if(rerender) renderOutreach(); else outStats(); }
+    catch(err){ toast('Ошибка: '+err.message,'err'); }
+  }
+  async function delOut(it){
+    if(!confirm('Удалить из списка обзвона?\n'+it.name)) return;
+    try{ await apiOut('POST',{action:'delete', id:it.id}); OUT=OUT.filter(x=>x.id!==it.id); renderOutreach(); toast('Удалено','ok'); }
+    catch(err){ toast('Ошибка: '+err.message,'err'); }
+  }
+  $('#outSearch') && $('#outSearch').addEventListener('input',e=>{ outSearch=e.target.value.trim(); renderOutreach(); });
+  $$('#outStatusFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#outStatusFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); outFilter=b.dataset.f; renderOutreach(); }));
+  $$('#outMineFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#outMineFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); outMine=b.dataset.m; renderOutreach(); }));
+  $('#outReloadBtn') && $('#outReloadBtn').addEventListener('click',loadOutreach);
 
   // ---------- DEALS render ----------
   let filterStatus='all', searchQ='', viewMode='kanban';

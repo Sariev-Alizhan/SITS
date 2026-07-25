@@ -20,6 +20,21 @@
     --ease:cubic-bezier(.22,1,.36,1);
     --r:14px; --r-lg:20px;
   }
+  body.light{
+    --void:#EEF1F6; --ink:#FFFFFF; --surface:#FFFFFF; --surface-2:#F5F7FB; --line:#E4E8EF; --line-2:#D2D9E3;
+    --fg:#141B26; --dim:#586074; --slate:#8A93A4;
+    --gold:#9A6F1E; --gold-lit:#B8892F; --gold-deep:#7A5514; --gold-soft:rgba(154,111,30,.13);
+    --ok:#217a52; --warn:#B8542A; --err:#b3241a; --info:#2f5c86;
+  }
+  /* modern inline icons */
+  .ic{width:1em;height:1em;display:inline-block;vertical-align:-.14em;flex:0 0 auto}
+  .btn .ic{width:1.05em;height:1.05em;margin-right:2px}
+  .tab .ic,.stat .ic{width:1em;height:1em}
+  .icon-btn{display:inline-flex;align-items:center;justify-content:center}
+  .icon-btn .ic{margin:0;width:1.15em;height:1.15em}
+  .tab{display:inline-flex;align-items:center;gap:7px}
+  .btn{display:inline-flex;align-items:center;gap:6px;justify-content:center}
+  h3 .ic{color:var(--gold)}
   *{margin:0;padding:0;box-sizing:border-box}
   body{color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;
     background:
@@ -181,12 +196,25 @@
   .out-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
   .out-head,.out-row{display:grid;grid-template-columns:1.6fr 1fr 1.3fr 128px 140px 1.5fr 32px;gap:12px;align-items:center;padding:11px 16px;min-width:1000px}
   .out-head{font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--slate);border-bottom:1px solid var(--line-2);position:sticky;top:0;background:var(--surface-2);z-index:1}
-  .out-row{border-bottom:1px solid var(--line);font-size:13.5px;transition:background .15s}
-  .out-row:last-child{border-bottom:none}
-  .out-row:hover{background:rgba(255,255,255,.02)}
-  .out-row.done{opacity:.62} .out-row.rejected{opacity:.5}
+  .out-item{border-bottom:1px solid var(--line)}
+  .out-item:last-child{border-bottom:none}
+  .out-row{font-size:13.5px;transition:background .15s}
+  .out-item:hover .out-row{background:color-mix(in srgb,var(--fg) 3%,transparent)}
+  .out-item.done{opacity:.6} .out-item.rejected{opacity:.5}
+  .out-item.notready{opacity:.55}
   .out-row .b-name{font-weight:600;color:var(--fg);line-height:1.3}
+  .out-row .b-name.expandable{cursor:pointer}
+  .out-row .b-name .chev{display:inline-block;color:var(--slate);font-size:10px;transition:transform .15s}
+  .out-item.open .b-name .chev{transform:rotate(90deg)}
+  .out-row .b-name .vbadge{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--ok);color:#fff;font-size:9px;vertical-align:1px}
+  .out-row .b-name .nrbadge{font-size:9.5px;color:var(--err);border:1px solid var(--err);border-radius:6px;padding:0 4px;text-transform:uppercase;letter-spacing:.03em;vertical-align:1px}
   .out-row .b-name small{display:block;color:var(--slate);font-size:11px;font-weight:400;margin-top:2px}
+  .out-row .b-name small.pain{color:var(--gold);font-weight:500}
+  .out-detail{padding:2px 16px 14px 16px;min-width:1000px;font-size:12.5px;line-height:1.5;color:var(--dim);background:color-mix(in srgb,var(--fg) 2%,transparent)}
+  .out-detail .dl{padding:3px 0}
+  .out-detail .dl b{color:var(--fg)}
+  .out-detail .dl.rec b{color:var(--gold)}
+  .out-detail a{color:var(--gold)}
   .out-row .b-cat{color:var(--dim);font-size:12px}
   .out-row .b-contact{font-size:12px;line-height:1.4;word-break:break-word}
   .out-row .b-contact a{color:var(--gold);text-decoration:none}
@@ -200,6 +228,7 @@
   .out-del:hover{border-color:var(--err);color:#e5675e}
   .out-empty{padding:48px 20px;text-align:center;color:var(--slate);font-size:14px}
   #outMineFilter .on{color:var(--gold)}
+  .who-filter{width:auto;min-width:150px;padding:8px 12px;font-size:13px;border-radius:10px}
   .preset-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 14px}
   .preset-lbl{font-size:12px;color:var(--slate)}
   .preset-chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -346,7 +375,8 @@
     <div class="brand"><img src="/brand/sits-mark-red.png" alt="" /><b>Fibonacci Control</b> <span>CRM</span></div>
     <div class="topbar-right">
       <div class="who"><span class="av" id="whoAv">•</span>Менеджер: <b id="whoName">—</b></div>
-      <button class="btn btn-ghost btn-sm" id="changePassBtn" title="Сменить свой пароль">🔑 Пароль</button>
+      <button class="btn btn-ghost btn-sm icon-btn" id="themeBtn" title="Светлая / тёмная тема" aria-label="Тема"></button>
+      <button class="btn btn-ghost btn-sm" id="changePassBtn" title="Сменить свой пароль"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3M17 6l3 3M15 8l2 2"/></svg> Пароль</button>
       <button class="btn btn-ghost btn-sm" id="logoutBtn">Выйти</button>
     </div>
   </div>
@@ -359,7 +389,7 @@
     <div class="tabseg">
       <button class="tab active" data-view="deals">Сделки</button>
       <button class="tab" data-view="kp">Новое КП</button>
-      <button class="tab" data-view="outreach">📞 Обзвон</button>
+      <button class="tab" data-view="outreach"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L7.9 9.8a16 16 0 0 0 6 6l1.4-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/></svg> Обзвон</button>
     </div>
   </div>
 
@@ -388,7 +418,7 @@
   <div class="wrap view" id="view-kp">
     <div class="kp-grid">
       <div class="card">
-        <h3>📄 Данные КП <span id="kpNoLabel" class="mono gold" style="font-size:13px;margin-left:auto"></span></h3>
+        <h3><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h1"/></svg> Данные КП <span id="kpNoLabel" class="mono gold" style="font-size:13px;margin-left:auto"></span></h3>
         <div class="ai-box">
           <div class="ai-head"><span class="ai-badge">✦ ИИ-ассистент</span><span class="ai-hint">Опишите задачу — соберу позиции и цены</span></div>
           <textarea id="ai_prompt" rows="2" placeholder="Напр.: автоматизация заявок из Instagram и WhatsApp + внедрение CRM для мебельной компании"></textarea>
@@ -418,7 +448,7 @@
           </div>
         </div>
 
-        <h3 style="margin-top:20px">🧩 Позиции (услуги)</h3>
+        <h3 style="margin-top:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg> Позиции (услуги)</h3>
         <div class="preset-bar">
           <span class="preset-lbl">Быстрый шаблон:</span>
           <div class="preset-chips" id="presetChips"></div>
@@ -436,9 +466,9 @@
         <div class="total-row"><span class="l">Итого</span><span class="v" id="totalOut">0 ₸</span></div>
 
         <div class="gen-actions">
-          <button class="btn btn-gold" id="saveDealBtn">💾 Сохранить сделку</button>
-          <button class="btn btn-ghost" id="previewKpBtn">👁 Предпросмотр КП</button>
-          <button class="btn btn-ghost" id="printKpBtn">⬇ Скачать КП (PDF)</button>
+          <button class="btn btn-gold" id="saveDealBtn"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg> Сохранить сделку</button>
+          <button class="btn btn-ghost" id="previewKpBtn"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Предпросмотр КП</button>
+          <button class="btn btn-ghost" id="printKpBtn"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Скачать КП (PDF)</button>
           <button class="btn btn-ghost" id="resetKpBtn" style="margin-left:auto">Очистить</button>
         </div>
       </div>
@@ -471,7 +501,8 @@
         <button class="on" data-m="all">Все</button>
         <button data-m="mine">Мои</button>
       </div>
-      <button class="btn btn-ghost btn-sm" id="outReloadBtn" title="Обновить">↻</button>
+      <select id="outWhoFilter" class="who-filter" title="Кто ведёт"><option value="">Кто ведёт: все</option></select>
+      <button class="btn btn-ghost btn-sm icon-btn" id="outReloadBtn" title="Обновить" aria-label="Обновить"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/></svg></button>
     </div>
     <div class="out-wrap">
       <div class="out-head">
@@ -487,7 +518,7 @@
 <div class="kp-overlay" id="kpOverlay">
   <div style="width:100%;max-width:820px">
     <div class="kp-toolbar">
-      <button class="btn btn-gold" id="doPrintBtn">⬇ Печать / Сохранить PDF</button>
+      <button class="btn btn-gold" id="doPrintBtn"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg> Печать / Сохранить PDF</button>
       <button class="btn btn-ghost" id="closeKpBtn">Закрыть</button>
     </div>
     <div class="kp-doc" id="kpDoc"><!-- rendered --></div>
@@ -497,7 +528,7 @@
 <!-- ==================== СМЕНА ПАРОЛЯ ==================== -->
 <div class="pass-overlay" id="passOverlay">
   <div class="pass-modal">
-    <div class="pass-head"><b>🔑 Смена пароля</b><button class="pass-x" id="passCloseBtn" type="button">×</button></div>
+    <div class="pass-head"><b><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3M17 6l3 3M15 8l2 2"/></svg> Смена пароля</b><button class="pass-x" id="passCloseBtn" type="button">×</button></div>
     <p class="pass-sub">Меняете пароль для <b id="passWho">—</b>. Минимум 6 символов.</p>
     <form id="passForm" autocomplete="off">
       <div class="field"><label>Новый пароль</label>
@@ -680,6 +711,14 @@
     finally{ btn.textContent='Сохранить'; btn.disabled=false; }
   });
 
+  // ---------- тема (светлая / тёмная) ----------
+  const KEY_THEME='sits_crm_theme';
+  const ICON_SUN='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+  const ICON_MOON='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>';
+  function applyTheme(t){ document.body.classList.toggle('light', t==='light'); const b=$('#themeBtn'); if(b) b.innerHTML = (t==='light'?ICON_MOON:ICON_SUN); }
+  applyTheme(localStorage.getItem(KEY_THEME)||'dark');
+  $('#themeBtn') && $('#themeBtn').addEventListener('click',()=>{ const t=document.body.classList.contains('light')?'dark':'light'; localStorage.setItem(KEY_THEME,t); applyTheme(t); });
+
   // ---------- tabs ----------
   $$('.tab').forEach(t=>t.addEventListener('click',()=>{
     $$('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
@@ -692,7 +731,7 @@
   // ---------- ОБЗВОН ----------
   const TEAM = ['Алижан','Аблай','Алишер','Айжан'];
   const OUT_ST = {new:'Новый', in_progress:'В работе', done:'Выполнено', rejected:'Отказ'};
-  let OUT=[], outLoaded=false, outSearch='', outFilter='all', outMine='all';
+  let OUT=[], outLoaded=false, outSearch='', outFilter='all', outMine='all', outWho='';
   async function apiOut(method, body){
     const opt={ method, headers:{ 'x-crm-login':LOGIN, 'x-crm-pass':PASS } };
     if(body){ opt.headers['Content-Type']='application/json'; opt.body=JSON.stringify(body); }
@@ -720,13 +759,15 @@
     const mine=OUT.filter(x=>x.assignee===(localStorage.getItem(KEY_MGR)||'')).length;
     box.innerHTML=[
       ['Всего', OUT.length],['В работе', by('in_progress')],['Выполнено', by('done')],['Мои', mine],
-    ].map(([l,v])=>`<div class="stat"><div class="stat-ic">📞</div><div class="stat-l">${l}</div><div class="stat-v">${v}</div></div>`).join('');
+    ].map(([l,v])=>`<div class="stat"><div class="stat-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L7.9 9.8a16 16 0 0 0 6 6l1.4-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/></svg></div><div class="stat-l">${l}</div><div class="stat-v">${v}</div></div>`).join('');
   }
   function renderOutreach(){
     const me=localStorage.getItem(KEY_MGR)||'';
     let list=OUT.slice();
     if(outFilter!=='all') list=list.filter(x=>x.status===outFilter);
     if(outMine==='mine') list=list.filter(x=>x.assignee===me);
+    if(outWho==='__none') list=list.filter(x=>!x.assignee);
+    else if(outWho) list=list.filter(x=>x.assignee===outWho);
     if(outSearch){ const q=outSearch.toLowerCase(); list=list.filter(x=>((x.name||'')+(x.category||'')+(x.contact||'')+(x.segment||'')).toLowerCase().includes(q)); }
     outStats();
     const box=$('#outList');
@@ -734,23 +775,42 @@
     box.innerHTML = list.map(it=>{
       const opts=['<option value="">— не назначен</option>'].concat(TEAM.map(n=>`<option value="${esc(n)}"${it.assignee===n?' selected':''}>${esc(n)}</option>`)).join('');
       const st=Object.keys(OUT_ST).map(s=>`<option value="${s}"${it.status===s?' selected':''}>${OUT_ST[s]}</option>`).join('');
-      return `<div class="out-row ${it.status}" data-id="${esc(it.id)}">
-        <div class="b-name">${esc(it.name)}${it.segment?`<small>${esc(it.segment)}</small>`:''}</div>
-        <div class="b-cat">${esc((it.category||'').replace(/\s*—\s*Астана.*/,'').replace(/\s*\(Астана\)/,''))}</div>
-        <div class="b-contact">${it.contactType?`<span class="ct">${esc(it.contactType)}</span>`:''}${contactLink(it)}</div>
-        <select class="o-assignee">${opts}</select>
-        <select class="o-status st-${it.status}">${st}</select>
-        <input class="b-note" value="${esc(it.note||'')}" placeholder="Заметка…" />
-        <button class="out-del" title="Удалить">×</button>
+      const cat=(it.category||'').replace(/\s*—\s*Астана.*/,'').replace(/\s*\(Астана\)/,'');
+      const srcUrl=(String(it.source||'').match(/https?:\/\/[^\s]+/)||[])[0];
+      const teaser = it.pain||it.segment||'';
+      const hasDetail = it.pain||it.strengths||it.weaknesses||it.gap||it.recommendation||it.why;
+      return `<div class="out-item ${it.status}${it.ready===false?' notready':''}" data-id="${esc(it.id)}">
+        <div class="out-row">
+          <div class="b-name${hasDetail?' expandable':''}">
+            <span class="nm">${esc(it.name)}${it.verified?' <span class="vbadge" title="Контакт проверен">✓</span>':''}${it.ready===false?' <span class="nrbadge">не готов</span>':''}${hasDetail?' <span class="chev">▸</span>':''}</span>
+            ${teaser?`<small class="${it.pain?'pain':''}">${esc(teaser)}</small>`:''}
+          </div>
+          <div class="b-cat">${esc(cat)}</div>
+          <div class="b-contact">${it.contactType?`<span class="ct">${esc(it.contactType)}</span>`:''}${contactLink(it)}</div>
+          <select class="o-assignee">${opts}</select>
+          <select class="o-status st-${it.status}">${st}</select>
+          <input class="b-note" value="${esc(it.note||'')}" placeholder="Заметка…" />
+          <button class="out-del" title="Удалить">×</button>
+        </div>
+        <div class="out-detail" hidden>
+          ${it.pain?`<div class="dl"><b>🎯 Боль:</b> ${esc(it.pain)}</div>`:''}
+          ${it.strengths?`<div class="dl"><b>Сильные:</b> ${esc(it.strengths)}</div>`:''}
+          ${it.weaknesses?`<div class="dl"><b>Слабые:</b> ${esc(it.weaknesses)}</div>`:''}
+          ${it.gap?`<div class="dl"><b>Не хватает:</b> ${esc(it.gap)}</div>`:''}
+          ${it.recommendation?`<div class="dl rec"><b>Как зайти:</b> ${esc(it.recommendation)}</div>`:''}
+          ${(!it.pain&&it.why)?`<div class="dl">${esc(it.why)}</div>`:''}
+          ${srcUrl?`<div class="dl"><a href="${esc(srcUrl)}" target="_blank" rel="noopener">источник ↗</a></div>`:''}
+        </div>
       </div>`;
     }).join('') || `<div class="out-empty">Ничего не найдено по фильтру.</div>`;
-    box.querySelectorAll('.out-row').forEach(row=>{
-      const id=row.dataset.id; const it=OUT.find(x=>x.id===id); if(!it) return;
-      row.querySelector('.o-assignee').addEventListener('change',e=>saveOut(it,{assignee:e.target.value}));
-      row.querySelector('.o-status').addEventListener('change',e=>saveOut(it,{status:e.target.value},true));
-      const note=row.querySelector('.b-note');
-      note.addEventListener('change',e=>saveOut(it,{note:e.target.value}));
-      row.querySelector('.out-del').addEventListener('click',()=>delOut(it));
+    box.querySelectorAll('.out-item').forEach(item=>{
+      const id=item.dataset.id; const it=OUT.find(x=>x.id===id); if(!it) return;
+      item.querySelector('.o-assignee').addEventListener('change',e=>saveOut(it,{assignee:e.target.value}));
+      item.querySelector('.o-status').addEventListener('change',e=>saveOut(it,{status:e.target.value},true));
+      item.querySelector('.b-note').addEventListener('change',e=>saveOut(it,{note:e.target.value}));
+      item.querySelector('.out-del').addEventListener('click',()=>delOut(it));
+      const nm=item.querySelector('.b-name.expandable');
+      if(nm) nm.addEventListener('click',()=>{ const d=item.querySelector('.out-detail'); d.hidden=!d.hidden; item.classList.toggle('open',!d.hidden); });
     });
   }
   async function saveOut(it, patch, rerender){
@@ -766,6 +826,7 @@
   $('#outSearch') && $('#outSearch').addEventListener('input',e=>{ outSearch=e.target.value.trim(); renderOutreach(); });
   $$('#outStatusFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#outStatusFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); outFilter=b.dataset.f; renderOutreach(); }));
   $$('#outMineFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#outMineFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); outMine=b.dataset.m; renderOutreach(); }));
+  (function(){ const s=$('#outWhoFilter'); if(!s) return; s.insertAdjacentHTML('beforeend','<option value="__none">Не назначен</option>'+TEAM.map(n=>`<option value="${n}">${n}</option>`).join('')); s.addEventListener('change',e=>{ outWho=e.target.value; renderOutreach(); }); })();
   $('#outReloadBtn') && $('#outReloadBtn').addEventListener('click',loadOutreach);
 
   // ---------- DEALS render ----------
@@ -803,7 +864,7 @@
   function kcard(d){
     return `<div class="kcard deal" data-id="${d.id}" style="--st:${ST_COLOR[d.status]||'var(--gold)'}">
       <div class="kc-top"><div><div class="kc-cl">${esc(d.client||'Без имени')}</div>${d.company?`<div class="kc-co">${esc(d.company)}</div>`:''}</div><div class="kc-sum">${fmt(d.total)}</div></div>
-      <div class="kc-meta">${d.no?`<span class="mono">${esc(d.no)}</span>`:''}${d.manager?`<span>👤 ${esc(d.manager)}</span>`:''}${d.source?`<span>${esc(d.source)}</span>`:''}<span>${dateShort(d.createdAt)}</span></div>
+      <div class="kc-meta">${d.no?`<span class="mono">${esc(d.no)}</span>`:''}${d.manager?`<span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${esc(d.manager)}</span>`:''}${d.source?`<span>${esc(d.source)}</span>`:''}<span>${dateShort(d.createdAt)}</span></div>
       <div class="kc-act"><button class="act-edit">Открыть</button><button class="act-status">Дальше →</button><button class="act-del" title="Удалить">✕</button></div>
     </div>`;
   }
@@ -840,7 +901,7 @@
         <div class="sum">${fmt(d.total)}</div>
         <div class="meta">
           ${d.no?`<span class="mono">${esc(d.no)}</span>`:''}
-          ${d.manager?`<span>👤 ${esc(d.manager)}</span>`:''}
+          ${d.manager?`<span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${esc(d.manager)}</span>`:''}
           ${d.source?`<span>${esc(d.source)}</span>`:''}
           <span>${dateShort(d.createdAt)}</span>
         </div>

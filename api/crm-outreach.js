@@ -15,7 +15,7 @@ const STATUSES = new Set(['new', 'in_progress', 'done', 'rejected']);
 const str = (v, max = 400) => String(v == null ? '' : v).slice(0, max);
 
 function toRow(d = {}) {
-  return {
+  const row = {
     id: str(d.id, 80),
     name: str(d.name, 300),
     category: str(d.category, 160),
@@ -27,15 +27,25 @@ function toRow(d = {}) {
     assignee: str(d.assignee, 120),
     status: STATUSES.has(d.status) ? d.status : 'new',
     note: str(d.note, 2000),
+    strengths: str(d.strengths, 800),
+    weaknesses: str(d.weaknesses, 800),
+    gap: str(d.gap, 800),
+    pain: str(d.pain, 600),
+    recommendation: str(d.recommendation, 800),
     created_at: d.createdAt || d.created_at || new Date().toISOString(),
     updated_at: new Date().toISOString(),
   };
+  if (d.ready !== undefined) row.ready = !!d.ready;
+  if (d.verified !== undefined) row.verified = !!d.verified;
+  return row;
 }
 function fromRow(r) {
   return {
     id: r.id, name: r.name, category: r.category, segment: r.segment,
     contact: r.contact, contactType: r.contact_type, why: r.why, source: r.source,
     assignee: r.assignee, status: r.status, note: r.note,
+    strengths: r.strengths, weaknesses: r.weaknesses, gap: r.gap, pain: r.pain,
+    recommendation: r.recommendation, ready: r.ready, verified: r.verified,
     createdAt: r.created_at, updatedAt: r.updated_at,
   };
 }

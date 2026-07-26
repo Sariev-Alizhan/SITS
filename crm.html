@@ -253,6 +253,9 @@
   .out-del{background:transparent;border:1px solid var(--line);border-radius:8px;color:var(--slate);height:34px;font-size:15px}
   .out-del:hover{border-color:var(--err);color:#e5675e}
   .out-empty{padding:48px 20px;text-align:center;color:var(--slate);font-size:14px}
+  .part-hero{background:linear-gradient(100deg,var(--gold-soft),transparent);border:1px solid color-mix(in srgb,var(--gold) 26%,var(--line));border-radius:14px;padding:16px 20px;margin-bottom:20px;font-size:14px;color:var(--dim);line-height:1.5}
+  .part-hero b{color:var(--gold);font-family:var(--font-display)}
+  .out-row .b-name .pt-tier{font-size:9px;font-weight:600;color:var(--slate);border:1px solid var(--line-2);border-radius:6px;padding:1px 6px;text-transform:uppercase;letter-spacing:.03em;vertical-align:1px}
   #outMineFilter .on{color:var(--gold)}
   .who-filter{width:auto;min-width:150px;padding:8px 12px;font-size:13px;border-radius:10px}
   .preset-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 14px}
@@ -440,6 +443,7 @@
       <button class="tab active" data-view="deals">Сделки</button>
       <button class="tab" data-view="kp">Новое КП</button>
       <button class="tab" data-view="outreach"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L7.9 9.8a16 16 0 0 0 6 6l1.4-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/></svg> Обзвон</button>
+      <button class="tab" data-view="partners"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg> Партнёры</button>
     </div>
   </div>
 
@@ -562,6 +566,33 @@
       <div id="outList"></div>
     </div>
     <div id="outEmpty" class="out-empty" style="display:none">Список пуст. Здесь появится база бизнесов Астаны из ресёрча — их можно будет распределять и прорабатывать.</div>
+  </div>
+
+  <!-- ---- ПАРТНЁРЫ (рекламные агентства для сотрудничества) ---- -->
+  <div class="wrap view" id="view-partners">
+    <div class="part-hero">
+      <b>Партнёрская сеть SITS</b> — рекламные и маркетинговые агентства, которые продают/рекомендуют наш продукт за %. Их клиенты — как раз те, кому нужна автоматизация и CRM. Пишите, договаривайтесь о сотрудничестве Win-Win.
+    </div>
+    <div class="stats" id="partStats"></div>
+    <div class="bar">
+      <input class="grow" type="search" id="partSearch" placeholder="Поиск: агентство, тип, контакт…" />
+      <div class="seg" id="partStatusFilter">
+        <button class="on" data-f="all">Все</button>
+        <button data-f="new">Новые</button>
+        <button data-f="contacted">Написал</button>
+        <button data-f="negotiating">Переговоры</button>
+        <button data-f="agreed">Договорились</button>
+      </div>
+      <select id="partWhoFilter" class="who-filter" title="Кто ведёт"><option value="">Кто ведёт: все</option></select>
+      <button class="btn btn-ghost btn-sm icon-btn" id="partReloadBtn" title="Обновить" aria-label="Обновить"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/></svg></button>
+    </div>
+    <div class="out-wrap">
+      <div class="out-head part-head">
+        <span>Агентство</span><span>Тип</span><span>Контакты</span><span>Кто ведёт</span><span>Статус</span><span>Заметка</span><span></span>
+      </div>
+      <div id="partList"></div>
+    </div>
+    <div id="partEmpty" class="out-empty" style="display:none">Список пуст. Здесь появятся рекламные агентства для партнёрства — идёт ресёрч.</div>
   </div>
 </div>
 
@@ -776,6 +807,7 @@
     $$('.view').forEach(v=>v.classList.remove('active'));
     $('#view-'+t.dataset.view).classList.add('active');
     if(t.dataset.view==='outreach') ensureOutreach();
+    if(t.dataset.view==='partners') ensurePartners();
   }));
   function gotoView(v){ $$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.view===v)); $$('.view').forEach(x=>x.classList.remove('active')); $('#view-'+v).classList.add('active'); if(v==='outreach') ensureOutreach(); }
 
@@ -896,6 +928,67 @@
   $$('#outMineFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#outMineFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); outMine=b.dataset.m; renderOutreach(); }));
   (function(){ const s=$('#outWhoFilter'); if(!s) return; s.insertAdjacentHTML('beforeend','<option value="__none">Не назначен</option>'+TEAM.map(n=>`<option value="${n}">${n}</option>`).join('')); s.addEventListener('change',e=>{ outWho=e.target.value; renderOutreach(); }); })();
   $('#outTierFilter') && $('#outTierFilter').addEventListener('change',e=>{ outTier=e.target.value; renderOutreach(); });
+
+  // ---------- ПАРТНЁРЫ (рекламные агентства) ----------
+  const PART_ST={new:'Новый',contacted:'Написал',negotiating:'Переговоры',agreed:'Договорились',declined:'Отказ'};
+  const IC_PART='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>';
+  let PART=[], partLoaded=false, partSearch='', partFilter='all', partWho='';
+  async function apiPart(method,body){ const opt={method,headers:{'x-crm-login':LOGIN,'x-crm-pass':PASS}}; if(body){opt.headers['Content-Type']='application/json';opt.body=JSON.stringify(body);} const r=await fetch('/api/crm-partners',opt); const d=await r.json().catch(()=>({ok:false,error:'Ошибка ответа'})); if(!r.ok||!d.ok) throw new Error(d.error||('HTTP '+r.status)); return d; }
+  async function ensurePartners(){ if(partLoaded) return; partLoaded=true; await loadPartners(); }
+  async function loadPartners(){ try{ const d=await apiPart('GET'); PART=d.items||[]; renderPartners(); }catch(err){ $('#partList').innerHTML=''; $('#partEmpty').style.display='block'; $('#partEmpty').textContent='Не удалось загрузить: '+err.message; } }
+  function partStats(){ const box=$('#partStats'); if(!box) return; const by=s=>PART.filter(x=>x.status===s).length; box.innerHTML=[['Всего',PART.length],['Написали',by('contacted')],['Переговоры',by('negotiating')],['Договорились',by('agreed')]].map(([l,v])=>`<div class="stat"><div class="stat-ic">${IC_PART}</div><div class="stat-l">${l}</div><div class="stat-v">${v}</div></div>`).join(''); }
+  function renderPartners(){
+    const me=localStorage.getItem(KEY_MGR)||'';
+    let list=PART.slice();
+    if(partFilter!=='all') list=list.filter(x=>x.status===partFilter);
+    if(partWho==='__none') list=list.filter(x=>!x.assignee); else if(partWho) list=list.filter(x=>x.assignee===partWho);
+    if(partSearch){ const q=partSearch.toLowerCase(); list=list.filter(x=>((x.name||'')+(x.category||'')+(x.contact||'')+(x.segment||'')).toLowerCase().includes(q)); }
+    partStats();
+    const box=$('#partList'); $('#partEmpty').style.display=PART.length?'none':'block';
+    box.innerHTML=list.map(it=>{
+      const opts=['<option value="">— не назначен</option>'].concat(TEAM.map(n=>`<option value="${esc(n)}"${it.assignee===n?' selected':''}>${esc(n)}</option>`)).join('');
+      const st=Object.keys(PART_ST).map(s=>`<option value="${s}"${it.status===s?' selected':''}>${PART_ST[s]}</option>`).join('');
+      const hasDetail=it.segment||it.strengths||it.why||it.recommendation||it.actionPlan||it.commission;
+      return `<div class="out-item ${it.status}" data-id="${esc(it.id)}">
+        <div class="out-row">
+          <div class="b-name${hasDetail?' expandable':''}">
+            <span class="nm">${esc(it.name)}${it.commission?` <span class="tier tier-hi" title="Предлагаемый %">${esc(it.commission)}</span>`:''}${it.budgetTier?` <span class="pt-tier">${esc(it.budgetTier)}</span>`:''}${hasDetail?' <span class="chev">▸</span>':''}</span>
+            ${it.reach||it.segment?`<small>${esc(it.reach||it.segment)}</small>`:''}
+          </div>
+          <div class="b-cat">${esc((it.category||'').replace(/\s*—\s*Астана.*/,'').replace(/\s*\(Астана\)/,''))}</div>
+          <div class="b-contact">${channelsHtml(it)}</div>
+          <select class="p-assignee">${opts}</select>
+          <select class="p-status st-${it.status}">${st}</select>
+          <input class="b-note" value="${esc(it.note||'')}" placeholder="Заметка…" />
+          <button class="out-del" title="Удалить">×</button>
+        </div>
+        <div class="out-detail" hidden>
+          ${it.segment?`<div class="dl"><b>Чем занимаются:</b> ${esc(it.segment)}</div>`:''}
+          ${it.strengths?`<div class="dl"><b>Охват / масштаб:</b> ${esc(it.strengths)}</div>`:''}
+          ${it.why?`<div class="dl"><b>Почему хороший партнёр:</b> ${esc(it.why)}</div>`:''}
+          ${it.commission?`<div class="dl"><b>Предложить %:</b> ${esc(it.commission)}</div>`:''}
+          ${it.recommendation?`<div class="dl rec"><b>Как зайти:</b> ${esc(it.recommendation)}</div>`:''}
+          ${it.actionPlan?`<div class="dl plan"><b>Первое сообщение:</b> ${esc(it.actionPlan)}</div>`:''}
+          ${it.source?`<div class="dl"><a href="${esc((String(it.source).match(/https?:\/\/[^\s]+/)||[it.source])[0])}" target="_blank" rel="noopener">источник ↗</a></div>`:''}
+        </div>
+      </div>`;
+    }).join('')||`<div class="out-empty">Ничего не найдено.</div>`;
+    box.querySelectorAll('.out-item').forEach(item=>{
+      const id=item.dataset.id; const it=PART.find(x=>x.id===id); if(!it) return;
+      item.querySelector('.p-assignee').addEventListener('change',e=>savePart(it,{assignee:e.target.value}));
+      item.querySelector('.p-status').addEventListener('change',e=>savePart(it,{status:e.target.value},true));
+      item.querySelector('.b-note').addEventListener('change',e=>savePart(it,{note:e.target.value}));
+      item.querySelector('.out-del').addEventListener('click',()=>delPart(it));
+      const nm=item.querySelector('.b-name.expandable');
+      if(nm) nm.addEventListener('click',()=>{ const d=item.querySelector('.out-detail'); d.hidden=!d.hidden; item.classList.toggle('open',!d.hidden); });
+    });
+  }
+  async function savePart(it,patch,rerender){ Object.assign(it,patch); try{ await apiPart('POST',{action:'save',item:it}); toast('Сохранено','ok'); if(rerender) renderPartners(); else partStats(); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  async function delPart(it){ if(!confirm('Удалить партнёра?\n'+it.name)) return; try{ await apiPart('POST',{action:'delete',id:it.id}); PART=PART.filter(x=>x.id!==it.id); renderPartners(); toast('Удалено','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  $('#partSearch') && $('#partSearch').addEventListener('input',e=>{ partSearch=e.target.value.trim(); renderPartners(); });
+  $$('#partStatusFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#partStatusFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); partFilter=b.dataset.f; renderPartners(); }));
+  (function(){ const s=$('#partWhoFilter'); if(!s) return; s.insertAdjacentHTML('beforeend','<option value="__none">Не назначен</option>'+TEAM.map(n=>`<option value="${n}">${n}</option>`).join('')); s.addEventListener('change',e=>{ partWho=e.target.value; renderPartners(); }); })();
+  $('#partReloadBtn') && $('#partReloadBtn').addEventListener('click',loadPartners);
   $('#outReloadBtn') && $('#outReloadBtn').addEventListener('click',loadOutreach);
 
   // ---------- DEALS render ----------

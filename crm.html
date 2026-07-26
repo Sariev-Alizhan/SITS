@@ -256,6 +256,8 @@
   .part-hero{background:linear-gradient(100deg,var(--gold-soft),transparent);border:1px solid color-mix(in srgb,var(--gold) 26%,var(--line));border-radius:14px;padding:16px 20px;margin-bottom:20px;font-size:14px;color:var(--dim);line-height:1.5}
   .part-hero b{color:var(--gold);font-family:var(--font-display)}
   .out-row .b-name .pt-tier{font-size:9px;font-weight:600;color:var(--slate);border:1px solid var(--line-2);border-radius:6px;padding:1px 6px;text-transform:uppercase;letter-spacing:.03em;vertical-align:1px}
+  .out-row .b-name .pt-tier.pt-big{color:var(--info);border-color:color-mix(in srgb,var(--info) 40%,var(--line))}
+  .out-row .b-name .pt-pct{font-size:10px;font-weight:800;color:var(--gold);background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent);border-radius:5px;padding:0 5px;vertical-align:1px;cursor:help}
   #outMineFilter .on{color:var(--gold)}
   .who-filter{width:auto;min-width:150px;padding:8px 12px;font-size:13px;border-radius:10px}
   .preset-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 14px}
@@ -952,7 +954,7 @@
       return `<div class="out-item ${it.status}" data-id="${esc(it.id)}">
         <div class="out-row">
           <div class="b-name${hasDetail?' expandable':''}">
-            <span class="nm">${esc(it.name)}${it.commission?` <span class="tier tier-hi" title="Предлагаемый %">${esc(it.commission)}</span>`:''}${it.budgetTier?` <span class="pt-tier">${esc(it.budgetTier)}</span>`:''}${hasDetail?' <span class="chev">▸</span>':''}</span>
+            <span class="nm">${esc(it.name)}${it.budgetTier?` <span class="pt-tier${it.budgetTier==='крупное'?' pt-big':''}">${esc(it.budgetTier)}</span>`:''}${it.commission?` <span class="pt-pct" title="${esc(it.commission)}">%</span>`:''}${hasDetail?' <span class="chev">▸</span>':''}</span>
             ${it.reach||it.segment?`<small>${esc(it.reach||it.segment)}</small>`:''}
           </div>
           <div class="b-cat">${esc((it.category||'').replace(/\s*—\s*Астана.*/,'').replace(/\s*\(Астана\)/,''))}</div>

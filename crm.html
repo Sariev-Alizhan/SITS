@@ -360,7 +360,7 @@
     .who-filter{min-width:0;flex:1}
   }
 
-  /* ===== Обзвон на мобилке: карточки вместо таблицы ===== */
+  /* ===== Обзвон / Партнёры на мобилке: карточки вместо таблицы ===== */
   @media(max-width:760px){
     .out-wrap{overflow-x:visible}
     .out-head{display:none}
@@ -368,12 +368,18 @@
     .out-row>.b-name{grid-column:1/-1}
     .out-row>.b-cat{grid-column:1/-1;font-size:11.5px}
     .out-row>.b-contact{grid-column:1/-1}
-    .out-row>.o-assignee{grid-column:1}
-    .out-row>.o-status{grid-column:2}
+    .out-row>.o-assignee,.out-row>.p-assignee{grid-column:1}
+    .out-row>.o-status,.out-row>.p-status{grid-column:2}
     .out-row>.b-note{grid-column:1/-1}
     .out-row>.out-del{grid-column:1/-1;justify-self:end;width:44px}
     .out-detail{min-width:0}
-    .out-row .b-cat::before{content:"Категория: ";color:var(--slate)}
+    .out-row .b-cat{color:var(--slate)}
+    /* календарь: компактнее, читаемая сетка со скроллом */
+    .cal-grid{grid-template-columns:44px repeat(7,minmax(52px,1fr));min-width:520px;gap:3px}
+    .cal-tl{font-size:10px;padding-right:5px}
+    .cal-cell{height:26px}
+    .cal-legend{margin-left:0;width:100%}
+    .part-hero,.cal-now{font-size:13px;padding:13px 15px}
   }
 
   /* ===================== КП ДОКУМЕНТ (печать / PDF) — светлый ===================== */

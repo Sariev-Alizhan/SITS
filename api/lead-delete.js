@@ -1,7 +1,7 @@
 // /api/lead-delete.js — удаление заявки из CRM.
 // Защита: timing-safe пароль, rate-limit на провалы.
 
-import { rateLimit, getClientIp, timingSafeEqual, parseBody } from './_security.js';
+import { rateLimit, getClientIp, timingSafeEqual, readBody } from './_security.js';
 import { db, dbReady } from './_db.js';
 
 export default async function handler(req, res) {
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
 
   try {
     let body;
-    try { body = parseBody(req, 4 * 1024); }
+    try { body = await readBody(req, 4 * 1024); }
     catch (e) { return res.status(e.code || 400).json({ ok: false, error: 'Bad request' }); }
 
     const { id } = body;

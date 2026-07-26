@@ -1,10 +1,10 @@
 // /api/lead.js — приём заявки с сайта
 // 1) Anti-abuse: rate limit per-IP, Origin check, body-size guard, honeypot, time-trap
-// 2) Сохраняет в Vercel KV (для CRM)
+// 2) Сохраняет в Supabase (таблица leads) — для CRM/админки
 // 3) Уведомляет в Telegram
 // Обе интеграции опциональны: если переменная не задана — шаг просто пропускается.
 
-import { rateLimit, getClientIp, checkOrigin, parseBody } from './_security.js';
+import { rateLimit, getClientIp, checkOrigin, readBody } from './_security.js';
 import { db, dbReady } from './_db.js';
 
 const ALLOWED_ORIGINS = [
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
 
   try {
     let body;
-    try { body = parseBody(req, 16 * 1024); }
+    try { body = await readBody(req, 16 * 1024); }
     catch (e) { return res.status(e.code || 400).json({ ok: false, error: 'Bad request' }); }
 
     const { name = '', contact = '', service = '', details = '', website = '', formTime = 0 } = body;

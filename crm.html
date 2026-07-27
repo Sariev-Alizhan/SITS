@@ -299,6 +299,25 @@
   .dl-list{display:flex;flex-direction:column;gap:2px}
   .dl-row{display:flex;align-items:center;justify-content:space-between;font-size:13.5px;color:var(--dim);padding:7px 0;border-bottom:1px dashed var(--line)}
   .dl-row:last-child{border-bottom:none} .dl-row b{color:var(--fg);font-family:var(--font-display)}
+  /* Заметки — общая доска */
+  .note-compose{background:linear-gradient(180deg,var(--surface),var(--ink));border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:20px}
+  .note-compose textarea{resize:vertical;min-height:60px;background:var(--ink);border-color:var(--line-2)}
+  .note-actions{display:flex;align-items:center;gap:12px;margin-top:10px}
+  .note-hint{font-size:12px;color:var(--slate)}
+  .notes-list{display:flex;flex-direction:column;gap:12px}
+  .note-card{display:flex;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px 16px;position:relative}
+  .note-card.pinned{border-color:color-mix(in srgb,var(--gold) 40%,var(--line));background:linear-gradient(100deg,var(--gold-soft),var(--surface))}
+  .note-av{width:38px;height:38px;flex:0 0 auto;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:#241a06;display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--font-display)}
+  .note-body{flex:1;min-width:0}
+  .note-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:5px}
+  .note-meta b{font-family:var(--font-display);font-weight:600;font-size:14px}
+  .note-meta span{font-size:12px;color:var(--slate)}
+  .note-pin-tag{font-size:10px;color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent);border-radius:6px;padding:1px 6px;text-transform:uppercase;letter-spacing:.03em}
+  .note-text{font-size:14px;color:var(--fg);line-height:1.5;word-break:break-word}
+  .note-tools{display:flex;flex-direction:column;gap:6px;flex:0 0 auto}
+  .note-tool{background:transparent;border:1px solid var(--line);border-radius:8px;width:30px;height:30px;color:var(--slate);font-size:15px;line-height:1;cursor:pointer;transition:.15s var(--ease)}
+  .note-tool.n-pin:hover{border-color:var(--gold);color:var(--gold)}
+  .note-tool.n-del:hover{border-color:var(--err);color:#e5675e}
   /* Roadmap / Стратегия — контент-страницы */
   .doc-hero{margin-bottom:24px}
   .doc-hero h2{font-family:var(--font-display);font-weight:700;font-size:26px;letter-spacing:-.3px}
@@ -536,6 +555,7 @@
       <button class="tab" data-view="calendar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg> Календарь</button>
       <button class="tab" data-view="roadmap"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3zM9 3v15M15 6v15"/></svg> Roadmap</button>
       <button class="tab" data-view="strategy"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg> Стратегия</button>
+      <button class="tab" data-view="notes"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg> Заметки</button>
     </div>
   </div>
 
@@ -847,6 +867,21 @@
       <p class="doc-note">Реклам­ные агентства — наш рычаг: у них уже есть нужные клиенты. Предлагаем <b>реферал 10%</b> · <b>активная продажа 15–20%</b> · <b>рекуррент 10–15%/мес</b> за поддержку. Заходим как коллеги: «вы приводите клиентам трафик — мы помогаем не терять заявки, вы получаете % без нагрузки на команду». Готовые сообщения — во вкладке «Партнёры».</p>
     </div>
   </div>
+
+  <!-- ---- ЗАМЕТКИ (общая доска команды) ---- -->
+  <div class="wrap view" id="view-notes">
+    <div class="part-hero"><b>Общие заметки команды</b> — доска, которую видят все. Пиши напоминания, договорённости, важное — остальные сразу увидят.</div>
+    <div class="note-compose">
+      <textarea id="noteText" rows="3" placeholder="Написать заметку для всей команды…" maxlength="4000"></textarea>
+      <div class="note-actions">
+        <button class="btn btn-gold btn-sm" id="noteAddBtn">Опубликовать</button>
+        <span class="note-hint">видят все · Ctrl+Enter</span>
+        <button class="btn btn-ghost btn-sm icon-btn" id="notesReload" title="Обновить" style="margin-left:auto"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/></svg></button>
+      </div>
+    </div>
+    <div id="notesList" class="notes-list"></div>
+    <div id="notesEmpty" class="out-empty" style="display:none">Пока нет заметок. Напиши первую — её увидит вся команда.</div>
+  </div>
 </div>
 
 <!-- ==================== КП ДОКУМЕНТ (модалка / печать) ==================== -->
@@ -1061,6 +1096,7 @@
     $$('.view').forEach(v=>v.classList.remove('active'));
     $('#view-'+t.dataset.view).classList.add('active');
     if(t.dataset.view==='dashboard') loadDashboard();
+    if(t.dataset.view==='notes') loadNotes();
     if(t.dataset.view==='outreach') ensureOutreach();
     if(t.dataset.view==='partners') ensurePartners();
     if(t.dataset.view==='calendar') renderCal();
@@ -1352,6 +1388,48 @@
     $$('#dashGrid [data-go]').forEach(b=>b.addEventListener('click',()=>goTab(b.dataset.go)));
   }
   $('#dashReload') && $('#dashReload').addEventListener('click',loadDashboard);
+
+  // ---------- ЗАМЕТКИ (общая доска команды) ----------
+  let NOTES=[];
+  async function apiNotes(method,body){ const opt={method,headers:{'x-crm-login':LOGIN,'x-crm-pass':PASS}}; if(body){opt.headers['Content-Type']='application/json';opt.body=JSON.stringify(body);} const r=await fetch('/api/crm-notes',opt); const d=await r.json().catch(()=>({ok:false,error:'Ошибка ответа'})); if(!r.ok||!d.ok) throw new Error(d.error||('HTTP '+r.status)); return d; }
+  function relTime(iso){ try{ const d=new Date(iso), now=new Date(), s=(now-d)/1000; if(s<60) return 'только что'; if(s<3600) return Math.floor(s/60)+' мин назад'; if(s<86400) return Math.floor(s/3600)+' ч назад'; if(s<172800) return 'вчера'; return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}); }catch(_){ return ''; } }
+  async function loadNotes(){ try{ const d=await apiNotes('GET'); NOTES=d.notes||[]; renderNotes(); }catch(err){ $('#notesList').innerHTML=''; $('#notesEmpty').style.display='block'; $('#notesEmpty').textContent='Не удалось загрузить: '+err.message; } }
+  function renderNotes(){
+    const box=$('#notesList'); if(!box) return;
+    $('#notesEmpty').style.display=NOTES.length?'none':'block';
+    const me=localStorage.getItem(KEY_MGR)||'';
+    box.innerHTML=NOTES.map(n=>{
+      const init=(String(n.author||'?').trim()[0]||'?').toUpperCase();
+      return `<div class="note-card${n.pinned?' pinned':''}" data-id="${esc(n.id)}">
+        <div class="note-av">${esc(init)}</div>
+        <div class="note-body">
+          <div class="note-meta"><b>${esc(n.author||'—')}</b><span>${esc(relTime(n.createdAt))}</span>${n.pinned?'<span class="note-pin-tag">закреплено</span>':''}</div>
+          <div class="note-text">${esc(n.text).replace(/\n/g,'<br>')}</div>
+        </div>
+        <div class="note-tools">
+          <button class="note-tool n-pin" title="${n.pinned?'Открепить':'Закрепить'}">${n.pinned?'★':'☆'}</button>
+          <button class="note-tool n-del" title="Удалить">×</button>
+        </div>
+      </div>`;
+    }).join('');
+    box.querySelectorAll('.note-card').forEach(card=>{
+      const id=card.dataset.id; const n=NOTES.find(x=>x.id===id); if(!n) return;
+      card.querySelector('.n-pin').addEventListener('click',()=>pinNote(n));
+      card.querySelector('.n-del').addEventListener('click',()=>delNote(n));
+    });
+  }
+  async function addNote(){
+    const ta=$('#noteText'); const text=(ta.value||'').trim(); if(!text) return;
+    const btn=$('#noteAddBtn'); btn.disabled=true; btn.textContent='Публикую…';
+    try{ const d=await apiNotes('POST',{action:'add',text}); if(d.note){ NOTES.unshift(d.note); ta.value=''; renderNotes(); toast('Заметка добавлена','ok'); } }
+    catch(err){ toast('Ошибка: '+err.message,'err'); }
+    finally{ btn.disabled=false; btn.textContent='Опубликовать'; }
+  }
+  async function pinNote(n){ n.pinned=!n.pinned; try{ await apiNotes('POST',{action:'pin',id:n.id,pinned:n.pinned}); NOTES.sort((a,b)=>(b.pinned-a.pinned)||(new Date(b.createdAt)-new Date(a.createdAt))); renderNotes(); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  async function delNote(n){ if(!confirm('Удалить заметку?')) return; try{ await apiNotes('POST',{action:'delete',id:n.id}); NOTES=NOTES.filter(x=>x.id!==n.id); renderNotes(); toast('Удалено','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  $('#noteAddBtn') && $('#noteAddBtn').addEventListener('click',addNote);
+  $('#notesReload') && $('#notesReload').addEventListener('click',loadNotes);
+  $('#noteText') && $('#noteText').addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key==='Enter') addNote(); });
   $('#outReloadBtn') && $('#outReloadBtn').addEventListener('click',loadOutreach);
 
   // ---------- DEALS render ----------

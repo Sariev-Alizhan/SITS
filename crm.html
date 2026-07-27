@@ -272,6 +272,40 @@
   .cal-tips{margin-top:16px;font-size:13.5px;color:var(--dim);line-height:1.6}
   .cal-tips b{color:var(--fg)} .cal-tips ul{margin:6px 0 0 18px} .cal-tips li{margin:3px 0}
   #calMode .ic{width:1em;height:1em}
+  /* Roadmap / Стратегия — контент-страницы */
+  .doc-hero{margin-bottom:24px}
+  .doc-hero h2{font-family:var(--font-display);font-weight:700;font-size:26px;letter-spacing:-.3px}
+  .doc-hero p{color:var(--dim);font-size:15px;margin-top:6px;max-width:760px}
+  .doc-sec{margin-bottom:30px}
+  .doc-sec h3{font-family:var(--font-display);font-weight:600;font-size:17px;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .doc-ic{width:26px;height:26px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex:0 0 auto}
+  .doc-ic.ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:#5cc79a;border:1px solid color-mix(in srgb,var(--ok) 40%,transparent)}
+  .doc-ic.gold{background:var(--gold-soft);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent)}
+  .doc-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+  .doc-card{background:linear-gradient(180deg,var(--surface),var(--ink));border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .doc-card b{font-family:var(--font-display);font-weight:600;font-size:14.5px;display:block;margin-bottom:6px}
+  .doc-card span{color:var(--dim);font-size:13.5px;line-height:1.5}
+  .doc-card.script{margin-bottom:12px}
+  .doc-card.script p{color:var(--fg);font-size:13.5px;line-height:1.55;margin-top:8px;padding:10px 12px;background:var(--ink);border-radius:10px;border:1px solid var(--line)}
+  .doc-card.script p b{display:inline;color:var(--gold);font-family:var(--font-body)}
+  .doc-lead{font-size:16px;line-height:1.6;color:var(--fg);background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--gold) 24%,transparent);border-radius:14px;padding:18px 22px}
+  .doc-lead b{color:var(--gold)}
+  .doc-note{color:var(--dim);font-size:14.5px;line-height:1.6} .doc-note b{color:var(--fg)}
+  .phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .phase{background:linear-gradient(180deg,var(--surface),var(--ink));border:1px solid var(--line);border-radius:16px;padding:18px;position:relative}
+  .phase.now{border-color:color-mix(in srgb,var(--gold) 45%,var(--line));box-shadow:0 0 0 1px color-mix(in srgb,var(--gold) 25%,transparent)}
+  .phase .ph-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--slate);margin-bottom:8px}
+  .phase.now .ph-tag{color:var(--gold)}
+  .phase>b{font-family:var(--font-display);font-weight:600;font-size:16px;display:block;margin-bottom:10px}
+  .phase ul{margin:0 0 0 16px;padding:0} .phase li{color:var(--dim);font-size:13px;line-height:1.45;margin:5px 0} .phase li b{color:var(--fg)}
+  .steps-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .sf{background:linear-gradient(180deg,var(--surface),var(--ink));border:1px solid var(--line);border-radius:14px;padding:16px 18px;position:relative}
+  .sf-n{position:absolute;top:14px;right:14px;width:26px;height:26px;border-radius:50%;background:var(--gold-soft);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:13px}
+  .sf b{font-family:var(--font-display);font-weight:600;font-size:14.5px;display:block;margin-bottom:6px;padding-right:30px}
+  .sf span{color:var(--dim);font-size:13px;line-height:1.5}
+  .doc-rules{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+  .doc-rules li{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--dim);line-height:1.5}
+  .doc-rules li b{color:var(--fg)}
   .part-hero{background:linear-gradient(100deg,var(--gold-soft),transparent);border:1px solid color-mix(in srgb,var(--gold) 26%,var(--line));border-radius:14px;padding:16px 20px;margin-bottom:20px;font-size:14px;color:var(--dim);line-height:1.5}
   .part-hero b{color:var(--gold);font-family:var(--font-display)}
   .out-row .b-name .pt-tier{font-size:9px;font-weight:600;color:var(--slate);border:1px solid var(--line-2);border-radius:6px;padding:1px 6px;text-transform:uppercase;letter-spacing:.03em;vertical-align:1px}
@@ -472,6 +506,8 @@
       <button class="tab" data-view="outreach"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L7.9 9.8a16 16 0 0 0 6 6l1.4-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/></svg> Обзвон</button>
       <button class="tab" data-view="partners"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg> Партнёры</button>
       <button class="tab" data-view="calendar"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg> Календарь</button>
+      <button class="tab" data-view="roadmap"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3zM9 3v15M15 6v15"/></svg> Roadmap</button>
+      <button class="tab" data-view="strategy"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg> Стратегия</button>
     </div>
   </div>
 
@@ -638,6 +674,137 @@
     </div>
     <div class="cal-wrap"><div class="cal-grid" id="calGrid"></div></div>
     <div class="cal-tips" id="calTips"></div>
+  </div>
+
+  <!-- ---- ROADMAP ---- -->
+  <div class="wrap view" id="view-roadmap">
+    <div class="doc-hero">
+      <h2>Roadmap SITS · Fibonacci Control</h2>
+      <p>Где мы сейчас и куда движемся. Продукт готов — фокус на первых клиентах, потоке и масштабе.</p>
+    </div>
+
+    <div class="doc-sec">
+      <h3><span class="doc-ic ok">✓</span>Что уже готово</h3>
+      <div class="doc-cards">
+        <div class="doc-card"><b>CRM Fibonacci Control</b><span>Сделки (канбан), КП-генератор с ИИ и печатью в PDF, каталог услуг, воронка.</span></div>
+        <div class="doc-card"><b>Внутренняя CRM SITS</b><span>Обзвон 413 отобранных бизнесов Астаны, 135 агентств-партнёров, календарь лучшего времени.</span></div>
+        <div class="doc-card"><b>Автоматизация заявок</b><span>Приём с сайта → Telegram + база, интеграции WhatsApp/Instagram, AI-ассистент на Claude.</span></div>
+        <div class="doc-card"><b>Каналы привлечения</b><span>Сайт с прайсом, реферальная программа 10%, партнёрская сеть агентств, фото-прайс и баннеры.</span></div>
+      </div>
+    </div>
+
+    <div class="doc-sec">
+      <h3><span class="doc-ic gold">→</span>Этапы роста</h3>
+      <div class="phases">
+        <div class="phase now">
+          <div class="ph-tag">Сейчас · 0–1 мес</div>
+          <b>Первые клиенты</b>
+          <ul>
+            <li>Обзвон высокобюджетных лидов (216 шт) — по скриптам из вкладки «Стратегия»</li>
+            <li>Запуск партнёрки: написать 10–15 крупным агентствам, договориться на %</li>
+            <li>Цель: <b>3–5 первых внедрений</b> + 2–3 партнёрских соглашения</li>
+            <li>Собрать первые кейсы и отзывы</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <div class="ph-tag">1–3 мес</div>
+          <b>Поток и процессы</b>
+          <ul>
+            <li>Отладить воронку: контакт → демо → КП → закрытие → внедрение</li>
+            <li>Контент из кейсов (до/после автоматизации) в соцсети</li>
+            <li>Масштабировать партнёрку до 10+ активных агентств</li>
+            <li>Распределить роли в команде (кто ведёт какие ниши)</li>
+            <li>Цель: <b>10–15 клиентов</b>, стабильный поток заявок</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <div class="ph-tag">3–6 мес</div>
+          <b>Масштаб</b>
+          <ul>
+            <li>Отраслевые шаблоны CRM (стоматологии, салоны, автосервисы, мебель)</li>
+            <li>Рекуррентный доход от поддержки/сопровождения</li>
+            <li>Выход в другие города (Алматы, Шымкент — база агентств уже есть)</li>
+            <li>Цель: <b>30+ клиентов</b>, MRR от поддержки</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <div class="ph-tag">6–12 мес</div>
+          <b>Продукт как SaaS</b>
+          <ul>
+            <li>Самообслуживание, тарифы, онбординг без ручного внедрения</li>
+            <li>White-label для партнёров (продают под своим брендом)</li>
+            <li>Цель: продукт продаёт себя сам, партнёры — основной канал</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-sec">
+      <h3><span class="doc-ic gold">◈</span>Направления (вертикали)</h3>
+      <p class="doc-note">Куда бить в первую очередь — где деньги и острая боль: <b>клиники и стоматологии</b>, <b>салоны красоты и косметология</b>, <b>мебель/кухни на заказ</b>, <b>автосервисы и детейлинг</b>, <b>недвижимость</b>, <b>e-commerce/доставка</b>. По каждой нише — свой шаблон CRM и готовый оффер.</p>
+    </div>
+  </div>
+
+  <!-- ---- СТРАТЕГИЯ / КАК ПРОДАВАТЬ ---- -->
+  <div class="wrap view" id="view-strategy">
+    <div class="doc-hero">
+      <h2>Стратегия продаж · как продавать SITS</h2>
+      <p>Единое видение для команды: кому, что и как продаём. Следуй процессу — не теряй лиды.</p>
+    </div>
+
+    <div class="doc-sec">
+      <h3><span class="doc-ic gold">◆</span>Наш оффер</h3>
+      <p class="doc-lead">«Мы автоматизируем ваш бизнес и внедряем CRM Fibonacci Control, чтобы вы <b>перестали терять заявки</b> из WhatsApp/Instagram и <b>довели каждого клиента до продажи</b>. Приём заявок 24/7, онлайн-запись, напоминания, воронка — под ключ.»</p>
+    </div>
+
+    <div class="doc-sec">
+      <h3><span class="doc-ic gold">◈</span>Кому продаём (приоритет)</h3>
+      <div class="doc-cards">
+        <div class="doc-card"><b>1. Высокий чек + поток заявок</b><span>Клиники, стоматологии, косметология, мебель/кухни, автосервисы, недвижимость — им дороже всего терять лиды.</span></div>
+        <div class="doc-card"><b>2. Активная реклама</b><span>Кто уже льёт трафик (таргет, блогеры) — у них есть заявки, но нет системы обработки.</span></div>
+        <div class="doc-card"><b>3. Сети и несколько точек</b><span>Им нужна единая база и распределение заявок между филиалами.</span></div>
+      </div>
+    </div>
+
+    <div class="doc-sec">
+      <h3><span class="doc-ic gold">→</span>Воронка продажи (этапы)</h3>
+      <div class="steps-flow">
+        <div class="sf"><span class="sf-n">1</span><b>Контакт</b><span>Пишем/звоним по скрипту (лучшее время — вкладка «Календарь»). Ставим статус «В работе».</span></div>
+        <div class="sf"><span class="sf-n">2</span><b>Квалификация</b><span>Узнаём: сколько заявок в день, где теряются, есть ли CRM. Подтверждаем боль.</span></div>
+        <div class="sf"><span class="sf-n">3</span><b>Демо / диагностика</b><span>Показываем, как теряются лиды у них сейчас, и как это решает наша CRM. Бесплатный аудит.</span></div>
+        <div class="sf"><span class="sf-n">4</span><b>КП</b><span>Собираем в CRM (вкладка «Новое КП» + ИИ) под их задачу, отправляем PDF.</span></div>
+        <div class="sf"><span class="sf-n">5</span><b>Закрытие</b><span>Отрабатываем возражения, предоплата 50%. Статус «Счёт» → «Выиграно».</span></div>
+        <div class="sf"><span class="sf-n">6</span><b>Внедрение + поддержка</b><span>Внедряем, обучаем, продаём месячную поддержку (рекуррент).</span></div>
+      </div>
+    </div>
+
+    <div class="doc-sec">
+      <h3><span class="doc-ic gold">✎</span>Скрипты</h3>
+      <div class="doc-card script"><b>Первое сообщение (WhatsApp/Instagram)</b><p>«Здравствуйте! Это [Имя], SITS. Видел, вы активно продвигаетесь — заявки идут в Direct/WhatsApp. Многие теряются без системы: не ответили вовремя, забыли перезвонить. Мы внедряем CRM и автоматизацию: заявки собираются в одном окне, автоответы, напоминания. Покажу за 15 минут на вашем примере — когда удобно?»</p></div>
+      <div class="doc-card script"><b>Начало звонка</b><p>«Добрый день! [Имя], компания SITS, автоматизация бизнеса. Пара минут есть? …Мы помогаем [ниша] не терять заявки и довести их до продажи. Скажите, сколько обращений в день у вас примерно и где они сейчас — WhatsApp, Instagram, звонки?»</p></div>
+      <div class="doc-card script"><b>Возражения</b>
+        <p><b>«Дорого»</b> → «Сколько стоит один потерянный клиент? Одна-две сделки окупают внедрение. Плюс предоплата 50%, старт от 150 000 ₸.»</p>
+        <p><b>«У нас уже есть CRM / таблицы»</b> → «Отлично, значит вы понимаете ценность. Покажу, что наша связывает WhatsApp+Instagram+сайт в одно окно с автоответами — часто это то, чего не хватает.»</p>
+        <p><b>«Подумаю»</b> → «Конечно. Давайте я бесплатно посчитаю, сколько заявок вы теряете за неделю — по этой цифре и решите. Займёт 15 минут.»</p>
+        <p><b>«Нет времени»</b> → «Поэтому и звоню — автоматизация экономит время. 15 минут сейчас сэкономят вам часы на переписке. Когда перезвонить — завтра до обеда?»</p>
+      </div>
+    </div>
+
+    <div class="doc-sec">
+      <h3><span class="doc-ic gold">◈</span>Правила игры</h3>
+      <ul class="doc-rules">
+        <li><b>Не теряй лиды.</b> Каждый контакт — в «Обзвон», ставь статус и заметку. Нет статуса = потерян.</li>
+        <li><b>Пиши/звони в правильное время</b> — смотри «Календарь» (Вт–Чт 10–12 и 15–17 для звонков, вечер для сообщений).</li>
+        <li><b>Follow-up.</b> Не ответили — напомни через 2–3 дня. 80% продаж — после 3–5 касаний.</li>
+        <li><b>Веди по боли, а не по функциям.</b> Продавай результат: «перестанете терять клиентов», а не «у нас есть канбан».</li>
+        <li><b>Скорость.</b> Ответил первым — забрал клиента. Особенно для партнёрских лидов.</li>
+      </ul>
+    </div>
+
+    <div class="doc-sec">
+      <h3><span class="doc-ic gold">◇</span>Партнёрам (агентствам)</h3>
+      <p class="doc-note">Реклам­ные агентства — наш рычаг: у них уже есть нужные клиенты. Предлагаем <b>реферал 10%</b> · <b>активная продажа 15–20%</b> · <b>рекуррент 10–15%/мес</b> за поддержку. Заходим как коллеги: «вы приводите клиентам трафик — мы помогаем не терять заявки, вы получаете % без нагрузки на команду». Готовые сообщения — во вкладке «Партнёры».</p>
+    </div>
   </div>
 </div>
 

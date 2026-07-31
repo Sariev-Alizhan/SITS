@@ -821,8 +821,31 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .fibo-card .fc-ico svg{width:22px;height:22px;color:var(--red)}
 .fibo-card h4{font-family:var(--font-display);font-weight:500;font-size:16.5px;letter-spacing:-.01em;margin-bottom:7px;color:var(--text)}
 .fibo-card p{color:var(--muted);font-size:14px;line-height:1.5}
+/* ——— Фирменный тёмно-золотой стиль Fibonacci Control (перекрывает красный акцент SITS в этой секции) ——— */
+#fibonacci{--fg-gold:#D2A24C;--fg-lit:#EFC97E;--fg-soft:rgba(210,162,76,.12);position:relative;overflow:hidden;
+  background:radial-gradient(1100px 520px at 82% -12%,rgba(210,162,76,.11),transparent 58%),linear-gradient(180deg,#090c14,#0b1020 60%,#0a0d16);
+  border-top:1px solid rgba(210,162,76,.16);border-bottom:1px solid rgba(210,162,76,.16)}
+#fibonacci::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 12% 108%,rgba(210,162,76,.07),transparent 60%);pointer-events:none}
+#fibonacci .wrap{position:relative;z-index:1}
+.fibo-brandbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:30px}
+.fibo-brandbar img{height:38px;width:auto;filter:drop-shadow(0 4px 18px rgba(210,162,76,.28))}
+.fibo-prod{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-lit);background:var(--fg-soft);border:1px solid rgba(210,162,76,.32);padding:6px 13px;border-radius:100px}
+#fibonacci .sec-tag{color:var(--fg-lit);background:var(--fg-soft);border-color:rgba(210,162,76,.3)}
+#fibonacci .sec-tag i{background:var(--fg-gold)}
+#fibonacci h2,#fibonacci .fibo-lead,#fibonacci .fibo-card h4{color:#F6F1E6}
+#fibonacci .desc,#fibonacci .fibo-card p,#fibonacci .fibo-list span{color:#B7B2A6}
+#fibonacci .fibo-badge{color:#0d0f16;background:linear-gradient(180deg,var(--fg-lit),var(--fg-gold));border-color:transparent;font-weight:700}
+#fibonacci .fibo-copy,#fibonacci .fibo-card{background:rgba(255,255,255,.024);border-color:rgba(210,162,76,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+#fibonacci .fibo-card:hover{transform:translateY(-4px);border-color:rgba(210,162,76,.42);background:rgba(210,162,76,.05)}
+#fibonacci .fibo-list svg{color:var(--fg-gold)}
+#fibonacci .fibo-card .fc-ico{border-color:rgba(210,162,76,.26);background:var(--fg-soft)}
+#fibonacci .fibo-card .fc-ico svg{color:var(--fg-lit)}
+#fibonacci .btn-primary{background:linear-gradient(180deg,var(--fg-lit),var(--fg-gold));color:#241a06;border-color:transparent;box-shadow:0 10px 30px -8px rgba(210,162,76,.45)}
+#fibonacci .btn-primary:hover{filter:brightness(1.06);transform:translateY(-2px)}
+#fibonacci .btn-line{border-color:rgba(210,162,76,.4);color:var(--fg-lit)}
+#fibonacci .btn-line:hover{border-color:var(--fg-gold);background:var(--fg-soft)}
 @media(max-width:940px){.fibo-grid{grid-template-columns:1fr}}
-@media(max-width:560px){.fibo-cards{grid-template-columns:1fr}.fibo-copy{padding:28px}}
+@media(max-width:560px){.fibo-cards{grid-template-columns:1fr}.fibo-copy{padding:28px}.fibo-brandbar img{height:32px}}
 
 .contact-pricing{font-size:14px;color:var(--muted);line-height:1.55;margin-bottom:16px;
   padding:14px 18px;border:1px solid var(--glass-line);border-radius:var(--r-md);background:var(--glass);
@@ -1460,12 +1483,17 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 <!-- ============ FIBONACCI CONTROL / AUTOMATION ============ -->
 <section class="section" id="fibonacci">
   <div class="wrap">
+    <div class="fibo-brandbar reveal">
+      <img src="/brand/fibonacci-mark.svg" alt="Fibonacci Control" width="38" height="38" loading="lazy" decoding="async"/>
+      <span style="font-family:var(--font-display);font-weight:600;font-size:19px;letter-spacing:-.01em;color:#F6F1E6">Fibonacci Control</span>
+      <span class="fibo-prod"><i style="width:5px;height:5px;border-radius:50%;background:var(--fg-gold);display:inline-block"></i><span data-i18n="fibo.prod">Флагманский продукт SITS</span></span>
+    </div>
     <div class="sec-head reveal">
       <div class="left">
         <div class="sec-tag"><i></i><span data-i18n="fibo.tag">Наш продукт</span></div>
-        <h2 data-i18n="fibo.h2">Fibonacci Control — автоматизация и своя CRM</h2>
+        <h2 data-i18n="fibo.h2">CRM с ИИ-сотрудником для бизнеса</h2>
       </div>
-      <p class="desc" data-i18n="fibo.desc">Флагманское направление SITS: ставим CRM и автоматизируем рутину бизнеса за 1–2 недели — на собственной платформе, настроенной под вас.</p>
+      <p class="desc" data-i18n="fibo.desc">Флагманский продукт SITS. Собственная CRM: гибкая low-code настройка под ваш процесс, ИИ-сотрудник, автоворонки и генерация КП. Внедряем под ключ за 1–2 недели.</p>
     </div>
     <div class="fibo-grid reveal">
       <div class="fibo-copy">
@@ -1473,8 +1501,8 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         <p class="fibo-lead" data-i18n="fibo.lead">Заявки теряются в мессенджерах, менеджеры дублируют работу, отчёты делаются вручную. Мы это чиним.</p>
         <ul class="fibo-list">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="fibo.b1">Все заявки — Instagram, WhatsApp, сайт, звонки — в одном окне</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="fibo.b2">Автонапоминания, статусы сделок и воронка продаж</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="fibo.b3">Автоматические отчёты — без ручной работы</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="fibo.b2">ИИ-сотрудник ведёт клиентов, двигает сделки и готовит КП</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="fibo.b3">Low-code настройка: поля, статусы, роли и автоворонки — под ваш процесс</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="fibo.b4">Внедрение под ключ за 1–2 недели</span></li>
         </ul>
         <div class="fibo-cta">
@@ -1499,14 +1527,14 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
           <p data-i18n="fibo.c2P">Видно каждый лид и этап — ничего не теряется.</p>
         </div>
         <div class="fibo-card reveal">
-          <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12h2.5M19 12h2.5M5.2 5.2l1.8 1.8M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg></div>
-          <h4 data-i18n="fibo.c3H">Автоматизация рутины</h4>
-          <p data-i18n="fibo.c3P">Напоминания, статусы и задачи ставятся сами.</p>
+          <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M9 8V6a3 3 0 0 1 6 0v2M9.5 14h.01M14.5 14h.01M12 4V2"/></svg></div>
+          <h4 data-i18n="fibo.c3H">ИИ-сотрудник</h4>
+          <p data-i18n="fibo.c3P">Отвечает клиентам, двигает сделки по воронке и сам собирает КП.</p>
         </div>
         <div class="fibo-card reveal">
-          <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 3 4-6"/></svg></div>
-          <h4 data-i18n="fibo.c4H">Аналитика и отчёты</h4>
-          <p data-i18n="fibo.c4P">Понятные отчёты по продажам и работе команды.</p>
+          <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a4 4 0 0 1 4 4M4 12a8 8 0 0 1 8-8M8 20a12 12 0 0 1 0-16"/><circle cx="12" cy="12" r="1.6"/></svg></div>
+          <h4 data-i18n="fibo.c4H">Low-code гибкость</h4>
+          <p data-i18n="fibo.c4P">Поля, статусы, роли и автоматизации меняются без переписывания кода.</p>
         </div>
       </div>
     </div>
@@ -1807,20 +1835,21 @@ const I18N = {
     },
     fibo: {
       tag:'Наш продукт',
-      h2:'Fibonacci Control — автоматизация и своя CRM',
-      desc:'Флагманское направление SITS: ставим CRM и автоматизируем рутину бизнеса за 1–2 недели — на собственной платформе, настроенной под вас.',
+      prod:'Флагманский продукт SITS',
+      h2:'CRM с ИИ-сотрудником для бизнеса',
+      desc:'Флагманский продукт SITS. Собственная CRM: гибкая low-code настройка под ваш процесс, ИИ-сотрудник, автоворонки и генерация КП. Внедряем под ключ за 1–2 недели.',
       badge:'Собственная разработка SITS',
       lead:'Заявки теряются в мессенджерах, менеджеры дублируют работу, отчёты делаются вручную. Мы это чиним.',
       b1:'Все заявки — Instagram, WhatsApp, сайт, звонки — в одном окне',
-      b2:'Автонапоминания, статусы сделок и воронка продаж',
-      b3:'Автоматические отчёты — без ручной работы',
+      b2:'ИИ-сотрудник ведёт клиентов, двигает сделки и готовит КП',
+      b3:'Low-code настройка: поля, статусы, роли и автоворонки — под ваш процесс',
       b4:'Внедрение под ключ за 1–2 недели',
       ctaMain:'Смотреть Fibonacci Control',
       ctaAudit:'Бесплатный аудит процесса',
       c1H:'Все каналы вместе', c1P:'Заявки со всех источников попадают в одну систему автоматически.',
       c2H:'Воронка и сделки', c2P:'Видно каждый лид и этап — ничего не теряется.',
-      c3H:'Автоматизация рутины', c3P:'Напоминания, статусы и задачи ставятся сами.',
-      c4H:'Аналитика и отчёты', c4P:'Понятные отчёты по продажам и работе команды.',
+      c3H:'ИИ-сотрудник', c3P:'Отвечает клиентам, двигает сделки по воронке и сам собирает КП.',
+      c4H:'Low-code гибкость', c4P:'Поля, статусы, роли и автоматизации меняются без переписывания кода.',
     },
     process: {
       tag:'Как работаем', h2:'Прозрачный процесс',
@@ -2107,20 +2136,21 @@ const I18N = {
     },
     fibo: {
       tag:'Our product',
-      h2:'Fibonacci Control — automation & our own CRM',
-      desc:'The SITS flagship: we set up a CRM and automate your busywork in 1–2 weeks — on our own platform, tailored to you.',
+      prod:'SITS flagship product',
+      h2:'A CRM with an AI teammate',
+      desc:'The SITS flagship product. Our own CRM: flexible low-code setup for your process, an AI teammate, auto pipelines and proposal generation. Turnkey rollout in 1–2 weeks.',
       badge:'Built in-house by SITS',
       lead:'Leads scattered across chats, duplicated work, manual reports — we fix that.',
       b1:'Every lead — Instagram, WhatsApp, site, calls — in one place',
-      b2:'Auto reminders, deal stages and a sales pipeline',
-      b3:'Automated reports — no manual work',
+      b2:'An AI teammate handles clients, moves deals and drafts proposals',
+      b3:'Low-code setup: fields, statuses, roles and auto pipelines — for your process',
       b4:'Full turnkey setup in 1–2 weeks',
       ctaMain:'Explore Fibonacci Control',
       ctaAudit:'Free process audit',
       c1H:'All channels together', c1P:'Leads from every source land in one system automatically.',
       c2H:'Pipeline & deals', c2P:'See every lead and stage — nothing slips through.',
-      c3H:'Automated routine', c3P:'Reminders, statuses and tasks happen on their own.',
-      c4H:'Analytics & reports', c4P:'Clear reports on sales and team performance.',
+      c3H:'AI teammate', c3P:'Replies to clients, moves deals down the pipeline and assembles proposals.',
+      c4H:'Low-code flexibility', c4P:'Fields, statuses, roles and automations change without rewriting code.',
     },
     process: {
       tag:'Process', h2:'A transparent workflow',
@@ -2407,20 +2437,21 @@ const I18N = {
     },
     fibo: {
       tag:'Біздің өнім',
-      h2:'Fibonacci Control — автоматтандыру және меншікті CRM',
-      desc:'SITS-тің басты бағыты: 1–2 аптада CRM орнатып, бизнес рутинасын автоматтандырамыз — сізге бейімделген өз платформамызда.',
+      prod:'SITS-тің басты өнімі',
+      h2:'ИИ-қызметкері бар CRM',
+      desc:'SITS-тің басты өнімі. Меншікті CRM: процесіңізге бейімделетін икемді low-code баптау, ИИ-қызметкер, автоворонкалар және КП генерациясы. 1–2 аптада кілтпен енгіземіз.',
       badge:'SITS-тің меншікті әзірлемесі',
       lead:'Өтінімдер мессенджерлерде жоғалады, менеджерлер жұмысты қайталайды, есептер қолмен жасалады. Біз мұны шешеміз.',
       b1:'Барлық өтінім — Instagram, WhatsApp, сайт, қоңыраулар — бір терезеде',
-      b2:'Автоеске салулар, мәміле кезеңдері және сату воронкасы',
-      b3:'Автоматты есептер — қолмен жұмыссыз',
+      b2:'ИИ-қызметкер клиенттерді жүргізеді, мәмілелерді жылжытады және КП дайындайды',
+      b3:'Low-code баптау: өрістер, мәртебелер, рөлдер мен автоворонкалар — процесіңізге',
       b4:'Кілтпен тапсыру — 1–2 аптада',
       ctaMain:'Fibonacci Control-ды көру',
       ctaAudit:'Тегін процесс аудиті',
       c1H:'Барлық арна бірге', c1P:'Барлық көзден келген өтінімдер бір жүйеге автоматты түседі.',
       c2H:'Воронка және мәмілелер', c2P:'Әр лид пен кезең көрінеді — ешнәрсе жоғалмайды.',
-      c3H:'Рутинаны автоматтандыру', c3P:'Еске салулар, мәртебелер мен тапсырмалар өздігінен қойылады.',
-      c4H:'Аналитика және есептер', c4P:'Сату мен команда жұмысы бойынша түсінікті есептер.',
+      c3H:'ИИ-қызметкер', c3P:'Клиенттерге жауап береді, мәмілелерді воронка бойынша жылжытады және КП жинайды.',
+      c4H:'Low-code икемділік', c4P:'Өрістер, мәртебелер, рөлдер мен автоматтандырулар кодты қайта жазбай өзгереді.',
     },
     process: {
       tag:'Жұмыс тәртібі', h2:'Айқын процесс',

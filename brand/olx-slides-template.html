@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!-- Source for OLX selling images. Rendered at 1080x4320 (4 slides), cropped into 4x 1080x1080. -->
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="/fonts/fonts.css" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px}
+  body{font-family:'Manrope',system-ui,sans-serif;color:#f4f1f1;background:#0c0a0b}
+  .slide{position:relative;width:1080px;height:1080px;overflow:hidden;background:#0c0a0b;
+      padding:72px;display:flex;flex-direction:column}
+  .glow::before{content:"";position:absolute;inset:0;
+      background:radial-gradient(65% 45% at 100% 0%, rgba(226,55,68,.24), transparent 60%),
+                 radial-gradient(55% 40% at 0% 100%, rgba(226,55,68,.14), transparent 60%)}
+  .z{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
+
+  /* mini logo */
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo img{height:44px}
+  .logo .w{font-family:'PT Serif',serif;font-weight:700;font-size:42px;color:#e23744;letter-spacing:.03em;line-height:.8}
+  .logo .n{margin-left:6px;font-size:19px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#a39d9e}
+
+  .kick{font-size:19px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#e23744}
+
+  /* cover */
+  .h1{font-family:'Unbounded',sans-serif;font-weight:700;font-size:78px;line-height:1.05;letter-spacing:-.02em}
+  .h1 .r{color:#e23744}
+  .sub{font-size:30px;color:#a39d9e;line-height:1.4}
+  .chips{display:flex;flex-wrap:wrap;gap:12px}
+  .chip{font-size:22px;font-weight:600;padding:11px 20px;border-radius:100px;
+      border:1px solid rgba(226,55,68,.35);background:rgba(226,55,68,.1);color:#f4f1f1}
+  .cta{display:inline-flex;align-items:center;gap:12px;align-self:flex-start;
+      font-family:'Unbounded',sans-serif;font-weight:600;font-size:26px;color:#fff;
+      background:linear-gradient(180deg,#e85560,#e23744);border-radius:100px;padding:20px 34px;
+      box-shadow:0 16px 40px -14px rgba(226,55,68,.6)}
+
+  /* services grid */
+  .h2{font-family:'Unbounded',sans-serif;font-weight:600;font-size:52px;letter-spacing:-.01em}
+  .svc{display:flex;align-items:center;gap:22px;padding:22px 26px;
+      border:1px solid rgba(255,255,255,.1);border-radius:20px;background:rgba(255,255,255,.045)}
+  .svc .ico{width:56px;height:56px;flex-shrink:0;border-radius:14px;
+      border:1px solid rgba(226,55,68,.35);background:rgba(226,55,68,.12);
+      display:flex;align-items:center;justify-content:center}
+  .svc .ico svg{width:30px;height:30px;color:#e23744}
+  .svc .t{font-family:'Unbounded',sans-serif;font-weight:500;font-size:26px}
+  .svc .d{font-size:19px;color:#a39d9e;margin-top:3px}
+
+  /* flagship bullets */
+  .bul{display:flex;align-items:flex-start;gap:18px;font-size:29px;line-height:1.35}
+  .bul .m{color:#e23744;font-size:30px;font-weight:800;flex-shrink:0}
+  .badge{display:inline-flex;align-items:center;gap:12px;align-self:flex-start;
+      padding:16px 26px;border-radius:16px;font-size:26px;
+      border:1px solid rgba(226,55,68,.4);background:linear-gradient(135deg,rgba(226,55,68,.18),rgba(226,55,68,.05))}
+  .badge b{color:#e23744}
+
+  /* why + contacts */
+  .why{display:flex;align-items:center;gap:20px;font-size:28px;line-height:1.3}
+  .why .c{width:44px;height:44px;flex-shrink:0;border-radius:50%;background:rgba(226,55,68,.14);
+      border:1px solid rgba(226,55,68,.4);color:#e23744;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800}
+  .offer{text-align:center;font-family:'Unbounded',sans-serif;font-weight:600;font-size:30px;
+      padding:24px;border-radius:18px;background:rgba(226,55,68,.14);border:1px solid rgba(226,55,68,.3)}
+  .offer span{color:#e23744}
+  .contacts{display:grid;grid-template-columns:1fr 1fr;gap:16px 40px}
+  .ci{display:flex;align-items:center;gap:14px;font-size:25px}
+  .ci .dot{width:11px;height:11px;border-radius:50%;background:#e23744;flex-shrink:0}
+  .ci .k{color:#a39d9e;font-size:17px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;display:block}
+  .site{text-align:center;font-family:'Unbounded',sans-serif;font-weight:600;font-size:30px}
+  .site b{color:#e23744}
+  .gap{flex:1}
+</style>
+</head>
+<body>
+
+<!-- ===== SLIDE 1 — COVER ===== -->
+<div class="slide glow">
+  <div class="z">
+    <div class="logo"><img src="/brand/sits-mark-red.png" alt=""/><div class="w">IT</div><img src="/brand/sits-mark-red.png" alt=""/><div class="n">Sariyev IT Solutions</div></div>
+    <div class="gap"></div>
+    <div class="kick" style="margin-bottom:22px">IT-студия полного цикла · Астана</div>
+    <div class="h1">Превращаем идеи<br/>в <span class="r">цифровые продукты</span></div>
+    <div class="sub" style="margin-top:26px">Сайты · приложения · игры · автоматизация бизнеса · AI-контент</div>
+    <div class="gap"></div>
+    <div class="cta">🎁 Бесплатный разбор вашей задачи</div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 2 — SERVICES ===== -->
+<div class="slide glow">
+  <div class="z">
+    <div class="kick">Услуги</div>
+    <div class="h2" style="margin:14px 0 30px">Что мы делаем</div>
+    <div style="display:flex;flex-direction:column;gap:15px">
+      <div class="svc"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M2.5 9h19M6 6.7h.01M9 6.7h.01"/></svg></div><div><div class="t">Сайты и веб-платформы</div><div class="d">Лендинги, магазины, B2B-платформы</div></div></div>
+      <div class="svc"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg></div><div><div class="t">Мобильные приложения</div><div class="d">iOS и Android, кроссплатформа</div></div></div>
+      <div class="svc"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="10" rx="4"/><path d="M6.5 11v2M5.5 12h2M15.5 11.5h.01M18 13.5h.01"/></svg></div><div><div class="t">Разработка игр</div><div class="d">Unity, Unreal Engine</div></div></div>
+      <div class="svc"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12h2.5M19 12h2.5M5.2 5.2l1.8 1.8M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg></div><div><div class="t">Бизнес-автоматизация + CRM</div><div class="d">Автоматизируем процессы, своя CRM</div></div></div>
+      <div class="svc"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4.5 9 8.5v7l6 4v-15z"/><rect x="2.5" y="9.5" width="4.5" height="5" rx="1"/><path d="M18.5 9.5a4 4 0 0 1 0 5"/></svg></div><div><div class="t">AI-контент и монтаж</div><div class="d">Видео, Reels, соцсети, AI-графика</div></div></div>
+      <div class="svc"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a1.5 1.5 0 0 0 2.1 2.1l6-6a4 4 0 0 0 5.4-5.4l-2.3 2.3-2.1-2.1z"/></svg></div><div><div class="t">IT-поддержка</div><div class="d">Обслуживание и сопровождение 24/7</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 3 — FLAGSHIP AUTOMATION ===== -->
+<div class="slide glow">
+  <div class="z">
+    <div class="kick">Наш флагман</div>
+    <div class="h2" style="margin:14px 0 10px;line-height:1.05">Автоматизация бизнеса<br/>+ своя CRM</div>
+    <div class="sub" style="margin-bottom:36px">Заявки теряются в мессенджерах? Менеджеры дублируют работу?</div>
+    <div style="display:flex;flex-direction:column;gap:26px">
+      <div class="bul"><span class="m">✓</span><div>Все заявки (Instagram, WhatsApp, сайт, звонки) — <b>в одном окне</b></div></div>
+      <div class="bul"><span class="m">✓</span><div>Автонапоминания, статусы сделок, воронка продаж</div></div>
+      <div class="bul"><span class="m">✓</span><div>Автоматические отчёты — без ручной работы</div></div>
+      <div class="bul"><span class="m">✓</span><div>Внедрение за <b>1–2 недели</b></div></div>
+    </div>
+    <div class="gap"></div>
+    <div class="badge">⚙️ Своя CRM-система — <b>Fibonacci Control</b></div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 4 — WHY US + CONTACTS ===== -->
+<div class="slide glow">
+  <div class="z">
+    <div class="kick">Почему SITS</div>
+    <div style="display:flex;flex-direction:column;gap:24px;margin:28px 0 34px">
+      <div class="why"><div class="c">✓</div><div>Полный цикл — один подрядчик на всё</div></div>
+      <div class="why"><div class="c">✓</div><div>Своя CRM — настраиваем под вас</div></div>
+      <div class="why"><div class="c">✓</div><div>Реальное портфолио проектов</div></div>
+      <div class="why"><div class="c">✓</div><div>Под ключ или усилим вашу команду</div></div>
+    </div>
+    <div class="offer"><span>Бесплатно</span> разберём вашу задачу и покажем решение</div>
+    <div class="gap"></div>
+    <div class="contacts" style="margin-bottom:28px">
+      <div class="ci"><span class="dot"></span><div><span class="k">WhatsApp</span>+7 777 496 13 58</div></div>
+      <div class="ci"><span class="dot"></span><div><span class="k">Telegram</span>@zhanmate</div></div>
+      <div class="ci"><span class="dot"></span><div><span class="k">Instagram</span>@sariyev.it.solutions</div></div>
+      <div class="ci"><span class="dot"></span><div><span class="k">Email</span>raimzhan1907@gmail.com</div></div>
+    </div>
+    <div class="site">sits-eta.vercel.app<b> · </b>fibonaccicontrol.com</div>
+  </div>
+</div>
+
+</body>
+</html>

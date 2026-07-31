@@ -17,3 +17,7 @@ SITS-2.zip
 # Hero video source (heavy HEVC .MOV — web-оптимизированные варианты лежат в brand/hero/)
 Послание Президента/
 marketing/
+
+# Local Fibonacci Control brand-asset repo (not part of the site)
+Fibonacci Control/
+.fullcheck.mjs

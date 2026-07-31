@@ -814,7 +814,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .fibo-list li b{color:var(--text);font-weight:600}
 .fibo-list li svg{width:20px;height:20px;color:var(--red);flex-shrink:0;margin-top:1px}
 .fibo-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:auto}
-.fibo-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fibo-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}
 .fibo-card{padding:26px;border:1px solid var(--glass-line);border-radius:var(--r-xl);background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi);transition:transform .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease)}
 .fibo-card:hover{transform:translateY(-4px);border-color:var(--line-2);background:var(--glass-2)}
 .fibo-card .fc-ico{width:44px;height:44px;border-radius:12px;border:1px solid var(--glass-line);background:var(--glass-2);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
@@ -844,8 +844,38 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 #fibonacci .btn-primary:hover{filter:brightness(1.06);transform:translateY(-2px)}
 #fibonacci .btn-line{border-color:rgba(210,162,76,.4);color:var(--fg-lit)}
 #fibonacci .btn-line:hover{border-color:var(--fg-gold);background:var(--fg-soft)}
-@media(max-width:940px){.fibo-grid{grid-template-columns:1fr}}
-@media(max-width:560px){.fibo-cards{grid-template-columns:1fr}.fibo-copy{padding:28px}.fibo-brandbar img{height:32px}}
+/* ——— Стилизованный макет продукта (окно CRM) ——— */
+.fibo-mock{position:relative;border-radius:var(--r-xl);border:1px solid rgba(210,162,76,.2);background:linear-gradient(180deg,#0d1322,#0a0e1a);box-shadow:0 34px 90px -34px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.05);overflow:hidden;display:flex;flex-direction:column;min-height:360px}
+.fibo-mock::after{content:"";position:absolute;inset:0;background:radial-gradient(520px 240px at 100% 0,rgba(210,162,76,.13),transparent 60%);pointer-events:none}
+.fm-bar{display:flex;align-items:center;gap:9px;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);position:relative;z-index:1}
+.fm-dots{display:flex;gap:6px}
+.fm-dots i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.14);display:block}
+.fm-title{display:flex;align-items:center;gap:8px;margin-left:6px;font-size:12.5px;color:#d3ccbc;font-weight:600}
+.fm-title img{width:16px;height:16px}
+.fm-live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#84d296;font-weight:600}
+.fm-live i{width:7px;height:7px;border-radius:50%;background:#54c96a;box-shadow:0 0 0 3px rgba(84,201,106,.16);display:block}
+.fm-body{padding:15px;display:flex;flex-direction:column;gap:10px;flex:1;position:relative;z-index:1}
+.fm-colh{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:#8f886f;font-weight:600;margin:2px 2px 0}
+.fm-row{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.026)}
+.fm-row .nm{font-size:13px;color:#ece3d2;font-weight:500;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fm-pill{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:100px;white-space:nowrap;flex:none}
+.fm-pill.new{color:#9cc0ff;background:rgba(120,160,255,.14)}
+.fm-pill.prog{color:#EFC97E;background:rgba(210,162,76,.16)}
+.fm-pill.done{color:#84d296;background:rgba(84,201,106,.16)}
+.fm-av{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700;color:#241a06;background:linear-gradient(180deg,#EFC97E,#D2A24C);flex:none}
+.fm-ai{margin-top:auto;display:flex;align-items:center;gap:11px;padding:12px 13px;border-radius:12px;border:1px solid rgba(210,162,76,.28);background:linear-gradient(90deg,rgba(210,162,76,.13),rgba(210,162,76,.02))}
+.fm-ai .ai-ic{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:rgba(210,162,76,.18);color:#EFC97E;flex:none}
+.fm-ai .ai-ic svg{width:17px;height:17px}
+.fm-ai .ai-tx{font-size:12px;color:#d8cfbe;flex:1;line-height:1.3}
+.fm-ai .ai-tx b{color:#F6F1E6;font-weight:600}
+.fm-typing{display:inline-flex;gap:3px;align-items:center}
+.fm-typing i{width:5px;height:5px;border-radius:50%;background:#EFC97E;opacity:.4;display:block;animation:fmbounce 1.2s infinite}
+.fm-typing i:nth-child(2){animation-delay:.18s}
+.fm-typing i:nth-child(3){animation-delay:.36s}
+@keyframes fmbounce{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){.fm-typing i{animation:none}}
+@media(max-width:940px){.fibo-grid{grid-template-columns:1fr}.fibo-cards{grid-template-columns:1fr 1fr}.fibo-mock{min-height:320px}}
+@media(max-width:560px){.fibo-cards{grid-template-columns:1fr}.fibo-copy{padding:28px}.fibo-brandbar img{height:32px}.fibo-mock{min-height:0}}
 
 .contact-pricing{font-size:14px;color:var(--muted);line-height:1.55;margin-bottom:16px;
   padding:14px 18px;border:1px solid var(--glass-line);border-radius:var(--r-md);background:var(--glass);
@@ -1515,7 +1545,26 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
           </a>
         </div>
       </div>
-      <div class="fibo-cards">
+      <div class="fibo-mock reveal" aria-hidden="true">
+        <div class="fm-bar">
+          <span class="fm-dots"><i></i><i></i><i></i></span>
+          <span class="fm-title"><img src="/brand/fibonacci-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async"/>Fibonacci Control · CRM</span>
+          <span class="fm-live"><i></i>online</span>
+        </div>
+        <div class="fm-body">
+          <div class="fm-colh">Сделки · воронка</div>
+          <div class="fm-row"><span class="nm">Пекарня «Тандыр»</span><span class="fm-pill new">Новый</span><span class="fm-av">Аб</span></div>
+          <div class="fm-row"><span class="nm">Клиника «Смайл»</span><span class="fm-pill prog">В работе</span><span class="fm-av">Ал</span></div>
+          <div class="fm-row"><span class="nm">Кофейня «Roast»</span><span class="fm-pill done">КП готово</span><span class="fm-av">Ай</span></div>
+          <div class="fm-ai">
+            <span class="ai-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M9 8V6a3 3 0 0 1 6 0v2M9.5 14h.01M14.5 14h.01M12 4V2"/></svg></span>
+          <span class="ai-tx"><b>ИИ-сотрудник:</b> собрал КП по сделке «Roast»</span>
+          <span class="fm-typing"><i></i><i></i><i></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fibo-cards reveal">
         <div class="fibo-card reveal">
           <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h3l2 3h6l2-3h3"/><path d="M5 13V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7"/></svg></div>
           <h4 data-i18n="fibo.c1H">Все каналы вместе</h4>
@@ -1537,7 +1586,6 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
           <p data-i18n="fibo.c4P">Поля, статусы, роли и автоматизации меняются без переписывания кода.</p>
         </div>
       </div>
-    </div>
   </div>
 </section>
 

@@ -1,20 +1,24 @@
 // scripts/make-vizitka.mjs
-// Генерирует электронные PDF-визитки SITS на трёх языках:
-//   brand/sits-vizitka.pdf     (ru)
-//   brand/sits-vizitka-en.pdf  (en)
-//   brand/sits-vizitka-kz.pdf  (kk)
+// Генерирует электронные визитки SITS на трёх языках:
+//   brand/sits-vizitka.pdf / .png     (ru)
+//   brand/sits-vizitka-en.pdf / .png  (en)
+//   brand/sits-vizitka-kz.pdf / .png  (kk)
 // Запуск: node scripts/make-vizitka.mjs
-// Требует: локальный сервер статики на :8899 (шрифты) и сеть (QR через qrserver).
+// Сервер статики поднимается сам; нужна сеть (QR через qrserver).
 
 import puppeteer from 'puppeteer-core';
-import { writeFile, unlink } from 'node:fs/promises';
+import http from 'node:http';
+import { writeFile, unlink, readFile } from 'node:fs/promises';
+import { extname, join } from 'node:path';
 
 const CHROME = '/Users/alizhan/.cache/puppeteer/chrome/mac_arm-147.0.7727.57/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing';
+const ROOT = new URL('..', import.meta.url).pathname;
+const PORT = 8899;
 const qr = (data) => 'https://api.qrserver.com/v1/create-qr-code/?size=520x520&margin=0&data=' + encodeURIComponent(data);
 
 const I18N = {
   ru: {
-    file: 'brand/sits-vizitka.pdf', lang: 'ru',
+    file: 'brand/sits-vizitka', lang: 'ru',
     title: 'SITS — электронная визитка',
     sub: 'Sariyev IT Solutions — IT-студия полного цикла',
     h1: 'Превращаем идеи<br/>в продукты<span class="dot">.</span>',
@@ -24,21 +28,22 @@ const I18N = {
     svc: [
       ['Сайты и лендинги','от 50 000 ₸','Продающие сайты под ключ: дизайн, адаптив, SEO, запуск за 3–7 дней. Вариант с AI-автоответчиком 24/7.'],
       ['Мобильные приложения','от 1 200 000 ₸','iOS и Android под ключ: дизайн, бэкенд, публикация в App Store и Google Play.'],
-      ['Разработка игр','от 100 000 ₸','Unity и Unreal: от веб-игр до крупных проектов на мобильные, ПК и PlayStation. Самый крупный кейс — игра за $10 000 000.'],
+      ['Разработка игр','от 100 000 ₸','Unity и Unreal: от веб-игр до крупных проектов на мобильные, ПК и PlayStation. Самый крупный кейс — игра за $10 млн.'],
       ['AI Video Creator','от 500 000 ₸','Реклама и видеоклипы с AI любой сложности: сценарий, генерация, монтаж, звук, помощь с дистрибуцией.'],
       ['Медиа-продакшн','от 4 500 ₸','Проф съёмка по Астане, монтаж часовых роликов, нарезки под Reels и TikTok. Кейс: подкаст Damn Disn × Maunfeld.'],
       ['SMM и таргет','от 150 000 ₸','Ведение TikTok и Instagram под ключ с мобилографом, контентом и аналитикой каждый месяц.'],
       ['Автоматизация бизнеса','от 800 000 ₸','Полная цифровизация под ключ: CRM, AI-агенты на Claude, интеграции с WhatsApp, Kaspi, 1C.'],
       ['Интеграции и команда','от 1 000 000 ₸/год','Международные партнёрства для бизнеса и подбор сильных специалистов в медиа, IT и AI — фокус на Казахстан и СНГ.'],
     ],
-    guar: ['Оплата 50/50','30 дней бесплатных правок','Проекты клиентов не публикуем без разрешения','Договор и NDA','Гарантия сопровождения'],
+    match: 'Нашли дешевле? Покажите — <b>сделаем за эту цену</b>',
+    guar: ['Оплата 50/50','30 дней бесплатных правок','Договор и NDA','Гарантия сопровождения'],
     qrSite: 'Сайт и прайс', qrWa: 'Написать в WhatsApp',
     waMsg: 'Здравствуйте! Пишу с вашей визитки SITS — хочу обсудить проект.',
     footL: '<b>ТОО «SARIYEV IT SOLUTIONS»</b> · БИН 250440005104 · Казахстан, Алматинская область',
     footR: 'Основатель — <b>Сариев Алижан Сабитулы</b>',
   },
   en: {
-    file: 'brand/sits-vizitka-en.pdf', lang: 'en',
+    file: 'brand/sits-vizitka-en', lang: 'en',
     title: 'SITS — digital business card',
     sub: 'Sariyev IT Solutions — Full-Cycle IT Studio',
     h1: 'Turning ideas<br/>into products<span class="dot">.</span>',
@@ -48,21 +53,22 @@ const I18N = {
     svc: [
       ['Websites & landing pages','from 50 000 ₸','Turnkey selling websites: design, responsive, SEO, launch in 3–7 days. Option with a 24/7 AI auto-responder.'],
       ['Mobile apps','from 1 200 000 ₸','Turnkey iOS and Android: design, backend, App Store and Google Play release.'],
-      ['Game development','from 100 000 ₸','Unity and Unreal: from web games to large projects for mobile, PC and PlayStation. Our largest case — a $10,000,000 game.'],
+      ['Game development','from 100 000 ₸','Unity and Unreal: from web games to large projects for mobile, PC and PlayStation. Our largest case — a $10M game.'],
       ['AI Video Creator','from 500 000 ₸','AI ads and music videos of any complexity: script, generation, editing, sound, distribution help.'],
       ['Media production','from 4 500 ₸','Pro shoots in Astana, hour-long video editing, cuts for Reels and TikTok. Case: the Damn Disn podcast × Maunfeld.'],
       ['SMM & targeted ads','from 150 000 ₸','End-to-end TikTok and Instagram management with a mobile videographer, content and monthly analytics.'],
       ['Business automation','from 800 000 ₸','Turnkey digitalization: CRM, Claude-powered AI agents, WhatsApp, Kaspi and 1C integrations.'],
       ['Integrations & talent','from 1 000 000 ₸/yr','International partnerships for business and recruiting of strong media, IT & AI specialists — focus on Kazakhstan and the CIS.'],
     ],
-    guar: ['Payment 50/50','30 days of free fixes','Client work never published without permission','Contract & NDA','Ongoing care warranty'],
+    match: 'Found it cheaper? Show us — <b>we’ll match that price</b>',
+    guar: ['Payment 50/50','30 days of free fixes','Contract & NDA','Ongoing care warranty'],
     qrSite: 'Website & pricing', qrWa: 'Chat on WhatsApp',
     waMsg: 'Hi! I found you via the SITS business card — I would like to discuss a project.',
     footL: '<b>SARIYEV IT SOLUTIONS LLP</b> · BIN 250440005104 · Kazakhstan, Almaty region',
     footR: 'Founder — <b>Sariyev Alizhan Sabituly</b>',
   },
   kk: {
-    file: 'brand/sits-vizitka-kz.pdf', lang: 'kk',
+    file: 'brand/sits-vizitka-kz', lang: 'kk',
     title: 'SITS — электрондық визитка',
     sub: 'Sariyev IT Solutions — толық циклді IT-студия',
     h1: 'Идеяларды өнімге<br/>айналдырамыз<span class="dot">.</span>',
@@ -72,14 +78,15 @@ const I18N = {
     svc: [
       ['Сайттар мен лендингтер','50 000 ₸-ден','Дайын сатушы сайттар: дизайн, адаптив, SEO, 3–7 күнде іске қосу. 24/7 AI-автожауапбергіш нұсқасы бар.'],
       ['Мобильді қосымшалар','1 200 000 ₸-ден','iOS және Android толық дайын: дизайн, бэкенд, App Store мен Google Play-ге жариялау.'],
-      ['Ойын жасау','100 000 ₸-ден','Unity және Unreal: веб-ойындардан мобильді, ПК және PlayStation ірі жобаларына дейін. Ең ірі кейс — $10 000 000 ойын.'],
+      ['Ойын жасау','100 000 ₸-ден','Unity және Unreal: веб-ойындардан мобильді, ПК және PlayStation ірі жобаларына дейін. Ең ірі кейс — $10 млн ойын.'],
       ['AI Video Creator','500 000 ₸-ден','Кез келген күрделіліктегі AI жарнамалар мен клиптер: сценарий, генерация, монтаж, дыбыс, дистрибуцияға көмек.'],
       ['Медиа-продакшн','4 500 ₸-ден','Астанада кәсіби түсірілім, сағаттық роликтер монтажы, Reels пен TikTok-қа нарезкалар. Кейс: Damn Disn × Maunfeld подкасты.'],
       ['SMM және таргет','150 000 ₸-ден','TikTok пен Instagram-ды толық жүргізу: мобилограф, контент және ай сайынғы аналитика.'],
       ['Бизнесті автоматтандыру','800 000 ₸-ден','Толық цифрландыру: CRM, Claude негізіндегі AI-агенттер, WhatsApp, Kaspi, 1C интеграциялары.'],
       ['Интеграциялар және команда','жылына 1 000 000 ₸-ден','Бизнеске халықаралық серіктестік және медиа, IT & AI мықты мамандарын іріктеу — Қазақстан мен ТМД-ға назар.'],
     ],
-    guar: ['Төлем 50/50','30 күн тегін түзетулер','Клиент жұмыстарын рұқсатсыз жарияламаймыз','Келісімшарт және NDA','Сүйемелдеу кепілдігі'],
+    match: 'Арзанырақ таптыңыз ба? Көрсетіңіз — <b>сол бағаға жасаймыз</b>',
+    guar: ['Төлем 50/50','30 күн тегін түзетулер','Келісімшарт және NDA','Сүйемелдеу кепілдігі'],
     qrSite: 'Сайт және бағалар', qrWa: 'WhatsApp-қа жазу',
     waMsg: 'Сәлеметсіз бе! SITS визиткасынан жазып отырмын — жобаны талқылағым келеді.',
     footL: '<b>«SARIYEV IT SOLUTIONS» ЖШС</b> · БСН 250440005104 · Қазақстан, Алматы облысы',
@@ -109,7 +116,6 @@ function render(t) {
   --glass-line:rgba(255,255,255,.12); --glass-hi:rgba(255,255,255,.10);
   --fd:'Unbounded','Arial Black',sans-serif;
   --fb:'Manrope',system-ui,sans-serif;
-  --fl:'PT Serif',Georgia,serif;
 }
 html,body{width:210mm;height:297mm;background:var(--bg);color:var(--text);font-family:var(--fb);overflow:hidden}
 .page{position:relative;width:210mm;height:297mm;padding:11mm 12mm 9mm;display:flex;flex-direction:column;overflow:hidden}
@@ -117,35 +123,45 @@ html,body{width:210mm;height:297mm;background:var(--bg);color:var(--text);font-f
   background:radial-gradient(circle at 50% 50%,rgba(226,55,68,.32),transparent 68%);filter:blur(14mm)}
 .page::after{content:"";position:absolute;width:120mm;height:120mm;bottom:-40mm;left:-35mm;border-radius:50%;
   background:radial-gradient(circle at 50% 50%,rgba(226,55,68,.20),transparent 68%);filter:blur(12mm)}
+.dots{position:absolute;inset:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.055) .35mm, transparent .35mm);
+  background-size:7mm 7mm}
 .z{position:relative;z-index:1}
-.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:7mm}
-.logo{font-family:var(--fl);font-weight:700;font-size:34px;letter-spacing:.04em;line-height:1}
-.logo b{color:var(--red)}
-.head .sub{font-size:9.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:2mm}
+.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6.5mm}
+.brand{display:flex;align-items:center;gap:3.4mm}
+.brand img{height:10.5mm}
+.brand .bn{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+.brand .bs{font-size:8.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:1.2mm}
 .site-pill{display:inline-flex;align-items:center;gap:2.2mm;border:1px solid var(--glass-line);background:var(--glass);
   border-radius:100px;padding:2.6mm 4.5mm;font-size:11px;font-weight:700;letter-spacing:.02em;
   box-shadow:inset 0 1px 0 var(--glass-hi)}
 .site-pill i{width:2mm;height:2mm;border-radius:50%;background:var(--red)}
-h1{font-family:var(--fd);font-weight:600;font-size:30px;line-height:1.08;letter-spacing:-.02em;margin-bottom:3mm}
+h1{font-family:var(--fd);font-weight:700;font-size:31px;line-height:1.08;letter-spacing:-.02em;margin-bottom:3mm}
 h1 .dot{color:var(--red)}
-.lead{color:var(--muted);font-size:12.5px;line-height:1.55;max-width:155mm;margin-bottom:5.5mm}
+.lead{color:var(--muted);font-size:12.5px;line-height:1.55;max-width:158mm;margin-bottom:5mm}
 .lead .em{color:var(--text);font-weight:600}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-bottom:5.5mm}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-bottom:5mm}
 .stat{border:1px solid var(--glass-line);background:var(--glass);border-radius:5mm;padding:3.4mm 4mm;
   box-shadow:inset 0 1px 0 var(--glass-hi)}
 .stat .v{font-family:var(--fd);font-weight:500;font-size:16px;letter-spacing:-.01em}
+.stat .v b{color:var(--red);font-weight:500}
 .stat .l{font-size:9px;color:var(--muted);margin-top:1mm;line-height:1.35}
-.sec-tag{display:flex;align-items:center;gap:2.4mm;font-size:9.5px;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:3mm}
+.sec-tag{display:flex;align-items:center;gap:2.4mm;font-size:9.5px;font-weight:800;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--red);margin-bottom:3mm}
 .sec-tag i{width:1.8mm;height:1.8mm;border-radius:50%;background:var(--red)}
-.svc{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-bottom:5.5mm}
+.svc{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-bottom:4.5mm}
 .s{border:1px solid var(--glass-line);background:var(--glass);border-radius:5mm;padding:3.6mm 4.2mm;
   box-shadow:inset 0 1px 0 var(--glass-hi);display:flex;flex-direction:column;gap:1.2mm}
 .s .t{display:flex;align-items:baseline;justify-content:space-between;gap:3mm}
 .s .n{font-family:var(--fd);font-weight:500;font-size:11px;letter-spacing:-.01em}
-.s .p{font-size:9.5px;font-weight:700;color:var(--red);white-space:nowrap}
+.s .p{font-family:var(--fd);font-weight:600;font-size:9.5px;color:var(--red);white-space:nowrap}
 .s .d{font-size:9.3px;color:var(--muted);line-height:1.45}
-.guar{display:flex;flex-wrap:wrap;gap:2.4mm;margin-bottom:5.5mm}
+.match{display:flex;align-items:center;justify-content:center;gap:2.6mm;margin-bottom:4.5mm;
+  border:1px solid rgba(226,55,68,.45);background:linear-gradient(135deg,rgba(226,55,68,.18),rgba(226,55,68,.05));
+  border-radius:100px;padding:3mm 5mm;font-size:11.5px;font-weight:600}
+.match b{color:var(--red)}
+.match svg{width:4.6mm;height:4.6mm;flex-shrink:0}
+.guar{display:flex;flex-wrap:wrap;gap:2.4mm;margin-bottom:5mm;justify-content:center}
 .g{display:inline-flex;align-items:center;gap:2mm;font-size:9.3px;font-weight:600;color:var(--muted);
   border:1px solid var(--glass-line);background:var(--glass);border-radius:100px;padding:2.2mm 3.6mm;
   box-shadow:inset 0 1px 0 var(--glass-hi)}
@@ -171,10 +187,14 @@ h1 .dot{color:var(--red)}
 </head>
 <body>
 <div class="page">
+  <div class="dots"></div>
   <div class="z head">
-    <div>
-      <div class="logo">SIT<b>S</b></div>
-      <div class="sub">${t.sub}</div>
+    <div class="brand">
+      <img src="/brand/sits-mark-red.png" alt="SITS" />
+      <div>
+        <div class="bn">Sariyev IT Solutions</div>
+        <div class="bs">${t.sub.split('—')[1] ? t.sub.split('— ')[1] : t.sub}</div>
+      </div>
     </div>
     <div class="site-pill"><i></i>sits-eta.vercel.app</div>
   </div>
@@ -183,7 +203,7 @@ h1 .dot{color:var(--red)}
     <p class="lead">${t.lead}</p>
   </div>
   <div class="z stats">
-    ${t.stats.map(([v,l])=>`<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('\n    ')}
+    ${t.stats.map(([v,l])=>`<div class="stat"><div class="v">${v.replace(/(\+|%|\/7)/,'<b>$1</b>')}</div><div class="l">${l}</div></div>`).join('\n    ')}
   </div>
   <div class="z">
     <div class="sec-tag"><i></i>${t.secTag}</div>
@@ -191,6 +211,7 @@ h1 .dot{color:var(--red)}
       ${t.svc.map(([n,p,d])=>`<div class="s"><div class="t"><div class="n">${n}</div><div class="p">${p}</div></div><div class="d">${d}</div></div>`).join('\n      ')}
     </div>
   </div>
+  <div class="z match"><svg viewBox="0 0 24 24" fill="none" stroke="#e23744" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg><span>${t.match}</span></div>
   <div class="z guar">
     ${t.guar.map(g=>`<span class="g">${g}</span>`).join('\n    ')}
   </div>
@@ -213,17 +234,31 @@ h1 .dot{color:var(--red)}
 </html>`;
 }
 
+const MIME = { '.html': 'text/html', '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff', '.ttf': 'font/ttf' };
+const server = http.createServer(async (req, res) => {
+  try {
+    const path = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+    const file = await readFile(join(ROOT, path));
+    res.writeHead(200, { 'Content-Type': MIME[extname(path)] || 'application/octet-stream' });
+    res.end(file);
+  } catch { res.writeHead(404); res.end(); }
+});
+await new Promise((ok) => server.listen(PORT, ok));
+
 const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
 const page = await browser.newPage();
-await page.setViewport({ width: 1240, height: 1754 });
+await page.setViewport({ width: 794, height: 1123, deviceScaleFactor: 2 }); // A4 @ 96dpi
 for (const lang of ['ru', 'en', 'kk']) {
   const t = I18N[lang];
   const tmp = `.vizitka-tmp-${lang}.html`;
-  await writeFile(tmp, render(t));
-  await page.goto('http://localhost:8899/' + tmp, { waitUntil: 'networkidle0' });
-  await new Promise(r => setTimeout(r, 1400));
-  await page.pdf({ path: t.file, format: 'A4', printBackground: true, pageRanges: '1', margin: { top: 0, bottom: 0, left: 0, right: 0 } });
-  await unlink(tmp);
-  console.log('✓', t.file);
+  await writeFile(join(ROOT, tmp), render(t));
+  await page.goto(`http://localhost:${PORT}/` + tmp, { waitUntil: 'networkidle0' });
+  await page.evaluateHandle('document.fonts.ready');
+  await new Promise(r => setTimeout(r, 1200));
+  await page.pdf({ path: join(ROOT, t.file + '.pdf'), format: 'A4', printBackground: true, pageRanges: '1', margin: { top: 0, bottom: 0, left: 0, right: 0 } });
+  await page.screenshot({ path: join(ROOT, t.file + '.png'), fullPage: false, clip: { x: 0, y: 0, width: 794, height: 1123 } });
+  await unlink(join(ROOT, tmp));
+  console.log('✓', t.file + '.pdf', '+', t.file + '.png');
 }
 await browser.close();
+server.close();

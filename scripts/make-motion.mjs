@@ -13,8 +13,9 @@ import { extname, join } from 'node:path';
 const CHROME = '/Users/alizhan/.cache/puppeteer/chrome/mac_arm-147.0.7727.57/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing';
 const ROOT = new URL('..', import.meta.url).pathname;
 const PORT = 8941;
-const HTML = process.argv[2] || 'marketing/target-sale80-motion.html';
+const HTML = process.argv[2] || 'marketing/target-sale80-motion.html'; // можно с ?fmt=feed&lang=kk
 const OUT = process.argv[3] || 'sale80-motion';
+const HEIGHT = Number(process.argv[4]) || 1920; // 1920 = 9:16, 1350 = 4:5
 const FPS = 30;
 const DURATION_MS = 7500;
 
@@ -31,7 +32,7 @@ await new Promise((ok) => server.listen(PORT, ok));
 
 const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
 const page = await browser.newPage();
-await page.setViewport({ width: 1080, height: 1920, deviceScaleFactor: 1 });
+await page.setViewport({ width: 1080, height: HEIGHT, deviceScaleFactor: 1 });
 await page.goto(`http://localhost:${PORT}/${HTML}`, { waitUntil: 'networkidle0' });
 await page.evaluateHandle('document.fonts.ready');
 

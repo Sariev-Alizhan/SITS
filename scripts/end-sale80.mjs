@@ -122,6 +122,25 @@ const PLAN = [
     ['\n      <div class="promo"><i></i><span><b>−80%</b> на все услуги — до 1 сентября</span></div>', '', true],
   ]],
 
+  // Строки AI-виджета (в price.html и index.html)
+  ...['price.html', 'index.html'].map((f) => [f, [
+    ['Подскажу по услугам, ценам и акции −80%. Что вас интересует?', 'Подскажу по услугам и ценам. Что вас интересует?', true],
+    ["chips:['Сколько стоит сайт?','Что входит в автоматизацию?','Расскажи про акцию −80%']",
+     "chips:['Сколько стоит сайт?','Что входит в автоматизацию?','Как заказать проект?']", true],
+    ['Ask me about services, prices and the −80% sale.', 'Ask me about services and prices.', true],
+    ["chips:['How much is a website?','What is business automation?','Tell me about the −80% sale']",
+     "chips:['How much is a website?','What is business automation?','How do I start a project?']", true],
+    ['Қызметтер, бағалар және −80% науқан бойынша көмектесемін.', 'Қызметтер мен бағалар бойынша көмектесемін.', true],
+    ["chips:['Сайт қанша тұрады?','Автоматтандыруға не кіреді?','−80% науқаны туралы айтшы']",
+     "chips:['Сайт қанша тұрады?','Автоматтандыруға не кіреді?','Жобаны қалай бастаймын?']", true],
+  ]]),
+
+  ['index.html', [
+    ['<span data-i18n="pricing.tz1">Сайты и лендинги — от 30 000 ₸</span>', '<span data-i18n="pricing.tz1">Сайты и лендинги — от 150 000 ₸</span>', true],
+    ['<span data-i18n="pricing.tz6">Приложения и игры — от 40 000 ₸</span>', '<span data-i18n="pricing.tz6">Приложения и игры — от 200 000 ₸</span>', true],
+    ['<span data-i18n="pricing.tz5">Техподдержка — от 10 000 ₸/мес</span>', '<span data-i18n="pricing.tz5">Техподдержка — от 50 000 ₸/мес</span>', true],
+  ]],
+
   ['crm.html', [
     ['предоплата 50%, по акции до 1 сентября старт — от 200 000 ₸ вместо 1 000 000 ₸.',
      'предоплата 50%, старт — от 1 000 000 ₸.', true],

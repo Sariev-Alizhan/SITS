@@ -193,6 +193,14 @@ touched.set(swPath, sw);
 for (const [path, text] of touched) writeFileSync(path, text);
 console.log('\nГотово: базовые цены возвращены, кэш SW поднят.');
 
+// AI-промпты: цены зашиты в текст — скрипт их не правит, только предупреждает
+for (const f of ['api/assistant.js', 'api/crm-ai.js']) {
+  try {
+    const t = readFileSync(join(DIR, f), 'utf-8');
+    if (t.includes('−80%')) console.warn(`ВНИМАНИЕ: в ${f} остался промпт с акцией −80% — обнови цены в нём вручную (5 минут).`);
+  } catch {}
+}
+
 // остаточная проверка
 for (const f of ['price.html', 'index.html']) {
   const t = readFileSync(join(DIR, f), 'utf-8');

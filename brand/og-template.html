@@ -22,8 +22,13 @@
   .brand-tag{font-family:'Manrope',sans-serif;font-weight:600;font-size:27px;
       letter-spacing:.02em;color:#e23744}
   /* headline */
-  .headline{font-family:'Manrope',sans-serif;font-weight:600;font-size:66px;
+  .headline{font-family:'Manrope',sans-serif;font-weight:600;font-size:60px;
       line-height:1.12;letter-spacing:-.015em;color:#f4f1f1}
+  .promo{display:inline-flex;align-items:center;gap:14px;align-self:flex-start;margin-top:24px;
+      padding:15px 26px;border-radius:100px;font-family:'Manrope',sans-serif;font-weight:700;font-size:28px;color:#f4f1f1;
+      border:1px solid rgba(226,55,68,.5);background:linear-gradient(135deg,rgba(226,55,68,.22),rgba(226,55,68,.07))}
+  .promo b{color:#e23744}
+  .promo i{width:12px;height:12px;border-radius:50%;background:#e23744}
   /* footer */
   .foot{}
   .divider{height:1px;width:100%;background:rgba(255,255,255,.12);margin-bottom:28px}
@@ -44,7 +49,10 @@
       </div>
       <div class="brand-tag">Sariyev IT Solutions</div>
     </div>
-    <div class="headline">Превращаем идеи<br/>в цифровые продукты</div>
+    <div style="display:flex;flex-direction:column">
+      <div class="headline">Превращаем идеи<br/>в цифровые продукты</div>
+      <div class="promo"><i></i><span><b>−80%</b> на все услуги — до 1 сентября</span></div>
+    </div>
     <div class="foot">
       <div class="divider"></div>
       <div class="services">Сайты · приложения · игры · автоматизация · AI-контент</div>

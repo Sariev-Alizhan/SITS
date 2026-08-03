@@ -40,20 +40,10 @@ const PLAN = [
     ['<s class="pc-old"><span data-i18n="pricing.from">от</span> 20 000 000 ₸</s><b class="pc-new"><span data-i18n="pricing.from">от</span> 4 000 000 ₸</b><span class="pc-per" data-i18n="pricing.andUp">и выше</span><em class="pc-chip">−80%</em>',
      '<b class="pc-new"><span data-i18n="pricing.from">от</span> 20 000 000 ₸</b><span class="pc-per" data-i18n="pricing.andUp">и выше</span>', true],
     // ---- медиа ----
-    ['<span class="pc-vals"><s class="pc-old"><span data-i18n="pricing.from">от</span> 150 000 ₸</s><b class="pc-new"><span data-i18n="pricing.from">от</span> 30 000 ₸</b><em class="pc-chip">−80%</em></span>',
-     '<span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 150 000 ₸</b></span>', true], // ×2: съёмка, таргет
-    ['<span class="pc-vals"><s class="pc-old"><span data-i18n="pricing.from">от</span> 150 000 ₸</s><b class="pc-new"><span data-i18n="pricing.from">от</span> 30 000 ₸</b><span class="pc-per" data-i18n="pricing.perVideo">/ролик</span><em class="pc-chip">−80%</em></span>',
-     '<span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 150 000 ₸</b><span class="pc-per" data-i18n="pricing.perVideo">/ролик</span></span>', true],
-    ['<span class="pc-vals"><s class="pc-old">4 500 ₸</s><b class="pc-new">900 ₸</b><em class="pc-chip">−80%</em></span>',
-     '<span class="pc-vals"><b class="pc-new">4 500 ₸</b></span>', true],
-    ['<span class="pc-vals"><s class="pc-old">54 000 ₸</s><b class="pc-new">10 800 ₸</b><em class="pc-chip">−80%</em></span>',
-     '<span class="pc-vals"><b class="pc-new">54 000 ₸</b></span>', true],
     ['<span class="pc-vals"><s class="pc-old"><span data-i18n="pricing.from">от</span> 500 000 ₸</s><b class="pc-new"><span data-i18n="pricing.from">от</span> 100 000 ₸</b><em class="pc-chip">−80%</em></span>',
      '<span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 500 000 ₸</b></span>', true],
-    ['<span class="pc-vals"><s class="pc-old"><span data-i18n="pricing.from">от</span> 200 000 ₸</s><b class="pc-new"><span data-i18n="pricing.from">от</span> 40 000 ₸</b><span class="pc-per" data-i18n="pricing.perMonth">/мес</span><em class="pc-chip">−80%</em></span>',
-     '<span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 200 000 ₸</b><span class="pc-per" data-i18n="pricing.perMonth">/мес</span></span>', true],
-    ['<span class="pc-vals"><s class="pc-old"><span data-i18n="pricing.from">от</span> 300 000 ₸</s><b class="pc-new"><span data-i18n="pricing.from">от</span> 60 000 ₸</b><span class="pc-per" data-i18n="pricing.perMonth">/мес</span><em class="pc-chip">−80%</em></span>',
-     '<span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 300 000 ₸</b><span class="pc-per" data-i18n="pricing.perMonth">/мес</span></span>', true],
+    ['<span class="pc-vals"><s class="pc-old"><span data-i18n="pricing.from">от</span> 250 000 ₸</s><b class="pc-new"><span data-i18n="pricing.from">от</span> 50 000 ₸</b><em class="pc-chip">−80%</em></span>',
+     '<span class="pc-vals"><b class="pc-new"><span data-i18n="pricing.from">от</span> 250 000 ₸</b></span>', true],
     // ---- партнёрства и поддержка ----
     ['<s class="pc-old"><span data-i18n="pricing.from">от</span> 2 000 000 ₸</s><b class="pc-new"><span data-i18n="pricing.from">от</span> 400 000 ₸</b><span class="pc-per" data-i18n="pricing.perYear">/год</span><em class="pc-chip">−80%</em>',
      '<b class="pc-new"><span data-i18n="pricing.from">от</span> 2 000 000 ₸</b><span class="pc-per" data-i18n="pricing.perYear">/год</span>', true],
@@ -74,8 +64,8 @@ const PLAN = [
      '%D0%B7%D0%B0%20400%20000%20%E2%82%B8', true],
     ['%C2%BB%20%D0%BF%D0%BE%20%D0%B0%D0%BA%D1%86%D0%B8%D0%B8', '%C2%BB', false], // wa1 «Лендинг» по акции
     // ---- meta ----
-    ['Прайс SITS: сайты и лендинги от 30 000 ₸, AI Video Creator, медиа-продакшн, автоматизация бизнеса и техподдержка. Скидка −80% на всё до 1 сентября.',
-     'Прайс SITS: сайты и лендинги от 150 000 ₸, AI Video Creator, медиа-продакшн, автоматизация бизнеса и техподдержка. Официально, по договору.', true],
+    ['Прайс SITS: сайты и лендинги от 30 000 ₸, AI Content Creator, AI Love Story, автоматизация бизнеса и техподдержка. Скидка −80% на всё до 1 сентября.',
+     'Прайс SITS: сайты и лендинги от 150 000 ₸, AI Content Creator, AI Love Story, автоматизация бизнеса и техподдержка. Официально, по договору.', true],
   ]],
 
   // Словари i18n — одинаковые в price.html и index.html
@@ -90,9 +80,9 @@ const PLAN = [
     ["mBadge:'−80% до 1 сентября'", "mBadge:''", true],
     ["mBadge:'−80% until Sep 1'", "mBadge:''", true],
     ["mBadge:'1 қыркүйекке дейін −80%'", "mBadge:''", true],
-    ['выезд по Астане. Все цены ниже — со скидкой −80% до 1 сентября.', 'выезд по Астане.', true],
-    ['across Astana. All prices below are −80% off until September 1.', 'across Astana.', true],
-    ['Астана бойынша шығу. Төмендегі барлық бағалар — 1 қыркүйекке дейін −80% жеңілдікпен.', 'Астана бойынша шығу.', true],
+    ['на новейших моделях видео, музыки и голоса. Скидка −80% до 1 сентября.', 'на новейших моделях видео, музыки и голоса.', true],
+    ['video, music and voice models. −80% off until September 1.', 'video, music and voice models.', true],
+    ['музыка және дауыс модельдерінде. 1 қыркүйекке дейін −80% жеңілдік.', 'музыка және дауыс модельдерінде.', true],
     ['крупных проектов. Скидка −80% действует до 1 сентября.', 'крупных проектов.', true],
     ['large-scale projects. −80% off until September 1.', 'large-scale projects.', true],
     ['ірі жобаларға дейін. −80% жеңілдік 1 қыркүйекке дейін.', 'ірі жобаларға дейін.', true],
@@ -153,9 +143,10 @@ const PLAN = [
     ["'от 400 000 ₸/год'", "'от 2 000 000 ₸/год'", true],
     ["'от 400 000 ₸'", "'от 2 000 000 ₸'", true],   // приложения
     ["'от 200 000 ₸'", "'от 1 000 000 ₸'", true],   // автоматизация
-    ["'от 100 000 ₸'", "'от 500 000 ₸'", true],     // AI Video
+    ["'от 100 000 ₸'", "'от 500 000 ₸'", true],
+    ["'от 50 000 ₸'", "'от 250 000 ₸'", true],
+    ["'от 10 000 ₸/мес'", "'от 50 000 ₸/мес'", true],     // AI Video
     ["'от 40 000 ₸'", "'от 200 000 ₸'", true],      // игры (базовая веб-игра)
-    ["'от 900 ₸'", "'от 4 500 ₸'", true],           // медиа
     ["'от 30 000 ₸'", "'от 150 000 ₸'", true],      // ×2: сайты, SMM — базово обе от 150 000
     ["secTag: 'Услуги и цены · −80% до 1 сентября'", "secTag: 'Услуги и цены'", true],
     // EN
@@ -163,8 +154,9 @@ const PLAN = [
     ["'from 400 000 ₸'", "'from 2 000 000 ₸'", true],
     ["'from 200 000 ₸'", "'from 1 000 000 ₸'", true],
     ["'from 100 000 ₸'", "'from 500 000 ₸'", true],
+    ["'from 50 000 ₸'", "'from 250 000 ₸'", true],
+    ["'from 10 000 ₸/mo'", "'from 50 000 ₸/mo'", true],
     ["'from 40 000 ₸'", "'from 200 000 ₸'", true],
-    ["'from 900 ₸'", "'from 4 500 ₸'", true],
     ["'from 30 000 ₸'", "'from 150 000 ₸'", true],
     ["secTag: 'Services & prices · −80% until Sep 1'", "secTag: 'Services & prices'", true],
     // KK
@@ -172,8 +164,9 @@ const PLAN = [
     ["'400 000 ₸-ден'", "'2 000 000 ₸-ден'", true],
     ["'200 000 ₸-ден'", "'1 000 000 ₸-ден'", true],
     ["'100 000 ₸-ден'", "'500 000 ₸-ден'", true],
+    ["'50 000 ₸-ден'", "'250 000 ₸-ден'", true],
+    ["'айына 10 000 ₸-ден'", "'айына 50 000 ₸-ден'", true],
     ["'40 000 ₸-ден'", "'200 000 ₸-ден'", true],
-    ["'900 ₸-ден'", "'4 500 ₸-ден'", true],
     ["'30 000 ₸-ден'", "'150 000 ₸-ден'", true],
     ["secTag: 'Қызметтер мен бағалар · 1 қыркүйекке дейін −80%'", "secTag: 'Қызметтер мен бағалар'", true],
   ]],

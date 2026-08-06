@@ -21,3 +21,4 @@ marketing/
 # Local Fibonacci Control brand-asset repo (not part of the site)
 Fibonacci Control/
 .fullcheck.mjs
+.vercel

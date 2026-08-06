@@ -19,18 +19,14 @@ const res = await page.evaluate(async (url) => {
     const d = ctx.getImageData(x, y, 1, 1).data;
     return 0.299 * d[0] + 0.587 * d[1] + 0.114 * d[2];
   };
+  const band = (ys) => ys.length ? `${ys[0]}..${ys[ys.length - 1]} (${ys.length}px)` : 'нет';
   const right = [];
   for (let y = 0; y < 1350; y++) if (lum(1077, y) > 110) right.push(y);
+  const left = [];
+  for (let y = 0; y < 1350; y++) if (lum(2, y) > 110) left.push(y);
   const top = [];
   for (let x = 0; x < 1080; x++) if (lum(x, 2) > 110) top.push(x);
-  // и профиль нити: самая яркая точка в колонках x=700..1070 c шагом 50
-  const profile = [];
-  for (let x = 700; x <= 1070; x += 50) {
-    let best = { y: -1, v: 0 };
-    for (let y = 0; y < 700; y++) { const v = lum(x, y); if (v > best.v) best = { y, v: Math.round(v) }; }
-    profile.push({ x, ...best });
-  }
-  return { right, top, profile };
+  return { left: band(left), right: band(right), top: band(top) };
 }, `data:image/png;base64,${(await readFile(img)).toString('base64')}`);
 console.log(JSON.stringify(res, null, 1));
 await browser.close();

@@ -556,6 +556,7 @@
       <button class="tab" data-view="roadmap"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3zM9 3v15M15 6v15"/></svg> Roadmap</button>
       <button class="tab" data-view="strategy"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg> Стратегия</button>
       <button class="tab" data-view="notes"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg> Заметки</button>
+      <button class="tab" data-view="whatsapp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.2-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg> WhatsApp</button>
     </div>
   </div>
 
@@ -915,6 +916,47 @@
   </div>
 </div>
 
+<div class="wrap view" id="view-whatsapp">
+  <style>
+    #view-whatsapp .mut{color:#9aa4af;font-size:13px}
+    #view-whatsapp .kb-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+    #view-whatsapp .kb-board{display:flex;gap:12px;overflow-x:auto;padding-bottom:10px;align-items:flex-start}
+    #view-whatsapp .kb-col{flex:0 0 235px;background:var(--card,#161616);border:1px solid var(--line,#2a2a2a);border-radius:12px;padding:8px;min-height:120px}
+    #view-whatsapp .kb-col h4{margin:2px 4px 8px;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+    #view-whatsapp .kb-col h4 .cnt{color:#9aa4af;font-weight:normal}
+    #view-whatsapp .kb-card{background:var(--bg,#0f0f0f);border:1px solid var(--line,#2a2a2a);border-radius:10px;padding:9px 10px;margin-bottom:8px;cursor:pointer}
+    #view-whatsapp .kb-card:hover{border-color:#e23744}
+    #view-whatsapp .kb-card b{font-size:13px}
+    #view-whatsapp .kb-card .svc{font-size:12px;color:#9aa4af;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    #view-whatsapp .kb-card .row{display:flex;justify-content:flex-end;margin-top:6px}
+    #view-whatsapp .kb-card select{font-size:11px;background:#181818;color:#ccc;border:1px solid #333;border-radius:6px;padding:2px 4px;max-width:150px}
+    #view-whatsapp .kb-drawer{position:fixed;top:0;right:0;height:100vh;width:min(430px,94vw);background:var(--card,#141414);border-left:1px solid var(--line,#2a2a2a);box-shadow:-8px 0 30px rgba(0,0,0,.5);transform:translateX(101%);transition:transform .25s;display:flex;flex-direction:column;z-index:80}
+    #view-whatsapp .kb-drawer.open{transform:translateX(0)}
+    #view-whatsapp .kb-dhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border-bottom:1px solid var(--line,#2a2a2a)}
+    #view-whatsapp .kb-thread{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+    #view-whatsapp .kb-msg{display:flex}#view-whatsapp .kb-msg.out{justify-content:flex-end}
+    #view-whatsapp .kb-bubble{max-width:78%;padding:8px 12px;border-radius:14px;font-size:14px;line-height:1.45}
+    #view-whatsapp .kb-msg.in .kb-bubble{background:#222;color:#eee}#view-whatsapp .kb-msg.out .kb-bubble{background:#e23744;color:#fff}
+    #view-whatsapp .kb-switch{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer}
+  </style>
+  <div class="kb-head">
+    <div>
+      <h2 style="margin:0">WhatsApp · Воронка</h2>
+      <div class="mut" id="waHint" style="margin-top:2px">Бот сам создаёт сделки и двигает по стадиям. Клик по карточке — переписка и тумблер бота.</div>
+    </div>
+    <button class="btn btn-ghost" id="waReload" type="button">Обновить</button>
+  </div>
+  <div class="kb-board" id="kbBoard"><div class="mut">Загрузка…</div></div>
+  <div class="kb-drawer" id="kbDrawer">
+    <div class="kb-dhead">
+      <b id="kbTitle">Чат</b>
+      <label class="kb-switch"><input type="checkbox" id="kbToggle"> Бот отвечает</label>
+      <button class="btn btn-ghost" id="kbClose" type="button">✕</button>
+    </div>
+    <div class="kb-thread" id="kbThread"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1101,6 +1143,7 @@
     if(t.dataset.view==='outreach') ensureOutreach();
     if(t.dataset.view==='partners') ensurePartners();
     if(t.dataset.view==='calendar') renderCal();
+    if(t.dataset.view==='whatsapp') loadWA();
   }));
   function gotoView(v){ $$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.view===v)); $$('.view').forEach(x=>x.classList.remove('active')); $('#view-'+v).classList.add('active'); if(v==='outreach') ensureOutreach(); }
 
@@ -1389,6 +1432,19 @@
     $$('#dashGrid [data-go]').forEach(b=>b.addEventListener('click',()=>goTab(b.dataset.go)));
   }
   $('#dashReload') && $('#dashReload').addEventListener('click',loadDashboard);
+
+  // ---------- WHATSAPP · КАНБАН ----------
+  const KB_STAGES=[['new','Новый'],['dialog','Диалог'],['qualified','Квалификация'],['quote','КП/Цена'],['waiting_payment','Ожидание оплаты'],['won','Клиент'],['lost','Отказ']];
+  let KB_DEALS=[], KB_CUR=null;
+  async function apiWA(path,method,body){ const opt={method,headers:{'x-crm-login':LOGIN,'x-crm-pass':PASS}}; if(body){opt.headers['Content-Type']='application/json';opt.body=JSON.stringify(body);} const r=await fetch(path,opt); const d=await r.json().catch(()=>({ok:false,error:'Ошибка ответа'})); if(!r.ok||!d.ok) throw new Error(d.error||('HTTP '+r.status)); return d; }
+  async function loadWA(){ const b=$('#kbBoard'); if(b) b.innerHTML='<div class="mut">Загрузка…</div>'; try{ const d=await apiWA('/api/wa-deals','GET'); KB_DEALS=d.deals||[]; renderKanban(); if($('#waHint')&&d.cloud===false) $('#waHint').textContent='CRM не подключён к Supabase — сделки не отображаются.'; }catch(err){ if(b) b.innerHTML='<div class="mut">Ошибка: '+esc(err.message)+'</div>'; } }
+  function renderKanban(){ const b=$('#kbBoard'); if(!b) return; b.innerHTML=KB_STAGES.map(([s,label])=>{ const items=KB_DEALS.filter(d=>(d.stage||'new')===s); const cards=items.map(d=>{ const opts=KB_STAGES.map(([v,l])=>'<option value="'+v+'"'+(v===(d.stage||'new')?' selected':'')+'>'+l+'</option>').join(''); return '<div class="kb-card" data-phone="'+esc(d.phone)+'"><b>'+esc(d.name||('+'+d.phone))+'</b><div class="svc">+'+esc(d.phone)+(d.service?' · '+esc(d.service):'')+'</div><div class="row"><select data-phone="'+esc(d.phone)+'" onclick="event.stopPropagation()">'+opts+'</select></div></div>'; }).join('')||'<div class="mut" style="padding:4px 6px">—</div>'; return '<div class="kb-col"><h4>'+label+'<span class="cnt">'+items.length+'</span></h4>'+cards+'</div>'; }).join(''); b.querySelectorAll('.kb-card').forEach(el=>el.addEventListener('click',()=>openChat(el.dataset.phone))); b.querySelectorAll('.kb-card select').forEach(sel=>sel.addEventListener('change',()=>moveStage(sel.dataset.phone,sel.value))); }
+  async function moveStage(phone,stage){ try{ await apiWA('/api/wa-deal-move','POST',{phone,stage}); const d=KB_DEALS.find(x=>x.phone===phone); if(d)d.stage=stage; renderKanban(); toast('Сделка перемещена','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  async function openChat(phone){ KB_CUR=phone; const d=KB_DEALS.find(x=>x.phone===phone); $('#kbTitle').textContent=(d&&d.name)?d.name+' (+'+phone+')':('+'+phone); $('#kbDrawer').classList.add('open'); $('#kbThread').innerHTML='<div class="mut">Загрузка…</div>'; try{ const c=await apiWA('/api/wa-chats','GET'); const ct=(c.chats||[]).find(x=>x.phone===phone); $('#kbToggle').checked=!(ct&&ct.bot_enabled===false); }catch{} try{ const m=await apiWA('/api/wa-messages?phone='+encodeURIComponent(phone),'GET'); const msgs=m.messages||[]; $('#kbThread').innerHTML=msgs.length? msgs.map(x=>'<div class="kb-msg '+(x.role==='user'?'in':'out')+'"><div class="kb-bubble">'+esc(x.text).replace(/\n/g,'<br>')+'</div></div>').join('') : '<div class="mut">Пусто</div>'; const t=$('#kbThread'); t.scrollTop=t.scrollHeight; }catch(err){ $('#kbThread').innerHTML='<div class="mut">Ошибка: '+esc(err.message)+'</div>'; } }
+  async function toggleKB(){ if(!KB_CUR) return; const enabled=$('#kbToggle').checked; try{ await apiWA('/api/wa-toggle','POST',{phone:KB_CUR,enabled}); toast(enabled?'Бот включён для чата':'Бот выключен — отвечаете вы','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); $('#kbToggle').checked=!enabled; } }
+  $('#waReload') && $('#waReload').addEventListener('click',loadWA);
+  $('#kbToggle') && $('#kbToggle').addEventListener('change',toggleKB);
+  $('#kbClose') && $('#kbClose').addEventListener('click',()=>$('#kbDrawer').classList.remove('open'));
 
   // ---------- ЗАМЕТКИ (общая доска команды) ----------
   let NOTES=[];

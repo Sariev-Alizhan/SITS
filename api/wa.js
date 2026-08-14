@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   let body = {};
   if (req.method === 'POST') {
     if (!checkOrigin(req, ALLOWED_ORIGINS)) return res.status(403).json({ ok: false, error: 'Forbidden origin' });
-    try { body = await readBody(req, 8 * 1024); } catch { return res.status(400).json({ ok: false, error: 'Bad request' }); }
+    try { body = await readBody(req, 10 * 1024 * 1024); } catch { return res.status(400).json({ ok: false, error: 'Файл слишком большой (лимит ~4 МБ)' }); }
   }
 
   const user = await authUser(req);
@@ -57,6 +57,32 @@ export default async function handler(req, res) {
       if (!dbReady()) return res.status(200).json({ ok: false, error: 'CRM (Supabase) не подключён' });
       await db.update('wa_deals', `phone=eq.${phone}`, { stage, updated_at: new Date().toISOString() });
       return res.status(200).json({ ok: true, phone, stage });
+    }
+    if (req.method === 'POST' && action === 'send') {
+      const phone = String(body.phone || '').replace(/\D/g, '');
+      if (!phone) return res.status(400).json({ ok: false, error: 'Нет phone' });
+      if (!dbReady()) return res.status(200).json({ ok: false, error: 'CRM (Supabase) не подключён' });
+      const type = ['text', 'image', 'audio', 'video', 'document'].includes(body.type) ? body.type : 'text';
+      const text = String(body.text || '').slice(0, 4000);
+      const filename = String(body.filename || '').slice(0, 200);
+      let media_url = '';
+      if (type !== 'text') {
+        if (!body.dataBase64) return res.status(400).json({ ok: false, error: 'Нет файла' });
+        const url = process.env.SUPABASE_URL, key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+        const ext = { image: 'jpg', audio: 'ogg', video: 'mp4', document: (filename.split('.').pop() || 'bin') }[type];
+        const path = `${phone}/${Date.now()}.${ext}`;
+        const up = await fetch(`${url}/storage/v1/object/wa-media/${path}`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${key}`, apikey: key, 'Content-Type': body.mimetype || 'application/octet-stream' },
+          body: Buffer.from(body.dataBase64, 'base64'),
+        });
+        if (!up.ok) return res.status(500).json({ ok: false, error: 'Не удалось загрузить файл' });
+        media_url = `${url}/storage/v1/object/public/wa-media/${path}`;
+      }
+      if (type === 'text' && !text) return res.status(400).json({ ok: false, error: 'Пустое сообщение' });
+      const id = 'ob-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+      await db.insert('wa_outbox', { id, phone, type, text, media_url, filename, status: 'pending', created_at: new Date().toISOString() });
+      return res.status(200).json({ ok: true });
     }
     return res.status(400).json({ ok: false, error: 'Неизвестное действие' });
   } catch (e) {

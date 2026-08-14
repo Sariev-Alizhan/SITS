@@ -938,6 +938,9 @@
     #view-whatsapp .kb-bubble{max-width:78%;padding:8px 12px;border-radius:14px;font-size:14px;line-height:1.45}
     #view-whatsapp .kb-msg.in .kb-bubble{background:#222;color:#eee}#view-whatsapp .kb-msg.out .kb-bubble{background:#e23744;color:#fff}
     #view-whatsapp .kb-switch{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer}
+    #view-whatsapp .kb-compose{display:flex;gap:6px;align-items:center;padding:10px;border-top:1px solid var(--line,#2a2a2a)}
+    #view-whatsapp .kb-compose input[type=text]{flex:1;background:#181818;color:#eee;border:1px solid #333;border-radius:20px;padding:9px 14px;font-size:14px;outline:none}
+    #view-whatsapp .kb-compose .btn{padding:8px 12px}
   </style>
   <div class="kb-head">
     <div>
@@ -954,6 +957,12 @@
       <button class="btn btn-ghost" id="kbClose" type="button">✕</button>
     </div>
     <div class="kb-thread" id="kbThread"></div>
+    <div class="kb-compose">
+      <input type="file" id="kbFile" style="display:none" accept="image/*,audio/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.txt">
+      <button class="btn btn-ghost" id="kbAttach" type="button" title="Прикрепить файл">📎</button>
+      <input type="text" id="kbInput" placeholder="Ваш ответ клиенту…">
+      <button class="btn btn-gold" id="kbSend" type="button">Отпр.</button>
+    </div>
   </div>
 </div>
 
@@ -1445,6 +1454,13 @@
   $('#waReload') && $('#waReload').addEventListener('click',loadWA);
   $('#kbToggle') && $('#kbToggle').addEventListener('change',toggleKB);
   $('#kbClose') && $('#kbClose').addEventListener('click',()=>$('#kbDrawer').classList.remove('open'));
+  function kbAppend(dir,text){ const t=$('#kbThread'); if(!t) return; t.insertAdjacentHTML('beforeend','<div class="kb-msg '+dir+'"><div class="kb-bubble">'+esc(text).replace(/\n/g,'<br>')+'</div></div>'); t.scrollTop=t.scrollHeight; }
+  async function kbSendText(){ if(!KB_CUR) return; const el=$('#kbInput'); const t=(el.value||'').trim(); if(!t) return; el.value=''; try{ await apiWA('/api/wa','POST',{action:'send',phone:KB_CUR,type:'text',text:t}); kbAppend('out',t); $('#kbToggle').checked=false; toast('Отправляется клиенту…','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  async function kbSendFile(file){ if(!KB_CUR||!file) return; if(file.size>4*1024*1024){ toast('Файл больше 4 МБ','err'); return; } const ty=(file.type||'').startsWith('image')?'image':(file.type||'').startsWith('audio')?'audio':(file.type||'').startsWith('video')?'video':'document'; try{ const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.onerror=rej;r.readAsDataURL(file);}); await apiWA('/api/wa','POST',{action:'send',phone:KB_CUR,type:ty,dataBase64:b64,mimetype:file.type,filename:file.name}); kbAppend('out','📎 '+esc(ty)+(file.name?': '+esc(file.name):'')); $('#kbToggle').checked=false; toast('Файл отправляется…','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  $('#kbSend') && $('#kbSend').addEventListener('click',kbSendText);
+  $('#kbInput') && $('#kbInput').addEventListener('keydown',e=>{ if(e.key==='Enter') kbSendText(); });
+  $('#kbAttach') && $('#kbAttach').addEventListener('click',()=>$('#kbFile').click());
+  $('#kbFile') && $('#kbFile').addEventListener('change',e=>{ if(e.target.files[0]) kbSendFile(e.target.files[0]); e.target.value=''; });
 
   // ---------- ЗАМЕТКИ (общая доска команды) ----------
   let NOTES=[];

@@ -40,7 +40,7 @@
   .tab .ic,.stat .ic{width:1em;height:1em}
   .icon-btn{display:inline-flex;align-items:center;justify-content:center}
   .icon-btn .ic{margin:0;width:1.15em;height:1.15em}
-  .tab{display:inline-flex;align-items:center;gap:7px}
+  .tab{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;flex:0 0 auto}
   .btn{display:inline-flex;align-items:center;gap:6px;justify-content:center}
   h3 .ic{color:var(--gold)}
   *{margin:0;padding:0;box-sizing:border-box}
@@ -98,8 +98,8 @@
   .who .av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:#241a06;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;font-family:var(--font-display)}
 
   .tabs{max-width:1200px;margin:0 auto;padding:24px 26px 0;width:100%}
-  .tabseg{display:inline-flex;gap:4px;padding:5px;background:var(--ink);border:1px solid var(--line);border-radius:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.02)}
-  .tab{padding:9px 22px;border-radius:10px;font-weight:600;font-size:14px;color:var(--dim);border:none;background:transparent;transition:.2s var(--ease)}
+  .tabseg{display:flex;flex-wrap:nowrap;gap:2px;padding:5px;background:var(--ink);border:1px solid var(--line);border-radius:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.02);max-width:100%;overflow-x:auto}
+  .tab{padding:9px 15px;border-radius:10px;font-weight:600;font-size:13.5px;color:var(--dim);border:none;background:transparent;transition:.2s var(--ease)}
   .tab:hover{color:var(--fg)}
   .tab.active{background:linear-gradient(180deg,var(--surface-2),var(--surface));color:var(--gold);box-shadow:inset 0 0 0 1px var(--line-2),0 6px 16px -8px var(--shadow-c)}
   .wrap{max-width:1200px;margin:0 auto;padding:22px 26px 60px;width:100%}
@@ -750,7 +750,7 @@
       <div class="doc-cards">
         <div class="doc-card"><b>CRM Fibonacci Control</b><span>Сделки (канбан), КП-генератор с ИИ и печатью в PDF, каталог услуг, воронка.</span></div>
         <div class="doc-card"><b>Внутренняя CRM SITS</b><span>Обзвон 413 отобранных бизнесов Астаны, 135 агентств-партнёров, календарь лучшего времени.</span></div>
-        <div class="doc-card"><b>Автоматизация заявок</b><span>Приём с сайта → Telegram + база, интеграции WhatsApp/Instagram, AI-ассистент на Claude.</span></div>
+        <div class="doc-card"><b>Автоматизация заявок</b><span>Приём с сайта → Telegram + база, интеграции WhatsApp/Instagram, AI-ассистент SITS AI.</span></div>
         <div class="doc-card"><b>Каналы привлечения</b><span>Сайт с прайсом, реферальная программа 10%, партнёрская сеть агентств, фото-прайс и баннеры.</span></div>
       </div>
     </div>
@@ -844,9 +844,8 @@
       <h3><span class="doc-ic gold">✎</span>Скрипты</h3>
       <div class="doc-card script"><b>Первое сообщение (WhatsApp/Instagram)</b><p>«Здравствуйте! Это [Имя], SITS. Видел, вы активно продвигаетесь — заявки идут в Direct/WhatsApp. Многие теряются без системы: не ответили вовремя, забыли перезвонить. Мы внедряем CRM и автоматизацию: заявки собираются в одном окне, автоответы, напоминания. Покажу за 15 минут на вашем примере — когда удобно?»</p></div>
       <div class="doc-card script"><b>Начало звонка</b><p>«Добрый день! [Имя], компания SITS, автоматизация бизнеса. Пара минут есть? …Мы помогаем [ниша] не терять заявки и довести их до продажи. Скажите, сколько обращений в день у вас примерно и где они сейчас — WhatsApp, Instagram, звонки?»</p></div>
-      <div class="doc-card script"><b>Аргумент закрытия — акция до 1 сентября</b><p>«До 1 сентября на все услуги скидка −80%: автоматизация под ключ — от 200 000 ₸ вместо 1 000 000 ₸, сайт — от 30 000 ₸. После 1 сентября цены возвращаются. Если сомневаетесь — подпишем договор сейчас и зафиксируем цену, а старт — когда вам удобно.»</p></div>
       <div class="doc-card script"><b>Возражения</b>
-        <p><b>«Дорого»</b> → «Сколько стоит один потерянный клиент? Одна-две сделки окупают внедрение. Плюс предоплата 50%, по акции до 1 сентября старт — от 200 000 ₸ вместо 1 000 000 ₸.»</p>
+        <p><b>«Дорого»</b> → «Сколько стоит один потерянный клиент? Одна-две сделки окупают внедрение. Плюс предоплата 50%, старт — от 1 000 000 ₸.»</p>
         <p><b>«У нас уже есть CRM / таблицы»</b> → «Отлично, значит вы понимаете ценность. Покажу, что наша связывает WhatsApp+Instagram+сайт в одно окно с автоответами — часто это то, чего не хватает.»</p>
         <p><b>«Подумаю»</b> → «Конечно. Давайте я бесплатно посчитаю, сколько заявок вы теряете за неделю — по этой цифре и решите. Займёт 15 минут.»</p>
         <p><b>«Нет времени»</b> → «Поэтому и звоню — автоматизация экономит время. 15 минут сейчас сэкономят вам часы на переписке. Когда перезвонить — завтра до обеда?»</p>
@@ -884,7 +883,6 @@
     <div id="notesList" class="notes-list"></div>
     <div id="notesEmpty" class="out-empty" style="display:none">Пока нет заметок. Напиши первую — её увидит вся команда.</div>
   </div>
-</div>
 
 <!-- ==================== КП ДОКУМЕНТ (модалка / печать) ==================== -->
 <div class="kp-overlay" id="kpOverlay">
@@ -918,53 +916,110 @@
 
 <div class="wrap view" id="view-whatsapp">
   <style>
-    #view-whatsapp .mut{color:#9aa4af;font-size:13px}
-    #view-whatsapp .kb-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+    #view-whatsapp .mut{color:var(--dim);font-size:13px}
+    #view-whatsapp .kb-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px;flex-wrap:wrap}
     #view-whatsapp .kb-board{display:flex;gap:12px;overflow-x:auto;padding-bottom:10px;align-items:flex-start}
-    #view-whatsapp .kb-col{flex:0 0 235px;background:var(--card,#161616);border:1px solid var(--line,#2a2a2a);border-radius:12px;padding:8px;min-height:120px}
-    #view-whatsapp .kb-col h4{margin:2px 4px 8px;font-size:13px;display:flex;justify-content:space-between;align-items:center}
-    #view-whatsapp .kb-col h4 .cnt{color:#9aa4af;font-weight:normal}
-    #view-whatsapp .kb-card{background:var(--bg,#0f0f0f);border:1px solid var(--line,#2a2a2a);border-radius:10px;padding:9px 10px;margin-bottom:8px;cursor:pointer}
+    #view-whatsapp .kb-col{flex:0 0 235px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:8px;min-height:120px}
+    #view-whatsapp .kb-col h4{margin:2px 4px 8px;font-size:13px;color:var(--fg);display:flex;justify-content:space-between;align-items:center}
+    #view-whatsapp .kb-col h4 .cnt{color:var(--dim);font-weight:normal}
+    #view-whatsapp .kb-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 10px;margin-bottom:8px;cursor:pointer;color:var(--fg)}
     #view-whatsapp .kb-card:hover{border-color:#e23744}
     #view-whatsapp .kb-card b{font-size:13px}
-    #view-whatsapp .kb-card .svc{font-size:12px;color:#9aa4af;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    #view-whatsapp .kb-card .svc{font-size:12px;color:var(--dim);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     #view-whatsapp .kb-card .row{display:flex;justify-content:flex-end;margin-top:6px}
-    #view-whatsapp .kb-card select{font-size:11px;background:#181818;color:#ccc;border:1px solid #333;border-radius:6px;padding:2px 4px;max-width:150px}
-    #view-whatsapp .kb-drawer{position:fixed;top:0;right:0;height:100vh;width:min(430px,94vw);background:var(--card,#141414);border-left:1px solid var(--line,#2a2a2a);box-shadow:-8px 0 30px rgba(0,0,0,.5);transform:translateX(101%);transition:transform .25s;display:flex;flex-direction:column;z-index:80}
+    #view-whatsapp .kb-card select{font-size:11px;background:var(--surface-2);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:2px 4px;max-width:150px}
+    #view-whatsapp .kb-drawer{position:fixed;top:0;right:0;height:100vh;width:min(440px,96vw);background:var(--surface);border-left:1px solid var(--line);box-shadow:-8px 0 40px -8px var(--shadow-c);transform:translateX(101%);transition:transform .25s;display:flex;flex-direction:column;z-index:80}
     #view-whatsapp .kb-drawer.open{transform:translateX(0)}
-    #view-whatsapp .kb-dhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border-bottom:1px solid var(--line,#2a2a2a)}
-    #view-whatsapp .kb-thread{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
-    #view-whatsapp .kb-msg{display:flex}#view-whatsapp .kb-msg.out{justify-content:flex-end}
-    #view-whatsapp .kb-bubble{max-width:78%;padding:8px 12px;border-radius:14px;font-size:14px;line-height:1.45}
-    #view-whatsapp .kb-msg.in .kb-bubble{background:#222;color:#eee}#view-whatsapp .kb-msg.out .kb-bubble{background:#e23744;color:#fff}
-    #view-whatsapp .kb-switch{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer}
-    #view-whatsapp .kb-compose{display:flex;gap:6px;align-items:center;padding:10px;border-top:1px solid var(--line,#2a2a2a)}
-    #view-whatsapp .kb-compose input[type=text]{flex:1;background:#181818;color:#eee;border:1px solid #333;border-radius:20px;padding:9px 14px;font-size:14px;outline:none}
+    #view-whatsapp .kb-dhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+    #view-whatsapp .kb-dhead b{color:var(--fg);font-size:15px}
+    #view-whatsapp .kb-thread{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:9px;background:var(--void)}
+    #view-whatsapp .kb-msg{display:flex;flex-direction:column;max-width:80%}
+    #view-whatsapp .kb-msg.in{align-self:flex-start;align-items:flex-start}
+    #view-whatsapp .kb-msg.out{align-self:flex-end;align-items:flex-end}
+    #view-whatsapp .kb-who{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--dim);margin:0 6px 2px}
+    #view-whatsapp .kb-bubble{padding:8px 12px;border-radius:14px;font-size:14px;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+    #view-whatsapp .kb-msg.in .kb-bubble{background:var(--surface);border:1px solid var(--line);color:var(--fg);border-bottom-left-radius:4px}
+    #view-whatsapp .kb-msg.out.bot .kb-bubble{background:#e23744;color:#fff;border-bottom-right-radius:4px}
+    #view-whatsapp .kb-msg.out.agent .kb-bubble{background:var(--gold);color:#fff;border-bottom-right-radius:4px}
+    #view-whatsapp .kb-switch{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--fg);cursor:pointer;white-space:nowrap}
+    #view-whatsapp .kb-compose{display:flex;gap:6px;align-items:center;padding:10px;border-top:1px solid var(--line);background:var(--surface)}
+    #view-whatsapp .kb-compose input[type=text]{flex:1;background:var(--surface-2);color:var(--fg);border:1px solid var(--line);border-radius:20px;padding:9px 14px;font-size:14px;outline:none}
+    #view-whatsapp .kb-compose input[type=text]:focus{border-color:#e23744}
     #view-whatsapp .kb-compose .btn{padding:8px 12px}
+    #view-whatsapp .kb-tabs{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:3px}
+    #view-whatsapp .kb-tb{border:0;background:transparent;padding:6px 13px;border-radius:7px;font-size:13px;cursor:pointer;color:var(--dim)}
+    #view-whatsapp .kb-tb.active{background:var(--surface);color:var(--fg);box-shadow:0 1px 3px var(--shadow-c);font-weight:600}
+    #view-whatsapp .kb-list{display:flex;flex-direction:column;gap:6px;max-width:820px}
+    #view-whatsapp .kb-li{display:flex;align-items:center;gap:11px;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;cursor:pointer;transition:border-color .12s}
+    #view-whatsapp .kb-li:hover{border-color:#e23744}
+    #view-whatsapp .kb-li .av{width:38px;height:38px;border-radius:50%;background:color-mix(in srgb,#e23744 12%,transparent);color:#e23744;display:flex;align-items:center;justify-content:center;font-weight:600;flex:0 0 38px}
+    #view-whatsapp .kb-li .mid{flex:1;min-width:0}
+    #view-whatsapp .kb-li .nm{font-size:14px;font-weight:600;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    #view-whatsapp .kb-li .lt{font-size:12.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+    #view-whatsapp .kb-li .badge{font-size:11px;padding:2px 8px;border-radius:20px;flex:0 0 auto}
+    #view-whatsapp .kb-li .badge.on{background:color-mix(in srgb,#1a9c4c 16%,transparent);color:#1a9c4c}
+    #view-whatsapp .kb-li .badge.off{background:color-mix(in srgb,var(--dim) 22%,transparent);color:var(--dim)}
+    #view-whatsapp .kb-li .badge.open{background:color-mix(in srgb,#e23744 12%,transparent);color:#e23744}
+    #view-whatsapp .kb-li.call .cal-when{flex:0 0 auto;text-align:center;min-width:60px;display:flex;flex-direction:column;line-height:1.15}
+    #view-whatsapp .kb-li.call .cal-when b{font-size:16px;color:#e23744}
+    #view-whatsapp .kb-li.call .cal-when span{font-size:11px;color:var(--dim)}
+    #view-whatsapp .kb-li.call.past{opacity:.5}
+    /* аналитика по чату */
+    #view-whatsapp .kb-stats{padding:11px 14px;border-bottom:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:9px}
+    #view-whatsapp .kb-stats .st-row{display:flex;flex-wrap:wrap;gap:6px}
+    #view-whatsapp .kb-stats .chip{font-size:11.5px;padding:3px 9px;border-radius:20px;background:var(--surface-2);border:1px solid var(--line);color:var(--fg)}
+    #view-whatsapp .kb-stats .chip.stage{background:var(--gold-soft);border-color:transparent;color:var(--gold-deep);font-weight:700}
+    #view-whatsapp .kb-stats .st-metrics{display:flex;gap:16px}
+    #view-whatsapp .kb-stats .st-metrics .m{font-size:11px;color:var(--dim);text-align:center}
+    #view-whatsapp .kb-stats .st-metrics .m b{display:block;color:var(--fg);font-size:17px;font-weight:700;line-height:1.1}
+    #view-whatsapp .kb-stats .st-sum{font-size:12.5px;color:var(--dim);line-height:1.45}
+    #view-whatsapp .kb-stats .st-sum b{color:var(--fg)}
+    #view-whatsapp .kb-stats .st-verdict{font-weight:700;color:#1a9c4c}
+    #view-whatsapp .kb-stats .st-verdict.warn{color:var(--warn)}
+    /* современный свитч бота */
+    #view-whatsapp .kb-switch input{appearance:none;-webkit-appearance:none;width:38px;height:22px;border-radius:20px;background:var(--line-2);position:relative;cursor:pointer;transition:background .18s;flex:0 0 auto;margin:0}
+    #view-whatsapp .kb-switch input:checked{background:#1a9c4c}
+    #view-whatsapp .kb-switch input::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .18s;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+    #view-whatsapp .kb-switch input:checked::after{transform:translateX(16px)}
+    /* иконочные кнопки в панели */
+    #view-whatsapp .kb-iconbtn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--dim);cursor:pointer;transition:.14s}
+    #view-whatsapp .kb-iconbtn:hover{color:var(--fg);border-color:var(--line-2);background:var(--surface-2)}
+    #view-whatsapp .kb-iconbtn .ic{width:18px;height:18px}
+    #view-whatsapp .kb-send{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;border-radius:50%;flex:0 0 auto}
+    #view-whatsapp .kb-send .ic{width:18px;height:18px;margin:0}
+    #view-whatsapp .kb-dhead .kb-iconbtn{border:none}
   </style>
   <div class="kb-head">
     <div>
-      <h2 style="margin:0">WhatsApp · Воронка</h2>
-      <div class="mut" id="waHint" style="margin-top:2px">Бот сам создаёт сделки и двигает по стадиям. Клик по карточке — переписка и тумблер бота.</div>
+      <h2 style="margin:0">WhatsApp</h2>
+      <div class="mut" id="waHint" style="margin-top:2px">Ваши переписки WhatsApp. Клик по чату — открыть диалог, ответить, включить/выключить бота.</div>
     </div>
-    <button class="btn btn-ghost" id="waReload" type="button">Обновить</button>
+    <div style="display:flex;gap:8px;align-items:center">
+      <div class="kb-tabs"><button type="button" class="kb-tb active" data-wa="chats">Все чаты</button><button type="button" class="kb-tb" data-wa="funnel">Воронка</button><button type="button" class="kb-tb" data-wa="calls">Созвоны</button><button type="button" class="kb-tb" data-wa="hidden">Скрытые</button></div>
+      <button class="btn btn-ghost" id="waReload" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/></svg> Обновить</button>
+    </div>
   </div>
-  <div class="kb-board" id="kbBoard"><div class="mut">Загрузка…</div></div>
+  <div class="kb-list" id="kbChats"><div class="mut">Загрузка…</div></div>
+  <div class="kb-board" id="kbBoard" style="display:none"><div class="mut">Загрузка…</div></div>
+  <div class="kb-list" id="kbCalls" style="display:none"><div class="mut">Загрузка…</div></div>
   <div class="kb-drawer" id="kbDrawer">
     <div class="kb-dhead">
       <b id="kbTitle">Чат</b>
       <label class="kb-switch"><input type="checkbox" id="kbToggle"> Бот отвечает</label>
-      <button class="btn btn-ghost" id="kbClose" type="button">✕</button>
+      <button class="btn btn-ghost" id="kbHideBtn" type="button" style="font-size:12px;padding:5px 10px">Скрыть</button>
+      <button class="kb-iconbtn" id="kbClose" type="button" title="Закрыть"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
+    <div class="kb-stats" id="kbStats"></div>
     <div class="kb-thread" id="kbThread"></div>
     <div class="kb-compose">
       <input type="file" id="kbFile" style="display:none" accept="image/*,audio/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.txt">
-      <button class="btn btn-ghost" id="kbAttach" type="button" title="Прикрепить файл">📎</button>
+      <button class="kb-iconbtn" id="kbAttach" type="button" title="Прикрепить файл"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
       <input type="text" id="kbInput" placeholder="Ваш ответ клиенту…">
-      <button class="btn btn-gold" id="kbSend" type="button">Отпр.</button>
+      <button class="btn btn-gold kb-send" id="kbSend" type="button" title="Отправить"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
     </div>
   </div>
 </div>
+</div><!-- /#app -->
 
 <div class="toast" id="toast"></div>
 
@@ -1444,19 +1499,32 @@
 
   // ---------- WHATSAPP · КАНБАН ----------
   const KB_STAGES=[['new','Новый'],['dialog','Диалог'],['qualified','Квалификация'],['quote','КП/Цена'],['waiting_payment','Ожидание оплаты'],['won','Клиент'],['lost','Отказ']];
-  let KB_DEALS=[], KB_CUR=null;
+  let KB_DEALS=[], KB_CHATS=[], KB_CALLS=[], KB_CUR=null, WA_POLL=null, KB_LASTCOUNT=0, WA_MODE='chats';
   async function apiWA(path,method,body){ const opt={method,headers:{'x-crm-login':LOGIN,'x-crm-pass':PASS}}; if(body){opt.headers['Content-Type']='application/json';opt.body=JSON.stringify(body);} const r=await fetch(path,opt); const d=await r.json().catch(()=>({ok:false,error:'Ошибка ответа'})); if(!r.ok||!d.ok) throw new Error(d.error||('HTTP '+r.status)); return d; }
-  async function loadWA(){ const b=$('#kbBoard'); if(b) b.innerHTML='<div class="mut">Загрузка…</div>'; try{ const d=await apiWA('/api/wa?action=deals','GET'); KB_DEALS=d.deals||[]; renderKanban(); if($('#waHint')&&d.cloud===false) $('#waHint').textContent='CRM не подключён к Supabase — сделки не отображаются.'; }catch(err){ if(b) b.innerHTML='<div class="mut">Ошибка: '+esc(err.message)+'</div>'; } }
-  function renderKanban(){ const b=$('#kbBoard'); if(!b) return; b.innerHTML=KB_STAGES.map(([s,label])=>{ const items=KB_DEALS.filter(d=>(d.stage||'new')===s); const cards=items.map(d=>{ const opts=KB_STAGES.map(([v,l])=>'<option value="'+v+'"'+(v===(d.stage||'new')?' selected':'')+'>'+l+'</option>').join(''); return '<div class="kb-card" data-phone="'+esc(d.phone)+'"><b>'+esc(d.name||('+'+d.phone))+'</b><div class="svc">+'+esc(d.phone)+(d.service?' · '+esc(d.service):'')+'</div><div class="row"><select data-phone="'+esc(d.phone)+'" onclick="event.stopPropagation()">'+opts+'</select></div></div>'; }).join('')||'<div class="mut" style="padding:4px 6px">—</div>'; return '<div class="kb-col"><h4>'+label+'<span class="cnt">'+items.length+'</span></h4>'+cards+'</div>'; }).join(''); b.querySelectorAll('.kb-card').forEach(el=>el.addEventListener('click',()=>openChat(el.dataset.phone))); b.querySelectorAll('.kb-card select').forEach(sel=>sel.addEventListener('change',()=>moveStage(sel.dataset.phone,sel.value))); }
-  async function moveStage(phone,stage){ try{ await apiWA('/api/wa','POST',{action:'move',phone,stage}); const d=KB_DEALS.find(x=>x.phone===phone); if(d)d.stage=stage; renderKanban(); toast('Сделка перемещена','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
-  async function openChat(phone){ KB_CUR=phone; const d=KB_DEALS.find(x=>x.phone===phone); $('#kbTitle').textContent=(d&&d.name)?d.name+' (+'+phone+')':('+'+phone); $('#kbDrawer').classList.add('open'); $('#kbThread').innerHTML='<div class="mut">Загрузка…</div>'; try{ const c=await apiWA('/api/wa?action=chats','GET'); const ct=(c.chats||[]).find(x=>x.phone===phone); $('#kbToggle').checked=!(ct&&ct.bot_enabled===false); }catch{} try{ const m=await apiWA('/api/wa?action=messages&phone='+encodeURIComponent(phone),'GET'); const msgs=m.messages||[]; $('#kbThread').innerHTML=msgs.length? msgs.map(x=>'<div class="kb-msg '+(x.role==='user'?'in':'out')+'"><div class="kb-bubble">'+esc(x.text).replace(/\n/g,'<br>')+'</div></div>').join('') : '<div class="mut">Пусто</div>'; const t=$('#kbThread'); t.scrollTop=t.scrollHeight; }catch(err){ $('#kbThread').innerHTML='<div class="mut">Ошибка: '+esc(err.message)+'</div>'; } }
-  async function toggleKB(){ if(!KB_CUR) return; const enabled=$('#kbToggle').checked; try{ await apiWA('/api/wa','POST',{action:'toggle',phone:KB_CUR,enabled}); toast(enabled?'Бот включён для чата':'Бот выключен — отвечаете вы','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); $('#kbToggle').checked=!enabled; } }
+  async function loadWA(){ const els=[$('#kbBoard'),$('#kbChats'),$('#kbCalls')]; els.forEach(e=>{if(e)e.innerHTML='<div class="mut">Загрузка…</div>';}); try{ const [dd,cc,kk]=await Promise.all([apiWA('/api/wa?action=deals','GET'),apiWA('/api/wa?action=chats','GET'),apiWA('/api/wa?action=calls','GET')]); KB_DEALS=dd.deals||[]; KB_CHATS=cc.chats||[]; KB_CALLS=kk.calls||[]; renderWAKanban(); renderWAChats(); renderWACalls(); if($('#waHint')&&dd.cloud===false) $('#waHint').textContent='CRM не подключён к Supabase — данные не отображаются.'; }catch(err){ els.forEach(e=>{if(e)e.innerHTML='<div class="mut">Ошибка: '+esc(err.message)+'</div>';}); } startWAPoll(); }
+  function startWAPoll(){ if(WA_POLL) clearInterval(WA_POLL); WA_POLL=setInterval(waPollTick,5000); }
+  async function waPollTick(){ const v=$('#view-whatsapp'); if(!v||!v.classList.contains('active')) return; try{ const cc=await apiWA('/api/wa?action=chats','GET'); KB_CHATS=cc.chats||[]; if($('#kbChats')&&getComputedStyle($('#kbChats')).display!=='none') renderWAChats(); if(KB_CUR&&$('#kbDrawer').classList.contains('open')) await refreshOpenChat(); }catch(e){} }
+  async function refreshOpenChat(){ const phone=KB_CUR; if(!phone) return; let msgs=[]; try{ const m=await apiWA('/api/wa?action=messages&phone='+encodeURIComponent(phone),'GET'); msgs=m.messages||[]; }catch{ return; } if(msgs.length===KB_LASTCOUNT) return; const t=$('#kbThread'); if(!t) return; const nearBottom=(t.scrollHeight-t.scrollTop-t.clientHeight)<140; t.innerHTML=msgs.length? msgs.map(waMsgHTML).join('') : '<div class="mut">Пусто</div>'; KB_LASTCOUNT=msgs.length; if(nearBottom) t.scrollTop=t.scrollHeight; renderChatStats(phone,msgs); }
+  function renderWACalls(){ const el=$('#kbCalls'); if(!el) return; if(!KB_CALLS.length){ el.innerHTML='<div class="mut">Пока нет записанных созвонов. Когда бот запишет клиента на звонок — созвон появится здесь: с кем, когда, тема и ссылка на чат.</div>'; return; } const now=Date.now(); el.innerHTML=KB_CALLS.map(c=>{ const d=new Date(c.scheduled_at); const past=d.getTime()<now; const time=d.toLocaleTimeString('ru-RU',{timeZone:'Asia/Almaty',hour:'2-digit',minute:'2-digit'}); const date=d.toLocaleDateString('ru-RU',{timeZone:'Asia/Almaty',weekday:'short',day:'2-digit',month:'2-digit'}); const nm=c.name||('+'+c.phone); return '<div class="kb-li call'+(past?' past':'')+'" data-phone="'+esc(c.phone)+'"><div class="cal-when"><b>'+esc(time)+'</b><span>'+esc(date)+'</span></div><div class="mid"><div class="nm">'+esc(nm)+' · +'+esc(c.phone)+'</div><div class="lt">'+esc(c.topic||'Тема не указана')+'</div></div><span class="badge open">Открыть чат</span></div>'; }).join(''); el.querySelectorAll('.kb-li').forEach(li=>li.addEventListener('click',()=>openChat(li.dataset.phone))); }
+  function renderWAChats(){ const el=$('#kbChats'); if(!el) return; const showHidden=(WA_MODE==='hidden'); const list=KB_CHATS.filter(c=>((c.hidden===true)===showHidden)); if(!list.length){ el.innerHTML='<div class="mut">'+(showHidden?'Скрытых чатов нет.':'Пока нет чатов. Когда клиент напишет боту — переписка появится здесь.')+'</div>'; return; } const ini=(c)=>{ const s=(c.name||'').trim(); return s?s[0].toUpperCase():'#'; }; el.innerHTML=list.map(c=>{ const nm=c.name||('+'+c.phone); const on=c.bot_enabled!==false; const lt=c.last_text?((c.last_role==='user'?'':'Вы: ')+c.last_text):'—'; return '<div class="kb-li" data-phone="'+esc(c.phone)+'"><div class="av">'+esc(ini(c))+'</div><div class="mid"><div class="nm">'+esc(nm)+'</div><div class="lt">'+esc(lt)+'</div></div><span class="badge '+(on?'on':'off')+'">'+(on?'бот вкл':'вы')+'</span></div>'; }).join(''); el.querySelectorAll('.kb-li').forEach(li=>li.addEventListener('click',()=>openChat(li.dataset.phone))); }
+  function switchWAView(mode){ WA_MODE=mode; $$('.kb-tb').forEach(x=>x.classList.toggle('active',x.dataset.wa===mode)); const showChats=(mode==='chats'||mode==='hidden'); if($('#kbChats')) $('#kbChats').style.display=showChats?'flex':'none'; if($('#kbBoard')) $('#kbBoard').style.display=(mode==='funnel')?'flex':'none'; if($('#kbCalls')) $('#kbCalls').style.display=(mode==='calls')?'flex':'none'; renderWAChats(); }
+  $$('.kb-tb').forEach(btn=>btn.addEventListener('click',()=>switchWAView(btn.dataset.wa)));
+  function renderWAKanban(){ const b=$('#kbBoard'); if(!b) return; b.innerHTML=KB_STAGES.map(([s,label])=>{ const items=KB_DEALS.filter(d=>(d.stage||'new')===s); const cards=items.map(d=>{ const opts=KB_STAGES.map(([v,l])=>'<option value="'+v+'"'+(v===(d.stage||'new')?' selected':'')+'>'+l+'</option>').join(''); return '<div class="kb-card" data-phone="'+esc(d.phone)+'"><b>'+esc(d.name||('+'+d.phone))+'</b><div class="svc">+'+esc(d.phone)+(d.service?' · '+esc(d.service):'')+'</div><div class="row"><select data-phone="'+esc(d.phone)+'" onclick="event.stopPropagation()">'+opts+'</select></div></div>'; }).join('')||'<div class="mut" style="padding:4px 6px">—</div>'; return '<div class="kb-col"><h4>'+label+'<span class="cnt">'+items.length+'</span></h4>'+cards+'</div>'; }).join(''); b.querySelectorAll('.kb-card').forEach(el=>el.addEventListener('click',()=>openChat(el.dataset.phone))); b.querySelectorAll('.kb-card select').forEach(sel=>sel.addEventListener('change',()=>moveStage(sel.dataset.phone,sel.value))); }
+  async function moveStage(phone,stage){ try{ await apiWA('/api/wa','POST',{action:'move',phone,stage}); const d=KB_DEALS.find(x=>x.phone===phone); if(d)d.stage=stage; renderWAKanban(); toast('Сделка перемещена','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  const WA_STAGE_LABEL={new:'Новый',dialog:'Диалог',qualified:'Квалификация',quote:'КП/Цена',waiting_payment:'Ожидание оплаты',won:'Клиент',lost:'Отказ'};
+  function waFmtDT(s){ if(!s) return '—'; try{ const d=new Date(s); return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}); }catch{ return '—'; } }
+  function waMsgHTML(x){ const cls=x.role==='user'?'in':('out '+(x.role==='agent'?'agent':'bot')); const who=x.role==='user'?'':(x.role==='agent'?'вы':'бот'); return '<div class="kb-msg '+cls+'">'+(who?'<span class="kb-who">'+who+'</span>':'')+'<div class="kb-bubble">'+esc(x.text).replace(/\n/g,'<br>')+'</div></div>'; }
+  function renderChatStats(phone,msgs){ const el=$('#kbStats'); if(!el) return; const d=KB_DEALS.find(x=>x.phone===phone)||{}; const c=msgs||[]; const byClient=c.filter(x=>x.role==='user').length; const byBot=c.filter(x=>x.role==='assistant').length; const byAgent=c.filter(x=>x.role==='agent').length; const stage=d.stage||'new'; const reach=['qualified','quote','waiting_payment','won'].includes(stage); const lead=[d.name,d.service,d.budget].filter(Boolean).join(' · '); let verdict,warn=false; if(stage==='won'){verdict='Довёл до заказа';} else if(stage==='lost'){verdict='Клиент отказался / не целевой';warn=true;} else if(reach){verdict='Выявил потребность, назвал решение';} else if(byBot>0){verdict='Ведёт диалог, квалифицирует';} else {verdict='Пока без ответа бота';warn=true;} const first=c.length?waFmtDT(c[0].created_at):'—'; const last=c.length?waFmtDT(c[c.length-1].created_at):'—'; el.innerHTML='<div class="st-row"><span class="chip stage">Стадия: '+esc(WA_STAGE_LABEL[stage]||stage)+'</span>'+(lead?'<span class="chip">'+esc(lead)+'</span>':'')+'</div>'+'<div class="st-metrics"><div class="m"><b>'+c.length+'</b>всего</div><div class="m"><b>'+byClient+'</b>клиент</div><div class="m"><b>'+byBot+'</b>бот</div><div class="m"><b>'+byAgent+'</b>вы</div></div>'+'<div class="st-sum"><span class="st-verdict'+(warn?' warn':'')+'">'+esc(verdict)+'</span>'+(d.note?' — '+esc(d.note):'')+'<br><span style="opacity:.7">Первое: '+first+' · Последнее: '+last+'</span></div>'; }
+  async function openChat(phone){ KB_CUR=phone; const d=KB_DEALS.find(x=>x.phone===phone); $('#kbTitle').textContent=(d&&d.name)?d.name+' (+'+phone+')':('+'+phone); $('#kbDrawer').classList.add('open'); $('#kbStats').innerHTML=''; $('#kbThread').innerHTML='<div class="mut">Загрузка…</div>'; try{ const c=await apiWA('/api/wa?action=chats','GET'); const ct=(c.chats||[]).find(x=>x.phone===phone); $('#kbToggle').checked=!(ct&&ct.bot_enabled===false); if($('#kbHideBtn')) $('#kbHideBtn').textContent=(ct&&ct.hidden===true)?'Вернуть':'Скрыть'; }catch{} try{ const m=await apiWA('/api/wa?action=messages&phone='+encodeURIComponent(phone),'GET'); const msgs=m.messages||[]; $('#kbThread').innerHTML=msgs.length? msgs.map(waMsgHTML).join('') : '<div class="mut">Пусто</div>'; const t=$('#kbThread'); t.scrollTop=t.scrollHeight; renderChatStats(phone,msgs); KB_LASTCOUNT=msgs.length; }catch(err){ $('#kbThread').innerHTML='<div class="mut">Ошибка: '+esc(err.message)+'</div>'; } }
+  async function toggleKB(){ if(!KB_CUR) return; const enabled=$('#kbToggle').checked; try{ await apiWA('/api/wa','POST',{action:'toggle',phone:KB_CUR,enabled}); const c=KB_CHATS.find(x=>x.phone===KB_CUR); if(c){ c.bot_enabled=enabled; renderWAChats(); } toast(enabled?'Бот включён для чата':'Бот выключен — отвечаете вы','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); $('#kbToggle').checked=!enabled; } }
   $('#waReload') && $('#waReload').addEventListener('click',loadWA);
   $('#kbToggle') && $('#kbToggle').addEventListener('change',toggleKB);
+  async function hideChat(){ if(!KB_CUR) return; const c=KB_CHATS.find(x=>x.phone===KB_CUR); const nh=!(c&&c.hidden===true); try{ await apiWA('/api/wa','POST',{action:'hide',phone:KB_CUR,hidden:nh}); if(c) c.hidden=nh; renderWAChats(); toast(nh?'Чат скрыт':'Чат возвращён','ok'); $('#kbDrawer').classList.remove('open'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  $('#kbHideBtn') && $('#kbHideBtn').addEventListener('click',hideChat);
   $('#kbClose') && $('#kbClose').addEventListener('click',()=>$('#kbDrawer').classList.remove('open'));
-  function kbAppend(dir,text){ const t=$('#kbThread'); if(!t) return; t.insertAdjacentHTML('beforeend','<div class="kb-msg '+dir+'"><div class="kb-bubble">'+esc(text).replace(/\n/g,'<br>')+'</div></div>'); t.scrollTop=t.scrollHeight; }
-  async function kbSendText(){ if(!KB_CUR) return; const el=$('#kbInput'); const t=(el.value||'').trim(); if(!t) return; el.value=''; try{ await apiWA('/api/wa','POST',{action:'send',phone:KB_CUR,type:'text',text:t}); kbAppend('out',t); $('#kbToggle').checked=false; toast('Отправляется клиенту…','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
-  async function kbSendFile(file){ if(!KB_CUR||!file) return; if(file.size>4*1024*1024){ toast('Файл больше 4 МБ','err'); return; } const ty=(file.type||'').startsWith('image')?'image':(file.type||'').startsWith('audio')?'audio':(file.type||'').startsWith('video')?'video':'document'; try{ const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.onerror=rej;r.readAsDataURL(file);}); await apiWA('/api/wa','POST',{action:'send',phone:KB_CUR,type:ty,dataBase64:b64,mimetype:file.type,filename:file.name}); kbAppend('out','📎 '+esc(ty)+(file.name?': '+esc(file.name):'')); $('#kbToggle').checked=false; toast('Файл отправляется…','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  function kbAppend(dir,text){ const t=$('#kbThread'); if(!t) return; const who=/agent/.test(dir)?'<span class="kb-who">вы</span>':''; t.insertAdjacentHTML('beforeend','<div class="kb-msg '+dir+'">'+who+'<div class="kb-bubble">'+esc(text).replace(/\n/g,'<br>')+'</div></div>'); t.scrollTop=t.scrollHeight; }
+  async function kbSendText(){ if(!KB_CUR) return; const el=$('#kbInput'); const t=(el.value||'').trim(); if(!t) return; el.value=''; try{ await apiWA('/api/wa','POST',{action:'send',phone:KB_CUR,type:'text',text:t}); kbAppend('out agent',t); $('#kbToggle').checked=false; toast('Отправляется клиенту…','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
+  async function kbSendFile(file){ if(!KB_CUR||!file) return; if(file.size>4*1024*1024){ toast('Файл больше 4 МБ','err'); return; } const ty=(file.type||'').startsWith('image')?'image':(file.type||'').startsWith('audio')?'audio':(file.type||'').startsWith('video')?'video':'document'; try{ const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.onerror=rej;r.readAsDataURL(file);}); await apiWA('/api/wa','POST',{action:'send',phone:KB_CUR,type:ty,dataBase64:b64,mimetype:file.type,filename:file.name}); kbAppend('out agent','Файл: '+(file.name||ty)); $('#kbToggle').checked=false; toast('Файл отправляется…','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
   $('#kbSend') && $('#kbSend').addEventListener('click',kbSendText);
   $('#kbInput') && $('#kbInput').addEventListener('keydown',e=>{ if(e.key==='Enter') kbSendText(); });
   $('#kbAttach') && $('#kbAttach').addEventListener('click',()=>$('#kbFile').click());
@@ -1541,7 +1609,7 @@
     return `<div class="kcard deal" data-id="${d.id}" style="--st:${ST_COLOR[d.status]||'var(--gold)'}">
       <div class="kc-top"><div><div class="kc-cl">${esc(d.client||'Без имени')}</div>${d.company?`<div class="kc-co">${esc(d.company)}</div>`:''}</div><div class="kc-sum">${fmt(d.total)}</div></div>
       <div class="kc-meta">${d.no?`<span class="mono">${esc(d.no)}</span>`:''}${d.manager?`<span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${esc(d.manager)}</span>`:''}${d.source?`<span>${esc(d.source)}</span>`:''}<span>${dateShort(d.createdAt)}</span></div>
-      <div class="kc-act"><button class="act-edit">Открыть</button><button class="act-status">Дальше →</button><button class="act-del" title="Удалить">✕</button></div>
+      <div class="kc-act"><button class="act-edit">Открыть</button><button class="act-status">Дальше →</button><button class="act-del" title="Удалить"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
     </div>`;
   }
   function renderKanban(box, list){

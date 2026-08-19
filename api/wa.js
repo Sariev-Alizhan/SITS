@@ -23,18 +23,22 @@ export default async function handler(req, res) {
   if (!user) return res.status(401).json({ ok: false, error: 'Неверный логин или пароль' });
 
   const action = (req.method === 'POST' ? body.action : req.query.action) || '';
-  if (!dbReady() && ['chats', 'messages', 'deals'].includes(action)) {
-    return res.status(200).json({ ok: true, chats: [], messages: [], deals: [], cloud: false });
+  if (!dbReady() && ['chats', 'messages', 'deals', 'calls'].includes(action)) {
+    return res.status(200).json({ ok: true, chats: [], messages: [], deals: [], calls: [], cloud: false });
   }
 
   try {
     if (req.method === 'GET' && action === 'chats') {
-      const chats = await db.select('wa_contacts', 'select=phone,name,bot_enabled,service,last_text,last_role,last_at&order=last_at.desc&limit=500');
+      const chats = await db.select('wa_contacts', 'select=phone,name,bot_enabled,hidden,service,last_text,last_role,last_at&order=last_at.desc&limit=500');
       return res.status(200).json({ ok: true, chats: chats || [], cloud: true });
     }
     if (req.method === 'GET' && action === 'deals') {
       const deals = await db.select('wa_deals', 'select=phone,name,title,service,budget,stage,note,updated_at&order=updated_at.desc&limit=1000');
       return res.status(200).json({ ok: true, deals: deals || [], cloud: true });
+    }
+    if (req.method === 'GET' && action === 'calls') {
+      const calls = await db.select('wa_calls', 'select=id,phone,name,scheduled_at,topic,status&order=scheduled_at.asc&limit=500');
+      return res.status(200).json({ ok: true, calls: calls || [], cloud: true });
     }
     if (req.method === 'GET' && action === 'messages') {
       const phone = String(req.query.phone || '').replace(/\D/g, '');
@@ -49,6 +53,14 @@ export default async function handler(req, res) {
       if (!dbReady()) return res.status(200).json({ ok: false, error: 'CRM (Supabase) не подключён' });
       await db.upsert('wa_contacts', { phone, bot_enabled: enabled, updated_at: new Date().toISOString() });
       return res.status(200).json({ ok: true, phone, enabled });
+    }
+    if (req.method === 'POST' && action === 'hide') {
+      const phone = String(body.phone || '').replace(/\D/g, '');
+      const hidden = !!body.hidden;
+      if (!phone) return res.status(400).json({ ok: false, error: 'Нет phone' });
+      if (!dbReady()) return res.status(200).json({ ok: false, error: 'CRM (Supabase) не подключён' });
+      await db.upsert('wa_contacts', { phone, hidden, updated_at: new Date().toISOString() });
+      return res.status(200).json({ ok: true, phone, hidden });
     }
     if (req.method === 'POST' && action === 'move') {
       const phone = String(body.phone || '').replace(/\D/g, '');

@@ -584,7 +584,7 @@
   </div>
   <div class="m-menu" id="mMenu">
     <div class="m-menu-panel">
-      <div class="m-menu-head"><b id="mMenuWho">Меню</b><button class="m-menu-x" id="mMenuClose" type="button">✕</button></div>
+      <div class="m-menu-head"><b id="mMenuWho">Меню</b><button class="m-menu-x" id="mMenuClose" type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" style="width:16px;height:16px"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
       <div class="m-menu-nav" id="mMenuNav"></div>
       <div class="m-menu-acts" id="mMenuActs"></div>
     </div>
@@ -619,7 +619,7 @@
   </style>
 
   <div id="cloudBanner" style="display:none;margin:0;padding:11px 26px;background:color-mix(in srgb,var(--warn) 15%,var(--ink));border-bottom:1px solid color-mix(in srgb,var(--warn) 40%,transparent);color:#e6b48f;font-size:13px;text-align:center">
-    ⚠ Облачное хранилище не подключено — сделки сохраняются <b>локально на этом устройстве</b>. Чтобы данные были общими для команды, подключите бесплатное хранилище (см. инструкцию).
+    <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;vertical-align:-2px;margin-right:5px"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>Облачное хранилище не подключено — сделки сохраняются <b>локально на этом устройстве</b>. Чтобы данные были общими для команды, подключите бесплатное хранилище (см. инструкцию).
   </div>
 
   <div class="tabs">
@@ -918,7 +918,7 @@
     </div>
 
     <div class="doc-sec">
-      <h3><span class="doc-ic gold">✎</span>Скрипты</h3>
+      <h3><span class="doc-ic gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>Скрипты</h3>
       <div class="doc-card script"><b>Первое сообщение (WhatsApp/Instagram)</b><p>«Здравствуйте! Это [Имя], SITS. Видел, вы активно продвигаетесь — заявки идут в Direct/WhatsApp. Многие теряются без системы: не ответили вовремя, забыли перезвонить. Мы внедряем CRM и автоматизацию: заявки собираются в одном окне, автоответы, напоминания. Покажу за 15 минут на вашем примере — когда удобно?»</p></div>
       <div class="doc-card script"><b>Начало звонка</b><p>«Добрый день! [Имя], компания SITS, автоматизация бизнеса. Пара минут есть? …Мы помогаем [ниша] не терять заявки и довести их до продажи. Скажите, сколько обращений в день у вас примерно и где они сейчас — WhatsApp, Instagram, звонки?»</p></div>
       <div class="doc-card script"><b>Возражения</b>
@@ -1136,7 +1136,7 @@
       <b id="kbTitle">Чат</b>
       <select id="kbManager" class="kb-mgr" title="Кто ведёт этот чат"><option value="">— менеджер —</option></select>
       <label class="kb-switch"><input type="checkbox" id="kbToggle"> Бот отвечает</label>
-      <button class="btn btn-ghost" id="kbCallBtn" type="button" style="font-size:12px;padding:5px 10px">📅 Созвон</button>
+      <button class="btn btn-ghost" id="kbCallBtn" type="button" style="font-size:12px;padding:5px 10px;gap:6px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg> Созвон</button>
       <button class="btn btn-ghost" id="kbHideBtn" type="button" style="font-size:12px;padding:5px 10px">Скрыть</button>
       <button class="kb-iconbtn" id="kbClose" type="button" title="Закрыть"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
@@ -1180,7 +1180,7 @@
 </style>
 <div class="pwa-modal" id="pwaModal">
   <div class="pwa-card">
-    <button class="pwa-close" id="pwaClose" type="button" aria-label="Закрыть">✕</button>
+    <button class="pwa-close" id="pwaClose" type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" style="width:16px;height:16px"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     <div class="pwa-top">
       <div class="pwa-ico"><img src="/brand/apple-touch-icon.png" alt="Fibonacci Control"></div>
       <h2>Установите Fibonacci&nbsp;Control как приложение</h2>
@@ -1805,7 +1805,7 @@
   function startWAPoll(){ if(WA_POLL) clearInterval(WA_POLL); WA_POLL=setInterval(waPollTick,5000); }
   async function waPollTick(){ const v=$('#view-whatsapp'); if(!v||!v.classList.contains('active')) return; try{ const cc=await apiWA('/api/wa?action=chats','GET'); KB_CHATS=cc.chats||[]; if($('#kbChats')&&getComputedStyle($('#kbChats')).display!=='none') renderWAChats(); if(KB_CUR&&$('#kbDrawer').classList.contains('open')) await refreshOpenChat(); }catch(e){} }
   async function refreshOpenChat(){ const phone=KB_CUR; if(!phone) return; let msgs=[]; try{ const m=await apiWA('/api/wa?action=messages&phone='+encodeURIComponent(phone),'GET'); msgs=m.messages||[]; }catch{ return; } if(msgs.length===KB_LASTCOUNT) return; const t=$('#kbThread'); if(!t) return; const nearBottom=(t.scrollHeight-t.scrollTop-t.clientHeight)<140; t.innerHTML=msgs.length? msgs.map(waMsgHTML).join('') : '<div class="mut">Пусто</div>'; KB_LASTCOUNT=msgs.length; if(nearBottom) t.scrollTop=t.scrollHeight; renderChatStats(phone,msgs); }
-  function renderWACalls(){ const el=$('#kbCalls'); if(!el) return; if(!KB_CALLS.length){ el.innerHTML='<div class="mut">Пока нет записанных созвонов. Когда бот запишет клиента на звонок — созвон появится здесь: с кем, когда, тема и ссылка на чат.</div>'; return; } const now=Date.now(); el.innerHTML=KB_CALLS.map(c=>{ const d=new Date(c.scheduled_at); const past=d.getTime()<now; const time=d.toLocaleTimeString('ru-RU',{timeZone:'Asia/Almaty',hour:'2-digit',minute:'2-digit'}); const date=d.toLocaleDateString('ru-RU',{timeZone:'Asia/Almaty',weekday:'short',day:'2-digit',month:'2-digit'}); const nm=c.name||('+'+c.phone); return '<div class="kb-li call'+(past?' past':'')+'" data-phone="'+esc(c.phone)+'"><div class="cal-when"><b>'+esc(time)+'</b><span>'+esc(date)+'</span></div><div class="mid"><div class="nm">'+esc(nm)+' · +'+esc(c.phone)+'</div><div class="lt">'+esc(c.topic||'Тема не указана')+'</div></div><div class="cal-acts"><button class="cal-mit" data-phone="'+esc(c.phone)+'">Ссылка на мит</button><button class="cal-del" data-id="'+esc(c.id||'')+'" title="Удалить созвон">✕</button></div></div>'; }).join(''); el.querySelectorAll('.kb-li').forEach(li=>li.addEventListener('click',e=>{ if(e.target.closest('.cal-acts')) return; openChat(li.dataset.phone); })); el.querySelectorAll('.cal-mit').forEach(b=>b.addEventListener('click',async e=>{ e.stopPropagation(); const url=prompt('Ссылка на созвон (Google Meet / Zoom):'); if(!url) return; try{ await apiWA('/api/wa','POST',{action:'send',phone:b.dataset.phone,type:'text',text:'Ссылка на наш созвон: '+url}); toast('Ссылка отправлена клиенту','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } })); el.querySelectorAll('.cal-del').forEach(b=>b.addEventListener('click',async e=>{ e.stopPropagation(); if(!confirm('Удалить этот созвон?')) return; try{ await apiWA('/api/wa','POST',{action:'del_call',id:b.dataset.id}); KB_CALLS=KB_CALLS.filter(x=>x.id!==b.dataset.id); renderWACalls(); toast('Созвон удалён','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } })); }
+  function renderWACalls(){ const el=$('#kbCalls'); if(!el) return; if(!KB_CALLS.length){ el.innerHTML='<div class="mut">Пока нет записанных созвонов. Когда бот запишет клиента на звонок — созвон появится здесь: с кем, когда, тема и ссылка на чат.</div>'; return; } const now=Date.now(); el.innerHTML=KB_CALLS.map(c=>{ const d=new Date(c.scheduled_at); const past=d.getTime()<now; const time=d.toLocaleTimeString('ru-RU',{timeZone:'Asia/Almaty',hour:'2-digit',minute:'2-digit'}); const date=d.toLocaleDateString('ru-RU',{timeZone:'Asia/Almaty',weekday:'short',day:'2-digit',month:'2-digit'}); const nm=c.name||('+'+c.phone); return '<div class="kb-li call'+(past?' past':'')+'" data-phone="'+esc(c.phone)+'"><div class="cal-when"><b>'+esc(time)+'</b><span>'+esc(date)+'</span></div><div class="mid"><div class="nm">'+esc(nm)+' · +'+esc(c.phone)+'</div><div class="lt">'+esc(c.topic||'Тема не указана')+'</div></div><div class="cal-acts"><button class="cal-mit" data-phone="'+esc(c.phone)+'">Ссылка на мит</button><button class="cal-del" data-id="'+esc(c.id||'')+'" title="Удалить созвон"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" style="width:14px;height:14px;vertical-align:middle"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div></div>'; }).join(''); el.querySelectorAll('.kb-li').forEach(li=>li.addEventListener('click',e=>{ if(e.target.closest('.cal-acts')) return; openChat(li.dataset.phone); })); el.querySelectorAll('.cal-mit').forEach(b=>b.addEventListener('click',async e=>{ e.stopPropagation(); const url=prompt('Ссылка на созвон (Google Meet / Zoom):'); if(!url) return; try{ await apiWA('/api/wa','POST',{action:'send',phone:b.dataset.phone,type:'text',text:'Ссылка на наш созвон: '+url}); toast('Ссылка отправлена клиенту','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } })); el.querySelectorAll('.cal-del').forEach(b=>b.addEventListener('click',async e=>{ e.stopPropagation(); if(!confirm('Удалить этот созвон?')) return; try{ await apiWA('/api/wa','POST',{action:'del_call',id:b.dataset.id}); KB_CALLS=KB_CALLS.filter(x=>x.id!==b.dataset.id); renderWACalls(); toast('Созвон удалён','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } })); }
   function renderWAChats(){ const el=$('#kbChats'); if(!el) return; const showHidden=(WA_MODE==='hidden'); const list=KB_CHATS.filter(c=>((c.hidden===true)===showHidden)); if(!list.length){ el.innerHTML='<div class="mut">'+(showHidden?'Скрытых чатов нет.':'Пока нет чатов. Когда клиент напишет боту — переписка появится здесь.')+'</div>'; return; } const ini=(c)=>{ const s=(c.name||'').trim(); return s?s[0].toUpperCase():'#'; }; el.innerHTML=list.map(c=>{ const nm=c.name||('+'+c.phone); const on=c.bot_enabled!==false; const lt=c.last_text?((c.last_role==='user'?'':'Вы: ')+c.last_text):'—'; return '<div class="kb-li" data-phone="'+esc(c.phone)+'"><div class="av">'+esc(ini(c))+'</div><div class="mid"><div class="nm">'+esc(nm)+(c.manager?' <span class="mgr-tag">'+esc(c.manager)+'</span>':'')+'</div><div class="lt">'+esc(lt)+'</div></div><span class="badge '+(on?'on':'off')+'">'+(on?'бот вкл':'вы')+'</span></div>'; }).join(''); el.querySelectorAll('.kb-li').forEach(li=>li.addEventListener('click',()=>openChat(li.dataset.phone))); }
   function switchWAView(mode){ WA_MODE=mode; $$('.kb-tb').forEach(x=>x.classList.toggle('active',x.dataset.wa===mode)); const showChats=(mode==='chats'||mode==='hidden'); if($('#kbChats')) $('#kbChats').style.display=showChats?'flex':'none'; if($('#kbBoard')) $('#kbBoard').style.display=(mode==='funnel')?'flex':'none'; if($('#kbCalls')) $('#kbCalls').style.display=(mode==='calls')?'flex':'none'; if($('#kbStatsView')) $('#kbStatsView').style.display=(mode==='stats')?'block':'none'; if(mode==='stats') loadWAStats(); else renderWAChats(); }
   $$('.kb-tb').forEach(btn=>btn.addEventListener('click',()=>switchWAView(btn.dataset.wa)));
@@ -1871,7 +1871,7 @@
           <div class="note-text">${esc(n.text).replace(/\n/g,'<br>')}</div>
         </div>
         <div class="note-tools">
-          <button class="note-tool n-pin" title="${n.pinned?'Открепить':'Закрепить'}">${n.pinned?'★':'☆'}</button>
+          <button class="note-tool n-pin" title="${n.pinned?'Открепить':'Закрепить'}"><svg viewBox="0 0 24 24" fill="${n.pinned?'currentColor':'none'}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;vertical-align:middle"><path d="M9 4h6l-1 7 3 3v1H7v-1l3-3z"/><path d="M12 15v5"/></svg></button>
           <button class="note-tool n-del" title="Удалить">×</button>
         </div>
       </div>`;

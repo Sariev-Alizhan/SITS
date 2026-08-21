@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="light">
+<html lang="ru" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -2579,7 +2579,7 @@ function renderPortfolio(lang) {
 const root = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
 (function(){ let s=null; try{ s=localStorage.getItem('sits-theme'); }catch(e){}
-  root.setAttribute('data-theme', 'light'); /* страница Автоматизация — всегда светлая, как atla */ })();
+  root.setAttribute('data-theme', s || 'dark'); })();
 themeToggle.addEventListener('click', () => {
   const n = root.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
   root.setAttribute('data-theme', n);

@@ -1192,6 +1192,7 @@
   function updateCloud(cloud){ CLOUD = cloud!==false; const b=$('#cloudBanner'); if(b) b.style.display = CLOUD ? 'none' : 'block'; }
   // применяем ответ сервера: если облако живо — берём серверные данные; иначе — локальный кэш
   function applyServer(data){
+    if(data && data.user){ if(data.user.name) localStorage.setItem(KEY_MGR, data.user.name); localStorage.setItem(KEY_ROLE, data.user.role||'manager'); const role=data.user.role||'manager'; const tb=$('#teamBtn'); if(tb) tb.style.display=(role==='admin'||role==='super_admin')?'':'none'; if($('#whoName')&&data.user.name){ $('#whoName').textContent=data.user.name; $('#whoAv').textContent=(data.user.name.trim()[0]||'•').toUpperCase(); } }
     if(data && data.cloud!==false){ DEALS = data.deals||[]; saveCache(DEALS); updateCloud(true); }
     else { DEALS = loadCache(); updateCloud(false); }
   }

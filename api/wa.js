@@ -96,6 +96,22 @@ export default async function handler(req, res) {
       await db.insert('wa_outbox', { id, phone, type, text, media_url, filename, status: 'pending', created_at: new Date().toISOString() });
       return res.status(200).json({ ok: true });
     }
+    if (req.method === 'POST' && action === 'new_chat') {
+      // Менеджер начинает диалог с новым клиентом по номеру.
+      const phone = String(body.phone || '').replace(/\D/g, '');
+      const name = String(body.name || '').slice(0, 120).trim();
+      const text = String(body.text || '').slice(0, 4000).trim();
+      if (phone.length < 10) return res.status(400).json({ ok: false, error: 'Некорректный номер' });
+      if (!text) return res.status(400).json({ ok: false, error: 'Пустое сообщение' });
+      if (!dbReady()) return res.status(200).json({ ok: false, error: 'CRM (Supabase) не подключён' });
+      const now = new Date().toISOString();
+      const contact = { phone, bot_enabled: false, last_text: text, last_role: 'agent', last_at: now, updated_at: now };
+      if (name) contact.name = name;
+      await db.upsert('wa_contacts', contact);
+      const id = 'ob-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+      await db.insert('wa_outbox', { id, phone, type: 'text', text, media_url: '', filename: '', status: 'pending', created_at: now });
+      return res.status(200).json({ ok: true, phone });
+    }
     return res.status(400).json({ ok: false, error: 'Неизвестное действие' });
   } catch (e) {
     console.error('wa:', e?.message || e);

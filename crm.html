@@ -988,6 +988,16 @@
     #view-whatsapp .kb-send{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;border-radius:50%;flex:0 0 auto}
     #view-whatsapp .kb-send .ic{width:18px;height:18px;margin:0}
     #view-whatsapp .kb-dhead .kb-iconbtn{border:none}
+    .wa-newmodal{position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:16px}
+    .wa-newmodal.open{display:flex}
+    .wa-newcard{width:100%;max-width:440px;background:var(--surface);border:1px solid var(--line-2);border-radius:16px;padding:20px;box-shadow:0 24px 60px -20px rgba(0,0,0,.6)}
+    .wa-newhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+    .wa-newhead b{font-size:16px}
+    .wa-nl{display:block;font-size:12px;color:var(--dim);margin:10px 0 4px}
+    .wa-newcard input,.wa-newcard textarea{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:10px 12px;color:var(--fg);font:inherit;font-size:14px}
+    .wa-newcard textarea{resize:vertical;min-height:80px}
+    .wa-newfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px}
+    .wa-newfoot .mut{color:#e2555f;font-size:12.5px}
   </style>
   <div class="kb-head">
     <div>
@@ -997,6 +1007,19 @@
     <div style="display:flex;gap:8px;align-items:center">
       <div class="kb-tabs"><button type="button" class="kb-tb active" data-wa="chats">Все чаты</button><button type="button" class="kb-tb" data-wa="funnel">Воронка</button><button type="button" class="kb-tb" data-wa="calls">Созвоны</button><button type="button" class="kb-tb" data-wa="hidden">Скрытые</button></div>
       <button class="btn btn-ghost" id="waReload" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/></svg> Обновить</button>
+      <button class="btn btn-gold" id="waNew" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Новый чат</button>
+    </div>
+  </div>
+  <div class="wa-newmodal" id="waNewModal">
+    <div class="wa-newcard">
+      <div class="wa-newhead"><b>Новый чат — написать клиенту</b><button class="kb-iconbtn" id="waNewClose" type="button" title="Закрыть"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+      <label class="wa-nl">Номер клиента (WhatsApp)</label>
+      <input type="tel" id="waNewPhone" placeholder="+7 777 123 45 67" autocomplete="off">
+      <label class="wa-nl">Имя (необязательно)</label>
+      <input type="text" id="waNewName" placeholder="Как зовут клиента" autocomplete="off">
+      <label class="wa-nl">Первое сообщение</label>
+      <textarea id="waNewText" rows="4" placeholder="Здравствуйте! Меня зовут…, компания SITS. Пишу по вашему запросу…"></textarea>
+      <div class="wa-newfoot"><span class="mut" id="waNewErr"></span><button class="btn btn-gold" id="waNewSend" type="button">Отправить клиенту</button></div>
     </div>
   </div>
   <div class="kb-list" id="kbChats"><div class="mut">Загрузка…</div></div>
@@ -1529,6 +1552,15 @@
   $('#kbInput') && $('#kbInput').addEventListener('keydown',e=>{ if(e.key==='Enter') kbSendText(); });
   $('#kbAttach') && $('#kbAttach').addEventListener('click',()=>$('#kbFile').click());
   $('#kbFile') && $('#kbFile').addEventListener('change',e=>{ if(e.target.files[0]) kbSendFile(e.target.files[0]); e.target.value=''; });
+  /* === Новый чат по номеру: старт диалога с новым клиентом === */
+  function waNormPhone(s){ let d=String(s||'').replace(/\D/g,''); if(d.startsWith('8')&&d.length===11) d='7'+d.slice(1); return d; }
+  function openNewChat(){ $('#waNewErr').textContent=''; $('#waNewPhone').value=''; $('#waNewName').value=''; $('#waNewText').value=''; $('#waNewModal').classList.add('open'); setTimeout(()=>$('#waNewPhone').focus(),50); }
+  function closeNewChat(){ $('#waNewModal').classList.remove('open'); }
+  async function sendNewChat(){ const phone=waNormPhone($('#waNewPhone').value); const name=($('#waNewName').value||'').trim(); const text=($('#waNewText').value||'').trim(); const err=$('#waNewErr'); err.textContent=''; if(phone.length<10){ err.textContent='Проверьте номер (пример: +7 777 123 45 67)'; return; } if(!text){ err.textContent='Напишите первое сообщение'; return; } const btn=$('#waNewSend'); btn.disabled=true; try{ await apiWA('/api/wa','POST',{action:'new_chat',phone,name,text}); toast('Сообщение отправляется клиенту…','ok'); closeNewChat(); let c=KB_CHATS.find(x=>x.phone===phone); if(!c){ c={phone,name,bot_enabled:false,last_text:text,last_role:'agent',last_at:new Date().toISOString()}; KB_CHATS.unshift(c); } else { if(name) c.name=name; } renderWAChats(); openChat(phone); }catch(e){ err.textContent='Ошибка: '+(e.message||e); }finally{ btn.disabled=false; } }
+  $('#waNew') && $('#waNew').addEventListener('click',openNewChat);
+  $('#waNewClose') && $('#waNewClose').addEventListener('click',closeNewChat);
+  $('#waNewSend') && $('#waNewSend').addEventListener('click',sendNewChat);
+  $('#waNewModal') && $('#waNewModal').addEventListener('click',e=>{ if(e.target.id==='waNewModal') closeNewChat(); });
 
   // ---------- ЗАМЕТКИ (общая доска команды) ----------
   let NOTES=[];

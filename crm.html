@@ -1204,6 +1204,8 @@
   // ---------- toast ----------
   let toT;
   function toast(msg, kind){ const t=$('#toast'); t.textContent=msg; t.className='toast show '+(kind||''); clearTimeout(toT); toT=setTimeout(()=>t.className='toast',2600); }
+  // Блокировка прокрутки фона при открытой модалке (чтобы скролился контент окна, а не задний экран).
+  function lockScroll(on){ const v=on?'hidden':''; document.documentElement.style.overflow=v; document.body.style.overflow=v; }
 
   // ---------- API ----------
   async function api(method, body){
@@ -1282,7 +1284,7 @@
 
   // ---------- Команда и доступы (для админов) ----------
   async function apiUsers(action, extra){ const r=await fetch('/api/crm-users',{method:'POST',headers:{'Content-Type':'application/json','x-crm-login':LOGIN,'x-crm-pass':PASS},body:JSON.stringify(Object.assign({action},extra||{}))}); const d=await r.json().catch(()=>({ok:false,error:'Ошибка ответа'})); if(!d.ok) throw new Error(d.error||('HTTP '+r.status)); return d; }
-  async function openTeam(){ $('#teamModal').classList.add('open'); $('#teamList').innerHTML='<div class="mut">Загрузка…</div>'; try{ const d=await apiUsers('list'); renderTeam(d.users||[], d.me||{}); }catch(e){ $('#teamList').innerHTML='<div class="mut">Ошибка: '+esc(e.message)+'</div>'; } }
+  async function openTeam(){ $('#teamModal').classList.add('open'); lockScroll(true); $('#teamList').innerHTML='<div class="mut">Загрузка…</div>'; try{ const d=await apiUsers('list'); renderTeam(d.users||[], d.me||{}); }catch(e){ $('#teamList').innerHTML='<div class="mut">Ошибка: '+esc(e.message)+'</div>'; } }
   function renderTeam(users, me){
     const iAmSuper = me.role==='super_admin';
     const roleName={super_admin:'владелец',admin:'админ',manager:'менеджер'};
@@ -1302,8 +1304,8 @@
     $('#teamList').querySelectorAll('select[data-role]').forEach(s=>s.addEventListener('change', async ()=>{ try{ await apiUsers('setrole',{login:s.dataset.role,role:s.value}); toast('Роль обновлена','ok'); }catch(e){ toast('Ошибка: '+e.message,'err'); openTeam(); } }));
   }
   $('#teamBtn') && $('#teamBtn').addEventListener('click', openTeam);
-  $('#teamClose') && $('#teamClose').addEventListener('click', ()=>$('#teamModal').classList.remove('open'));
-  $('#teamModal') && $('#teamModal').addEventListener('click', e=>{ if(e.target.id==='teamModal') $('#teamModal').classList.remove('open'); });
+  $('#teamClose') && $('#teamClose').addEventListener('click', ()=>{ $('#teamModal').classList.remove('open'); lockScroll(false); });
+  $('#teamModal') && $('#teamModal').addEventListener('click', e=>{ if(e.target.id==='teamModal'){ $('#teamModal').classList.remove('open'); lockScroll(false); } });
 
   // ---------- смена пароля ----------
   function openPass(){
@@ -1682,8 +1684,8 @@
   $('#kbFile') && $('#kbFile').addEventListener('change',e=>{ if(e.target.files[0]) kbSendFile(e.target.files[0]); e.target.value=''; });
   /* === Новый чат по номеру: старт диалога с новым клиентом === */
   function waNormPhone(s){ let d=String(s||'').replace(/\D/g,''); if(d.startsWith('8')&&d.length===11) d='7'+d.slice(1); return d; }
-  function openNewChat(){ $('#waNewErr').textContent=''; $('#waNewPhone').value=''; $('#waNewName').value=''; $('#waNewText').value=''; $('#waNewModal').classList.add('open'); setTimeout(()=>$('#waNewPhone').focus(),50); }
-  function closeNewChat(){ $('#waNewModal').classList.remove('open'); }
+  function openNewChat(){ $('#waNewErr').textContent=''; $('#waNewPhone').value=''; $('#waNewName').value=''; $('#waNewText').value=''; $('#waNewModal').classList.add('open'); lockScroll(true); setTimeout(()=>$('#waNewPhone').focus(),50); }
+  function closeNewChat(){ $('#waNewModal').classList.remove('open'); lockScroll(false); }
   async function sendNewChat(){ const phone=waNormPhone($('#waNewPhone').value); const name=($('#waNewName').value||'').trim(); const text=($('#waNewText').value||'').trim(); const err=$('#waNewErr'); err.textContent=''; if(phone.length<10){ err.textContent='Проверьте номер (пример: +7 777 123 45 67)'; return; } if(!text){ err.textContent='Напишите первое сообщение'; return; } const btn=$('#waNewSend'); btn.disabled=true; try{ await apiWA('/api/wa','POST',{action:'new_chat',phone,name,text}); toast('Сообщение отправляется клиенту…','ok'); closeNewChat(); let c=KB_CHATS.find(x=>x.phone===phone); if(!c){ c={phone,name,bot_enabled:false,last_text:text,last_role:'agent',last_at:new Date().toISOString()}; KB_CHATS.unshift(c); } else { if(name) c.name=name; } renderWAChats(); openChat(phone); }catch(e){ err.textContent='Ошибка: '+(e.message||e); }finally{ btn.disabled=false; } }
   $('#waNew') && $('#waNew').addEventListener('click',openNewChat);
   $('#waNewClose') && $('#waNewClose').addEventListener('click',closeNewChat);
@@ -1695,12 +1697,12 @@
   function callSlots(ds){ const [Y,M,D]=ds.split('-').map(Number); const dow=new Date(Date.UTC(Y,M-1,D)).getUTCDay(); const weekend=dow===0||dow===6||KZ_HOL.has(String(M).padStart(2,'0')+'-'+String(D).padStart(2,'0')); const start=weekend?13*60:9*60, end=weekend?16*60+30:20*60; const s=[]; for(let t=start;t<=end;t+=30){ s.push(String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')); } return s; }
   function busyTimes(ds){ const set=new Set(); (KB_CALLS||[]).forEach(c=>{ const d=new Date(c.scheduled_at); const cds=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Almaty',year:'numeric',month:'2-digit',day:'2-digit'}).format(d); if(cds===ds){ set.add(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Almaty',hour:'2-digit',minute:'2-digit',hour12:false}).format(d)); } }); return set; }
   function fillCallTimes(){ const ds=$('#callDate').value, sel=$('#callTime'); if(!sel) return; if(!ds){ sel.innerHTML='<option value="">— выберите дату —</option>'; return; } const busy=busyTimes(ds), slots=callSlots(ds); sel.innerHTML=slots.map(t=>{ const b=busy.has(t); return '<option value="'+t+'"'+(b?' disabled':'')+'>'+t+(b?' — занято':' — свободно')+'</option>'; }).join('')||'<option value="">— нет слотов —</option>'; }
-  function openCall(){ if(!KB_CUR) return; const c=KB_CHATS.find(x=>x.phone===KB_CUR); $('#callWho').textContent='Клиент: '+((c&&c.name)||('+'+KB_CUR)); $('#callErr').textContent=''; const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Almaty'}).format(new Date()); $('#callDate').min=today; $('#callDate').value=today; $('#callTopic').value=''; fillCallTimes(); $('#callModal').classList.add('open'); }
+  function openCall(){ if(!KB_CUR) return; const c=KB_CHATS.find(x=>x.phone===KB_CUR); $('#callWho').textContent='Клиент: '+((c&&c.name)||('+'+KB_CUR)); $('#callErr').textContent=''; const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Almaty'}).format(new Date()); $('#callDate').min=today; $('#callDate').value=today; $('#callTopic').value=''; fillCallTimes(); $('#callModal').classList.add('open'); lockScroll(true); }
   $('#kbCallBtn') && $('#kbCallBtn').addEventListener('click',openCall);
-  $('#callClose') && $('#callClose').addEventListener('click',()=>$('#callModal').classList.remove('open'));
-  $('#callModal') && $('#callModal').addEventListener('click',e=>{ if(e.target.id==='callModal') $('#callModal').classList.remove('open'); });
+  $('#callClose') && $('#callClose').addEventListener('click',()=>{ $('#callModal').classList.remove('open'); lockScroll(false); });
+  $('#callModal') && $('#callModal').addEventListener('click',e=>{ if(e.target.id==='callModal'){ $('#callModal').classList.remove('open'); lockScroll(false); } });
   $('#callDate') && $('#callDate').addEventListener('change',fillCallTimes);
-  $('#callSave') && $('#callSave').addEventListener('click',async ()=>{ const ds=$('#callDate').value, ts=$('#callTime').value, topic=$('#callTopic').value.trim(); const err=$('#callErr'); err.textContent=''; if(!ds||!ts){ err.textContent='Выберите дату и время'; return; } const c=KB_CHATS.find(x=>x.phone===KB_CUR); try{ await apiWA('/api/wa','POST',{action:'add_call',phone:KB_CUR,name:(c&&c.name)||'',datetime:ds+' '+ts,topic}); toast('Созвон записан на '+ds+' '+ts,'ok'); $('#callModal').classList.remove('open'); const kk=await apiWA('/api/wa?action=calls','GET'); KB_CALLS=kk.calls||[]; renderWACalls(); }catch(e){ err.textContent=e.message; } });
+  $('#callSave') && $('#callSave').addEventListener('click',async ()=>{ const ds=$('#callDate').value, ts=$('#callTime').value, topic=$('#callTopic').value.trim(); const err=$('#callErr'); err.textContent=''; if(!ds||!ts){ err.textContent='Выберите дату и время'; return; } const c=KB_CHATS.find(x=>x.phone===KB_CUR); try{ await apiWA('/api/wa','POST',{action:'add_call',phone:KB_CUR,name:(c&&c.name)||'',datetime:ds+' '+ts,topic}); toast('Созвон записан на '+ds+' '+ts,'ok'); $('#callModal').classList.remove('open'); lockScroll(false); const kk=await apiWA('/api/wa?action=calls','GET'); KB_CALLS=kk.calls||[]; renderWACalls(); }catch(e){ err.textContent=e.message; } });
 
   // ---------- ЗАМЕТКИ (общая доска команды) ----------
   let NOTES=[];

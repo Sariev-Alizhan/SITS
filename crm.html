@@ -519,6 +519,25 @@
 </style>
 </head>
 <body>
+<div id="crmSplash">
+  <div class="cs-inner">
+    <div class="cs-logo"><img src="/brand/sits-mark-red.png" alt=""/><span>Fibonacci Control</span></div>
+    <div class="cs-bar"><i></i></div>
+    <div class="cs-text">Загружаем вашу систему…</div>
+  </div>
+</div>
+<style>
+  #crmSplash{position:fixed;inset:0;z-index:9999;background:#070A10;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease,visibility .5s ease}
+  #crmSplash.gone{opacity:0;visibility:hidden;pointer-events:none}
+  #crmSplash .cs-inner{display:flex;flex-direction:column;align-items:center;gap:22px;padding:24px}
+  #crmSplash .cs-logo{display:flex;align-items:center;gap:12px;font-family:'Unbounded','Segoe UI',sans-serif;font-weight:700;font-size:26px;letter-spacing:-.01em;color:#f4f5f7}
+  #crmSplash .cs-logo img{height:34px;width:auto;display:block}
+  #crmSplash .cs-bar{position:relative;width:min(260px,64vw);height:4px;border-radius:999px;background:rgba(255,255,255,.10);overflow:hidden}
+  #crmSplash .cs-bar i{position:absolute;left:0;top:0;height:100%;width:40%;border-radius:999px;background:linear-gradient(90deg,#c39a4c,#efc97e);animation:csLoad 1.15s ease-in-out infinite}
+  @keyframes csLoad{0%{left:-40%}50%{left:35%}100%{left:100%}}
+  #crmSplash .cs-text{font-family:'Segoe UI',sans-serif;font-size:13px;color:#8a93a3;letter-spacing:.02em}
+  @media(max-width:560px){ #crmSplash .cs-logo{font-size:21px} }
+</style>
 
 <!-- ==================== LOGIN ==================== -->
 <div id="login" class="login-wrap">
@@ -1254,6 +1273,10 @@
   function toast(msg, kind){ const t=$('#toast'); t.textContent=msg; t.className='toast show '+(kind||''); clearTimeout(toT); toT=setTimeout(()=>t.className='toast',2600); }
   // Блокировка прокрутки фона при открытой модалке (чтобы скролился контент окна, а не задний экран).
   function lockScroll(on){ const v=on?'hidden':''; document.documentElement.style.overflow=v; document.body.style.overflow=v; }
+  // Загрузочный экран: скрываем, когда система готова.
+  let __splashHidden=false;
+  function hideSplash(){ if(__splashHidden) return; __splashHidden=true; const s=$('#crmSplash'); if(s){ s.classList.add('gone'); setTimeout(()=>{ try{ s.remove(); }catch(_){} }, 550); } }
+  setTimeout(hideSplash, 9000); // страховка: не держим экран дольше 9 с
 
   // ---------- PWA: установка на главный экран ----------
   if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js').catch(()=>{}); }
@@ -1669,6 +1692,7 @@
     try{ part=(await apiPart('GET')).items||[]; }catch(_){}
     const deals=DEALS||[];
     dashLoading=false;
+    hideSplash();
     const oBy=s=>out.filter(x=>x.status===s).length;
     const pBy=s=>part.filter(x=>x.status===s).length;
     const myOut=out.filter(x=>x.assignee===nm).length;
@@ -2142,7 +2166,8 @@
     if(location.hash.includes('doc')){ openDoc(); }
   }
   // auto-login if session creds present
-  if(PASS && LOGIN){ (async()=>{ try{ const d=await api('GET'); applyServer(d); showApp(); }catch(_){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); PASS=''; LOGIN=''; } })(); }
+  if(PASS && LOGIN){ (async()=>{ try{ const d=await api('GET'); applyServer(d); showApp(); }catch(_){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); PASS=''; LOGIN=''; hideSplash(); } })(); }
+  else { hideSplash(); }
 })();
 </script>
 </body>

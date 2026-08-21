@@ -4,6 +4,17 @@
 import { rateLimit, getClientIp, checkOrigin, readBody } from './_security.js';
 import { authUser } from './_crm-auth.js';
 import { db, dbReady } from './_db.js';
+import { authDb, authDbReady } from './_authdb.js';
+
+// Карта phone→менеджер из отдельной auth-базы (chat_managers).
+async function managerMap() {
+  if (!authDbReady()) return {};
+  try {
+    const rows = await authDb.select('chat_managers', 'select=phone,manager&limit=5000');
+    const m = {}; (rows || []).forEach((r) => { if (r.manager) m[r.phone] = r.manager; });
+    return m;
+  } catch { return {}; }
+}
 
 const ALLOWED_ORIGINS = ['https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app'];
 const STAGES = ['new', 'dialog', 'qualified', 'quote', 'waiting_payment', 'won', 'lost'];
@@ -29,8 +40,35 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET' && action === 'chats') {
-      const chats = await db.select('wa_contacts', 'select=phone,name,bot_enabled,hidden,service,last_text,last_role,last_at&order=last_at.desc&limit=500');
-      return res.status(200).json({ ok: true, chats: chats || [], cloud: true });
+      const chats = await db.select('wa_contacts', 'select=phone,name,bot_enabled,hidden,service,last_text,last_role,last_at&order=last_at.desc&limit=500') || [];
+      const mm = await managerMap();
+      chats.forEach((c) => { c.manager = mm[c.phone] || null; });
+      return res.status(200).json({ ok: true, chats, cloud: true });
+    }
+    if (req.method === 'GET' && action === 'managers') {
+      let managers = [];
+      if (authDbReady()) { try { managers = await authDb.select('crm_users', 'select=login,name&status=eq.active&order=name.asc') || []; } catch {} }
+      return res.status(200).json({ ok: true, managers });
+    }
+    if (req.method === 'POST' && action === 'assign') {
+      const phone = String(body.phone || '').replace(/\D/g, '');
+      const manager = String(body.manager || '').slice(0, 80);
+      if (!phone) return res.status(400).json({ ok: false, error: 'Нет phone' });
+      if (!authDbReady()) return res.status(200).json({ ok: false, error: 'База пользователей не подключена' });
+      await authDb.upsert('chat_managers', { phone, manager: manager || null, updated_at: new Date().toISOString() });
+      return res.status(200).json({ ok: true, phone, manager });
+    }
+    if (req.method === 'GET' && action === 'stats') {
+      const deals = await db.select('wa_deals', 'select=phone,stage,budget&limit=5000') || [];
+      const mm = await managerMap();
+      const agg = {};
+      for (const d of deals) {
+        const m = mm[d.phone] || '— не назначен';
+        agg[m] = agg[m] || { manager: m, total: 0, won: 0, sum: 0 };
+        agg[m].total++;
+        if (d.stage === 'won') { agg[m].won++; agg[m].sum += Number(String(d.budget || '').replace(/[^\d.]/g, '')) || 0; }
+      }
+      return res.status(200).json({ ok: true, stats: Object.values(agg).sort((a, b) => b.sum - a.sum) });
     }
     if (req.method === 'GET' && action === 'deals') {
       const deals = await db.select('wa_deals', 'select=phone,name,title,service,budget,stage,note,updated_at&order=updated_at.desc&limit=1000');

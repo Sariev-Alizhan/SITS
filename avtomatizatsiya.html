@@ -2970,7 +2970,6 @@ window.__formLoaded = Date.now();
 (function(){
   const bar = document.querySelector('.scroll-progress');
   if (!bar) return;
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   let ticking = false;
   const update = () => {
     const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -3202,5 +3201,31 @@ window.__formLoaded = Date.now();
 <!-- Vercel Web Analytics (включить в Dashboard → Analytics; до включения запрос тихо 404-ит) -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<script>
+/* Сплэш: держим лого ~4с, затем плавно уезжаем к секции #kak. Отменяется, если пользователь сам скроллит. */
+(function(){
+  if (location.hash) return;
+  var target=document.getElementById('kak'); if(!target) return;
+  var cancelled=false;
+  function cancel(){ cancelled=true; off(); }
+  function off(){ ['wheel','touchstart','keydown','pointerdown'].forEach(function(e){ window.removeEventListener(e,cancel); }); }
+  ['wheel','touchstart','keydown','pointerdown'].forEach(function(e){ window.addEventListener(e,cancel,{passive:true}); });
+  setTimeout(function(){
+    if(cancelled||window.scrollY>40){ off(); return; }
+    off();
+    var startY=window.scrollY;
+    var targetY=Math.max(0, target.getBoundingClientRect().top + window.scrollY);
+    var dist=targetY-startY, dur=1200, t0=null;
+    function step(t){
+      if(cancelled) return;
+      if(t0===null)t0=t;
+      var p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,3);
+      window.scrollTo(0, startY+dist*e);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }, 4000);
+})();
+</script>
 </body>
 </html>

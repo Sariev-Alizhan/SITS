@@ -601,6 +601,55 @@ main, footer{position:relative;z-index:1}
 /* === Magnetic CTA: только will-change, transition уже у .btn === */
 .magnetic{will-change:transform}
 
+/* ============ 3D-ДЕКОР: робо-руки + парящие устройства ============ */
+/* Контент секций всегда над декором */
+.hero>.wrap,.section>.wrap{position:relative;z-index:1}
+/* Контейнер декора — обрезан по секции (никакого горизонтального скролла) */
+.sec-deco,.hero-deco{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+/* Один парящий 3D-элемент: внешний слой — параллакс по --scroll, внутренний — левитация */
+.deco3d{position:absolute;opacity:0;will-change:transform;
+  transform:translateY(calc((var(--scroll,0) * var(--par,40)) * 1px));
+  animation:decoFade 1.3s var(--ease) .15s forwards}
+.deco3d-in{will-change:transform;animation:floatY var(--dur,9s) ease-in-out infinite;animation-delay:var(--delay,0s)}
+.deco3d img{display:block;width:var(--w,300px);height:auto;
+  filter:drop-shadow(0 26px 50px rgba(0,0,0,.55)) drop-shadow(0 0 34px var(--fx-glow-2))}
+@keyframes decoFade{to{opacity:var(--op,.5)}}
+@keyframes floatY{0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}
+  50%{transform:translateY(-20px) rotate(calc(var(--rot,0deg) - 3deg))}}
+/* Позиционные хелперы */
+.d-right{right:-40px;top:50%;margin-top:-160px}
+.d-left{left:-40px;top:50%;margin-top:-160px}
+.d-tr{right:2%;top:6%}
+.d-bl{left:1%;bottom:6%}
+/* HERO робо-руки */
+.hero-arm{position:absolute}
+.hero-arm img{display:block;height:auto;
+  filter:drop-shadow(0 34px 70px rgba(0,0,0,.6)) drop-shadow(0 0 46px var(--fx-glow-1))}
+.arm-r{right:-70px;bottom:-40px;width:min(46vw,560px);animation:armInR 1.4s var(--ease) .2s both}
+.arm-r img{width:100%}
+.arm-r .deco3d-in{animation:floatY 10s ease-in-out infinite}
+.arm-l{left:-90px;top:2%;width:min(30vw,360px);opacity:.5;animation:armInL 1.4s var(--ease) .35s both}
+.arm-l img{width:100%}
+.arm-l .deco3d-in{animation:floatY 12s ease-in-out infinite .4s}
+@keyframes armInR{from{opacity:0;transform:translateX(80px) rotate(6deg)}to{opacity:1;transform:none}}
+@keyframes armInL{from{opacity:0;transform:translateX(-70px) rotate(-6deg)}to{opacity:.5;transform:none}}
+/* Планшеты/телефоны на мобиле — мельче и слабее, чтобы не мешать тексту */
+@media(max-width:900px){
+  .arm-r{width:min(64vw,340px);right:-50px;bottom:-20px;opacity:.7}
+  .arm-l{display:none}
+  .deco3d img{width:var(--wm,180px)}
+}
+@media(max-width:560px){
+  .arm-r{opacity:.5;width:min(70vw,280px)}
+  .deco3d{--op:.28!important}
+  .deco3d img{width:var(--wm,140px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .deco3d,.hero-arm{animation:none!important;opacity:var(--op,.5)}
+  .arm-l{opacity:.4}
+  .deco3d-in{animation:none!important}
+}
+
 /* === Portfolio 3D tilt + cursor glow === */
 .pf-bento{perspective:800px}
 .pf{transform-style:preserve-3d}
@@ -1537,6 +1586,10 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 <main id="main" tabindex="-1">
 <!-- ============ HERO ============ -->
 <section class="hero" id="hero">
+  <div class="hero-deco" aria-hidden="true">
+    <div class="hero-arm arm-l"><div class="deco3d-in"><img src="/brand/3d/robo-arm-left.webp" alt="" width="1120" height="1500"></div></div>
+    <div class="hero-arm arm-r"><div class="deco3d-in"><img src="/brand/3d/robo-arm-right.webp" alt="" width="1120" height="1500"></div></div>
+  </div>
   <div class="wrap">
     <div class="kicker"><span class="ln"></span><span data-i18n="hero.kicker">Sariyev IT Solutions — IT-студия полного цикла</span></div>
     <h1 class="hero-title">
@@ -1561,6 +1614,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 
 <!-- ============ SERVICES ============ -->
 <section class="section" id="services">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-right" style="--w:300px;--wm:170px;--op:.5;--par:80;--rot:-8deg;--dur:9s"><div class="deco3d-in"><img src="/brand/3d/phone-3d.webp" alt="" width="1000" height="1000" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left">
@@ -1622,6 +1676,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 
 <!-- ============ FIBONACCI CONTROL / AUTOMATION ============ -->
 <section class="section" id="fibonacci">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-left" style="--w:280px;--wm:160px;--op:.42;--par:60;--rot:6deg;--dur:10s"><div class="deco3d-in"><img src="/brand/3d/chip-3d.webp" alt="" width="1000" height="1000" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="fibo-brandbar reveal">
       <img src="/brand/fibonacci-mark.svg" alt="Fibonacci Control" width="38" height="38" loading="lazy" decoding="async"/>
@@ -1701,6 +1756,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 
 <!-- ============ PROCESS ============ -->
 <section class="section" id="process">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-right" style="--w:330px;--wm:180px;--op:.5;--par:75;--rot:-6deg;--dur:9s"><div class="deco3d-in"><img src="/brand/3d/laptop-3d.webp" alt="" width="1000" height="1000" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left">
@@ -1720,6 +1776,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 
 <!-- ============ APPROACH ============ -->
 <section class="section" id="approach">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-left" style="--w:290px;--wm:160px;--op:.5;--par:65;--rot:5deg;--dur:11s"><div class="deco3d-in"><img src="/brand/3d/gamepad-3d.webp" alt="" width="1000" height="1000" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left">
@@ -1737,6 +1794,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 
 <!-- ============ PORTFOLIO ============ -->
 <section class="section" id="portfolio">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-tr" style="--w:250px;--wm:150px;--op:.45;--par:90;--rot:-10deg;--dur:8.5s"><div class="deco3d-in"><img src="/brand/3d/phone-3d.webp" alt="" width="1000" height="1000" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left">
@@ -1751,6 +1809,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 
 <!-- ============ PRICING (тизер → /price) ============ -->
 <section class="section" id="pricing">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-bl" style="--w:270px;--wm:150px;--op:.4;--par:55;--rot:6deg;--dur:10.5s"><div class="deco3d-in"><img src="/brand/3d/chip-3d.webp" alt="" width="1000" height="1000" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left">
@@ -1793,6 +1852,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 
 <!-- ============ ABOUT ============ -->
 <section class="section" id="about">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-right" style="--w:320px;--wm:170px;--op:.5;--par:70;--rot:-7deg;--dur:9.5s"><div class="deco3d-in"><img src="/brand/3d/laptop-3d.webp" alt="" width="1000" height="1000" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="about-grid">
       <div class="founder-photo reveal">
@@ -1820,6 +1880,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 
 <!-- ============ CONTACT ============ -->
 <section class="section" id="contact">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-left" style="--w:280px;--wm:160px;--op:.5;--par:60;--rot:8deg;--dur:10s"><div class="deco3d-in"><img src="/brand/3d/phone-3d.webp" alt="" width="1000" height="1000" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="contact-grid">
       <div class="contact-info reveal">
@@ -3150,6 +3211,7 @@ window.__formLoaded = Date.now();
     const max = document.documentElement.scrollHeight - window.innerHeight;
     const ratio = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
     bar.style.setProperty('--scroll', ratio.toString());
+    document.documentElement.style.setProperty('--scroll', ratio.toString()); // для параллакса 3D-декора
     ticking = false;
   };
   addEventListener('scroll', () => {

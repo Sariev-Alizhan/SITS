@@ -729,6 +729,24 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 
 /* ============ SECTION ============ */
 .section{padding:128px 0;position:relative}
+/* ============ 3D-ДЕКОР: парящие роботы/устройства ============ */
+.section>.wrap{position:relative;z-index:1}
+.sec-deco{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.deco3d{position:absolute;opacity:0;will-change:transform;
+  transform:translateY(calc((var(--scroll,0) * var(--par,40)) * 1px));
+  animation:decoFade 1.3s var(--ease) .15s forwards}
+.deco3d-in{will-change:transform;animation:floatY var(--dur,9s) ease-in-out infinite;animation-delay:var(--delay,0s)}
+.deco3d img{display:block;width:var(--w,300px);height:auto;
+  filter:drop-shadow(0 26px 50px rgba(0,0,0,.55)) drop-shadow(0 0 34px var(--fx-glow-2,rgba(226,55,68,.18)))}
+@keyframes decoFade{to{opacity:var(--op,.5)}}
+@keyframes floatY{0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}50%{transform:translateY(-20px) rotate(calc(var(--rot,0deg) - 3deg))}}
+.d-right{right:-30px;top:50%;margin-top:-170px}
+.d-left{left:-30px;top:50%;margin-top:-170px}
+.d-tr{right:2%;top:7%}
+.d-bl{left:1%;bottom:7%}
+@media(max-width:900px){.deco3d img{width:var(--wm,180px)}}
+@media(max-width:560px){.deco3d{--op:.24!important}.deco3d img{width:var(--wm,138px)}}
+@media(prefers-reduced-motion:reduce){.deco3d{animation:none!important;opacity:var(--op,.5)}.deco3d-in{animation:none!important}}
 .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:64px;flex-wrap:wrap}
 .sec-head .left{max-width:660px}
 .sec-tag{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;letter-spacing:.14em;
@@ -1563,6 +1581,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 </section>
 
 <section class="section" id="kak">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-right" style="--w:340px;--wm:180px;--op:.5;--par:70;--rot:-6deg;--dur:9s"><div class="deco3d-in"><img src="/brand/3d/robot-3d.webp" alt="" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left"><div class="sec-tag"><i></i><span data-i18n="a.kakTag">Как это работает</span></div><h2 class="big" data-i18n="a.kakH">Система, собранная под ваш бизнес</h2></div>
@@ -1577,6 +1596,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 </section>
 
 <section class="section">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-left" style="--w:300px;--wm:165px;--op:.45;--par:62;--rot:6deg;--dur:11s"><div class="deco3d-in"><img src="/brand/3d/gears-3d.webp" alt="" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left"><div class="sec-tag"><i></i><span data-i18n="a.whyTag">Почему мы</span></div><h2 class="big" data-i18n="a.whyH">Это нельзя купить коробкой или скачать</h2></div>
@@ -1592,6 +1612,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 </section>
 
 <section class="section">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-right" style="--w:290px;--wm:160px;--op:.48;--par:75;--rot:-7deg;--dur:9.5s"><div class="deco3d-in"><img src="/brand/3d/chat-3d.webp" alt="" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left"><div class="sec-tag"><i></i><span data-i18n="a.tracTag">Нам уже доверяют</span></div><h2 class="big" data-i18n="a.tracH">Реальные бизнесы, а не обещания</h2></div>
@@ -1609,6 +1630,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 </section>
 
 <section class="section" id="tarify">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-bl" style="--w:260px;--wm:150px;--op:.4;--par:55;--rot:6deg;--dur:10.5s"><div class="deco3d-in"><img src="/brand/3d/ai-orb-3d.webp" alt="" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left"><div class="sec-tag"><i></i><span data-i18n="a.priceTag">Тарифы</span></div><h2 class="big" data-i18n="a.priceH">Начните с прототипа — потом масштабируйте</h2></div>
@@ -1654,6 +1676,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 </section>
 
 <section class="section">
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-tr" style="--w:250px;--wm:150px;--op:.5;--par:85;--rot:-9deg;--dur:8.5s"><div class="deco3d-in"><img src="/brand/3d/rocket-3d.webp" alt="" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="proto reveal">
       <div>
@@ -2930,6 +2953,7 @@ window.__formLoaded = Date.now();
     const max = document.documentElement.scrollHeight - window.innerHeight;
     const ratio = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
     bar.style.setProperty('--scroll', ratio.toString());
+    document.documentElement.style.setProperty('--scroll', ratio.toString()); // для параллакса 3D-декора
     ticking = false;
   };
   addEventListener('scroll', () => {

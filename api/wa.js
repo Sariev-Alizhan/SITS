@@ -6,6 +6,18 @@ import { authUser } from './_crm-auth.js';
 import { db, dbReady } from './_db.js';
 import { authDb, authDbReady } from './_authdb.js';
 
+// Рабочие окна созвонов (время Астаны): Пн–Пт 09:00–20:00, Сб–Вс/праздники 13:00–16:30.
+const KZ_HOLIDAYS = new Set(['01-01', '01-02', '03-08', '03-21', '03-22', '03-23', '05-01', '05-07', '05-09', '07-06', '08-30', '10-25', '12-16']);
+function callWindowOK(dateStr, timeStr) {
+  const [Y, M, D] = dateStr.split('-').map(Number);
+  const [h, mi] = timeStr.split(':').map(Number);
+  if (!Y || !M || !D || Number.isNaN(h) || Number.isNaN(mi)) return false;
+  const dow = new Date(Date.UTC(Y, M - 1, D)).getUTCDay();
+  const mins = h * 60 + mi;
+  const weekend = dow === 0 || dow === 6 || KZ_HOLIDAYS.has(String(M).padStart(2, '0') + '-' + String(D).padStart(2, '0'));
+  return weekend ? (mins >= 13 * 60 && mins <= 16 * 60 + 30) : (mins >= 9 * 60 && mins <= 20 * 60);
+}
+
 // Карта phone→менеджер из отдельной auth-базы (chat_managers).
 async function managerMap() {
   if (!authDbReady()) return {};
@@ -149,6 +161,27 @@ export default async function handler(req, res) {
       const id = 'ob-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
       await db.insert('wa_outbox', { id, phone, type: 'text', text, media_url: '', filename: '', status: 'pending', created_at: now });
       return res.status(200).json({ ok: true, phone });
+    }
+    if (req.method === 'POST' && action === 'add_call') {
+      const phone = String(body.phone || '').replace(/\D/g, '');
+      const name = String(body.name || '').slice(0, 200);
+      const dt = String(body.datetime || '').trim();
+      const topic = String(body.topic || '').slice(0, 500);
+      if (!phone) return res.status(400).json({ ok: false, error: 'Нет номера' });
+      const m = dt.match(/^(\d{4}-\d{2}-\d{2})[ T](\d{2}:\d{2})/);
+      if (!m) return res.status(400).json({ ok: false, error: 'Некорректная дата/время' });
+      if (!callWindowOK(m[1], m[2])) return res.status(400).json({ ok: false, error: 'Время вне рабочих окон (Пн–Пт 09:00–20:00, Сб–Вс 13:00–16:30)' });
+      if (!dbReady()) return res.status(200).json({ ok: false, error: 'CRM (Supabase) не подключён' });
+      const iso = new Date(`${m[1]}T${m[2]}:00+05:00`).toISOString();
+      const id = 'call-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+      await db.insert('wa_calls', { id, phone, name, scheduled_at: iso, topic, chat_phone: phone, status: 'scheduled', created_at: new Date().toISOString() });
+      return res.status(200).json({ ok: true, id });
+    }
+    if (req.method === 'POST' && action === 'del_call') {
+      const id = String(body.id || '');
+      if (!id) return res.status(400).json({ ok: false, error: 'Нет id' });
+      if (dbReady()) await db.remove('wa_calls', `id=eq.${encodeURIComponent(id)}`);
+      return res.status(200).json({ ok: true });
     }
     return res.status(400).json({ ok: false, error: 'Неизвестное действие' });
   } catch (e) {

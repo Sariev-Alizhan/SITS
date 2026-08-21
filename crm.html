@@ -1010,6 +1010,11 @@
     #view-whatsapp .stat-tbl th{text-align:left;padding:9px 12px;color:var(--dim);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line)}
     #view-whatsapp .stat-tbl td{padding:11px 12px;border-bottom:1px solid var(--line)}
     #view-whatsapp .stat-tbl tr:hover td{background:var(--surface-2)}
+    #view-whatsapp .cal-acts{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+    #view-whatsapp .cal-mit{font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:8px;border:1px solid var(--gold);background:color-mix(in srgb,var(--gold) 14%,transparent);color:var(--gold);cursor:pointer;white-space:nowrap}
+    #view-whatsapp .cal-mit:hover{background:color-mix(in srgb,var(--gold) 22%,transparent)}
+    #view-whatsapp .cal-del{font-size:13px;width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:transparent;color:var(--dim);cursor:pointer}
+    #view-whatsapp .cal-del:hover{color:#e2555f;border-color:#e2555f55}
     .wa-newmodal{position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:16px}
     .wa-newmodal.open{display:flex}
     .wa-newcard{width:100%;max-width:440px;background:var(--surface);border:1px solid var(--line-2);border-radius:16px;padding:20px;box-shadow:0 24px 60px -20px rgba(0,0,0,.6)}
@@ -1044,6 +1049,20 @@
       <div class="wa-newfoot"><span class="mut" id="waNewErr"></span><button class="btn btn-gold" id="waNewSend" type="button">Отправить клиенту</button></div>
     </div>
   </div>
+  <div class="wa-newmodal" id="callModal">
+    <div class="wa-newcard">
+      <div class="wa-newhead"><b>Записать созвон</b><button class="kb-iconbtn" id="callClose" type="button" title="Закрыть"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+      <div class="mut" id="callWho" style="font-size:12.5px;margin-bottom:6px"></div>
+      <label class="wa-nl">Дата</label>
+      <input type="date" id="callDate">
+      <label class="wa-nl">Время (свободные слоты)</label>
+      <select id="callTime"><option value="">— выберите дату —</option></select>
+      <div class="mut" style="font-size:11.5px;margin-top:4px">Окна: Пн–Пт 09:00–20:00 · Сб–Вс/праздники 13:00–16:30</div>
+      <label class="wa-nl">Тема созвона</label>
+      <input type="text" id="callTopic" placeholder="О чём созвон (услуга, задача)">
+      <div class="wa-newfoot"><span class="mut" id="callErr"></span><button class="btn btn-gold" id="callSave" type="button">Записать</button></div>
+    </div>
+  </div>
   <div class="kb-list" id="kbChats"><div class="mut">Загрузка…</div></div>
   <div class="kb-board" id="kbBoard" style="display:none"><div class="mut">Загрузка…</div></div>
   <div class="kb-list" id="kbCalls" style="display:none"><div class="mut">Загрузка…</div></div>
@@ -1053,6 +1072,7 @@
       <b id="kbTitle">Чат</b>
       <select id="kbManager" class="kb-mgr" title="Кто ведёт этот чат"><option value="">— менеджер —</option></select>
       <label class="kb-switch"><input type="checkbox" id="kbToggle"> Бот отвечает</label>
+      <button class="btn btn-ghost" id="kbCallBtn" type="button" style="font-size:12px;padding:5px 10px">📅 Созвон</button>
       <button class="btn btn-ghost" id="kbHideBtn" type="button" style="font-size:12px;padding:5px 10px">Скрыть</button>
       <button class="kb-iconbtn" id="kbClose" type="button" title="Закрыть"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
@@ -1630,7 +1650,7 @@
   function startWAPoll(){ if(WA_POLL) clearInterval(WA_POLL); WA_POLL=setInterval(waPollTick,5000); }
   async function waPollTick(){ const v=$('#view-whatsapp'); if(!v||!v.classList.contains('active')) return; try{ const cc=await apiWA('/api/wa?action=chats','GET'); KB_CHATS=cc.chats||[]; if($('#kbChats')&&getComputedStyle($('#kbChats')).display!=='none') renderWAChats(); if(KB_CUR&&$('#kbDrawer').classList.contains('open')) await refreshOpenChat(); }catch(e){} }
   async function refreshOpenChat(){ const phone=KB_CUR; if(!phone) return; let msgs=[]; try{ const m=await apiWA('/api/wa?action=messages&phone='+encodeURIComponent(phone),'GET'); msgs=m.messages||[]; }catch{ return; } if(msgs.length===KB_LASTCOUNT) return; const t=$('#kbThread'); if(!t) return; const nearBottom=(t.scrollHeight-t.scrollTop-t.clientHeight)<140; t.innerHTML=msgs.length? msgs.map(waMsgHTML).join('') : '<div class="mut">Пусто</div>'; KB_LASTCOUNT=msgs.length; if(nearBottom) t.scrollTop=t.scrollHeight; renderChatStats(phone,msgs); }
-  function renderWACalls(){ const el=$('#kbCalls'); if(!el) return; if(!KB_CALLS.length){ el.innerHTML='<div class="mut">Пока нет записанных созвонов. Когда бот запишет клиента на звонок — созвон появится здесь: с кем, когда, тема и ссылка на чат.</div>'; return; } const now=Date.now(); el.innerHTML=KB_CALLS.map(c=>{ const d=new Date(c.scheduled_at); const past=d.getTime()<now; const time=d.toLocaleTimeString('ru-RU',{timeZone:'Asia/Almaty',hour:'2-digit',minute:'2-digit'}); const date=d.toLocaleDateString('ru-RU',{timeZone:'Asia/Almaty',weekday:'short',day:'2-digit',month:'2-digit'}); const nm=c.name||('+'+c.phone); return '<div class="kb-li call'+(past?' past':'')+'" data-phone="'+esc(c.phone)+'"><div class="cal-when"><b>'+esc(time)+'</b><span>'+esc(date)+'</span></div><div class="mid"><div class="nm">'+esc(nm)+' · +'+esc(c.phone)+'</div><div class="lt">'+esc(c.topic||'Тема не указана')+'</div></div><span class="badge open">Открыть чат</span></div>'; }).join(''); el.querySelectorAll('.kb-li').forEach(li=>li.addEventListener('click',()=>openChat(li.dataset.phone))); }
+  function renderWACalls(){ const el=$('#kbCalls'); if(!el) return; if(!KB_CALLS.length){ el.innerHTML='<div class="mut">Пока нет записанных созвонов. Когда бот запишет клиента на звонок — созвон появится здесь: с кем, когда, тема и ссылка на чат.</div>'; return; } const now=Date.now(); el.innerHTML=KB_CALLS.map(c=>{ const d=new Date(c.scheduled_at); const past=d.getTime()<now; const time=d.toLocaleTimeString('ru-RU',{timeZone:'Asia/Almaty',hour:'2-digit',minute:'2-digit'}); const date=d.toLocaleDateString('ru-RU',{timeZone:'Asia/Almaty',weekday:'short',day:'2-digit',month:'2-digit'}); const nm=c.name||('+'+c.phone); return '<div class="kb-li call'+(past?' past':'')+'" data-phone="'+esc(c.phone)+'"><div class="cal-when"><b>'+esc(time)+'</b><span>'+esc(date)+'</span></div><div class="mid"><div class="nm">'+esc(nm)+' · +'+esc(c.phone)+'</div><div class="lt">'+esc(c.topic||'Тема не указана')+'</div></div><div class="cal-acts"><button class="cal-mit" data-phone="'+esc(c.phone)+'">Ссылка на мит</button><button class="cal-del" data-id="'+esc(c.id||'')+'" title="Удалить созвон">✕</button></div></div>'; }).join(''); el.querySelectorAll('.kb-li').forEach(li=>li.addEventListener('click',e=>{ if(e.target.closest('.cal-acts')) return; openChat(li.dataset.phone); })); el.querySelectorAll('.cal-mit').forEach(b=>b.addEventListener('click',async e=>{ e.stopPropagation(); const url=prompt('Ссылка на созвон (Google Meet / Zoom):'); if(!url) return; try{ await apiWA('/api/wa','POST',{action:'send',phone:b.dataset.phone,type:'text',text:'Ссылка на наш созвон: '+url}); toast('Ссылка отправлена клиенту','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } })); el.querySelectorAll('.cal-del').forEach(b=>b.addEventListener('click',async e=>{ e.stopPropagation(); if(!confirm('Удалить этот созвон?')) return; try{ await apiWA('/api/wa','POST',{action:'del_call',id:b.dataset.id}); KB_CALLS=KB_CALLS.filter(x=>x.id!==b.dataset.id); renderWACalls(); toast('Созвон удалён','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } })); }
   function renderWAChats(){ const el=$('#kbChats'); if(!el) return; const showHidden=(WA_MODE==='hidden'); const list=KB_CHATS.filter(c=>((c.hidden===true)===showHidden)); if(!list.length){ el.innerHTML='<div class="mut">'+(showHidden?'Скрытых чатов нет.':'Пока нет чатов. Когда клиент напишет боту — переписка появится здесь.')+'</div>'; return; } const ini=(c)=>{ const s=(c.name||'').trim(); return s?s[0].toUpperCase():'#'; }; el.innerHTML=list.map(c=>{ const nm=c.name||('+'+c.phone); const on=c.bot_enabled!==false; const lt=c.last_text?((c.last_role==='user'?'':'Вы: ')+c.last_text):'—'; return '<div class="kb-li" data-phone="'+esc(c.phone)+'"><div class="av">'+esc(ini(c))+'</div><div class="mid"><div class="nm">'+esc(nm)+(c.manager?' <span class="mgr-tag">'+esc(c.manager)+'</span>':'')+'</div><div class="lt">'+esc(lt)+'</div></div><span class="badge '+(on?'on':'off')+'">'+(on?'бот вкл':'вы')+'</span></div>'; }).join(''); el.querySelectorAll('.kb-li').forEach(li=>li.addEventListener('click',()=>openChat(li.dataset.phone))); }
   function switchWAView(mode){ WA_MODE=mode; $$('.kb-tb').forEach(x=>x.classList.toggle('active',x.dataset.wa===mode)); const showChats=(mode==='chats'||mode==='hidden'); if($('#kbChats')) $('#kbChats').style.display=showChats?'flex':'none'; if($('#kbBoard')) $('#kbBoard').style.display=(mode==='funnel')?'flex':'none'; if($('#kbCalls')) $('#kbCalls').style.display=(mode==='calls')?'flex':'none'; if($('#kbStatsView')) $('#kbStatsView').style.display=(mode==='stats')?'block':'none'; if(mode==='stats') loadWAStats(); else renderWAChats(); }
   $$('.kb-tb').forEach(btn=>btn.addEventListener('click',()=>switchWAView(btn.dataset.wa)));
@@ -1665,6 +1685,18 @@
   $('#waNewClose') && $('#waNewClose').addEventListener('click',closeNewChat);
   $('#waNewSend') && $('#waNewSend').addEventListener('click',sendNewChat);
   $('#waNewModal') && $('#waNewModal').addEventListener('click',e=>{ if(e.target.id==='waNewModal') closeNewChat(); });
+
+  /* === Запись созвона из чата (свободные слоты, окна Астаны) === */
+  const KZ_HOL=new Set(['01-01','01-02','03-08','03-21','03-22','03-23','05-01','05-07','05-09','07-06','08-30','10-25','12-16']);
+  function callSlots(ds){ const [Y,M,D]=ds.split('-').map(Number); const dow=new Date(Date.UTC(Y,M-1,D)).getUTCDay(); const weekend=dow===0||dow===6||KZ_HOL.has(String(M).padStart(2,'0')+'-'+String(D).padStart(2,'0')); const start=weekend?13*60:9*60, end=weekend?16*60+30:20*60; const s=[]; for(let t=start;t<=end;t+=30){ s.push(String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')); } return s; }
+  function busyTimes(ds){ const set=new Set(); (KB_CALLS||[]).forEach(c=>{ const d=new Date(c.scheduled_at); const cds=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Almaty',year:'numeric',month:'2-digit',day:'2-digit'}).format(d); if(cds===ds){ set.add(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Almaty',hour:'2-digit',minute:'2-digit',hour12:false}).format(d)); } }); return set; }
+  function fillCallTimes(){ const ds=$('#callDate').value, sel=$('#callTime'); if(!sel) return; if(!ds){ sel.innerHTML='<option value="">— выберите дату —</option>'; return; } const busy=busyTimes(ds), slots=callSlots(ds); sel.innerHTML=slots.map(t=>{ const b=busy.has(t); return '<option value="'+t+'"'+(b?' disabled':'')+'>'+t+(b?' — занято':' — свободно')+'</option>'; }).join('')||'<option value="">— нет слотов —</option>'; }
+  function openCall(){ if(!KB_CUR) return; const c=KB_CHATS.find(x=>x.phone===KB_CUR); $('#callWho').textContent='Клиент: '+((c&&c.name)||('+'+KB_CUR)); $('#callErr').textContent=''; const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Almaty'}).format(new Date()); $('#callDate').min=today; $('#callDate').value=today; $('#callTopic').value=''; fillCallTimes(); $('#callModal').classList.add('open'); }
+  $('#kbCallBtn') && $('#kbCallBtn').addEventListener('click',openCall);
+  $('#callClose') && $('#callClose').addEventListener('click',()=>$('#callModal').classList.remove('open'));
+  $('#callModal') && $('#callModal').addEventListener('click',e=>{ if(e.target.id==='callModal') $('#callModal').classList.remove('open'); });
+  $('#callDate') && $('#callDate').addEventListener('change',fillCallTimes);
+  $('#callSave') && $('#callSave').addEventListener('click',async ()=>{ const ds=$('#callDate').value, ts=$('#callTime').value, topic=$('#callTopic').value.trim(); const err=$('#callErr'); err.textContent=''; if(!ds||!ts){ err.textContent='Выберите дату и время'; return; } const c=KB_CHATS.find(x=>x.phone===KB_CUR); try{ await apiWA('/api/wa','POST',{action:'add_call',phone:KB_CUR,name:(c&&c.name)||'',datetime:ds+' '+ts,topic}); toast('Созвон записан на '+ds+' '+ts,'ok'); $('#callModal').classList.remove('open'); const kk=await apiWA('/api/wa?action=calls','GET'); KB_CALLS=kk.calls||[]; renderWACalls(); }catch(e){ err.textContent=e.message; } });
 
   // ---------- ЗАМЕТКИ (общая доска команды) ----------
   let NOTES=[];

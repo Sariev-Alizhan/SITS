@@ -1397,7 +1397,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 /* traction */
 .trac{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .trac .n{border-radius:var(--r-xl);padding:30px}
-.trac .n .big{font-family:var(--font-display);font-weight:600;font-size:clamp(34px,4vw,50px);letter-spacing:-.03em;line-height:1;color:var(--text)}
+.trac .n .big{font-family:var(--font-display);font-weight:600;font-size:clamp(25px,2.9vw,38px);letter-spacing:-.02em;line-height:1;color:var(--text);white-space:nowrap;font-variant-numeric:tabular-nums}
 .trac .n .lbl{color:var(--muted);font-size:14px;margin-top:10px;line-height:1.5}
 .logos{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;align-items:center}
 .logos .lg{border:1px solid var(--glass-line);background:var(--surface);border-radius:12px;padding:12px 18px;font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--text);letter-spacing:.02em;box-shadow:0 1px 2px rgba(20,12,13,.04)}
@@ -1408,7 +1408,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 .assess p{color:var(--muted);font-size:14.5px;line-height:1.6;margin-top:10px}
 .assess .note{color:var(--gold-lit);font-size:13px;margin-top:10px;font-weight:600}
 .assess .rt{text-align:right}
-.assess .price{font-family:var(--font-display);font-weight:600;font-size:38px;letter-spacing:-.02em;color:var(--text)}
+.assess .price{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,3.4vw,38px);letter-spacing:-.02em;color:var(--text);white-space:nowrap;font-variant-numeric:tabular-nums}
 .assess .term{color:var(--muted);font-size:14px}
 /* tiers */
 .tiers3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:18px;align-items:stretch}
@@ -1418,7 +1418,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 .t3 h3{font-family:var(--font-display);font-weight:600;font-size:20px}
 .t3 .term{font-size:12px;color:var(--muted);border:1px solid var(--glass-line);border-radius:999px;padding:3px 10px;white-space:nowrap}
 .t3 .badge{background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:4px 11px;border-radius:999px;white-space:nowrap}
-.t3 .price{font-family:var(--font-display);font-weight:600;font-size:29px;letter-spacing:-.02em;margin-top:14px;color:var(--text)}
+.t3 .price{font-family:var(--font-display);font-weight:600;font-size:clamp(21px,2.3vw,27px);letter-spacing:-.02em;margin-top:14px;color:var(--text);white-space:nowrap;font-variant-numeric:tabular-nums}
 .t3 .oper{font-size:12.5px;color:var(--muted);margin-top:3px}
 .t3 ul{list-style:none;margin-top:14px}
 .t3 li{display:flex;gap:9px;font-size:13px;color:var(--muted);margin:8px 0;line-height:1.42;align-items:flex-start}
@@ -1445,8 +1445,8 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 .splash-logo{display:inline-flex;align-items:center;gap:.08em;font-family:var(--font-logo);font-size:clamp(66px,13.5vw,158px);line-height:1;color:var(--text);pointer-events:none;letter-spacing:-.01em}
 .splash-logo .logo-mark{height:.9em;width:auto;display:block}
 .splash-tag{font-family:var(--font-display);font-weight:500;font-size:clamp(15px,1.7vw,21px);letter-spacing:.03em;color:var(--muted)}
-.splash-bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:color-mix(in srgb,var(--text) 8%,transparent);overflow:hidden}
-.splash-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff5a67,var(--red));box-shadow:0 0 14px rgba(226,55,68,.55);animation:splashLoad 3s cubic-bezier(.35,0,.25,1) forwards}
+.splash-bar{width:min(230px,56vw);height:5px;border-radius:999px;background:color-mix(in srgb,var(--text) 10%,transparent);overflow:hidden;margin-top:8px}
+.splash-bar i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#ff5a67,var(--red));box-shadow:0 0 12px rgba(226,55,68,.5);animation:splashLoad 3s cubic-bezier(.35,0,.25,1) forwards}
 .a-splash.skip .splash-bar i{animation-duration:.5s}
 @keyframes splashLoad{to{width:100%}}
 @media(max-width:900px){.splash-logo{font-size:clamp(54px,22vw,120px)}}
@@ -1559,8 +1559,8 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
   <div class="wrap">
     <div class="splash-logo" aria-label="SITS"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240"/>IT<img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240"/></div>
     <p class="splash-tag">Автоматизация бизнеса под ключ · Fibonacci Control</p>
+    <div class="splash-bar" aria-hidden="true"><i></i></div>
   </div>
-  <div class="splash-bar" aria-hidden="true"><i></i></div>
 </section>
 
 <!-- СИСТЕМА ПОД ВАШ БИЗНЕС -->

@@ -3,24 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!-- ROOT-REDIRECT-START -->
-<!-- Только на корне /. На /en и /kz build-script этот блок вырезает (URI уважается). -->
-<script>
-(function(){
-  var p = location.pathname;
-  if (p !== '/' && p !== '/index.html') return;
-  var saved = null; try { saved = localStorage.getItem('sits-lang'); } catch(e) {}
-  if (saved === 'en') return location.replace('/en');
-  if (saved === 'kk') return location.replace('/kz');
-  if (saved === 'ru') return;
-  var nl = (navigator.language || '').toLowerCase();
-  if (nl.indexOf('kk') === 0) return location.replace('/kz');
-  if (nl.indexOf('en') === 0) return location.replace('/en');
-})();
-</script>
-<!-- ROOT-REDIRECT-END -->
-<title>SITS — IT-студия полного цикла</title>
-<meta name="description" content="SITS — Sariyev IT Solutions. IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка." />
+<title>Автоматизация бизнеса — SITS · Fibonacci Control</title>
+<meta name="description" content="Автоматизация бизнеса под ключ от SITS: CRM Fibonacci Control, ИИ-агенты, WhatsApp Business, 1С, Kaspi и ЭСФ в одной системе. Внедрение от 800 000 ₸, старт с Assessment за 7 дней." />
 <link rel="icon" type="image/png" href="brand/favicon.png?v=10" />
 <link rel="apple-touch-icon" href="brand/apple-touch-icon.png?v=10" />
 <link rel="manifest" href="/manifest.webmanifest" />
@@ -28,17 +12,13 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="SITS" />
 
-<link rel="canonical" href="https://sits-eta.vercel.app/" />
-<link rel="alternate" hreflang="ru" href="https://sits-eta.vercel.app/" />
-<link rel="alternate" hreflang="en" href="https://sits-eta.vercel.app/en" />
-<link rel="alternate" hreflang="kk" href="https://sits-eta.vercel.app/kz" />
-<link rel="alternate" hreflang="x-default" href="https://sits-eta.vercel.app/" />
+<link rel="canonical" href="https://sits-eta.vercel.app/avtomatizatsiya" />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="SITS — Sariyev IT Solutions" />
-<meta property="og:title" content="SITS — Превращаем идеи в цифровые продукты" />
-<meta property="og:description" content="IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент и IT-поддержка." />
-<meta property="og:url" content="https://sits-eta.vercel.app/" />
+<meta property="og:title" content="Автоматизация бизнеса — SITS · Fibonacci Control" />
+<meta property="og:description" content="CRM Fibonacci Control с ИИ-агентами: заявки, КП, счета, WhatsApp Business, 1С и Kaspi в одной системе. Внедрение от 800 000 ₸." />
+<meta property="og:url" content="https://sits-eta.vercel.app/avtomatizatsiya" />
 <meta property="og:image" content="https://sits-eta.vercel.app/brand/og-image.png?v=12" />
 <meta property="og:image:secure_url" content="https://sits-eta.vercel.app/brand/og-image.png?v=12" />
 <meta property="og:image:type" content="image/png" />
@@ -47,7 +27,7 @@
 <meta property="og:image:alt" content="SITS — Sariyev IT Solutions" />
 <meta property="og:locale" content="ru_RU" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="SITS — Превращаем идеи в цифровые продукты" />
+<meta name="twitter:title" content="Прайс SITS — пакеты, медиа-продакшн и AI-видео" />
 <meta name="twitter:description" content="IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент." />
 <meta name="twitter:image" content="https://sits-eta.vercel.app/brand/og-image.png?v=12" />
 <meta name="twitter:image:alt" content="SITS — Sariyev IT Solutions" />
@@ -115,6 +95,26 @@
 }
 </script>
 
+<!-- Schema.org Person — Game Design партнёр -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://sits-eta.vercel.app/#partner-yelzhan",
+  "name": "Yelzhan Nurtileu",
+  "jobTitle": "Game Designer · Indie Developer",
+  "url": "https://yelzhanport.netlify.app",
+  "image": "https://sits-eta.vercel.app/brand/partner-yelzhan-square.jpg",
+  "affiliation": [
+    { "@type": "Organization", "name": "Katsumi Games", "url": "https://katsumigames.itch.io/" },
+    { "@type": "EducationalOrganization", "name": "University of the Arts London (UAL)" }
+  ],
+  "knowsAbout": ["Game Design", "Unity", "C#", "Digital Art", "UI/UX"],
+  "knowsLanguage": ["en", "kk", "ru"],
+  "email": "mailto:yelzhannurtleuov@gmail.com",
+  "worksFor": { "@id": "https://sits-eta.vercel.app/#organization" }
+}
+</script>
 
 <!-- Schema.org ItemList — портфолио (CreativeWork × 9) -->
 <script type="application/ld+json">
@@ -123,7 +123,7 @@
   "@type": "ItemList",
   "name": "SITS Portfolio",
   "itemListOrder": "https://schema.org/ItemListOrderAscending",
-  "numberOfItems": 12,
+  "numberOfItems": 10,
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "item": { "@type": "WebSite", "name": "Atelier57", "url": "https://www.atelier57.kz", "description": "Студия интерьерного дизайна и бутик (Алматы)" } },
     { "@type": "ListItem", "position": 2, "item": { "@type": "WebSite", "name": "RedPad Games", "url": "https://redpad-website.vercel.app", "description": "Сайт независимой игровой студии" } },
@@ -134,9 +134,7 @@
     { "@type": "ListItem", "position": 7, "item": { "@type": "WebSite", "name": "FreelanceHub", "url": "https://freelance-hub.kz", "description": "Платформа фриланса без комиссий" } },
     { "@type": "ListItem", "position": 8, "item": { "@type": "WebSite", "name": "Interagent", "url": "https://www.interagent.kz", "description": "B2B-маркетплейс для поставщиков и магазинов" } },
     { "@type": "ListItem", "position": 9,  "item": { "@type": "WebSite", "name": "Citytorg", "url": "https://www.citytorg.kz", "description": "Каталог акций и магазинов (Усть-Каменогорск)" } },
-    { "@type": "ListItem", "position": 10, "item": { "@type": "WebSite", "name": "PRO CERAMIC", "url": "https://pro-ceramic.kz", "description": "Премиум-шоурум камня в Астане: спечённый камень SINISO, керамогранит, мрамор" } },
-    { "@type": "ListItem", "position": 11, "item": { "@type": "SoftwareApplication", "name": "Fibonacci Control", "url": "https://fibonaccicontrol.com", "applicationCategory": "BusinessApplication", "description": "Собственная CRM-платформа SITS с ИИ-сотрудником и WhatsApp" } },
-    { "@type": "ListItem", "position": 12, "item": { "@type": "WebApplication", "name": "AI-консультант SITS", "url": "https://sits-eta.vercel.app/price", "applicationCategory": "BusinessApplication", "description": "AI-консультант на базе Claude: консультирует и принимает заявки на сайте SITS" } }
+    { "@type": "ListItem", "position": 10, "item": { "@type": "WebSite", "name": "PRO CERAMIC", "url": "https://pro-ceramic.kz", "description": "Премиум-шоурум камня в Астане: спечённый камень SINISO, керамогранит, мрамор" } }
   ]
 }
 </script>
@@ -151,6 +149,7 @@
     { "@type": "Service", "name": "Разработка игр", "description": "Игры для мобильных и ПК на Unity и Unreal Engine.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "Game development" },
     { "@type": "Service", "name": "Бизнес-автоматизация", "description": "Автоматизация процессов и рутины бизнеса.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "Business process automation" },
     { "@type": "Service", "name": "AI Content Creator & AI Love Story", "description": "Контент, созданный AI: реклама, клипы и персональные видео-истории — на новейших моделях видео, музыки и голоса.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "AI content production" },
+    { "@type": "Service", "name": "Настройка таргетированной рекламы", "description": "Таргетированная реклама в Instagram под ключ: стратегия, креативы, запуск, еженедельная оптимизация и ежемесячный отчёт с цифрами.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "Targeted advertising" },
     { "@type": "Service", "name": "IT-поддержка 24/7", "description": "Техобслуживание и сопровождение продуктов 24/7.", "provider": { "@id": "https://sits-eta.vercel.app/#organization" }, "areaServed": "KZ", "serviceType": "IT support" }
   ]
 }
@@ -716,13 +715,13 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 @keyframes rise{to{transform:translateY(0);opacity:1}}
 .dot{color:var(--red)}
 .hero-lower{display:flex;justify-content:space-between;align-items:flex-end;gap:48px;margin-top:36px;flex-wrap:wrap;
-  }
+  opacity:0;animation:fade 1s var(--ease) .55s forwards}
 @keyframes fade{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 .hero-sub{color:var(--muted);font-size:clamp(17px,1.4vw,19px);line-height:1.55;max-width:440px}
 .hero-sub .em{color:var(--text);font-weight:500}
 .hero-actions{display:flex;align-items:center;gap:26px;flex-shrink:0}
 .hero-meta{display:flex;gap:0;margin-top:48px;border-top:1px solid var(--line);padding-top:24px;flex-wrap:wrap;
-  opacity:0;animation:fade .6s var(--ease) .3s forwards}
+  opacity:0;animation:fade 1s var(--ease) .75s forwards}
 .hero-meta .m{padding-right:46px;margin-right:46px;border-right:1px solid var(--line)}
 .hero-meta .m:last-child{border-right:none;margin-right:0;padding-right:0}
 .hero-meta .mv{font-family:var(--font-display);font-weight:500;font-size:clamp(26px,3vw,34px);letter-spacing:-.02em;line-height:1}
@@ -804,81 +803,6 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
   color:transparent;-webkit-text-stroke:1px var(--line-2);margin-bottom:20px;transition:-webkit-text-stroke .4s}
 .ap-item:hover .ap-num{-webkit-text-stroke:1px var(--red)}
 .ap-item p{color:var(--muted);font-size:15px;line-height:1.6}
-
-/* ============ FIBONACCI CONTROL ============ */
-.fibo-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:stretch;margin-top:8px}
-.fibo-copy{padding:38px;border:1px solid var(--glass-line);border-radius:var(--r-xl);background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi);display:flex;flex-direction:column}
-.fibo-badge{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--red);background:var(--red-soft);border:1px solid color-mix(in srgb,var(--red) 30%,transparent);padding:6px 13px;border-radius:100px;margin-bottom:18px}
-.fibo-badge i{width:6px;height:6px;border-radius:50%;background:var(--red)}
-.fibo-lead{font-family:var(--font-display);font-weight:500;font-size:21px;line-height:1.32;letter-spacing:-.01em;color:var(--text);margin-bottom:22px}
-.fibo-list{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:28px}
-.fibo-list li{display:flex;gap:12px;color:var(--muted);font-size:15.5px;line-height:1.5}
-.fibo-list li b{color:var(--text);font-weight:600}
-.fibo-list li svg{width:20px;height:20px;color:var(--red);flex-shrink:0;margin-top:1px}
-.fibo-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:auto}
-.fibo-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}
-.fibo-card{padding:26px;border:1px solid var(--glass-line);border-radius:var(--r-xl);background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi);transition:transform .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease)}
-.fibo-card:hover{transform:translateY(-4px);border-color:var(--line-2);background:var(--glass-2)}
-.fibo-card .fc-ico{width:44px;height:44px;border-radius:12px;border:1px solid var(--glass-line);background:var(--glass-2);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.fibo-card .fc-ico svg{width:22px;height:22px;color:var(--red)}
-.fibo-card h3{font-family:var(--font-display);font-weight:500;font-size:16.5px;letter-spacing:-.01em;margin-bottom:7px;color:var(--text)}
-.fibo-card p{color:var(--muted);font-size:14px;line-height:1.5}
-/* ——— Фирменный тёмно-золотой стиль Fibonacci Control (перекрывает красный акцент SITS в этой секции) ——— */
-#fibonacci{--fg-gold:#D2A24C;--fg-lit:#EFC97E;--fg-soft:rgba(210,162,76,.12);position:relative;overflow:hidden;
-  background:radial-gradient(1100px 520px at 82% -12%,rgba(210,162,76,.11),transparent 58%),linear-gradient(180deg,#090c14,#0b1020 60%,#0a0d16);
-  border-top:1px solid rgba(210,162,76,.16);border-bottom:1px solid rgba(210,162,76,.16)}
-#fibonacci::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 12% 108%,rgba(210,162,76,.07),transparent 60%);pointer-events:none}
-#fibonacci .wrap{position:relative;z-index:1}
-.fibo-brandbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:30px}
-.fibo-brandbar img{height:38px;width:auto;filter:drop-shadow(0 4px 18px rgba(210,162,76,.28))}
-.fibo-prod{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-lit);background:var(--fg-soft);border:1px solid rgba(210,162,76,.32);padding:6px 13px;border-radius:100px}
-#fibonacci .sec-tag{color:var(--fg-lit);background:var(--fg-soft);border-color:rgba(210,162,76,.3)}
-#fibonacci .sec-tag i{background:var(--fg-gold)}
-#fibonacci h2,#fibonacci .fibo-lead,#fibonacci .fibo-card h3{color:#F6F1E6}
-#fibonacci .desc,#fibonacci .fibo-card p,#fibonacci .fibo-list span{color:#B7B2A6}
-#fibonacci .fibo-badge{color:#0d0f16;background:linear-gradient(180deg,var(--fg-lit),var(--fg-gold));border-color:transparent;font-weight:700}
-#fibonacci .fibo-copy,#fibonacci .fibo-card{background:rgba(255,255,255,.024);border-color:rgba(210,162,76,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
-#fibonacci .fibo-card:hover{transform:translateY(-4px);border-color:rgba(210,162,76,.42);background:rgba(210,162,76,.05)}
-#fibonacci .fibo-list svg{color:var(--fg-gold)}
-#fibonacci .fibo-card .fc-ico{border-color:rgba(210,162,76,.26);background:var(--fg-soft)}
-#fibonacci .fibo-card .fc-ico svg{color:var(--fg-lit)}
-#fibonacci .btn-primary{background:linear-gradient(180deg,var(--fg-lit),var(--fg-gold));color:#241a06;border-color:transparent;box-shadow:0 10px 30px -8px rgba(210,162,76,.45)}
-#fibonacci .btn-primary:hover{filter:brightness(1.06);transform:translateY(-2px)}
-#fibonacci .btn-line{border-color:rgba(210,162,76,.4);color:var(--fg-lit)}
-#fibonacci .btn-line:hover{border-color:var(--fg-gold);background:var(--fg-soft)}
-/* ——— Стилизованный макет продукта (окно CRM) ——— */
-.fibo-mock{position:relative;border-radius:var(--r-xl);border:1px solid rgba(210,162,76,.2);background:linear-gradient(180deg,#0d1322,#0a0e1a);box-shadow:0 34px 90px -34px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.05);overflow:hidden;display:flex;flex-direction:column;min-height:360px}
-.fibo-mock::after{content:"";position:absolute;inset:0;background:radial-gradient(520px 240px at 100% 0,rgba(210,162,76,.13),transparent 60%);pointer-events:none}
-.fm-bar{display:flex;align-items:center;gap:9px;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);position:relative;z-index:1}
-.fm-dots{display:flex;gap:6px}
-.fm-dots i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.14);display:block}
-.fm-title{display:flex;align-items:center;gap:8px;margin-left:6px;font-size:12.5px;color:#d3ccbc;font-weight:600}
-.fm-title img{width:16px;height:16px}
-.fm-live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#84d296;font-weight:600}
-.fm-live i{width:7px;height:7px;border-radius:50%;background:#54c96a;box-shadow:0 0 0 3px rgba(84,201,106,.16);display:block}
-.fm-body{padding:15px;display:flex;flex-direction:column;gap:10px;flex:1;position:relative;z-index:1}
-.fm-colh{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:#8f886f;font-weight:600;margin:2px 2px 0}
-.fm-row{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.026)}
-.fm-row .nm{font-size:13px;color:#ece3d2;font-weight:500;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fm-pill{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:100px;white-space:nowrap;flex:none}
-.fm-pill.new{color:#9cc0ff;background:rgba(120,160,255,.14)}
-.fm-pill.prog{color:#EFC97E;background:rgba(210,162,76,.16)}
-.fm-pill.done{color:#84d296;background:rgba(84,201,106,.16)}
-.fm-av{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700;color:#241a06;background:linear-gradient(180deg,#EFC97E,#D2A24C);flex:none}
-.fm-ai{margin-top:auto;display:flex;align-items:center;gap:11px;padding:12px 13px;border-radius:12px;border:1px solid rgba(210,162,76,.28);background:linear-gradient(90deg,rgba(210,162,76,.13),rgba(210,162,76,.02))}
-.fm-ai .ai-ic{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:rgba(210,162,76,.18);color:#EFC97E;flex:none}
-.fm-ai .ai-ic svg{width:17px;height:17px}
-.fm-ai .ai-tx{font-size:12px;color:#d8cfbe;flex:1;line-height:1.3}
-.fm-ai .ai-tx b{color:#F6F1E6;font-weight:600}
-.fm-typing{display:inline-flex;gap:3px;align-items:center}
-.fm-typing i{width:5px;height:5px;border-radius:50%;background:#EFC97E;opacity:.4;display:block;animation:fmbounce 1.2s infinite}
-.fm-typing i:nth-child(2){animation-delay:.18s}
-.fm-typing i:nth-child(3){animation-delay:.36s}
-@keyframes fmbounce{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
-@media(prefers-reduced-motion:reduce){.fm-typing i{animation:none}}
-@media(max-width:940px){.fibo-grid{grid-template-columns:1fr}.fibo-cards{grid-template-columns:1fr 1fr}.fibo-mock{min-height:320px}}
-@media(max-width:560px){.fibo-cards{grid-template-columns:1fr}.fibo-copy{padding:28px}.fibo-brandbar img{height:32px}.fibo-mock{min-height:0}}
-
 .contact-pricing{font-size:14px;color:var(--muted);line-height:1.55;margin-bottom:16px;
   padding:14px 18px;border:1px solid var(--glass-line);border-radius:var(--r-md);background:var(--glass);
   box-shadow:inset 0 1px 0 var(--glass-hi)}
@@ -916,10 +840,9 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .pf-8{grid-column:span 3}
 .pf-9{grid-column:span 3}
 .pf-10{grid-column:span 3}
-.pf-11{grid-column:span 3}
-.pf-12{grid-column:span 3}
 
 /* ============ PRICING ============ */
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .promo-pill{display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;
   margin:0 0 40px;padding:16px 24px;border-radius:var(--r-md);
   border:1px solid color-mix(in srgb, var(--red) 30%, transparent);
@@ -1253,7 +1176,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .p-row{grid-template-columns:70px 1fr;gap:22px}
   .p-row p{grid-column:2}
   .pf-bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:220px}
-  .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10,.pf-11,.pf-12{grid-column:span 2;grid-row:span 1}
+  .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10{grid-column:span 2;grid-row:span 1}
   .about-grid{grid-template-columns:1fr;gap:40px;max-width:520px}
   .contact-grid{grid-template-columns:1fr;gap:36px}
 }
@@ -1279,7 +1202,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .s-sites,.s-mobile,.s-ai,.s-support{grid-column:auto}
   /* Portfolio: image on top, text below on solid surface — fully readable on touch */
   .pf-bento{grid-template-columns:1fr;grid-auto-rows:auto}
-  .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10,.pf-11,.pf-12{grid-column:auto;grid-row:auto}
+  .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10{grid-column:auto;grid-row:auto}
   .pf{display:flex;flex-direction:column;background:var(--surface)}
   .pf img{position:relative;inset:auto;height:200px}
   .pf .grad{display:none}
@@ -1418,6 +1341,53 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   unicode-range: U+20B8;
 }
 </style>
+
+<style>
+/* ==== Автоматизация — компоненты (в фирменном стиле SITS + золото Fibonacci) ==== */
+.auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba(210,162,76,.12)}
+.auto .sec-tag{color:var(--gold-lit);background:var(--gold-soft);border-color:rgba(210,162,76,.3)}
+.auto .sec-tag i{background:var(--gold)}
+.auto-hero{padding-top:150px;padding-bottom:72px;position:relative;overflow:hidden}
+.auto-hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(720px 400px at 84% -8%,rgba(226,55,68,.14),transparent 60%),
+  radial-gradient(560px 320px at 2% 118%,rgba(210,162,76,.09),transparent 60%)}
+.auto-hero h1{font-family:var(--font-display);font-weight:600;font-size:clamp(32px,5vw,58px);line-height:1.05;letter-spacing:-.03em;max-width:17ch;margin-top:18px}
+.auto-hero .lead{color:var(--muted);font-size:18px;line-height:1.6;max-width:660px;margin-top:20px}
+.auto-price{display:flex;align-items:center;gap:26px;margin-top:32px;flex-wrap:wrap}
+.auto-price .big{font-family:var(--font-display);font-weight:600;font-size:36px;letter-spacing:-.02em}
+.auto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.auto-card{border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:24px;box-shadow:inset 0 1px 0 var(--glass-hi)}
+.auto-card .ic{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:var(--gold-soft);border:1px solid rgba(210,162,76,.28);color:var(--gold-lit);margin-bottom:15px}
+.auto-card .ic svg{width:22px;height:22px}
+.auto-card h3{font-family:var(--font-display);font-weight:600;font-size:18px}
+.auto-card p{color:var(--muted);font-size:14.5px;line-height:1.55;margin-top:8px}
+.auto-cases{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.case-card{border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:28px 30px;box-shadow:inset 0 1px 0 var(--glass-hi)}
+.case-card .cbrand{font-family:var(--font-display);font-weight:700;font-size:26px;letter-spacing:.02em}
+.case-card .csub{color:var(--gold-lit);font-size:13px;font-weight:600;margin-top:4px}
+.case-card p{color:var(--muted);font-size:14.5px;line-height:1.6;margin-top:12px}
+.case-card ul{list-style:none;margin-top:12px}
+.case-card li{display:flex;gap:9px;font-size:13.5px;color:var(--text);margin:7px 0;line-height:1.4;align-items:flex-start}
+.case-card li svg{width:16px;height:16px;color:#43d18a;flex:0 0 auto;margin-top:2px}
+.tiers{display:grid;grid-template-columns:.85fr 1fr 1.05fr;gap:16px;align-items:stretch}
+.tier{border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:26px;display:flex;flex-direction:column;box-shadow:inset 0 1px 0 var(--glass-hi)}
+.tier.feat{border-color:rgba(226,55,68,.42);background:linear-gradient(180deg,rgba(226,55,68,.06),var(--glass))}
+.tier .th{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.tier h3{font-family:var(--font-display);font-weight:600;font-size:19px}
+.tier .term{font-size:12px;color:var(--muted);border:1px solid var(--glass-line);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.tier .price{font-family:var(--font-display);font-weight:600;font-size:27px;letter-spacing:-.02em;margin-top:12px}
+.tier .oper{font-size:12px;color:var(--muted);margin-top:2px}
+.tier .note{font-size:12.5px;color:#43d18a;margin-top:10px;line-height:1.5}
+.tier ul{list-style:none;margin-top:12px}
+.tier li{display:flex;gap:9px;font-size:13px;color:var(--muted);margin:7px 0;line-height:1.42;align-items:flex-start}
+.tier li svg{width:15px;height:15px;color:var(--gold-lit);flex:0 0 auto;margin-top:2px}
+.tier .tcta{margin-top:auto;padding-top:16px}
+.badge-feat{background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:4px 11px;border-radius:999px;white-space:nowrap}
+.auto-final{text-align:center;position:relative;overflow:hidden}
+.auto-final::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(600px 340px at 50% -20%,rgba(226,55,68,.12),transparent 60%)}
+.auto-final h2{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,4vw,40px);line-height:1.1;letter-spacing:-.02em}
+@media(max-width:900px){.auto-grid,.auto-cases,.tiers{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 
@@ -1459,15 +1429,15 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
   <div class="wrap">
-    <a href="#hero" class="logo" aria-label="SITS"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" />IT<img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" /></a>
+    <a href="/" class="logo" aria-label="SITS"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" />IT<img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" /></a>
     <div class="nav-links">
-      <a href="#services" data-i18n="nav.services">Услуги</a>
-      <a href="#process" data-i18n="nav.process">Как работаем</a>
-      <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+      <a href="/#services" data-i18n="nav.services">Услуги</a>
+      <a href="/#process" data-i18n="nav.process">Как работаем</a>
+      <a href="/#portfolio" data-i18n="nav.portfolio">Портфолио</a>
       <a href="/price" data-i18n="nav.pricing">Прайс</a>
       <a href="/avtomatizatsiya" data-i18n="nav.auto">Автоматизация</a>
-      <a href="#about" data-i18n="nav.about">О нас</a>
-      <a href="#contact" data-i18n="nav.contact">Контакты</a>
+      <a href="/#about" data-i18n="nav.about">О нас</a>
+      <a href="/#contact" data-i18n="nav.contact">Контакты</a>
     </div>
     <div class="nav-actions">
       <button class="cmdk-hint" id="cmdkHint" type="button" aria-label="Open command palette (⌘K)" data-i18n-aria-label="cmdk.open">
@@ -1483,20 +1453,20 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
       </button>
-      <a href="#contact" class="btn btn-primary magnetic" data-i18n="nav.cta">Обсудить проект</a>
+      <a href="/#contact" class="btn btn-primary magnetic" data-i18n="nav.cta">Обсудить проект</a>
     </div>
     <button class="burger" id="burger" data-i18n-aria-label="nav.menu" aria-label="Меню"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#services" data-i18n="nav.services">Услуги</a>
-  <a href="#process" data-i18n="nav.process">Как работаем</a>
-  <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+  <a href="/#services" data-i18n="nav.services">Услуги</a>
+  <a href="/#process" data-i18n="nav.process">Как работаем</a>
+  <a href="/#portfolio" data-i18n="nav.portfolio">Портфолио</a>
   <a href="/price" data-i18n="nav.pricing">Прайс</a>
       <a href="/avtomatizatsiya" data-i18n="nav.auto">Автоматизация</a>
-  <a href="#about" data-i18n="nav.about">О нас</a>
-  <a href="#contact" data-i18n="nav.contact">Контакты</a>
+  <a href="/#about" data-i18n="nav.about">О нас</a>
+  <a href="/#contact" data-i18n="nav.contact">Контакты</a>
   <div class="mm-soc">
     <a href="https://wa.me/77774961358" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg></a>
     <a href="https://t.me/zhanmate" target="_blank" rel="noopener" class="icon-btn" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></a>
@@ -1512,358 +1482,134 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 </div>
 
 <main id="main" tabindex="-1">
-<!-- ============ HERO ============ -->
-<section class="hero" id="hero">
-  <div class="wrap">
-    <div class="kicker"><span class="ln"></span><span data-i18n="hero.kicker">Sariyev IT Solutions — IT-студия полного цикла</span></div>
-    <h1 class="hero-title">
-      <span class="ln-mask"><span class="rise" style="animation-delay:.05s" data-i18n="hero.titleA">Превращаем</span></span>
-      <span class="ln-mask"><span class="rise" style="animation-delay:.16s" data-i18n="hero.titleB">идеи в</span></span>
-      <span class="ln-mask"><span class="rise" style="animation-delay:.27s"><span data-i18n="hero.titleC">продукты</span><span class="dot">.</span></span></span>
-    </h1>
-    <div class="hero-lower">
-      <p class="hero-sub"><span data-i18n="hero.sub">Сайты, приложения, игры, автоматизация, AI-контент и поддержка — </span><span class="em" data-i18n="hero.subEm">от идеи до запуска и сопровождения</span><span data-i18n="hero.subTail">, под одной крышей.</span></p>
-      <div class="hero-actions">
-        <a href="#contact" class="alink"><span data-i18n="hero.ctaPrimary">Обсудить проект</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-        <a href="#portfolio" class="alink" style="color:var(--muted)" data-i18n="hero.ctaSecondary">Работы</a>
-      </div>
-    </div>
-    <div class="hero-meta">
-      <div class="m"><div class="mv" data-i18n="hero.meta1V">10 проектов</div><div class="ml" data-i18n="hero.meta1L">запущены в продакшен</div></div>
-      <div class="m"><div class="mv" data-i18n="hero.meta2V">6 направлений</div><div class="ml" data-i18n="hero.meta2L">от веба до игр и AI</div></div>
-      <div class="m"><div class="mv" data-i18n="hero.meta3V">24/7</div><div class="ml" data-i18n="hero.meta3L">поддержка продуктов</div></div>
-    </div>
-  </div>
-</section>
+<div class="auto">
 
-<!-- ============ SERVICES ============ -->
-<section class="section" id="services">
+<!-- HERO -->
+<section class="section auto-hero">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="left">
-        <div class="sec-tag"><i></i><span data-i18n="services.tag">Услуги</span></div>
-        <h2 data-i18n="services.h2">Полный цикл разработки</h2>
-      </div>
-      <p class="desc" data-i18n="services.desc">Шесть направлений, которые закрывают весь путь продукта — от первой строки кода до ежедневной поддержки.</p>
-    </div>
-    <div class="bento">
-      <div class="b-card s-sites reveal">
-        <div class="svc-top">
-          <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M2.5 9h19M6 6.7h.01M9 6.7h.01"/></svg></div>
-          <div class="svc-num">01</div>
-        </div>
-        <div class="svc-body">
-          <h3 data-i18n="services.s1H">Сайты и веб-платформы</h3>
-          <p data-i18n="services.s1P">Сайты, лендинги и сложные платформы с нуля. Быстрые, адаптивные, на современном стеке — от визитки до B2B-маркетплейса.</p>
-          <div class="svc-tags"><span data-i18n="services.s1T1">Landing</span><span data-i18n="services.s1T2">Веб-платформы</span><span data-i18n="services.s1T3">E-commerce</span><span data-i18n="services.s1T4">SaaS</span></div>
-        </div>
-      </div>
-      <div class="b-card s-mobile reveal">
-        <div class="svc-top">
-          <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg></div>
-          <div class="svc-num">02</div>
-        </div>
-        <div class="svc-body"><h3 data-i18n="services.s2H">Мобильные приложения</h3><p data-i18n="services.s2P">Нативные и кроссплатформенные приложения для iOS и Android.</p></div>
-      </div>
-      <div class="b-card reveal">
-        <div class="svc-top">
-          <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="10" rx="4"/><path d="M6.5 11v2M5.5 12h2M15.5 11.5h.01M18 13.5h.01"/></svg></div>
-          <div class="svc-num">03</div>
-        </div>
-        <div class="svc-body"><h3 data-i18n="services.s3H">Разработка игр</h3><p data-i18n="services.s3P">Игры для мобильных и ПК на Unity и Unreal Engine.</p></div>
-      </div>
-      <div class="b-card reveal">
-        <div class="svc-top">
-          <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12h2.5M19 12h2.5M5.2 5.2l1.8 1.8M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg></div>
-          <div class="svc-num">04</div>
-        </div>
-        <div class="svc-body"><h3 data-i18n="services.s4H">Бизнес-автоматизация</h3><p data-i18n="services.s4P">Автоматизируем процессы и рутину бизнеса. Мы написали собственную CRM-систему — это отдельное направление SITS, Fibonacci Control.</p><div class="svc-tags"><span data-i18n="services.s4T1">Собственная CRM</span><span data-i18n="services.s4T2">Fibonacci Control</span></div><a href="https://fibonaccicontrol.com" target="_blank" rel="noopener" class="alink" style="margin-top:16px;font-size:14px"><span data-i18n="services.s4Link">Открыть Fibonacci Control</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div>
-      </div>
-      <div class="b-card s-ai reveal">
-        <div class="svc-top">
-          <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4.5 9 8.5v7l6 4v-15z"/><rect x="2.5" y="9.5" width="4.5" height="5" rx="1"/><path d="M18.5 9.5a4 4 0 0 1 0 5"/></svg></div>
-          <div class="svc-num">05</div>
-        </div>
-        <div class="svc-body"><h3 data-i18n="services.s5H">AI Content Creator</h3><p data-i18n="services.s5P">Контент, созданный AI: реклама, клипы и персональные AI Love Story — на новейших моделях видео, музыки и голоса.</p><div class="svc-tags"><span data-i18n="services.s5T1">AI-видео</span><span data-i18n="services.s5T2">AI Love Story</span><span data-i18n="services.s5T3">Реклама</span></div></div>
-      </div>
-      <div class="b-card s-support reveal">
-        <div class="svc-top">
-          <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a1.5 1.5 0 0 0 2.1 2.1l6-6a4 4 0 0 0 5.4-5.4l-2.3 2.3-2.1-2.1z"/></svg></div>
-          <div class="svc-num">06</div>
-        </div>
-        <div class="svc-body"><h3 data-i18n="services.s6H">IT-поддержка</h3><p data-i18n="services.s6P">Техобслуживание и сопровождение продуктов 24/7.</p><div class="svc-tags"><span data-i18n="services.s6T1">SLA</span><span data-i18n="services.s6T2">Мониторинг</span><span data-i18n="services.s6T3">Сопровождение</span></div></div>
+    <div class="sec-tag reveal"><i></i><span>Автоматизация бизнеса · Fibonacci Control</span></div>
+    <h1 class="reveal">Автоматизируем бизнес под ключ — с ИИ-сотрудниками</h1>
+    <p class="lead reveal">Собственная CRM-платформа Fibonacci Control: заявки, КП, счета, дебиторка и документы в одной системе. ИИ-агенты готовят черновики, WhatsApp Business и 1С подключены, руководитель видит весь бизнес на одном экране.</p>
+    <div class="auto-price reveal">
+      <div><div style="color:var(--muted);font-size:13px">Внедрение от</div><div class="big">800 000 ₸</div></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-primary magnetic" href="https://wa.me/77774961358" target="_blank" rel="noopener">Начать с диагностики <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        <a class="btn btn-line" href="#tarify">Смотреть тарифы</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ FIBONACCI CONTROL / AUTOMATION ============ -->
-<section class="section" id="fibonacci">
+<!-- WHAT WE AUTOMATE -->
+<section class="section">
   <div class="wrap">
-    <div class="fibo-brandbar reveal">
-      <img src="/brand/fibonacci-mark.svg" alt="Fibonacci Control" width="38" height="38" loading="lazy" decoding="async"/>
-      <span style="font-family:var(--font-display);font-weight:600;font-size:19px;letter-spacing:-.01em;color:#F6F1E6">Fibonacci Control</span>
-      <span class="fibo-prod"><i style="width:5px;height:5px;border-radius:50%;background:var(--fg-gold);display:inline-block"></i><span data-i18n="fibo.prod">Флагманский продукт SITS</span></span>
-    </div>
     <div class="sec-head reveal">
-      <div class="left">
-        <div class="sec-tag"><i></i><span data-i18n="fibo.tag">Наш продукт</span></div>
-        <h2 data-i18n="fibo.h2">CRM с ИИ-сотрудником для бизнеса</h2>
-      </div>
-      <p class="desc" data-i18n="fibo.desc">Флагманский продукт SITS. Собственная CRM: гибкая low-code настройка под ваш процесс, ИИ-сотрудник, автоворонки и генерация КП. Внедряем под ключ за 1–2 недели.</p>
+      <div class="left"><div class="sec-tag"><i></i><span>Что автоматизируем</span></div><h2>Рутина съедает время и деньги. Мы её убираем.</h2></div>
+      <p class="desc">Заявки теряются в переписках, КП и счета готовятся вручную, руководитель не видит, кто чем занят. Мы собираем это в одну систему с ИИ-агентами.</p>
     </div>
-    <div class="fibo-grid reveal">
-      <div class="fibo-copy">
-        <div class="fibo-badge"><i></i><span data-i18n="fibo.badge">Собственная разработка SITS</span></div>
-        <p class="fibo-lead" data-i18n="fibo.lead">Заявки теряются в мессенджерах, менеджеры дублируют работу, отчёты делаются вручную. Мы это чиним.</p>
-        <ul class="fibo-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="fibo.b1">Все заявки — Instagram, WhatsApp, сайт, звонки — в одном окне</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="fibo.b2">ИИ-сотрудник ведёт клиентов, двигает сделки и готовит КП</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="fibo.b3">Low-code настройка: поля, статусы, роли и автоворонки — под ваш процесс</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="fibo.b4">Внедрение под ключ за 1–2 недели</span></li>
+    <div class="auto-grid reveal">
+      <div class="auto-card"><div class="ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 5h18M3 12h18M3 19h12" stroke-linecap="round"/></svg></div><h3>Заявки, КП и счета — в одном окне</h3><p>Приём заявок со всех каналов, КП, счета, акты, дебиторка и закуп — единый поток без потерь.</p></div>
+      <div class="auto-card"><div class="ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6" stroke-linecap="round"/></svg></div><h3>ИИ-агенты вместо рутины</h3><p>Черновики КП и документов готовит ИИ на движке SITS AI — сотрудник только проверяет и отправляет.</p></div>
+      <div class="auto-card"><div class="ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16v12H4z"/><path d="M8 20h8M12 16v4" stroke-linecap="round"/></svg></div><h3>Дашборд руководителя</h3><p>Весь бизнес на одном экране: выручка, воронка, дебиторка, действия каждого сотрудника.</p></div>
+      <div class="auto-card"><div class="ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 4.5 16.8L21 21l-1.2-4.5A9 9 0 0 0 12 3Z"/></svg></div><h3>WhatsApp Business + телефония</h3><p>Клиент пишет в WhatsApp — заявка и переписка уже в системе. Плюс почта, ЭСФ и телефония.</p></div>
+      <div class="auto-card"><div class="ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 7h16v10H4z"/><path d="M4 11h16" stroke-linecap="round"/></svg></div><h3>Интеграции: 1С, Kaspi, ЭСФ</h3><p>Синхронизация с 1С, оплаты Kaspi, электронные счета-фактуры — без ручного переноса.</p></div>
+      <div class="auto-card"><div class="ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 4-3 7-7 9-4-2-7-5-7-9V7l7-4Z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Роли, маршруты, контроль</h3><p>Права доступа, согласования и маршруты документов. Ничего не теряется, всё под контролем.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="left"><div class="sec-tag"><i></i><span>Кейсы</span></div><h2>Бизнесы, которые мы автоматизировали</h2></div>
+      <p class="desc">Не в теории — реальные компании, где система уже работает.</p>
+    </div>
+    <div class="auto-cases reveal">
+      <div class="case-card">
+        <div class="cbrand">ETG</div><div class="csub">Стоматология · публичная CRM</div>
+        <p>Полностью автоматизировали бизнес ETG и построили публичную CRM-систему для стоматологических клиник — готовый продукт, который клиники подключают под себя.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Онлайн-запись 24/7 и расписание врачей</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Карты пациентов, история лечения, напоминания</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Учёт, финансы и аналитика клиники в одном месте</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Мультиклиника и роли: администратор, врач, руководитель</li>
         </ul>
-        <div class="fibo-cta">
-          <a class="btn btn-primary" href="https://fibonaccicontrol.com" target="_blank" rel="noopener">
-            <span data-i18n="fibo.ctaMain">Смотреть Fibonacci Control</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
-          </a>
-          <a class="btn btn-line" href="https://wa.me/77774961358" target="_blank" rel="noopener">
-            <span data-i18n="fibo.ctaAudit">Бесплатный аудит процесса</span>
-          </a>
-        </div>
       </div>
-      <div class="fibo-mock reveal" aria-hidden="true">
-        <div class="fm-bar">
-          <span class="fm-dots"><i></i><i></i><i></i></span>
-          <span class="fm-title"><img src="/brand/fibonacci-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async"/>Fibonacci Control · CRM</span>
-          <span class="fm-live"><i></i>online</span>
-        </div>
-        <div class="fm-body">
-          <div class="fm-colh">Сделки · воронка</div>
-          <div class="fm-row"><span class="nm">Пекарня «Тандыр»</span><span class="fm-pill new">Новый</span><span class="fm-av">Аб</span></div>
-          <div class="fm-row"><span class="nm">Клиника «Смайл»</span><span class="fm-pill prog">В работе</span><span class="fm-av">Ал</span></div>
-          <div class="fm-row"><span class="nm">Кофейня «Roast»</span><span class="fm-pill done">КП готово</span><span class="fm-av">Ай</span></div>
-          <div class="fm-ai">
-            <span class="ai-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M9 8V6a3 3 0 0 1 6 0v2M9.5 14h.01M14.5 14h.01M12 4V2"/></svg></span>
-          <span class="ai-tx"><b>ИИ-сотрудник:</b> собрал КП по сделке «Roast»</span>
-          <span class="fm-typing"><i></i><i></i><i></i></span>
-          </div>
-        </div>
+      <div class="case-card">
+        <div class="cbrand">LA COUPELLE</div><div class="csub">SPA и бани · AI-администратор</div>
+        <p>Автоматизировали спа- и банный комплекс: AI отвечает гостям 24/7 в WhatsApp и Instagram, подбирает баню, создаёт бронь и присылает ссылку Kaspi на предоплату.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>AI-менеджер: диалог с гостем → бронь → оплата Kaspi</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Бронирование, клиенты с RFM, воронка лидов</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Отзывы с 2ГИС/Google/Яндекс + ответы AI</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Дашборд на данных iiko, под своим брендом</li>
+        </ul>
       </div>
     </div>
-    <div class="fibo-cards reveal">
-        <div class="fibo-card reveal">
-          <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h3l2 3h6l2-3h3"/><path d="M5 13V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7"/></svg></div>
-          <h3 data-i18n="fibo.c1H">Все каналы вместе</h3>
-          <p data-i18n="fibo.c1P">Заявки со всех источников попадают в одну систему автоматически.</p>
-        </div>
-        <div class="fibo-card reveal">
-          <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg></div>
-          <h3 data-i18n="fibo.c2H">Воронка и сделки</h3>
-          <p data-i18n="fibo.c2P">Видно каждый лид и этап — ничего не теряется.</p>
-        </div>
-        <div class="fibo-card reveal">
-          <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M9 8V6a3 3 0 0 1 6 0v2M9.5 14h.01M14.5 14h.01M12 4V2"/></svg></div>
-          <h3 data-i18n="fibo.c3H">ИИ-сотрудник</h3>
-          <p data-i18n="fibo.c3P">Отвечает клиентам, двигает сделки по воронке и сам собирает КП.</p>
-        </div>
-        <div class="fibo-card reveal">
-          <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a4 4 0 0 1 4 4M4 12a8 8 0 0 1 8-8M8 20a12 12 0 0 1 0-16"/><circle cx="12" cy="12" r="1.6"/></svg></div>
-          <h3 data-i18n="fibo.c4H">Low-code гибкость</h3>
-          <p data-i18n="fibo.c4P">Поля, статусы, роли и автоматизации меняются без переписывания кода.</p>
-        </div>
-      </div>
   </div>
 </section>
 
-<!-- ============ PROCESS ============ -->
-<section class="section" id="process">
+<!-- TIERS -->
+<section class="section" id="tarify">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="left">
-        <div class="sec-tag"><i></i><span data-i18n="process.tag">Как работаем</span></div>
-        <h2 data-i18n="process.h2">Прозрачный процесс</h2>
+      <div class="left"><div class="sec-tag"><i></i><span>Как внедряем</span></div><h2>Три шага — от прототипа до полной автоматизации</h2></div>
+      <p class="desc">Начинаем с Assessment: прототип на ваших данных и фиксированная цена. Сумма Assessment засчитывается в проект при старте в течение 30 дней.</p>
+    </div>
+    <div class="tiers reveal">
+      <div class="tier">
+        <div class="th"><h3>Assessment</h3><span class="term">7 дней</span></div>
+        <div class="price">700 000 ₸</div>
+        <p style="color:var(--muted);font-size:13.5px;margin-top:10px;line-height:1.55">Интервью, baseline-метрики, прототип на ваших данных и план внедрения с фиксированной ценой.</p>
+        <div class="note">Полностью засчитывается в деплой при старте в течение 30 дней.</div>
+        <div class="tcta"><a class="btn btn-line" href="https://wa.me/77774961358" target="_blank" rel="noopener" style="width:100%;justify-content:center">Начать с прототипа</a></div>
       </div>
-      <p class="desc" data-i18n="process.desc">Четыре этапа от первого созвона до живого продукта. Вы всегда видите, где проект и что дальше.</p>
-    </div>
-    <div class="process">
-      <div class="p-row reveal"><div class="pn">01</div><h3 data-i18n="process.p1H">Бриф и стратегия</h3><p data-i18n="process.p1P">Разбираем задачу, цели и аудиторию. Фиксируем объём, сроки и смету — без сюрпризов по ходу.</p></div>
-      <div class="p-row reveal"><div class="pn">02</div><h3 data-i18n="process.p2H">Дизайн и прототип</h3><p data-i18n="process.p2P">Собираем UX-логику и визуал. Показываем кликабельный прототип ещё до написания кода.</p></div>
-      <div class="p-row reveal"><div class="pn">03</div><h3 data-i18n="process.p3H">Разработка</h3><p data-i18n="process.p3P">Пишем чистый код, тестируем на реальных данных и устройствах. Демонстрируем результат по этапам.</p></div>
-      <div class="p-row reveal"><div class="pn">04</div><h3 data-i18n="process.p4H">Запуск и поддержка</h3><p data-i18n="process.p4P">Публикуем, передаём доступы и сопровождаем продукт после релиза — 24/7.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ APPROACH ============ -->
-<section class="section" id="approach">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="left">
-        <h2 data-i18n="approach.title">Подход и гарантии</h2>
+      <div class="tier">
+        <div class="th"><h3>Пилотный контур</h3><span class="term">4 недели</span></div>
+        <div class="price">1 800 000 ₸</div>
+        <div class="oper">разовый счёт · + 450 000 ₸/мес — Operate</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Приём заявок и КП/счета в одной системе</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>ИИ-агент: черновики КП с 3-й недели</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Видно каждое действие каждого сотрудника</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Подключаем WhatsApp Business и 1С</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>До 15 сотрудников</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Внедренец неделю работает у вас в офисе</li>
+        </ul>
       </div>
-    </div>
-    <div class="approach">
-      <div class="ap-item reveal"><div class="ap-num">01</div><p data-i18n="approach.1">Индивидуальная разработка — под ваше ТЗ и масштаб задачи, для B2B, B2C и B2G</p></div>
-      <div class="ap-item reveal"><div class="ap-num">02</div><p data-i18n="approach.2">Премиальное качество — основательно и без компромиссов</p></div>
-      <div class="ap-item reveal"><div class="ap-num">03</div><p data-i18n="approach.3">Пожизненная гарантия — сопровождаем и исправляем наши разработки весь срок жизни продукта</p></div>
-      <div class="ap-item reveal"><div class="ap-num">04</div><p data-i18n="approach.4">Конфиденциальность — все проекты и заказы клиентов защищены: мы ничего не публикуем без разрешения клиента</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PORTFOLIO ============ -->
-<section class="section" id="portfolio">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="left">
-        <div class="sec-tag"><i></i><span data-i18n="portfolio.tag">Портфолио</span></div>
-        <h2 data-i18n="portfolio.h2">Избранные работы</h2>
-      </div>
-      <p class="desc" data-i18n="portfolio.desc">Десять запущенных проектов — от интерьерных бутиков до B2B-платформ и игровых студий.</p>
-    </div>
-    <div class="pf-bento" id="pfBento"></div>
-  </div>
-</section>
-
-<!-- ============ PRICING (тизер → /price) ============ -->
-<section class="section" id="pricing">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="left">
-        <div class="sec-tag"><i></i><span data-i18n="pricing.tag">Прайс</span></div>
-        <h2 data-i18n="pricing.h2">Пакеты и цены</h2>
-      </div>
-      <p class="desc" data-i18n="pricing.teaserP">Все цены собраны на отдельной странице: пакеты сайтов, медиа-продакшн, AI-видео, автоматизация и поддержка.</p>
-    </div>
-
-    <div class="promo-pill reveal"><i aria-hidden="true"></i><span data-i18n="pricing.promo">Фиксированные цены — прозрачно и по договору. Следите за акциями в нашем Instagram.</span></div>
-
-    <div class="price-notes reveal">
-      <span data-i18n="pricing.tz1">Сайты и лендинги — от 150 000 ₸</span>
-      <span data-i18n="pricing.tz2">AI Love Story — ваша история, созданная AI</span>
-      <span data-i18n="pricing.tz3">AI Content Creator — контент и реклама с AI</span>
-      <span data-i18n="pricing.tz4">Автоматизация бизнеса под ключ</span>
-      <span data-i18n="pricing.tz6">Приложения и игры — от 200 000 ₸</span>
-      <span data-i18n="pricing.tz7">Интеграции и подбор команды — международный уровень</span>
-      <span data-i18n="pricing.tz5">Техподдержка — от 50 000 ₸/мес</span>
-    </div>
-
-    <div class="price-cta-all reveal">
-      <div class="cta-all-row">
-        <a class="btn btn-primary" href="/price">
-          <span data-i18n="pricing.teaserBtn">Открыть весь прайс</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-        <a class="btn btn-line" data-wa="pricing.waAll" href="https://wa.me/77774961358" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg>
-          <span>WhatsApp</span>
-        </a>
-        <a class="btn btn-line" href="https://t.me/zhanmate" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg>
-          <span>Telegram</span>
-        </a>
+      <div class="tier feat">
+        <div class="th"><h3>Операционный контур</h3><span class="badge-feat">Чаще всего</span></div>
+        <div style="display:flex;align-items:baseline;gap:9px"><div class="price">3 800 000 ₸</div><span class="term">6–8 недель</span></div>
+        <div class="oper">разовый счёт · + 750 000 ₸/мес — Operate</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>До 5 станций: заявки, КП, дебиторка, акты, закуп</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Два ИИ-агента готовят черновики документов</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Дашборд руководителя: весь бизнес на одном экране</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>ЭСФ, телефония, почта, WhatsApp и 1С</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>До 25 сотрудников, роли и маршруты согласования</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>2 недели у вас, переносим историю за 12 месяцев</li>
+        </ul>
+        <div class="tcta"><a class="btn btn-primary magnetic" href="https://wa.me/77774961358" target="_blank" rel="noopener" style="width:100%;justify-content:center">Назначить звонок</a></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ ABOUT ============ -->
-<section class="section" id="about">
-  <div class="wrap">
-    <div class="about-grid">
-      <div class="founder-photo reveal">
-        <img src="brand/founder-square.jpg" alt="Сариев Алижан Сабитулы — основатель SITS" loading="lazy" decoding="async" width="800" height="1000" />
-        <div class="cap">
-          <div><div class="nm">Сариев Алижан Сабитулы</div><div class="rl">Sariyev Alizhan Sabituly</div></div>
-          <div class="badge" data-i18n="about.role">Founder</div>
-        </div>
-      </div>
-      <div class="about-text reveal">
-        <div class="sec-tag"><i></i><span data-i18n="about.tag">О нас</span></div>
-        <h2 data-i18n="about.h2">Студия с подходом, а не конвейером</h2>
-        <p><span data-i18n="about.p1">SITS — Sariyev IT Solutions — это IT-студия полного цикла. Мы берём проект от идеи и доводим до запуска: </span><span class="em" data-i18n="about.p1Em">сайты и платформы, мобильные приложения, игры на Unity и Unreal, бизнес-автоматизация, AI-контент и поддержка.</span></p>
-        <p data-i18n="about.p2">За каждым проектом — внимание к деталям, честные сроки и продукт, которым удобно пользоваться. Вы работаете напрямую с теми, кто его делает.</p>
-        <div class="about-stats">
-          <div class="a"><div class="num" data-count="10" data-i18n="about.a1V">10</div><div class="lbl" data-i18n="about.a1L">проектов в продакшене</div></div>
-          <div class="a"><div class="num" data-count="6" data-i18n="about.a2V">6</div><div class="lbl" data-i18n="about.a2L">направлений</div></div>
-          <div class="a"><div class="num" data-count="100" data-count-suffix="%" data-i18n="about.a3V">100%</div><div class="lbl" data-i18n="about.a3L">проектов под ключ</div></div>
-        </div>
-      </div>
+<!-- FINAL CTA -->
+<section class="section auto-final">
+  <div class="wrap" style="position:relative">
+    <div class="sec-tag reveal" style="justify-content:center;display:inline-flex"><i></i><span>Начнём</span></div>
+    <h2 class="reveal" style="margin-top:14px">Начните с Assessment за 7 дней —<br>увидите прототип на своих данных</h2>
+    <p class="reveal" style="color:var(--muted);font-size:17px;line-height:1.6;max-width:720px;margin:18px auto 0">Зафиксируем цену внедрения договором. Assessment засчитывается в проект — вы ничем не рискуете.</p>
+    <div class="reveal" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px">
+      <a class="btn btn-primary magnetic" href="https://wa.me/77774961358" target="_blank" rel="noopener">Написать в WhatsApp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+      <a class="btn btn-line" href="https://t.me/zhanmate" target="_blank" rel="noopener">Telegram @zhanmate</a>
     </div>
   </div>
 </section>
 
-
-<!-- ============ CONTACT ============ -->
-<section class="section" id="contact">
-  <div class="wrap">
-    <div class="contact-grid">
-      <div class="contact-info reveal">
-        <div class="sec-tag"><i></i><span data-i18n="contact.tag">Контакты</span></div>
-        <h2 data-i18n="contact.h2">Расскажите о&nbsp;проекте</h2>
-        <p data-i18n="contact.desc">Заполните форму или напишите напрямую — ответим в течение дня и предложим, как реализовать идею.</p>
-        <div class="cinfo-list">
-          <a href="https://wa.me/77774961358?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20SITS%20%E2%80%94%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82." data-wa="pricing.waAll" target="_blank" rel="noopener" class="cinfo">
-            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7a11 11 0 0 0 4.2 3.7c.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3z"/></svg></div>
-            <div><div class="ci-k">WhatsApp</div><div class="ci-v">+7 777 496 13 58</div></div>
-            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-          </a>
-          <a href="https://t.me/zhanmate" target="_blank" rel="noopener" class="cinfo">
-            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.04 15.51 8.9 19.4c.4 0 .57-.17.78-.37l1.87-1.79 3.88 2.84c.71.39 1.22.19 1.4-.66l2.53-11.87c.23-1.05-.38-1.46-1.07-1.2L3.4 12.06c-1.02.4-1 .96-.18 1.22l3.85 1.2 8.94-5.64c.42-.26.8-.12.49.14l-7.46 6.53z"/></svg></div>
-            <div><div class="ci-k">Telegram</div><div class="ci-v">@zhanmate</div></div>
-            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-          </a>
-          <a href="https://www.instagram.com/sariyev.it.solutions/" target="_blank" rel="noopener" class="cinfo">
-            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div>
-            <div><div class="ci-k">Instagram</div><div class="ci-v">@sariyev.it.solutions</div></div>
-            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-          </a>
-          <a href="https://www.youtube.com/@sariyev.it.solutions" target="_blank" rel="noopener" class="cinfo">
-            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12zM9.8 15V9l5.2 3-5.2 3z"/></svg></div>
-            <div><div class="ci-k">YouTube</div><div class="ci-v">@sariyev.it.solutions</div></div>
-            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-          </a>
-          <a href="https://www.linkedin.com/in/alizhan-sariyev-5a3804278/" target="_blank" rel="noopener" class="cinfo">
-            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0V8zm7.5 0H12v2.2h.07c.63-1.2 2.17-2.46 4.46-2.46C21.4 7.74 24 10 24 14.6V24h-5v-8.2c0-1.95-.04-4.46-2.7-4.46-2.71 0-3.13 2.12-3.13 4.32V24h-5V8z"/></svg></div>
-            <div><div class="ci-k">LinkedIn</div><div class="ci-v">Alizhan Sariyev</div></div>
-            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-          </a>
-          <a href="mailto:raimzhan1907@gmail.com" class="cinfo">
-            <div class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg></div>
-            <div><div class="ci-k">Email</div><div class="ci-v">raimzhan1907@gmail.com</div></div>
-            <span class="ci-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-          </a>
-        </div>
-      </div>
-      <div class="reveal">
-        <p class="contact-pricing" data-i18n="contact.pricing">Готовые пакеты и цены — в разделе «Прайс». Нестандартные задачи считаем индивидуально под объём работ.</p>
-        <form class="contact-form" id="contactForm">
-          <div class="form-fields" id="formFields">
-            <div class="hp-field" aria-hidden="true">
-              <label for="f-website">Website (leave empty)</label>
-              <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
-            </div>
-            <div class="form-row">
-              <div class="field"><label for="f-name" data-i18n="contact.labelName">Имя</label><input id="f-name" name="name" type="text" data-i18n-placeholder="contact.phName" placeholder="Как к вам обращаться" required /></div>
-              <div class="field"><label for="f-contact" data-i18n="contact.labelContact">Email или телефон</label><input id="f-contact" name="contact" type="text" data-i18n-placeholder="contact.phContact" placeholder="Куда ответить" required /></div>
-            </div>
-            <div class="field"><label for="f-type" data-i18n="contact.labelType">Тип проекта</label><input id="f-type" name="type" type="text" data-i18n-placeholder="contact.phType" placeholder="Сайт, приложение, игра…" /></div>
-            <div class="field"><label for="f-msg" data-i18n="contact.labelMsg">О проекте</label><textarea id="f-msg" name="message" data-i18n-placeholder="contact.phMsg" placeholder="Пара слов о задаче, сроках и бюджете" required></textarea></div>
-            <button type="submit" class="btn btn-primary"><span data-i18n="contact.submit">Отправить заявку</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
-            <div class="form-error" id="formError" role="alert" aria-live="polite"></div>
-            <div class="form-note"><span data-i18n="contact.note2">Нажимая «Отправить», вы соглашаетесь с</span> <a href="/privacy" data-i18n="contact.noteLink">политикой конфиденциальности</a>.</div>
-          </div>
-          <div class="form-success" id="formSuccess">
-            <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></div>
-            <h3 data-i18n="contact.successH">Заявка отправлена</h3>
-            <p data-i18n="contact.successP">Спасибо — мы свяжемся с вами в ближайшее время.</p>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 </main>
 
 <!-- ============ FOOTER ============ -->
@@ -1877,13 +1623,13 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
       <div class="foot-cols">
         <div class="foot-col">
           <h3 data-i18n="footer.navTitle">Навигация</h3>
-          <a href="#services" data-i18n="nav.services">Услуги</a>
-          <a href="#process" data-i18n="nav.process">Как работаем</a>
-          <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+          <a href="/#services" data-i18n="nav.services">Услуги</a>
+          <a href="/#process" data-i18n="nav.process">Как работаем</a>
+          <a href="/#portfolio" data-i18n="nav.portfolio">Портфолио</a>
           <a href="/price" data-i18n="nav.pricing">Прайс</a>
       <a href="/avtomatizatsiya" data-i18n="nav.auto">Автоматизация</a>
-          <a href="#about" data-i18n="nav.about">О нас</a>
-          <a href="#contact" data-i18n="nav.contact">Контакты</a>
+          <a href="/#about" data-i18n="nav.about">О нас</a>
+          <a href="/#contact" data-i18n="nav.contact">Контакты</a>
         </div>
         <div class="foot-col">
           <h3 data-i18n="footer.docsTitle">Документы</h3>
@@ -1962,30 +1708,11 @@ const I18N = {
       s1T1:'Landing', s1T2:'Веб-платформы', s1T3:'E-commerce', s1T4:'SaaS',
       s2H:'Мобильные приложения', s2P:'Нативные и кроссплатформенные приложения для iOS и Android.',
       s3H:'Разработка игр', s3P:'Игры для мобильных и ПК на Unity и Unreal Engine.',
-      s4H:'Бизнес-автоматизация', s4P:'Автоматизируем процессы и рутину бизнеса. Мы написали собственную CRM-систему — это отдельное направление SITS, Fibonacci Control.',
-      s4T1:'Собственная CRM', s4T2:'Fibonacci Control', s4Link:'Открыть Fibonacci Control',
+      s4H:'Бизнес-автоматизация', s4P:'Автоматизация процессов и рутины бизнеса.',
       s5H:'AI Content Creator', s5P:'Контент, созданный AI: реклама, клипы и персональные AI Love Story — на новейших моделях видео, музыки и голоса.',
       s5T1:'AI-видео', s5T2:'AI Love Story', s5T3:'Реклама',
       s6H:'IT-поддержка', s6P:'Техобслуживание и сопровождение продуктов 24/7.',
       s6T1:'SLA', s6T2:'Мониторинг', s6T3:'Сопровождение',
-    },
-    fibo: {
-      tag:'Наш продукт',
-      prod:'Флагманский продукт SITS',
-      h2:'CRM с ИИ-сотрудником для бизнеса',
-      desc:'Флагманский продукт SITS. Собственная CRM: гибкая low-code настройка под ваш процесс, ИИ-сотрудник, автоворонки и генерация КП. Внедряем под ключ за 1–2 недели.',
-      badge:'Собственная разработка SITS',
-      lead:'Заявки теряются в мессенджерах, менеджеры дублируют работу, отчёты делаются вручную. Мы это чиним.',
-      b1:'Все заявки — Instagram, WhatsApp, сайт, звонки — в одном окне',
-      b2:'ИИ-сотрудник ведёт клиентов, двигает сделки и готовит КП',
-      b3:'Low-code настройка: поля, статусы, роли и автоворонки — под ваш процесс',
-      b4:'Внедрение под ключ за 1–2 недели',
-      ctaMain:'Смотреть Fibonacci Control',
-      ctaAudit:'Бесплатный аудит процесса',
-      c1H:'Все каналы вместе', c1P:'Заявки со всех источников попадают в одну систему автоматически.',
-      c2H:'Воронка и сделки', c2P:'Видно каждый лид и этап — ничего не теряется.',
-      c3H:'ИИ-сотрудник', c3P:'Отвечает клиентам, двигает сделки по воронке и сам собирает КП.',
-      c4H:'Low-code гибкость', c4P:'Поля, статусы, роли и автоматизации меняются без переписывания кода.',
     },
     process: {
       tag:'Как работаем', h2:'Прозрачный процесс',
@@ -2010,7 +1737,7 @@ const I18N = {
         '01':'Сайт-визитка', '02':'Игровая студия', '03':'E-commerce / fashion',
         '04':'E-commerce / премиум', '05':'B2B-платформа', '06':'Dev-инструмент / SaaS',
         '07':'Маркетплейс', '08':'B2B-маркетплейс', '09':'Каталог / городской сервис',
-        '10':'Премиум-шоурум', '11':'Меншікті өнім · CRM', '12':'Claude негізіндегі AI', '11':'Собственный продукт · CRM', '12':'AI на базе Claude',
+        '10':'Премиум-шоурум',
       },
       desc_: {
         '01':'Студия интерьерного дизайна и бутик (Алматы). Элегантный мультиязычный сайт.',
@@ -2022,12 +1749,12 @@ const I18N = {
         '07':'Платформа фриланса без комиссий с прямыми выплатами (Kaspi, USDT, банк). Чистый editorial-дизайн.',
         '08':'Торговая площадка для поставщиков и магазинов. 3D-иллюстрации, регистрация и каталог.',
         '09':'Каталог акций и магазинов города (Усть-Каменогорск). Карточки товаров и акций.',
-        '10':'Премиум-сайт шоурума камня (Астана). Спечённый камень SINISO, керамогранит, мрамор. Расчёт, 3D-визуализация, монтаж под ключ.', '11':'Fibonacci Control — наша CRM-платформа: ИИ-сотрудник, WhatsApp и учёт сделок для любого бизнеса Казахстана.', '12':'AI-консультант сайта SITS: отвечает про услуги и цены на трёх языках и принимает заявки прямо в чате. Нажмите кнопку чата и попробуйте.',
+        '10':'Премиум-сайт шоурума камня (Астана). Спечённый камень SINISO, керамогранит, мрамор. Расчёт, 3D-визуализация, монтаж под ключ.',
       },
     },
     pricing: {
       tag:'Прайс', h2:'Пакеты и цены',
-      desc:'Фиксированные цены и новейшие технологии — AI на базе Claude (Anthropic). Каждый пакет под ключ: от идеи до запуска.',
+      desc:'Фиксированные цены и новейшие технологии — AI на движке SITS AI. Каждый пакет под ключ: от идеи до запуска.',
       promo:'Фиксированные цены — прозрачно и по договору. Следите за акциями в нашем Instagram.',
       b1:'', from:'от', perMonth:'/мес', monthly:'Ежемесячно', priceLbl:'Стоимость', allIn:'Фото и видео включены',
       c1H:'Лендинг', c1Sub:'Сайт-визитка под портфолио, бизнес или услуги — быстрый, современный, продающий.',
@@ -2038,9 +1765,9 @@ const I18N = {
       c1F4:'Форма заявок + кнопка WhatsApp',
       c1F5:'Домен, хостинг и SSL — настроим всё',
       c1F6:'Запуск за 3–7 дней',
-      c2H:'Лендинг + AI', c2Sub:'Сайт со встроенным AI-автоответчиком и навигатором на базе Claude — отвечает клиентам за вас, 24/7.',
+      c2H:'Лендинг + AI', c2Sub:'Сайт со встроенным AI-автоответчиком и навигатором на базе SITS AI — отвечает клиентам за вас, 24/7.',
       c2F1:'Всё из пакета «Лендинг»',
-      c2F2:'AI-автоответчик 24/7 на базе Claude',
+      c2F2:'AI-автоответчик 24/7 на базе SITS AI',
       c2F3:'AI-навигатор: ведёт клиента по услугам и ценам',
       c2F4:'Обучен на данных вашего бизнеса',
       c2F5:'Интеграция с WhatsApp',
@@ -2051,16 +1778,16 @@ const I18N = {
       c3F3:'Админ-панель и база данных',
       c3F4:'Приём и учёт заявок в одном месте',
       c3F5:'Обучим работе с системой',
-      c4H:'Лендинг + софт + AI', c4Sub:'Максимальный пакет: сайт, софт и AI-автоматизация на базе Claude в одном решении.',
+      c4H:'Лендинг + софт + AI', c4Sub:'Максимальный пакет: сайт, софт и AI-автоматизация на базе SITS AI в одном решении.',
       c4F1:'Всё из пакетов «Лендинг» и «Софт»',
-      c4F2:'AI-ассистент на базе Claude',
+      c4F2:'AI-ассистент на базе SITS AI',
       c4F3:'Автоматизация заявок и рутинных задач',
       c4F4:'Профессиональные фото и видео включены',
       c4F5:'Аналитика и отчёты',
-      c5H:'Автоматизация бизнеса под ключ', c5Sub:'Полная цифровизация компании — новейшие технологии и AI-агенты на базе Claude. Разбираем процессы, убираем рутину, ускоряем бизнес.',
+      c5H:'Автоматизация бизнеса под ключ', c5Sub:'Полная цифровизация компании — новейшие технологии и AI-агенты на базе SITS AI. Разбираем процессы, убираем рутину, ускоряем бизнес.',
       c5F1:'Аудит процессов и план автоматизации',
       c5F2:'CRM, учёт и внутренние инструменты',
-      c5F3:'AI-агенты на базе Claude под задачи бизнеса',
+      c5F3:'AI-агенты на базе SITS AI под задачи бизнеса',
       c5F4:'Интеграции: WhatsApp, Kaspi, 1C, платёжные системы',
       c5F5:'Обучение команды',
       c5F6:'Первый месяц поддержки — в подарок',
@@ -2086,14 +1813,32 @@ const I18N = {
       waGame:'Здравствуйте! Интересует разработка игры. Хочу обсудить проект.',
       mAiBadge:'новинка', mAiH:'AI Content Creator',
       mAiSub:'AI-видео под заказ: реклама, видеоклипы и контент любой сложности — на новейших AI-моделях видео, музыки и голоса.',
-      mAiLbl:'Видеоклип под ключ',
+      mAiLbl:'Проект под ключ',
       mAiF1:'Рекламные ролики и клипы, созданные с AI',
-      mAiF2:'Полный цикл: сценарий, генерация, монтаж, звук',
+      mAiF2:'Полный цикл: сценарий, генерация, постпродакшн, звук',
       mAiF3:'Любая сложность — бюджет без потолка',
       mAiF4:'Помощь с дистрибуцией и продвижением',
       mAiF5:'Новейшие AI-модели видео, музыки и голоса',
       mAiF6:'Работаем официально, по договору',
-      waAi:'Здравствуйте! Интересует AI Video Creator — видео или клип с AI. Хочу обсудить проект.',
+      waAi:'Здравствуйте! Интересует AI Content Creator — контент или видео с AI. Хочу обсудить проект.',
+      mLsH:'AI Love Story', mLsSub:'Персональная видео-история о вашей паре, созданная AI: из фотографий и воспоминаний — трогательный ролик в подарок.',
+      mLsLbl:'История под ключ',
+      mLsF1:'Сценарий из вашей истории: знакомство, свидания, важные даты',
+      mLsF2:'Видео, музыка и голос — на новейших AI-моделях',
+      mLsF3:'Свадьба, годовщина, предложение — повод любой',
+      mLsF4:'Готово за 3–5 дней',
+      waLs:'Здравствуйте! Интересует AI Love Story — видео-история о нашей паре. Хочу обсудить детали.',
+      tgH:'Реклама и продвижение', tgSub:'Таргетированная реклама в Instagram: цели и KPI фиксируем договором, отчёт с цифрами — каждый месяц.',
+      tgBadge:'новинка', tgAdH:'Настройка таргета',
+      tgAdSub:'Реклама в Instagram под ключ: стратегия, креативы, запуск и еженедельная оптимизация.',
+      tgLbl:'Настройка под ключ',
+      tgF1:'Бесплатный аудит текущей рекламы за 30 минут',
+      tgF2:'Цели и KPI фиксируем до запуска',
+      tgF3:'Креативы и тексты объявлений — делаем сами',
+      tgF4:'Оптимизация каждую неделю',
+      tgF5:'Отчёт каждый месяц: показы, клики, заявки и цена заявки',
+      tgF6:'Договор с NDA, цена зафиксирована',
+      waTg:'Здравствуйте! Интересует настройка таргетированной рекламы. Хочу обсудить детали.',
       tz1:'Сайты и лендинги — от 150 000 ₸',
       tz2:'AI Love Story — ваша история, созданная AI',
       tz3:'AI Content Creator — контент и реклама с AI',
@@ -2221,30 +1966,11 @@ const I18N = {
       s1T1:'Landing', s1T2:'Web platforms', s1T3:'E-commerce', s1T4:'SaaS',
       s2H:'Mobile apps', s2P:'Native and cross-platform apps for iOS and Android.',
       s3H:'Game development', s3P:'Mobile and PC games on Unity and Unreal Engine.',
-      s4H:'Business automation', s4P:'Streamlining routine processes and back-office workflows. We built our own CRM system — a dedicated SITS division, Fibonacci Control.',
-      s4T1:'In-house CRM', s4T2:'Fibonacci Control', s4Link:'Open Fibonacci Control',
+      s4H:'Business automation', s4P:'Streamlining routine processes and back-office workflows.',
       s5H:'AI Content Creator', s5P:'AI-made content: ads, clips and personal AI Love Story films — on the newest video, music and voice models.',
       s5T1:'AI video', s5T2:'AI Love Story', s5T3:'Ads',
       s6H:'IT support', s6P:'Maintenance and 24/7 product care after launch.',
       s6T1:'SLA', s6T2:'Monitoring', s6T3:'Support',
-    },
-    fibo: {
-      tag:'Our product',
-      prod:'SITS flagship product',
-      h2:'A CRM with an AI teammate',
-      desc:'The SITS flagship product. Our own CRM: flexible low-code setup for your process, an AI teammate, auto pipelines and proposal generation. Turnkey rollout in 1–2 weeks.',
-      badge:'Built in-house by SITS',
-      lead:'Leads scattered across chats, duplicated work, manual reports — we fix that.',
-      b1:'Every lead — Instagram, WhatsApp, site, calls — in one place',
-      b2:'An AI teammate handles clients, moves deals and drafts proposals',
-      b3:'Low-code setup: fields, statuses, roles and auto pipelines — for your process',
-      b4:'Full turnkey setup in 1–2 weeks',
-      ctaMain:'Explore Fibonacci Control',
-      ctaAudit:'Free process audit',
-      c1H:'All channels together', c1P:'Leads from every source land in one system automatically.',
-      c2H:'Pipeline & deals', c2P:'See every lead and stage — nothing slips through.',
-      c3H:'AI teammate', c3P:'Replies to clients, moves deals down the pipeline and assembles proposals.',
-      c4H:'Low-code flexibility', c4P:'Fields, statuses, roles and automations change without rewriting code.',
     },
     process: {
       tag:'Process', h2:'A transparent workflow',
@@ -2269,7 +1995,7 @@ const I18N = {
         '01':'Showcase site', '02':'Game studio', '03':'E-commerce / fashion',
         '04':'E-commerce / premium', '05':'B2B platform', '06':'Dev tool / SaaS',
         '07':'Marketplace', '08':'B2B marketplace', '09':'Catalog / local service',
-        '10':'Premium showroom', '11':'Own product · CRM', '12':'AI powered by Claude',
+        '10':'Premium showroom',
       },
       desc_: {
         '01':'Interior design studio and boutique (Almaty). An elegant multilingual site.',
@@ -2281,12 +2007,12 @@ const I18N = {
         '07':'A zero-commission freelance platform with direct payouts (Kaspi, USDT, bank). Clean editorial design.',
         '08':'Marketplace for suppliers and retailers. 3D illustrations, sign-up and catalog.',
         '09':'Local catalog of deals and stores (Oskemen). Product and promo cards.',
-        '10':'Premium stone showroom site (Astana). SINISO sintered stone, porcelain, marble. Calculation, 3D viz, turn-key installation.', '11':'Fibonacci Control — our own CRM platform: an AI employee, WhatsApp and deal tracking for any business in Kazakhstan.', '12':'The AI consultant on the SITS site: answers about services and prices in three languages and takes leads right in the chat. Tap the chat button and try it.',
+        '10':'Premium stone showroom site (Astana). SINISO sintered stone, porcelain, marble. Calculation, 3D viz, turn-key installation.',
       },
     },
     pricing: {
       tag:'Pricing', h2:'Packages & prices',
-      desc:'Fixed prices and cutting-edge technology — AI powered by Claude (Anthropic). Every package is turnkey: from idea to launch.',
+      desc:'Fixed prices and cutting-edge technology — AI powered by SITS AI. Every package is turnkey: from idea to launch.',
       promo:'Fixed prices — transparent, under contract. Follow our Instagram for future deals.',
       b1:'', from:'from', perMonth:'/mo', monthly:'Monthly', priceLbl:'Price', allIn:'Photo & video included',
       c1H:'Landing page', c1Sub:'A site for your portfolio, business or services — fast, modern and built to sell.',
@@ -2297,9 +2023,9 @@ const I18N = {
       c1F4:'Lead form + WhatsApp button',
       c1F5:'Domain, hosting and SSL — all set up for you',
       c1F6:'Launch in 3–7 days',
-      c2H:'Landing + AI', c2Sub:'A site with a built-in AI auto-responder and navigator powered by Claude — answers your clients 24/7.',
+      c2H:'Landing + AI', c2Sub:'A site with a built-in AI auto-responder and navigator powered by SITS AI — answers your clients 24/7.',
       c2F1:'Everything in “Landing page”',
-      c2F2:'24/7 AI auto-responder powered by Claude',
+      c2F2:'24/7 AI auto-responder powered by SITS AI',
       c2F3:'AI navigator: guides clients through services and prices',
       c2F4:'Trained on your business data',
       c2F5:'WhatsApp integration',
@@ -2310,16 +2036,16 @@ const I18N = {
       c3F3:'Admin panel and database',
       c3F4:'All leads collected and tracked in one place',
       c3F5:'Team onboarding included',
-      c4H:'Landing + software + AI', c4Sub:'The full stack: site, software and Claude-powered AI automation in one solution.',
+      c4H:'Landing + software + AI', c4Sub:'The full stack: site, software and SITS AI automation in one solution.',
       c4F1:'Everything in “Landing” and “Software”',
-      c4F2:'AI assistant powered by Claude',
+      c4F2:'AI assistant powered by SITS AI',
       c4F3:'Automated leads and routine tasks',
       c4F4:'Professional photo & video included',
       c4F5:'Analytics and reports',
-      c5H:'Turnkey business automation', c5Sub:'Full digitalization of your company — cutting-edge technology and Claude-powered AI agents. We map your processes, remove the routine and speed up the business.',
+      c5H:'Turnkey business automation', c5Sub:'Full digitalization of your company — cutting-edge technology and SITS AI agents. We map your processes, remove the routine and speed up the business.',
       c5F1:'Process audit and automation plan',
       c5F2:'CRM, records and internal tools',
-      c5F3:'Claude-powered AI agents for your business tasks',
+      c5F3:'SITS AI agents for your business tasks',
       c5F4:'Integrations: WhatsApp, Kaspi, 1C, payment systems',
       c5F5:'Team training',
       c5F6:'First month of support — free',
@@ -2345,14 +2071,32 @@ const I18N = {
       waGame:'Hi! I’m interested in game development. I’d like to discuss a project.',
       mAiBadge:'new', mAiH:'AI Content Creator',
       mAiSub:'Custom AI video: ads, music videos and content of any complexity — built on the newest AI video, music and voice models.',
-      mAiLbl:'Turnkey music video',
+      mAiLbl:'Turnkey project',
       mAiF1:'Ads and music videos created with AI',
-      mAiF2:'Full cycle: script, generation, editing, sound',
+      mAiF2:'Full cycle: script, generation, post-production, sound',
       mAiF3:'Any complexity — no budget ceiling',
       mAiF4:'Help with distribution and promotion',
       mAiF5:'The newest AI video, music and voice models',
       mAiF6:'Official work, under contract',
-      waAi:'Hi! I’m interested in AI Video Creator — an AI video or music video. I’d like to discuss a project.',
+      waAi:'Hi! I’m interested in AI Content Creator — AI-made content or video. I’d like to discuss a project.',
+      mLsH:'AI Love Story', mLsSub:'A personal AI-made video story about your couple: built from photos and memories — a touching film as a gift.',
+      mLsLbl:'Turnkey story',
+      mLsF1:'A script from your story: how you met, dates, milestones',
+      mLsF2:'Video, music and voice — on the newest AI models',
+      mLsF3:'Wedding, anniversary, proposal — any occasion',
+      mLsF4:'Ready in 3–5 days',
+      waLs:'Hi! I’m interested in AI Love Story — a video story about our couple.',
+      tgH:'Advertising & promotion', tgSub:'Targeted Instagram ads: goals and KPIs fixed by contract, a numbers report every month.',
+      tgBadge:'new', tgAdH:'Targeted ads setup',
+      tgAdSub:'Instagram ads end-to-end: strategy, creatives, launch and weekly optimization.',
+      tgLbl:'Setup, end-to-end',
+      tgF1:'Free 30-minute audit of your current ads',
+      tgF2:'Goals and KPIs fixed before launch',
+      tgF3:'Ad creatives and copy — made by us',
+      tgF4:'Weekly optimization',
+      tgF5:'Monthly report: impressions, clicks, leads and cost per lead',
+      tgF6:'Contract with NDA, price is fixed',
+      waTg:'Hi! I’m interested in targeted ads setup. I’d like to discuss details.',
       tz1:'Websites and landing pages — from 150 000 KZT',
       tz2:'AI Love Story — your story, made by AI',
       tz3:'AI Content Creator — AI content and ads',
@@ -2480,30 +2224,11 @@ const I18N = {
       s1T1:'Landing', s1T2:'Веб-платформалар', s1T3:'E-commerce', s1T4:'SaaS',
       s2H:'Мобильді қосымшалар', s2P:'iOS және Android үшін нативті және кроссплатформалық қосымшалар.',
       s3H:'Ойындар жасау', s3P:'Mobile және PC ойындары — Unity мен Unreal Engine негізінде.',
-      s4H:'Бизнес-автоматтандыру', s4P:'Бизнестегі процестер мен күнделікті жұмысты автоматтандырамыз. Өз CRM-жүйемізді жаздық — бұл SITS-тің жеке бағыты, Fibonacci Control.',
-      s4T1:'Меншікті CRM', s4T2:'Fibonacci Control', s4Link:'Fibonacci Control-ды ашу',
+      s4H:'Бизнес-автоматтандыру', s4P:'Бизнестегі процестер мен күнделікті жұмысты автоматтандыру.',
       s5H:'AI Content Creator', s5P:'AI жасаған контент: жарнама, клиптер және жеке AI Love Story — ең жаңа видео, музыка және дауыс модельдерінде.',
       s5T1:'AI-бейне', s5T2:'AI Love Story', s5T3:'Жарнама',
       s6H:'IT-қолдау', s6P:'Өнімдерге 24/7 техникалық қызмет көрсету мен сүйемелдеу.',
       s6T1:'SLA', s6T2:'Мониторинг', s6T3:'Сүйемелдеу',
-    },
-    fibo: {
-      tag:'Біздің өнім',
-      prod:'SITS-тің басты өнімі',
-      h2:'ИИ-қызметкері бар CRM',
-      desc:'SITS-тің басты өнімі. Меншікті CRM: процесіңізге бейімделетін икемді low-code баптау, ИИ-қызметкер, автоворонкалар және КП генерациясы. 1–2 аптада кілтпен енгіземіз.',
-      badge:'SITS-тің меншікті әзірлемесі',
-      lead:'Өтінімдер мессенджерлерде жоғалады, менеджерлер жұмысты қайталайды, есептер қолмен жасалады. Біз мұны шешеміз.',
-      b1:'Барлық өтінім — Instagram, WhatsApp, сайт, қоңыраулар — бір терезеде',
-      b2:'ИИ-қызметкер клиенттерді жүргізеді, мәмілелерді жылжытады және КП дайындайды',
-      b3:'Low-code баптау: өрістер, мәртебелер, рөлдер мен автоворонкалар — процесіңізге',
-      b4:'Кілтпен тапсыру — 1–2 аптада',
-      ctaMain:'Fibonacci Control-ды көру',
-      ctaAudit:'Тегін процесс аудиті',
-      c1H:'Барлық арна бірге', c1P:'Барлық көзден келген өтінімдер бір жүйеге автоматты түседі.',
-      c2H:'Воронка және мәмілелер', c2P:'Әр лид пен кезең көрінеді — ешнәрсе жоғалмайды.',
-      c3H:'ИИ-қызметкер', c3P:'Клиенттерге жауап береді, мәмілелерді воронка бойынша жылжытады және КП жинайды.',
-      c4H:'Low-code икемділік', c4P:'Өрістер, мәртебелер, рөлдер мен автоматтандырулар кодты қайта жазбай өзгереді.',
     },
     process: {
       tag:'Жұмыс тәртібі', h2:'Айқын процесс',
@@ -2540,12 +2265,12 @@ const I18N = {
         '07':'Комиссиясыз фриланс платформасы — тікелей төлемдермен (Kaspi, USDT, банк). Таза editorial-дизайн.',
         '08':'Жеткізушілер мен дүкендерге арналған сауда алаңы. 3D-иллюстрациялар, тіркеу және каталог.',
         '09':'Қаладағы акциялар мен дүкендердің каталогы (Өскемен). Тауар мен акциялардың карточкалары.',
-        '10':'Астана тас шоурумының премиум-сайты. SINISO спечен тас, керамогранит, мрамор. Есептеу, 3D-визуализация, кілт астында монтаж.', '11':'Fibonacci Control — өз CRM-платформамыз: ИИ-қызметкер, WhatsApp және мәмілелер есебі кез келген бизнеске.', '12':'SITS сайтындағы AI-кеңесші: қызметтер мен бағалар туралы үш тілде жауап беріп, өтінімдерді чатта қабылдайды. Чат батырмасын басып көріңіз.',
+        '10':'Астана тас шоурумының премиум-сайты. SINISO спечен тас, керамогранит, мрамор. Есептеу, 3D-визуализация, кілт астында монтаж.',
       },
     },
     pricing: {
       tag:'Бағалар', h2:'Пакеттер мен бағалар',
-      desc:'Бекітілген бағалар және ең жаңа технологиялар — Claude (Anthropic) негізіндегі AI. Әр пакет — идеядан іске қосуға дейін дайын шешім.',
+      desc:'Бекітілген бағалар және ең жаңа технологиялар — SITS AI. Әр пакет — идеядан іске қосуға дейін дайын шешім.',
       promo:'Тұрақты бағалар — ашық және келісімшартпен. Науқандарды Instagram-да қадағалаңыз.',
       b1:'', from:'бастап', perMonth:'/ай', monthly:'Ай сайын', priceLbl:'Бағасы', allIn:'Фото мен видео кіреді',
       c1H:'Лендинг', c1Sub:'Портфолио, бизнес немесе қызметтерге арналған сайт — жылдам, заманауи, сатуға бағытталған.',
@@ -2556,9 +2281,9 @@ const I18N = {
       c1F4:'Өтінім формасы + WhatsApp батырмасы',
       c1F5:'Домен, хостинг және SSL — бәрін баптаймыз',
       c1F6:'3–7 күнде іске қосу',
-      c2H:'Лендинг + AI', c2Sub:'Claude негізіндегі AI-автожауапбергіші мен навигаторы бар сайт — клиенттерге сіздің орныңызға 24/7 жауап береді.',
+      c2H:'Лендинг + AI', c2Sub:'SITS AI негізіндегі AI-автожауапбергіші мен навигаторы бар сайт — клиенттерге сіздің орныңызға 24/7 жауап береді.',
       c2F1:'«Лендинг» пакетіндегінің бәрі',
-      c2F2:'Claude негізіндегі 24/7 AI-автожауапбергіш',
+      c2F2:'SITS AI негізіндегі 24/7 AI-автожауапбергіш',
       c2F3:'AI-навигатор: клиентті қызметтер мен бағалар бойынша бағыттайды',
       c2F4:'Бизнесіңіздің деректерімен оқытылған',
       c2F5:'WhatsApp интеграциясы',
@@ -2569,16 +2294,16 @@ const I18N = {
       c3F3:'Әкімші панелі және дерекқор',
       c3F4:'Өтінімдерді бір жерде қабылдау және есепке алу',
       c3F5:'Жүйемен жұмыс істеуге үйретеміз',
-      c4H:'Лендинг + софт + AI', c4Sub:'Максималды пакет: сайт, софт және Claude негізіндегі AI-автоматтандыру бір шешімде.',
+      c4H:'Лендинг + софт + AI', c4Sub:'Максималды пакет: сайт, софт және SITS AI негізіндегі AI-автоматтандыру бір шешімде.',
       c4F1:'«Лендинг» және «Софт» пакеттеріндегінің бәрі',
-      c4F2:'Claude негізіндегі AI-ассистент',
+      c4F2:'SITS AI негізіндегі AI-ассистент',
       c4F3:'Өтінімдер мен күнделікті жұмысты автоматтандыру',
       c4F4:'Кәсіби фото мен видео кіреді',
       c4F5:'Аналитика және есептер',
-      c5H:'Бизнесті түгел автоматтандыру', c5Sub:'Компанияны толық цифрландыру — ең жаңа технологиялар және Claude негізіндегі AI-агенттер. Процестерді талдап, күнделікті рутинаны алып тастаймыз.',
+      c5H:'Бизнесті түгел автоматтандыру', c5Sub:'Компанияны толық цифрландыру — ең жаңа технологиялар және SITS AI негізіндегі AI-агенттер. Процестерді талдап, күнделікті рутинаны алып тастаймыз.',
       c5F1:'Процестер аудиті және автоматтандыру жоспары',
       c5F2:'CRM, есеп және ішкі құралдар',
-      c5F3:'Бизнес тапсырмаларына арналған Claude AI-агенттері',
+      c5F3:'Бизнес тапсырмаларына арналған SITS AI-агенттері',
       c5F4:'Интеграциялар: WhatsApp, Kaspi, 1C, төлем жүйелері',
       c5F5:'Команданы оқыту',
       c5F6:'Қолдаудың алғашқы айы — сыйлыққа',
@@ -2604,14 +2329,32 @@ const I18N = {
       waGame:'Сәлеметсіз бе! Ойын жасау қызықтырады. Жобаны талқылағым келеді.',
       mAiBadge:'жаңа', mAiH:'AI Content Creator',
       mAiSub:'Тапсырыспен AI-видео: жарнама, бейнеклиптер және кез келген күрделіліктегі контент — ең жаңа AI видео, музыка және дауыс модельдерінде.',
-      mAiLbl:'Дайын бейнеклип',
+      mAiLbl:'Дайын жоба',
       mAiF1:'AI-мен жасалған жарнамалар мен клиптер',
-      mAiF2:'Толық цикл: сценарий, генерация, монтаж, дыбыс',
+      mAiF2:'Толық цикл: сценарий, генерация, постпродакшн, дыбыс',
       mAiF3:'Кез келген күрделілік — бюджет шектеусіз',
       mAiF4:'Дистрибуция мен жылжытуға көмек',
       mAiF5:'Ең жаңа AI видео, музыка және дауыс модельдері',
       mAiF6:'Ресми түрде, келісімшарт бойынша жұмыс істейміз',
-      waAi:'Сәлеметсіз бе! AI Video Creator қызықтырады — AI-мен видео немесе клип. Жобаны талқылағым келеді.',
+      waAi:'Сәлеметсіз бе! AI Content Creator қызықтырады — AI-мен контент немесе видео. Жобаны талқылағым келеді.',
+      mLsH:'AI Love Story', mLsSub:'Жұбыңыз туралы AI жасаған жеке видео-хикая: фотолар мен естеліктерден — сыйлыққа әсерлі ролик.',
+      mLsLbl:'Дайын хикая',
+      mLsF1:'Сіздің тарихыңыздан сценарий: танысу, кездесулер, маңызды күндер',
+      mLsF2:'Видео, музыка және дауыс — ең жаңа AI-модельдерде',
+      mLsF3:'Той, мерейтой, ұсыныс — кез келген себеп',
+      mLsF4:'3–5 күнде дайын',
+      waLs:'Сәлеметсіз бе! AI Love Story қызықтырады — жұбымыз туралы видео-хикая.',
+      tgH:'Жарнама және жылжыту', tgSub:'Instagram-дағы таргеттелген жарнама: мақсаттар мен KPI келісімшартпен бекітіледі, есеп — ай сайын.',
+      tgBadge:'жаңа', tgAdH:'Таргет баптау',
+      tgAdSub:'Instagram жарнамасы толық циклмен: стратегия, креативтер, іске қосу және апта сайынғы оңтайландыру.',
+      tgLbl:'Толық баптау',
+      tgF1:'Ағымдағы жарнамаға 30 минуттық тегін аудит',
+      tgF2:'Мақсаттар мен KPI іске қосуға дейін бекітіледі',
+      tgF3:'Креативтер мен жарнама мәтіндерін өзіміз жасаймыз',
+      tgF4:'Апта сайын оңтайландыру',
+      tgF5:'Ай сайынғы есеп: көрсетілімдер, кликтер, өтінімдер және өтінім бағасы',
+      tgF6:'NDA-мен келісімшарт, баға бекітілген',
+      waTg:'Сәлеметсіз бе! Таргеттелген жарнаманы баптау қызықтырады. Егжей-тегжейін талқылағым келеді.',
       tz1:'Сайттар мен лендингтер — 150 000 ₸-ден',
       tz2:'AI Love Story — AI жасаған сіздің хикаяңыз',
       tz3:'AI Content Creator — AI контент пен жарнама',
@@ -2733,8 +2476,6 @@ const PORTFOLIO = [
   { id:'08', name:'Interagent',          url:'https://www.interagent.kz',                      img:'portfolio/08_interagent.webp',    cls:'pf-8' },
   { id:'09', name:'Citytorg',            url:'https://www.citytorg.kz',                        img:'portfolio/09_citytorg.webp',      cls:'pf-9' },
   { id:'10', name:'PRO CERAMIC',         url:'https://pro-ceramic.kz',                         img:'portfolio/10_pro-ceramic.webp',   cls:'pf-10' },
-  { id:'11', name:'Fibonacci Control',   url:'https://fibonaccicontrol.com',                   img:'portfolio/11_fibonacci-control.webp', cls:'pf-11' },
-  { id:'12', name:'AI-консультант SITS', url:'/price',                                         img:'portfolio/12_ai-assistant.webp',  cls:'pf-12' },
 ];
 
 function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
@@ -2868,15 +2609,13 @@ function applyLang(lang) {
    localStorage используется только redirect-скриптом и для запоминания выбора. */
 const LANG_PATH = { ru: '/', en: '/en', kk: '/kz' };
 const PATH_LANG = { '/': 'ru', '/index.html': 'ru', '/en': 'en', '/en.html': 'en', '/kz': 'kk', '/kz.html': 'kk' };
-function langFromPath() { return PATH_LANG[location.pathname] || 'ru'; }
+function langFromPath() { try { var s = localStorage.getItem('sits-lang'); if (s && PATH_LANG['/'+s] !== undefined || ['ru','en','kk'].indexOf(s) >= 0) return s; } catch(e) {} return 'ru'; }
 
 document.querySelectorAll('#langSwitch button, #mmLang button').forEach(b => {
   b.addEventListener('click', () => {
     const lang = b.dataset.lang;
     if (!LANGS.includes(lang)) return;
-    const path = LANG_PATH[lang] || '/';
-    if (location.pathname !== path) history.pushState({ lang }, '', path);
-    applyLang(lang); // меняет тексты, обновляет localStorage и <html lang>
+    applyLang(lang); // на /price язык переключается на месте, без смены URL
   });
 });
 
@@ -2947,12 +2686,12 @@ window.__formLoaded = Date.now();
     const t = I18N[currentLang]?.cmdk || I18N.en.cmdk;
     const nav = I18N[currentLang]?.nav || I18N.en.nav;
     return [
-      { id:'services', name: nav.services,   hint: t.hintServices,  icon:'grid',    action:() => location.hash='#services' },
-      { id:'process',  name: nav.process,    hint: t.hintProcess,   icon:'flow',    action:() => location.hash='#process' },
-      { id:'portfolio',name: nav.portfolio,  hint: t.hintPortfolio, icon:'image',   action:() => location.hash='#portfolio' },
-      { id:'pricing',  name: nav.pricing,    hint: t.hintPricing,   icon:'grid',    action:() => location.href='/price' },
-      { id:'about',    name: nav.about,      hint: t.hintAbout,     icon:'user',    action:() => location.hash='#about' },
-      { id:'contact',  name: nav.contact,    hint: t.hintContact,   icon:'send',    action:() => location.hash='#contact' },
+      { id:'services', name: nav.services,   hint: t.hintServices,  icon:'grid',    action:() => location.href='/#services' },
+      { id:'process',  name: nav.process,    hint: t.hintProcess,   icon:'flow',    action:() => location.href='/#process' },
+      { id:'portfolio',name: nav.portfolio,  hint: t.hintPortfolio, icon:'image',   action:() => location.href='/#portfolio' },
+      { id:'pricing',  name: nav.pricing,    hint: t.hintPricing,   icon:'grid',    action:() => location.hash='#pricing' },
+      { id:'about',    name: nav.about,      hint: t.hintAbout,     icon:'user',    action:() => location.href='/#about' },
+      { id:'contact',  name: nav.contact,    hint: t.hintContact,   icon:'send',    action:() => location.href='/#contact' },
       { id:'whatsapp', name: 'WhatsApp',     hint: '+7 777 496 13 58', icon:'send', action:() => open('https://wa.me/77774961358') },
       { id:'telegram', name: 'Telegram',     hint: '@zhanmate',        icon:'send', action:() => open('https://t.me/zhanmate') },
       { id:'ru',       name: t.langRu,       hint: 'Русский',       icon:'globe',   action:() => switchLang('ru') },
@@ -3263,7 +3002,7 @@ window.__formLoaded = Date.now();
 <div class="aiw" id="aiw" role="dialog" aria-label="AI-консультант SITS">
   <div class="aiw-head">
     <img src="/brand/sits-mark-red.png" alt="" />
-    <div><div class="t" id="aiwTitle">AI-консультант SITS</div><div class="s" id="aiwSub">на базе Claude · отвечает сразу</div></div>
+    <div><div class="t" id="aiwTitle">AI-консультант SITS</div><div class="s" id="aiwSub">на базе SITS AI · отвечает сразу</div></div>
     <button type="button" id="aiwClose" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
   <div class="aiw-msgs" id="aiwMsgs"></div>
@@ -3276,17 +3015,17 @@ window.__formLoaded = Date.now();
 <script>
 (function(){
   var L = {
-    ru: { title:'AI-консультант SITS', sub:'на базе Claude · отвечает сразу',
+    ru: { title:'AI-консультант SITS', sub:'на базе SITS AI · отвечает сразу',
       hello:'Здравствуйте! Я AI-консультант SITS — такого же мы делаем клиентам в пакете «Лендинг + AI». Подскажу по услугам и ценам. Что вас интересует?',
       chips:['Сколько стоит сайт?','Что входит в автоматизацию?','Как заказать проект?'],
       ph:'Ваш вопрос…', teaser:'Вопрос по ценам или услугам? Подскажу за минуту.',
       err:'Консультант временно недоступен. Напишите нам в WhatsApp: +7 777 496 13 58' },
-    en: { title:'SITS AI consultant', sub:'powered by Claude · replies instantly',
+    en: { title:'SITS AI consultant', sub:'powered by SITS AI · replies instantly',
       hello:'Hi! I am the SITS AI consultant — the same one we build for clients in the "Landing + AI" package. Ask me about services and prices.',
       chips:['How much is a website?','What is business automation?','How do I start a project?'],
       ph:'Your question…', teaser:'Questions about prices or services? I can help.',
       err:'The consultant is temporarily unavailable. Message us on WhatsApp: +7 777 496 13 58' },
-    kk: { title:'SITS AI-кеңесшісі', sub:'Claude негізінде · бірден жауап береді',
+    kk: { title:'SITS AI-кеңесшісі', sub:'SITS AI негізінде · бірден жауап береді',
       hello:'Сәлеметсіз бе! Мен SITS AI-кеңесшісімін — «Лендинг + AI» пакетінде клиенттерге дәл осындай жасаймыз. Қызметтер, бағалар бойынша көмектесемін.',
       chips:['Сайт қанша тұрады?','Автоматтандыруға не кіреді?','Жобаны қалай бастаймын?'],
       ph:'Сұрағыңыз…', teaser:'Бағалар туралы сұрақ бар ма? Көмектесемін.',

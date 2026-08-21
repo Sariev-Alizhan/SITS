@@ -2801,7 +2801,13 @@ onScroll(); window.addEventListener('scroll', onScroll, { passive:true });
 
 /* ============ MOBILE MENU ============ */
 const burger = document.getElementById('burger'), mm = document.getElementById('mobileMenu');
-const toggleMenu = o => { burger.classList.toggle('open', o); mm.classList.toggle('open', o); document.body.style.overflow = o ? 'hidden' : ''; };
+let _menuScrollY = 0;
+const toggleMenu = o => {
+  burger.classList.toggle('open', o); mm.classList.toggle('open', o);
+  const b = document.body.style;
+  if (o) { _menuScrollY = window.scrollY || window.pageYOffset || 0; b.position='fixed'; b.top=(-_menuScrollY)+'px'; b.left='0'; b.right='0'; b.width='100%'; b.overflow='hidden'; }
+  else { b.position=''; b.top=''; b.left=''; b.right=''; b.width=''; b.overflow=''; window.scrollTo(0, _menuScrollY); }
+};
 burger.addEventListener('click', () => toggleMenu(!mm.classList.contains('open')));
 mm.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
 

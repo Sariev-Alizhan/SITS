@@ -1,6 +1,14 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/((?!api/).*)",
+      "has": [{ "type": "host", "value": "sits-eta.vercel.app" }],
+      "destination": "https://sariyev.com/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/favicon.ico", "destination": "/brand/favicon.png" }
   ],

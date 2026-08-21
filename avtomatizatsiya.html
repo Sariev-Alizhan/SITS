@@ -1343,52 +1343,103 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 </style>
 
 <style>
-/* ==== Автоматизация — компоненты (в фирменном стиле SITS + золото Fibonacci) ==== */
+/* ==== Автоматизация — оформление в духе atla.kz, в бренде SITS (тёмная тема, красный+золото) ==== */
 .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba(210,162,76,.12)}
+.auto .section{padding:104px 0}
 .auto .sec-tag{color:var(--gold-lit);background:var(--gold-soft);border-color:rgba(210,162,76,.3)}
 .auto .sec-tag i{background:var(--gold)}
-.auto-hero{padding-top:150px;padding-bottom:72px;position:relative;overflow:hidden}
-.auto-hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:
-  radial-gradient(720px 400px at 84% -8%,rgba(226,55,68,.14),transparent 60%),
-  radial-gradient(560px 320px at 2% 118%,rgba(210,162,76,.09),transparent 60%)}
-.auto-hero h1{font-family:var(--font-display);font-weight:600;font-size:clamp(32px,5vw,58px);line-height:1.05;letter-spacing:-.03em;max-width:17ch;margin-top:18px}
-.auto-hero .lead{color:var(--muted);font-size:18px;line-height:1.6;max-width:660px;margin-top:20px}
-.auto-price{display:flex;align-items:center;gap:26px;margin-top:32px;flex-wrap:wrap}
-.auto-price .big{font-family:var(--font-display);font-weight:600;font-size:36px;letter-spacing:-.02em}
-.auto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.auto-card{border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:24px;box-shadow:inset 0 1px 0 var(--glass-hi)}
-.auto-card .ic{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:var(--gold-soft);border:1px solid rgba(210,162,76,.28);color:var(--gold-lit);margin-bottom:15px}
-.auto-card .ic svg{width:22px;height:22px}
-.auto-card h3{font-family:var(--font-display);font-weight:600;font-size:18px}
-.auto-card p{color:var(--muted);font-size:14.5px;line-height:1.55;margin-top:8px}
-.auto-cases{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.case-card{border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:28px 30px;box-shadow:inset 0 1px 0 var(--glass-hi)}
-.case-card .cbrand{font-family:var(--font-display);font-weight:700;font-size:26px;letter-spacing:.02em}
-.case-card .csub{color:var(--gold-lit);font-size:13px;font-weight:600;margin-top:4px}
-.case-card p{color:var(--muted);font-size:14.5px;line-height:1.6;margin-top:12px}
-.case-card ul{list-style:none;margin-top:12px}
-.case-card li{display:flex;gap:9px;font-size:13.5px;color:var(--text);margin:7px 0;line-height:1.4;align-items:flex-start}
-.case-card li svg{width:16px;height:16px;color:#43d18a;flex:0 0 auto;margin-top:2px}
-.tiers{display:grid;grid-template-columns:.85fr 1fr 1.05fr;gap:16px;align-items:stretch}
-.tier{border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:26px;display:flex;flex-direction:column;box-shadow:inset 0 1px 0 var(--glass-hi)}
-.tier.feat{border-color:rgba(226,55,68,.42);background:linear-gradient(180deg,rgba(226,55,68,.06),var(--glass))}
-.tier .th{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-.tier h3{font-family:var(--font-display);font-weight:600;font-size:19px}
-.tier .term{font-size:12px;color:var(--muted);border:1px solid var(--glass-line);border-radius:999px;padding:3px 10px;white-space:nowrap}
-.tier .price{font-family:var(--font-display);font-weight:600;font-size:27px;letter-spacing:-.02em;margin-top:12px}
-.tier .oper{font-size:12px;color:var(--muted);margin-top:2px}
-.tier .note{font-size:12.5px;color:#43d18a;margin-top:10px;line-height:1.5}
-.tier ul{list-style:none;margin-top:12px}
-.tier li{display:flex;gap:9px;font-size:13px;color:var(--muted);margin:7px 0;line-height:1.42;align-items:flex-start}
-.tier li svg{width:15px;height:15px;color:var(--gold-lit);flex:0 0 auto;margin-top:2px}
-.tier .tcta{margin-top:auto;padding-top:16px}
-.badge-feat{background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:4px 11px;border-radius:999px;white-space:nowrap}
-.auto-final{text-align:center;position:relative;overflow:hidden}
-.auto-final::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(600px 340px at 50% -20%,rgba(226,55,68,.12),transparent 60%)}
-.auto-final h2{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,4vw,40px);line-height:1.1;letter-spacing:-.02em}
-@media(max-width:900px){.auto-grid,.auto-cases,.tiers{grid-template-columns:1fr}}
+.auto h2.big{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,4.4vw,50px);line-height:1.05;letter-spacing:-.03em;max-width:18ch}
+.auto .subt{color:var(--muted);font-size:18px;line-height:1.6;max-width:620px;margin-top:16px}
+/* HERO */
+.a-hero{padding-top:150px;padding-bottom:70px;position:relative;overflow:hidden}
+.a-hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(760px 420px at 88% -10%,rgba(226,55,68,.16),transparent 60%),
+  radial-gradient(560px 320px at -4% 120%,rgba(210,162,76,.09),transparent 60%)}
+.a-hero .grid{display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:center}
+.a-hero h1{font-family:var(--font-display);font-weight:600;font-size:clamp(34px,5.2vw,60px);line-height:1.03;letter-spacing:-.035em;max-width:15ch;margin-top:18px}
+.a-hero .lead{color:var(--muted);font-size:19px;line-height:1.6;max-width:520px;margin-top:20px}
+.a-hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px;align-items:center}
+.a-hero .fromp{color:var(--muted);font-size:14px;margin-top:18px}
+.a-hero .fromp b{color:var(--text);font-family:var(--font-display);font-size:20px}
+/* mock */
+.fcmock{border:1px solid var(--glass-line);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.012));overflow:hidden;box-shadow:0 40px 90px -40px rgba(0,0,0,.7),inset 0 1px 0 var(--glass-hi)}
+.fcmock .bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--glass-line);font-size:12.5px;color:var(--muted)}
+.fcmock .bar .d{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.14)}
+.fcmock .bd{padding:16px}
+.fcmock .colh{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.fcmock .row{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1px solid var(--glass-line);border-radius:12px;background:rgba(255,255,255,.02);margin-bottom:9px}
+.fcmock .row .nm{flex:1;font-size:13.5px;color:var(--text)}
+.fcmock .pill{font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px}
+.fcmock .pill.n{color:#a9d8ff;background:rgba(90,155,236,.16)}
+.fcmock .pill.w{color:#ffd79a;background:rgba(245,166,35,.16)}
+.fcmock .pill.d{color:#7ee2ac;background:rgba(51,196,129,.16)}
+.fcmock .av{width:26px;height:26px;border-radius:50%;background:var(--gold-soft);color:var(--gold-lit);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.fcmock .ai{display:flex;align-items:center;gap:10px;padding:12px 13px;border:1px solid rgba(210,162,76,.28);border-radius:12px;background:var(--gold-soft);margin-top:6px}
+.fcmock .ai .ic{width:30px;height:30px;border-radius:9px;background:rgba(210,162,76,.2);color:var(--gold-lit);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.fcmock .ai span{font-size:12.5px;color:var(--gold-lit);line-height:1.4}
+/* 3 columns system */
+.sys3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px}
+.sys3 .c{border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:28px;box-shadow:inset 0 1px 0 var(--glass-hi)}
+.sys3 .num{font-family:var(--font-display);font-weight:600;font-size:40px;letter-spacing:-.03em;color:var(--gold-lit);line-height:1}
+.sys3 .st{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--gold-soft);border:1px solid rgba(210,162,76,.28);color:var(--gold-lit);margin-bottom:16px}
+.sys3 h3{font-family:var(--font-display);font-weight:600;font-size:19px}
+.sys3 p{color:var(--muted);font-size:14.5px;line-height:1.6;margin-top:9px}
+/* advantages */
+.advg{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+.advg .a{display:flex;gap:16px;border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:26px 28px;box-shadow:inset 0 1px 0 var(--glass-hi)}
+.advg .a .ic{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:rgba(226,55,68,.12);border:1px solid rgba(226,55,68,.28);color:#ff8f98;flex:0 0 auto}
+.advg .a h3{font-family:var(--font-display);font-weight:600;font-size:18px}
+.advg .a p{color:var(--muted);font-size:14px;line-height:1.55;margin-top:7px}
+/* traction */
+.trac{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.trac .n{border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:30px;box-shadow:inset 0 1px 0 var(--glass-hi)}
+.trac .n .big{font-family:var(--font-display);font-weight:600;font-size:clamp(34px,4vw,50px);letter-spacing:-.03em;line-height:1}
+.trac .n .lbl{color:var(--muted);font-size:14px;margin-top:10px;line-height:1.5}
+.logos{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;align-items:center}
+.logos .lg{border:1px solid var(--glass-line);background:var(--glass);border-radius:12px;padding:12px 18px;font-family:var(--font-display);font-weight:700;font-size:16px;color:#cfd3db;letter-spacing:.02em}
+.logos .lg.gold{color:var(--gold-lit)}
+/* assessment highlighted */
+.assess{border:1px solid rgba(210,162,76,.4);background:linear-gradient(180deg,rgba(210,162,76,.07),var(--glass));border-radius:var(--r-xl);padding:32px 34px;display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:center;box-shadow:inset 0 1px 0 var(--glass-hi)}
+.assess h3{font-family:var(--font-display);font-weight:600;font-size:24px}
+.assess p{color:var(--muted);font-size:14.5px;line-height:1.6;margin-top:10px}
+.assess .note{color:var(--gold-lit);font-size:13px;margin-top:10px}
+.assess .rt{text-align:right}
+.assess .price{font-family:var(--font-display);font-weight:600;font-size:38px;letter-spacing:-.02em}
+.assess .term{color:var(--muted);font-size:14px}
+/* tiers 3 */
+.tiers3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:18px;align-items:stretch}
+.t3{border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:28px;display:flex;flex-direction:column;box-shadow:inset 0 1px 0 var(--glass-hi)}
+.t3.feat{border-color:rgba(226,55,68,.42);background:linear-gradient(180deg,rgba(226,55,68,.06),var(--glass))}
+.t3 .th{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.t3 h3{font-family:var(--font-display);font-weight:600;font-size:20px}
+.t3 .term{font-size:12px;color:var(--muted);border:1px solid var(--glass-line);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.t3 .badge{background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:4px 11px;border-radius:999px;white-space:nowrap}
+.t3 .price{font-family:var(--font-display);font-weight:600;font-size:29px;letter-spacing:-.02em;margin-top:14px}
+.t3 .oper{font-size:12.5px;color:var(--muted);margin-top:3px}
+.t3 ul{list-style:none;margin-top:14px}
+.t3 li{display:flex;gap:9px;font-size:13px;color:var(--muted);margin:8px 0;line-height:1.42;align-items:flex-start}
+.t3 li svg{width:15px;height:15px;color:var(--gold-lit);flex:0 0 auto;margin-top:2px}
+.t3 .tcta{margin-top:auto;padding-top:18px}
+/* prototype CTA 2 col */
+.proto{display:grid;grid-template-columns:1.05fr 1fr;gap:22px;border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-xl);padding:38px 40px;box-shadow:inset 0 1px 0 var(--glass-hi);position:relative;overflow:hidden}
+.proto::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(500px 300px at 100% 0,rgba(226,55,68,.10),transparent 60%)}
+.proto h2{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,3.4vw,38px);line-height:1.08;letter-spacing:-.02em;position:relative}
+.proto p{color:var(--muted);font-size:16px;line-height:1.6;margin-top:14px;position:relative}
+.proto .opts{display:flex;flex-direction:column;gap:12px;position:relative}
+.proto .opt{display:flex;align-items:center;gap:14px;border:1px solid var(--glass-line);background:rgba(255,255,255,.02);border-radius:14px;padding:16px 18px;transition:border-color .25s}
+.proto .opt:hover{border-color:rgba(210,162,76,.4)}
+.proto .opt .ic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--gold-soft);color:var(--gold-lit);flex:0 0 auto}
+.proto .opt .k{font-size:12px;color:var(--muted)}
+.proto .opt .v{font-family:var(--font-display);font-weight:600;font-size:16px;margin-top:1px}
+@media(max-width:900px){
+  .a-hero .grid,.sys3,.advg,.trac,.tiers3,.assess,.proto{grid-template-columns:1fr}
+  .assess .rt{text-align:left}
+  .auto .section{padding:64px 0}
+  .a-hero{padding-top:120px}
+}
 </style>
 </head>
+
 <body>
 
 <!-- Skip link для клавиатурной навигации (WCAG 2.4.1) -->
@@ -1485,126 +1536,192 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 <div class="auto">
 
 <!-- HERO -->
-<section class="section auto-hero">
+<section class="section a-hero">
   <div class="wrap">
-    <div class="sec-tag reveal"><i></i><span>Автоматизация бизнеса · Fibonacci Control</span></div>
-    <h1 class="reveal">Автоматизируем бизнес под ключ — с ИИ-сотрудниками</h1>
-    <p class="lead reveal">Собственная CRM-платформа Fibonacci Control: заявки, КП, счета, дебиторка и документы в одной системе. ИИ-агенты готовят черновики, WhatsApp Business и 1С подключены, руководитель видит весь бизнес на одном экране.</p>
-    <div class="auto-price reveal">
-      <div><div style="color:var(--muted);font-size:13px">Внедрение от</div><div class="big">800 000 ₸</div></div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a class="btn btn-primary magnetic" href="https://wa.me/77774961358" target="_blank" rel="noopener">Начать с диагностики <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-        <a class="btn btn-line" href="#tarify">Смотреть тарифы</a>
+    <div class="grid">
+      <div>
+        <div class="sec-tag reveal"><i></i><span>Автоматизация бизнеса · Fibonacci Control</span></div>
+        <h1 class="reveal">ИИ-сотрудники, обученные на живых процессах вашего бизнеса</h1>
+        <p class="lead reveal">Реальный бизнес, который работает внутри Fibonacci Control: заявки, КП, счета и документы — в одной системе. ИИ-агенты готовят черновики, WhatsApp Business и 1С подключены, руководитель видит всё на одном экране.</p>
+        <div class="cta reveal">
+          <a class="btn btn-primary magnetic" href="https://wa.me/77774961358" target="_blank" rel="noopener">Назначить звонок <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <a class="btn btn-line" href="#tarify">Смотреть тарифы</a>
+        </div>
+        <div class="fromp reveal">Внедрение <b>от 800 000 ₸</b> · старт с Assessment за 7 дней</div>
+      </div>
+      <div class="fcmock reveal" aria-hidden="true">
+        <div class="bar"><span class="d"></span><span class="d"></span><span class="d"></span><span style="margin-left:6px">Fibonacci Control · CRM</span></div>
+        <div class="bd">
+          <div class="colh">Сделки · воронка</div>
+          <div class="row"><span class="nm">Пекарня «Тандыр»</span><span class="pill n">Новый</span><span class="av">Аб</span></div>
+          <div class="row"><span class="nm">Клиника «Смайл»</span><span class="pill w">В работе</span><span class="av">Ал</span></div>
+          <div class="row"><span class="nm">Кофейня «Roast»</span><span class="pill d">КП готово</span><span class="av">Ай</span></div>
+          <div class="ai"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M9 8V6a3 3 0 0 1 6 0v2M9.5 14h.01M14.5 14h.01M12 4V2"/></svg></span><span>ИИ-агент подготовил КП для «Roast» — проверьте и отправьте.</span></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WHAT WE AUTOMATE -->
+<!-- СИСТЕМА ПОД ВАШ БИЗНЕС -->
 <section class="section">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="left"><div class="sec-tag"><i></i><span>Что автоматизируем</span></div><h2>Рутина съедает время и деньги. Мы её убираем.</h2></div>
-      <p class="desc">Заявки теряются в переписках, КП и счета готовятся вручную, руководитель не видит, кто чем занят. Мы собираем это в одну систему с ИИ-агентами.</p>
+      <div class="left"><div class="sec-tag"><i></i><span>Как это работает</span></div><h2 class="big">Система, собранная под ваш бизнес</h2></div>
+      <p class="desc">Не «коробка», а рабочий процесс именно вашей компании. ИИ учится на реальных действиях сотрудников и постепенно берёт рутину на себя.</p>
     </div>
-    <div class="auto-grid reveal">
-      <div class="auto-card"><div class="ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 5h18M3 12h18M3 19h12" stroke-linecap="round"/></svg></div><h3>Заявки, КП и счета — в одном окне</h3><p>Приём заявок со всех каналов, КП, счета, акты, дебиторка и закуп — единый поток без потерь.</p></div>
-      <div class="auto-card"><div class="ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6" stroke-linecap="round"/></svg></div><h3>ИИ-агенты вместо рутины</h3><p>Черновики КП и документов готовит ИИ на движке SITS AI — сотрудник только проверяет и отправляет.</p></div>
-      <div class="auto-card"><div class="ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16v12H4z"/><path d="M8 20h8M12 16v4" stroke-linecap="round"/></svg></div><h3>Дашборд руководителя</h3><p>Весь бизнес на одном экране: выручка, воронка, дебиторка, действия каждого сотрудника.</p></div>
-      <div class="auto-card"><div class="ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 4.5 16.8L21 21l-1.2-4.5A9 9 0 0 0 12 3Z"/></svg></div><h3>WhatsApp Business + телефония</h3><p>Клиент пишет в WhatsApp — заявка и переписка уже в системе. Плюс почта, ЭСФ и телефония.</p></div>
-      <div class="auto-card"><div class="ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 7h16v10H4z"/><path d="M4 11h16" stroke-linecap="round"/></svg></div><h3>Интеграции: 1С, Kaspi, ЭСФ</h3><p>Синхронизация с 1С, оплаты Kaspi, электронные счета-фактуры — без ручного переноса.</p></div>
-      <div class="auto-card"><div class="ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 4-3 7-7 9-4-2-7-5-7-9V7l7-4Z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Роли, маршруты, контроль</h3><p>Права доступа, согласования и маршруты документов. Ничего не теряется, всё под контролем.</p></div>
+    <div class="sys3 reveal">
+      <div class="c">
+        <div class="st"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke-linecap="round"/></svg></div>
+        <h3>Сотрудники работают как раньше</h3>
+        <p>Ничего не ломаем и не заставляем переучиваться. Команда продолжает вести заявки — а система наблюдает и учится.</p>
+      </div>
+      <div class="c">
+        <div class="num">100%</div>
+        <h3 style="margin-top:14px">ИИ учится и берёт рутину на себя</h3>
+        <p>Черновики КП, счетов и документов ИИ-агент готовит сам. Сотрудник только проверяет и подтверждает — человек всегда последний.</p>
+      </div>
+      <div class="c">
+        <div class="st"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 4v5c0 4-3 7-7 9-4-2-7-5-7-9V7l7-4Z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Прототип на ваших данных</h3>
+        <p>За 7 дней вы видите систему на своих реальных процессах и заявках — не в теории, а вживую. С фиксированной ценой внедрения.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CASES -->
+<!-- ЭТО НЕЛЬЗЯ КУПИТЬ ИЛИ СКАЧАТЬ -->
 <section class="section">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="left"><div class="sec-tag"><i></i><span>Кейсы</span></div><h2>Бизнесы, которые мы автоматизировали</h2></div>
-      <p class="desc">Не в теории — реальные компании, где система уже работает.</p>
+      <div class="left"><div class="sec-tag"><i></i><span>Почему мы</span></div><h2 class="big">Это нельзя купить коробкой или скачать</h2></div>
+      <p class="desc">Мы не продаём «ещё одну CRM». Мы внедряемся в ваш процесс и доводим до результата.</p>
     </div>
-    <div class="auto-cases reveal">
-      <div class="case-card">
-        <div class="cbrand">ETG</div><div class="csub">Стоматология · публичная CRM</div>
-        <p>Полностью автоматизировали бизнес ETG и построили публичную CRM-систему для стоматологических клиник — готовый продукт, который клиники подключают под себя.</p>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Онлайн-запись 24/7 и расписание врачей</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Карты пациентов, история лечения, напоминания</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Учёт, финансы и аналитика клиники в одном месте</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Мультиклиника и роли: администратор, врач, руководитель</li>
-        </ul>
-      </div>
-      <div class="case-card">
-        <div class="cbrand">LA COUPELLE</div><div class="csub">SPA и бани · AI-администратор</div>
-        <p>Автоматизировали спа- и банный комплекс: AI отвечает гостям 24/7 в WhatsApp и Instagram, подбирает баню, создаёт бронь и присылает ссылку Kaspi на предоплату.</p>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>AI-менеджер: диалог с гостем → бронь → оплата Kaspi</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Бронирование, клиенты с RFM, воронка лидов</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Отзывы с 2ГИС/Google/Яндекс + ответы AI</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Дашборд на данных iiko, под своим брендом</li>
-        </ul>
-      </div>
+    <div class="advg reveal">
+      <div class="a"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16v10H4z"/><path d="M4 11h16" stroke-linecap="round"/></svg></div><div><h3>Внедряется в ваш процесс</h3><p>Настраиваем систему под вашу воронку, роли и документы — а не подгоняем бизнес под чужой шаблон.</p></div></div>
+      <div class="a"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M9 8V6a3 3 0 0 1 6 0v2" stroke-linecap="round"/></svg></div><div><h3>ИИ обучен на реальных действиях</h3><p>Агенты на движке SITS AI учатся на том, как реально работают ваши сотрудники — и повторяют это.</p></div></div>
+      <div class="a"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke-linecap="round"/></svg></div><div><h3>Экспертиза живых внедренцев</h3><p>Наш специалист неделю работает у вас в офисе рядом с командой — обучает и доводит до запуска.</p></div></div>
+      <div class="a"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M6 21V9l6-4 6 4v12M10 21v-6h4v6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h3>Любая отрасль</h3><p>Услуги, торговля, производство, клиники, HoReCa. Уже автоматизировали стоматологию и спа-комплекс.</p></div></div>
     </div>
   </div>
 </section>
 
-<!-- TIERS -->
+<!-- TRACTION -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="left"><div class="sec-tag"><i></i><span>Нам уже доверяют</span></div><h2 class="big">Реальные бизнесы, а не обещания</h2></div>
+      <p class="desc">ETG — публичная CRM для стоматологий. La Coupelle — AI-администратор для спа и бань. И ещё десяток продуктов.</p>
+    </div>
+    <div class="trac reveal">
+      <div class="n"><div class="big">12+</div><div class="lbl">реализованных продуктов для бизнеса</div></div>
+      <div class="n"><div class="big">2</div><div class="lbl">бизнеса полностью автоматизированы под ключ</div></div>
+      <div class="n"><div class="big">от 800 000 ₸</div><div class="lbl">внедрение · фиксированная цена после Assessment</div></div>
+    </div>
+    <div class="logos reveal">
+      <span class="lg">ETG</span>
+      <span class="lg">LA&nbsp;COUPELLE</span>
+      <span class="lg gold">Fibonacci Control</span>
+      <span class="lg">Horecom</span>
+      <span class="lg">Interagent</span>
+      <span class="lg">Citytorg</span>
+      <span class="lg">PRO CERAMIC</span>
+      <span class="lg">Tengri Yurt</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
 <section class="section" id="tarify">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="left"><div class="sec-tag"><i></i><span>Как внедряем</span></div><h2>Три шага — от прототипа до полной автоматизации</h2></div>
-      <p class="desc">Начинаем с Assessment: прототип на ваших данных и фиксированная цена. Сумма Assessment засчитывается в проект при старте в течение 30 дней.</p>
+      <div class="left"><div class="sec-tag"><i></i><span>Тарифы</span></div><h2 class="big">Начните с прототипа — потом масштабируйте</h2></div>
+      <p class="desc">Assessment засчитывается в проект при старте в течение 30 дней. Вы ничем не рискуете.</p>
     </div>
-    <div class="tiers reveal">
-      <div class="tier">
-        <div class="th"><h3>Assessment</h3><span class="term">7 дней</span></div>
-        <div class="price">700 000 ₸</div>
-        <p style="color:var(--muted);font-size:13.5px;margin-top:10px;line-height:1.55">Интервью, baseline-метрики, прототип на ваших данных и план внедрения с фиксированной ценой.</p>
+    <!-- Assessment highlighted -->
+    <div class="assess reveal">
+      <div>
+        <div class="sec-tag" style="margin-bottom:10px"><i></i><span>Шаг 1 · без риска</span></div>
+        <h3>Assessment — прототип на ваших данных</h3>
+        <p>Интервью, baseline-метрики, прототип на ваших реальных процессах и план внедрения с фиксированной ценой.</p>
         <div class="note">Полностью засчитывается в деплой при старте в течение 30 дней.</div>
-        <div class="tcta"><a class="btn btn-line" href="https://wa.me/77774961358" target="_blank" rel="noopener" style="width:100%;justify-content:center">Начать с прототипа</a></div>
       </div>
-      <div class="tier">
+      <div class="rt">
+        <div class="term">7 дней</div>
+        <div class="price">700 000 ₸</div>
+        <a class="btn btn-primary magnetic" style="margin-top:14px" href="https://wa.me/77774961358" target="_blank" rel="noopener">Начать с прототипа</a>
+      </div>
+    </div>
+    <!-- 3 tiers -->
+    <div class="tiers3 reveal">
+      <div class="t3">
         <div class="th"><h3>Пилотный контур</h3><span class="term">4 недели</span></div>
         <div class="price">1 800 000 ₸</div>
         <div class="oper">разовый счёт · + 450 000 ₸/мес — Operate</div>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Приём заявок и КП/счета в одной системе</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Заявки и КП/счета в одной системе</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>ИИ-агент: черновики КП с 3-й недели</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Видно каждое действие каждого сотрудника</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Подключаем WhatsApp Business и 1С</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Видно каждое действие сотрудника</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>WhatsApp Business и 1С</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>До 15 сотрудников</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Внедренец неделю работает у вас в офисе</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Внедренец неделю в вашем офисе</li>
         </ul>
+        <div class="tcta"><a class="btn btn-line" style="width:100%;justify-content:center" href="https://wa.me/77774961358" target="_blank" rel="noopener">Начать с прототипа</a></div>
       </div>
-      <div class="tier feat">
-        <div class="th"><h3>Операционный контур</h3><span class="badge-feat">Чаще всего</span></div>
-        <div style="display:flex;align-items:baseline;gap:9px"><div class="price">3 800 000 ₸</div><span class="term">6–8 недель</span></div>
+      <div class="t3 feat">
+        <div class="th"><h3>Операционный контур</h3><span class="badge">Чаще всего</span></div>
+        <div style="display:flex;align-items:baseline;gap:9px;margin-top:14px"><div class="price" style="margin:0">3 800 000 ₸</div><span class="term">6–8 недель</span></div>
         <div class="oper">разовый счёт · + 750 000 ₸/мес — Operate</div>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>До 5 станций: заявки, КП, дебиторка, акты, закуп</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Два ИИ-агента готовят черновики документов</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Дашборд руководителя: весь бизнес на одном экране</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Два ИИ-агента готовят документы</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Дашборд руководителя: весь бизнес на экране</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>ЭСФ, телефония, почта, WhatsApp и 1С</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>До 25 сотрудников, роли и маршруты согласования</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>2 недели у вас, переносим историю за 12 месяцев</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>До 25 сотрудников, роли и согласования</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>2 недели у вас, история за 12 месяцев</li>
         </ul>
-        <div class="tcta"><a class="btn btn-primary magnetic" href="https://wa.me/77774961358" target="_blank" rel="noopener" style="width:100%;justify-content:center">Назначить звонок</a></div>
+        <div class="tcta"><a class="btn btn-primary magnetic" style="width:100%;justify-content:center" href="https://wa.me/77774961358" target="_blank" rel="noopener">Назначить звонок</a></div>
+      </div>
+      <div class="t3">
+        <div class="th"><h3>Выделенный контур</h3><span class="term">под ключ</span></div>
+        <div class="price">Индивидуально</div>
+        <div class="oper">кастомная настройка · Operate ×1.5</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Сложные процессы и несколько подразделений</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Выделенная команда внедрения</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Индивидуальные интеграции и SLA</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Без ограничений по числу сотрудников</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Приоритетная поддержка</li>
+        </ul>
+        <div class="tcta"><a class="btn btn-line" style="width:100%;justify-content:center" href="https://wa.me/77774961358" target="_blank" rel="noopener">Обсудить</a></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FINAL CTA -->
-<section class="section auto-final">
-  <div class="wrap" style="position:relative">
-    <div class="sec-tag reveal" style="justify-content:center;display:inline-flex"><i></i><span>Начнём</span></div>
-    <h2 class="reveal" style="margin-top:14px">Начните с Assessment за 7 дней —<br>увидите прототип на своих данных</h2>
-    <p class="reveal" style="color:var(--muted);font-size:17px;line-height:1.6;max-width:720px;margin:18px auto 0">Зафиксируем цену внедрения договором. Assessment засчитывается в проект — вы ничем не рискуете.</p>
-    <div class="reveal" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px">
-      <a class="btn btn-primary magnetic" href="https://wa.me/77774961358" target="_blank" rel="noopener">Написать в WhatsApp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-      <a class="btn btn-line" href="https://t.me/zhanmate" target="_blank" rel="noopener">Telegram @zhanmate</a>
+<!-- НАЧНИТЕ С ПРОТОТИПА (2 col CTA) -->
+<section class="section">
+  <div class="wrap">
+    <div class="proto reveal">
+      <div>
+        <div class="sec-tag" style="margin-bottom:14px"><i></i><span>Начнём</span></div>
+        <h2>Начните с прототипа на ваших данных — за 7 дней</h2>
+        <p>Опишите бизнес и пришлите пример заявок/процесса — покажем прототип и зафиксируем цену внедрения договором. Дальше решаете вы.</p>
+      </div>
+      <div class="opts">
+        <a class="opt" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a9 9 0 1 0 4.5 16.8L21 21l-1.2-4.5A9 9 0 0 0 12 3Z"/></svg></span>
+          <span><span class="k">Написать в WhatsApp</span><span class="v">+7 777 496 13 58</span></span>
+        </a>
+        <a class="opt" href="https://t.me/zhanmate" target="_blank" rel="noopener">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m22 3-9 9M22 3l-6 18-4-8-8-4 18-6Z" stroke-linejoin="round"/></svg></span>
+          <span><span class="k">Telegram</span><span class="v">@zhanmate</span></span>
+        </a>
+        <a class="opt" href="https://wa.me/77774961358" target="_blank" rel="noopener">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M8 2v4M16 2v4M3 10h18" stroke-linecap="round"/></svg></span>
+          <span><span class="k">Звонок 30 минут, онлайн</span><span class="v">Назначить время</span></span>
+        </a>
+      </div>
     </div>
   </div>
 </section>

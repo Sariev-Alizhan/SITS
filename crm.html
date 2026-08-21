@@ -579,8 +579,44 @@
       <button class="btn btn-ghost btn-sm icon-btn" id="themeBtn" title="Светлая / тёмная тема" aria-label="Тема"></button>
       <button class="btn btn-ghost btn-sm" id="changePassBtn" title="Сменить свой пароль"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3M17 6l3 3M15 8l2 2"/></svg> Пароль</button>
       <button class="btn btn-ghost btn-sm" id="logoutBtn">Выйти</button>
+      <button class="m-menu-btn" id="mMenuBtn" type="button" aria-label="Меню"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
     </div>
   </div>
+  <div class="m-menu" id="mMenu">
+    <div class="m-menu-panel">
+      <div class="m-menu-head"><b id="mMenuWho">Меню</b><button class="m-menu-x" id="mMenuClose" type="button">✕</button></div>
+      <div class="m-menu-nav" id="mMenuNav"></div>
+      <div class="m-menu-acts" id="mMenuActs"></div>
+    </div>
+  </div>
+  <style>
+    .m-menu-btn{display:none;width:42px;height:42px;border-radius:11px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer;align-items:center;justify-content:center;flex:0 0 auto}
+    .m-menu-btn svg{width:22px;height:22px}
+    .m-menu{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);display:none}
+    .m-menu.open{display:block}
+    .m-menu-panel{position:absolute;top:0;right:0;height:100%;width:min(320px,87vw);background:var(--surface);border-left:1px solid var(--line-2);box-shadow:-24px 0 70px -20px rgba(0,0,0,.6);display:flex;flex-direction:column;overflow-y:auto;animation:mSlide .28s ease}
+    @keyframes mSlide{from{transform:translateX(100%)}to{transform:none}}
+    .m-menu-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}
+    .m-menu-head b{font-size:16px}
+    .m-menu-x{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--dim);cursor:pointer;font-size:15px}
+    .m-menu-nav{padding:8px}
+    .m-menu-nav button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 14px;border:none;background:transparent;color:var(--fg);font-size:15px;border-radius:11px;cursor:pointer}
+    .m-menu-nav button.active{background:color-mix(in srgb,var(--gold) 15%,transparent);color:var(--gold);font-weight:600}
+    .m-menu-nav button:active{background:var(--surface-2)}
+    .m-menu-nav button svg{width:19px;height:19px;flex:0 0 auto}
+    .m-menu-acts{margin-top:auto;padding:12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+    .m-menu-acts button{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);border-radius:11px;font-size:14px;font-weight:600;cursor:pointer}
+    .m-menu-acts button.m-logout{color:#e2555f;border-color:#e2555f44}
+    @media(max-width:820px){
+      html,body{overflow-x:hidden}
+      #app{overflow-x:hidden}
+      .m-menu-btn{display:inline-flex}
+      .topbar{position:sticky;top:0;z-index:40}
+      .topbar .topbar-right>*:not(.m-menu-btn){display:none!important}
+      .tabs{display:none!important}
+      .topbar .brand b{font-size:16px}
+    }
+  </style>
 
   <div id="cloudBanner" style="display:none;margin:0;padding:11px 26px;background:color-mix(in srgb,var(--warn) 15%,var(--ink));border-bottom:1px solid color-mix(in srgb,var(--warn) 40%,transparent);color:#e6b48f;font-size:13px;text-align:center">
     ⚠ Облачное хранилище не подключено — сделки сохраняются <b>локально на этом устройстве</b>. Чтобы данные были общими для команды, подключите бесплатное хранилище (см. инструкцию).
@@ -1298,6 +1334,25 @@
   $('#pwaModal') && $('#pwaModal').addEventListener('click',e=>{ if(e.target.id==='pwaModal') closePWA(); });
   $('#pwaInstall') && $('#pwaInstall').addEventListener('click',async ()=>{ if(__pwaPrompt){ __pwaPrompt.prompt(); try{ const r=await __pwaPrompt.userChoice; if(r&&r.outcome==='accepted') closePWA(); }catch(_){} __pwaPrompt=null; } else { toast('Следуйте инструкции для вашего устройства выше','ok'); } });
   window.__openPWA=openPWA;
+
+  // ---------- Мобильное меню (бургер → выбор раздела + действия) ----------
+  function buildMobileMenu(){
+    const nav=$('#mMenuNav'); if(!nav) return;
+    nav.innerHTML='';
+    $$('.tab').forEach(t=>{ const b=document.createElement('button'); b.innerHTML=t.innerHTML; b.classList.toggle('active',t.classList.contains('active')); b.addEventListener('click',()=>{ closeMMenu(); t.click(); }); nav.appendChild(b); });
+    const acts=$('#mMenuActs'); if(acts){ acts.innerHTML=''; const mk=(label,cls,fn)=>{ const b=document.createElement('button'); b.textContent=label; if(cls) b.className=cls; b.addEventListener('click',()=>{ closeMMenu(); fn(); }); return b; };
+      if($('#teamBtn') && $('#teamBtn').style.display!=='none') acts.appendChild(mk('Команда и доступы','',()=>$('#teamBtn').click()));
+      acts.appendChild(mk('Сменить тему','',()=>$('#themeBtn').click()));
+      acts.appendChild(mk('Сменить пароль','',()=>$('#changePassBtn').click()));
+      acts.appendChild(mk('Выйти','m-logout',()=>$('#logoutBtn').click()));
+    }
+    const w=$('#mMenuWho'); if(w) w.textContent=(localStorage.getItem(KEY_MGR))||'Меню';
+  }
+  function openMMenu(){ buildMobileMenu(); $('#mMenu').classList.add('open'); lockScroll(true); }
+  function closeMMenu(){ $('#mMenu').classList.remove('open'); lockScroll(false); }
+  $('#mMenuBtn') && $('#mMenuBtn').addEventListener('click',openMMenu);
+  $('#mMenuClose') && $('#mMenuClose').addEventListener('click',closeMMenu);
+  $('#mMenu') && $('#mMenu').addEventListener('click',e=>{ if(e.target.id==='mMenu') closeMMenu(); });
 
   // ---------- API ----------
   async function api(method, body){

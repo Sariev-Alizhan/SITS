@@ -535,8 +535,8 @@ html[data-theme="light"]{
   --text:#171314;
   --muted:#6a6364;
   --faint:#716b6c;
-  --line:rgba(20,12,13,.1);
-  --line-2:rgba(20,12,13,.18);
+  --line:rgba(20,12,13,.05);
+  --line-2:rgba(20,12,13,.1);
   --red:#b31d22;
   --red-soft:rgba(179,29,34,.1);
   --shadow:0 30px 70px -44px rgba(80,20,25,.28);
@@ -875,8 +875,11 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 /* ——— Фирменный тёмно-золотой стиль Fibonacci Control (перекрывает красный акцент SITS в этой секции) ——— */
 #fibonacci{--fg-gold:#D2A24C;--fg-lit:#EFC97E;--fg-soft:rgba(210,162,76,.12);position:relative;overflow:hidden;
   background:radial-gradient(1100px 520px at 82% -12%,rgba(210,162,76,.11),transparent 58%),linear-gradient(180deg,#090c14,#0b1020 60%,#0a0d16);
-  border-top:1px solid rgba(210,162,76,.16);border-bottom:1px solid rgba(210,162,76,.16)}
+  }
 #fibonacci::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 12% 108%,rgba(210,162,76,.07),transparent 60%);pointer-events:none}
+/* Плавное растворение тёмной секции в фон страницы сверху и снизу — без жёсткой линии */
+#fibonacci::after{content:"";position:absolute;left:0;right:0;top:0;bottom:0;pointer-events:none;z-index:0;
+  background:linear-gradient(180deg,var(--bg),transparent 96px),linear-gradient(0deg,var(--bg),transparent 96px)}
 #fibonacci .wrap{position:relative;z-index:1}
 .fibo-brandbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:30px}
 .fibo-brandbar img{height:38px;width:auto;filter:drop-shadow(0 4px 18px rgba(210,162,76,.28))}

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>SITS — Автоматизация бизнеса</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=PT+Serif:wght@700&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  @page{size:1280px 720px;margin:0}
+  html,body{background:#000;font-family:'Inter',sans-serif}
+  :root{
+    --bg:#0c0d12;--card:#15161d;--card2:#191b23;--line:#282b36;--red:#e23744;--red2:#ff5a67;
+    --gold:#D2A24C;--gold2:#EFC97E;--ink:#f4f5f7;--mut:#9aa0ac;--mut2:#6a7080;--ok:#43d18a;
+  }
+  .s{position:relative;width:1280px;height:720px;overflow:hidden;background:var(--bg);color:var(--ink);page-break-after:always;padding:54px 64px;display:flex;flex-direction:column}
+  .s:last-child{page-break-after:auto}
+  h1{font-family:'Manrope',system-ui,'Segoe UI',sans-serif;font-weight:800;letter-spacing:-.025em;line-height:1.05}
+  h2{font-family:'Manrope',system-ui,'Segoe UI',sans-serif;font-weight:700;letter-spacing:-.015em}
+  h3{font-family:'Manrope',system-ui,'Segoe UI',sans-serif;font-weight:700}
+  .k{font-family:'Manrope',system-ui,'Segoe UI',sans-serif;font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--red2);margin-bottom:14px}
+  .k.g{color:var(--gold2)}
+  .mut{color:var(--mut)}.mut2{color:var(--mut2)}
+  .lead{font-size:15.5px;line-height:1.6;color:#d6d9df}
+  .foot{position:absolute;left:64px;right:64px;bottom:24px;display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:var(--mut2);border-top:1px solid var(--line);padding-top:12px}
+  .brand{font-family:'Manrope',system-ui,'Segoe UI',sans-serif;font-weight:800;color:#cfd3db;letter-spacing:.02em}
+  .logo{display:inline-flex;align-items:center;gap:11px}
+  .logo img{height:38px;width:auto;display:block}
+  .logo b{font-family:'Manrope',system-ui,'Segoe UI',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.02em;color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+  .grid{display:grid;gap:14px}
+  .chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:#dfe2e8}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--red);display:inline-block;flex:0 0 auto}
+  .ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(226,55,68,.12);border:1px solid rgba(226,55,68,.28);flex:0 0 auto}
+  .ico svg{width:22px;height:22px;stroke:#ff8f98}
+  .li{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;line-height:1.4;margin:7px 0;color:#d6d9df}
+  .li svg{width:16px;height:16px;stroke:var(--ok);flex:0 0 auto;margin-top:1px}
+  .price{font-family:'Manrope',system-ui,'Segoe UI',sans-serif;font-weight:800;letter-spacing:-.02em}
+  .word{font-family:'Manrope',system-ui,'Segoe UI',sans-serif;font-weight:800;letter-spacing:.02em}
+  .serif{font-family:'PT Serif',Georgia,serif;letter-spacing:.06em}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  td,th{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+  th{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut2);font-weight:700}
+  td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+  .glow{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+
+<!-- 1 TITLE -->
+<div class="s" style="justify-content:center">
+  <div class="glow" style="background:radial-gradient(820px 520px at 82% 4%,rgba(226,55,68,.22),transparent 60%),radial-gradient(620px 420px at 4% 108%,rgba(210,162,76,.10),transparent 60%)"></div>
+  <div style="position:relative">
+    <div class="logo" style="margin-bottom:30px"><img src="../brand/sits-mark-red.png" alt="SITS"/><b>SITS</b></div>
+    <div class="k">Sariyev IT Solutions · Автоматизация бизнеса</div>
+    <h1 style="font-size:52px;max-width:960px">Автоматизируем бизнес<br>под ключ — с ИИ-сотрудниками</h1>
+    <p class="lead" style="margin-top:20px;max-width:820px">
+      Собственная CRM-платформа <b style="color:var(--gold2)">Fibonacci Control</b>: заявки, КП, счета, дебиторка и документы в одной системе.
+      ИИ-агенты готовят черновики, WhatsApp Business и 1С подключены, руководитель видит весь бизнес на одном экране.
+    </p>
+    <div style="display:flex;align-items:center;gap:26px;margin-top:30px">
+      <div><div class="mut2" style="font-size:12px">Внедрение от</div><div class="price" style="font-size:40px;color:#fff">800 000 ₸</div></div>
+      <div style="width:1px;height:52px;background:var(--line)"></div>
+      <div class="lead" style="max-width:420px;font-size:14px">Договор и NDA · оплата поэтапно · фиксированная цена после диагностики · внедренец работает у вас в офисе.</div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">SARIYEV IT SOLUTIONS</span><span>Автоматизация бизнеса · Fibonacci Control</span></div>
+</div>
+
+<!-- 2 WHAT WE AUTOMATE -->
+<div class="s">
+  <div class="k">Что мы автоматизируем</div>
+  <h2 style="font-size:30px">Рутина съедает время и деньги. Мы её убираем.</h2>
+  <p class="mut" style="font-size:14px;margin-top:8px;max-width:900px">Заявки теряются в переписках, КП и счета готовятся вручную, руководитель не видит, кто что делает. Мы собираем это в одну систему с ИИ-агентами.</p>
+  <div class="grid" style="grid-template-columns:1fr 1fr 1fr;margin-top:22px;gap:14px">
+    <div class="card">
+      <div class="ico"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 5h18M3 12h18M3 19h12" stroke-linecap="round"/></svg></div>
+      <h3 style="font-size:16px;margin-top:12px">Заявки, КП и счета — в одном окне</h3>
+      <p class="mut" style="font-size:13px;margin-top:6px;line-height:1.5">Приём заявок со всех каналов, КП, счета, акты, дебиторка и закуп — единый поток без потерь.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6" stroke-linecap="round"/></svg></div>
+      <h3 style="font-size:16px;margin-top:12px">ИИ-агенты вместо рутины</h3>
+      <p class="mut" style="font-size:13px;margin-top:6px;line-height:1.5">Черновики КП и документов готовит ИИ на движке SITS AI — сотрудник только проверяет и отправляет.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16v12H4z"/><path d="M8 20h8M12 16v4" stroke-linecap="round"/></svg></div>
+      <h3 style="font-size:16px;margin-top:12px">Дашборд руководителя</h3>
+      <p class="mut" style="font-size:13px;margin-top:6px;line-height:1.5">Весь бизнес на одном экране: выручка, воронка, дебиторка, действия каждого сотрудника.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 4.5 16.8L21 21l-1.2-4.5A9 9 0 0 0 12 3Z"/></svg></div>
+      <h3 style="font-size:16px;margin-top:12px">WhatsApp Business + телефония</h3>
+      <p class="mut" style="font-size:13px;margin-top:6px;line-height:1.5">Клиент пишет в WhatsApp — заявка и переписка уже в системе. Плюс почта, ЭСФ и телефония.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 7h16v10H4z"/><path d="M4 11h16" stroke-linecap="round"/></svg></div>
+      <h3 style="font-size:16px;margin-top:12px">Интеграции: 1С, Kaspi, ЭСФ</h3>
+      <p class="mut" style="font-size:13px;margin-top:6px;line-height:1.5">Синхронизация с 1С, оплаты Kaspi, электронные счета-фактуры — без ручного переноса.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 4-3 7-7 9-4-2-7-5-7-9V7l7-4Z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 style="font-size:16px;margin-top:12px">Роли, маршруты, контроль</h3>
+      <p class="mut" style="font-size:13px;margin-top:6px;line-height:1.5">Права доступа, согласования и маршруты документов. Ничего не теряется, всё под контролем.</p>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">SARIYEV IT SOLUTIONS</span><span>02 · Что мы автоматизируем</span></div>
+</div>
+
+<!-- 3 TRUST WALL -->
+<div class="s">
+  <div class="k">Нам доверяют</div>
+  <h2 style="font-size:30px">Компании, которым мы уже сделали продукт</h2>
+  <div class="grid" style="grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px">
+    <div class="card" style="text-align:center;padding:22px 14px"><span class="word" style="font-size:19px">ETG</span><div class="mut2" style="font-size:11px;margin-top:5px">Стоматология · CRM</div></div>
+    <div class="card" style="text-align:center;padding:22px 14px"><span class="word" style="font-size:16px">LA&nbsp;COUPELLE</span><div class="mut2" style="font-size:11px;margin-top:5px">SPA · бани</div></div>
+    <div class="card" style="text-align:center;padding:22px 14px"><span class="word" style="font-size:19px;color:var(--gold2)">Fibonacci Control</span><div class="mut2" style="font-size:11px;margin-top:5px">Наша CRM-платформа</div></div>
+    <div class="card" style="text-align:center;padding:22px 14px"><span class="word" style="font-size:19px">Horecom</span><div class="mut2" style="font-size:11px;margin-top:5px">HoReCa-платформа</div></div>
+    <div class="card" style="text-align:center;padding:22px 14px"><span class="word" style="font-size:19px">Interagent</span><div class="mut2" style="font-size:11px;margin-top:5px">Недвижимость</div></div>
+    <div class="card" style="text-align:center;padding:22px 14px"><span class="word" style="font-size:19px">Citytorg</span><div class="mut2" style="font-size:11px;margin-top:5px">E-commerce</div></div>
+    <div class="card" style="text-align:center;padding:22px 14px"><span class="word" style="font-size:19px">RedPad Games</span><div class="mut2" style="font-size:11px;margin-top:5px">Игры</div></div>
+    <div class="card" style="text-align:center;padding:22px 14px"><span class="word" style="font-size:19px">PRO CERAMIC</span><div class="mut2" style="font-size:11px;margin-top:5px">Производство</div></div>
+    <div class="card" style="text-align:center;padding:22px 14px"><span class="word" style="font-size:19px">Tengri Yurt</span><div class="mut2" style="font-size:11px;margin-top:5px">Туризм</div></div>
+    <div class="card" style="text-align:center;padding:22px 14px"><span class="word" style="font-size:19px">Atelier57</span><div class="mut2" style="font-size:11px;margin-top:5px">Ателье · мода</div></div>
+    <div class="card" style="text-align:center;padding:22px 14px"><span class="word" style="font-size:19px">Red Flag</span><div class="mut2" style="font-size:11px;margin-top:5px">Сообщество</div></div>
+    <div class="card" style="text-align:center;padding:22px 14px"><span class="word" style="font-size:19px">FreelanceHub</span><div class="mut2" style="font-size:11px;margin-top:5px">Фриланс-платформа</div></div>
+  </div>
+  <div style="display:flex;gap:34px;margin-top:22px">
+    <div><span class="price" style="font-size:26px;color:#fff">12+</span> <span class="mut" style="font-size:13px">реализованных продуктов</span></div>
+    <div><span class="price" style="font-size:26px;color:#fff">2</span> <span class="mut" style="font-size:13px">полностью автоматизированных бизнеса</span></div>
+    <div><span class="price" style="font-size:26px;color:#fff">RU · KZ · EN</span> <span class="mut" style="font-size:13px">работаем на 3 языках</span></div>
+  </div>
+  <div class="foot"><span class="brand">SARIYEV IT SOLUTIONS</span><span>03 · Нам доверяют</span></div>
+</div>
+
+<!-- 4 CASE ETG -->
+<div class="s">
+  <div class="k">Кейс · полная автоматизация</div>
+  <div style="display:flex;align-items:baseline;gap:16px"><span class="word" style="font-size:38px">ETG</span><h2 style="font-size:26px;color:#d6d9df">Публичная CRM для стоматологических клиник</h2></div>
+  <div class="grid" style="grid-template-columns:1.15fr 1fr;gap:26px;margin-top:20px">
+    <div>
+      <p class="lead" style="font-size:15px">Полностью автоматизировали бизнес ETG и построили <b style="color:#fff">публичную CRM-систему для стоматологий</b> — готовый продукт, который клиники подключают под себя.</p>
+      <div style="margin-top:14px">
+        <div class="li"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>Онлайн-запись пациентов и расписание врачей</div>
+        <div class="li"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>Карты пациентов, история лечения и напоминания</div>
+        <div class="li"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>Учёт, финансы и аналитика клиники в одном месте</div>
+        <div class="li"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>Мультиклиника: система под несколько филиалов</div>
+        <div class="li"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>Роли: администратор, врач, руководитель</div>
+      </div>
+    </div>
+    <div class="card" style="background:var(--card2)">
+      <div class="k" style="margin-bottom:14px">Результат</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div><div class="price" style="font-size:30px;color:#fff">100%</div><div class="mut" style="font-size:12px">записей и карт — в системе, без бумаги</div></div>
+        <div><div class="price" style="font-size:30px;color:#fff">24/7</div><div class="mut" style="font-size:12px">онлайн-запись без звонков</div></div>
+        <div><div class="price" style="font-size:30px;color:var(--ok)">−ручной труд</div><div class="mut" style="font-size:12px">администраторы разгружены</div></div>
+        <div><div class="price" style="font-size:30px;color:#fff">SaaS</div><div class="mut" style="font-size:12px">публичный продукт для клиник</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">SARIYEV IT SOLUTIONS</span><span>04 · Кейс ETG</span></div>
+</div>
+
+<!-- 5 CASE LA COUPELLE -->
+<div class="s">
+  <div class="k">Кейс · автоматизация SPA и бань</div>
+  <div style="display:flex;align-items:baseline;gap:16px"><span class="word" style="font-size:30px">LA COUPELLE</span><h2 style="font-size:24px;color:#d6d9df">AI-администратор для спа и банных комплексов</h2></div>
+  <div class="grid" style="grid-template-columns:1.15fr 1fr;gap:26px;margin-top:20px">
+    <div>
+      <p class="lead" style="font-size:15px">Автоматизировали спа- и банный комплекс La&nbsp;Coupelle: <b style="color:#fff">AI отвечает гостям 24/7</b> в WhatsApp/Instagram, подбирает баню, создаёт бронь и присылает ссылку Kaspi на предоплату.</p>
+      <div style="margin-top:14px">
+        <div class="li"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>AI-менеджер: диалог с гостем → бронь → оплата Kaspi</div>
+        <div class="li"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>Бронирование: шахматка по баням, статусы, предоплаты</div>
+        <div class="li"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>Клиенты с RFM, воронка лидов, задачи команды</div>
+        <div class="li"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>Отзывы с 2ГИС/Google/Яндекс + ответы AI</div>
+        <div class="li"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>Дашборд на данных iiko, под своим брендом</div>
+      </div>
+    </div>
+    <div class="card" style="background:var(--card2)">
+      <div class="k" style="margin-bottom:14px">Что даёт бизнесу</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div><div class="price" style="font-size:30px;color:#fff">24/7</div><div class="mut" style="font-size:12px">гость получает ответ за минуту</div></div>
+        <div><div class="price" style="font-size:30px;color:var(--ok)">+брони</div><div class="mut" style="font-size:12px">AI доводит до предоплаты</div></div>
+        <div><div class="price" style="font-size:30px;color:#fff">1 окно</div><div class="mut" style="font-size:12px">все каналы и мессенджеры вместе</div></div>
+        <div><div class="price" style="font-size:22px;color:#ffb4bb">guestup.kz</div><div class="mut" style="font-size:12px">продукт работает вживую</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">SARIYEV IT SOLUTIONS</span><span>05 · Кейс La Coupelle</span></div>
+</div>
+
+<!-- 6 ENGAGEMENT TIERS -->
+<div class="s">
+  <div class="k">Как мы внедряем</div>
+  <h2 style="font-size:27px">Три шага — от прототипа до полной автоматизации</h2>
+  <div class="grid" style="grid-template-columns:0.82fr 1fr 1.05fr;gap:14px;margin-top:16px">
+    <!-- Диагностика -->
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><h3 style="font-size:17px">Диагностика</h3><span class="chip" style="padding:4px 10px;font-size:11px">7 дней</span></div>
+      <div class="price" style="font-size:26px;color:#fff;margin-top:10px">700 000 ₸</div>
+      <p class="mut" style="font-size:12.5px;margin-top:10px;line-height:1.5">Интервью, baseline-метрики, прототип на ваших данных и план внедрения с фиксированной ценой.</p>
+      <p style="font-size:12px;margin-top:10px;color:var(--ok);line-height:1.5">Полностью засчитывается в деплой при старте в течение 30 дней.</p>
+      <div style="flex:1"></div>
+      <div class="chip" style="justify-content:center;margin-top:14px;background:transparent;border-color:rgba(226,55,68,.5);color:#ff8f98">Начать с прототипа</div>
+    </div>
+    <!-- Pilot -->
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><h3 style="font-size:17px">Старт</h3><span class="chip" style="padding:4px 10px;font-size:11px">4 недели</span></div>
+      <div class="price" style="font-size:26px;color:#fff;margin-top:10px">1 800 000 ₸</div>
+      <div class="mut2" style="font-size:11.5px">разовый счёт · + 450 000 ₸/мес — Operate</div>
+      <div style="margin-top:10px">
+        <div class="li" style="font-size:12.5px;margin:5px 0">Приём заявок и КП/счета в одной системе</div>
+        <div class="li" style="font-size:12.5px;margin:5px 0">ИИ-агент: черновики КП с 3-й недели</div>
+        <div class="li" style="font-size:12.5px;margin:5px 0">Видно каждое действие каждого сотрудника</div>
+        <div class="li" style="font-size:12.5px;margin:5px 0">Подключаем WhatsApp Business и 1С</div>
+        <div class="li" style="font-size:12.5px;margin:5px 0">До 15 сотрудников</div>
+        <div class="li" style="font-size:12.5px;margin:5px 0">Внедренец неделю работает у вас в офисе</div>
+      </div>
+    </div>
+    <!-- Operational -->
+    <div class="card" style="display:flex;flex-direction:column;border-color:rgba(226,55,68,.5);background:linear-gradient(180deg,rgba(226,55,68,.07),var(--card))">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><h3 style="font-size:17px">Рост</h3><span class="chip" style="padding:4px 10px;font-size:11px;background:var(--red);border-color:transparent;color:#fff">Чаще всего</span></div>
+      <div style="display:flex;align-items:baseline;gap:8px;margin-top:10px"><div class="price" style="font-size:26px;color:#fff">3 800 000 ₸</div><span class="chip" style="padding:3px 9px;font-size:10.5px">6–8 недель</span></div>
+      <div class="mut2" style="font-size:11.5px">разовый счёт · + 750 000 ₸/мес — Operate</div>
+      <div style="margin-top:10px">
+        <div class="li" style="font-size:12.5px;margin:5px 0">До 5 станций: заявки, КП, дебиторка, акты, закуп</div>
+        <div class="li" style="font-size:12.5px;margin:5px 0">Два ИИ-агента готовят черновики документов</div>
+        <div class="li" style="font-size:12.5px;margin:5px 0">Дашборд руководителя: весь бизнес на одном экране</div>
+        <div class="li" style="font-size:12.5px;margin:5px 0">ЭСФ, телефония, почта, WhatsApp и 1С</div>
+        <div class="li" style="font-size:12.5px;margin:5px 0">До 25 сотрудников, роли и маршруты согласования</div>
+        <div class="li" style="font-size:12.5px;margin:5px 0">2 недели у вас, переносим историю за 12 месяцев</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">SARIYEV IT SOLUTIONS</span><span>06 · Внедрение</span></div>
+</div>
+
+<!-- 7 FULL PRICE -->
+<div class="s">
+  <div class="k">Полный прайс SITS</div>
+  <h2 style="font-size:28px">Не только автоматизация — весь спектр</h2>
+  <div class="grid" style="grid-template-columns:1fr 1fr;gap:26px;margin-top:16px">
+    <table>
+      <thead><tr><th>Сайты и AI</th><th class="n">Цена</th></tr></thead>
+      <tbody>
+        <tr><td>Лендинг (без / с фото и видео)</td><td class="n">150 / 200 тыс ₸</td></tr>
+        <tr><td>Лендинг + AI-консультант 24/7</td><td class="n">200 000 ₸</td></tr>
+        <tr><td>Лендинг + софт</td><td class="n">250 000 ₸</td></tr>
+        <tr><td>Лендинг + софт + AI</td><td class="n">400 000 ₸</td></tr>
+        <tr><td style="color:#fff;font-weight:700">Автоматизация бизнеса под ключ</td><td class="n" style="color:#fff">от 800 000 ₸</td></tr>
+        <tr><td>Мобильное приложение (iOS + Android)</td><td class="n">от 2 000 000 ₸</td></tr>
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th>Контент, реклама, поддержка</th><th class="n">Цена</th></tr></thead>
+      <tbody>
+        <tr><td>AI Content Creator (реклама, клипы)</td><td class="n">от 500 000 ₸</td></tr>
+        <tr><td>AI Love Story (видео-история)</td><td class="n">от 250 000 ₸</td></tr>
+        <tr><td>Настройка таргета (Instagram)</td><td class="n">от 30 000 ₸</td></tr>
+        <tr><td>Игры: веб / средние / крупные</td><td class="n">от 200 тыс ₸</td></tr>
+        <tr><td>Международные интеграции</td><td class="n">от 2 млн ₸/год +3%</td></tr>
+        <tr><td>Техподдержка (в месяц)</td><td class="n">50 / 150 тыс ₸</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card" style="margin-top:16px;background:var(--card2);display:flex;align-items:center;gap:14px">
+    <span class="dot"></span>
+    <span class="mut" style="font-size:13px">Условия: договор и NDA · оплата 50/50 · 30 дней бесплатных правок после запуска · бесплатная консультация 30 минут · гарантия цены.</span>
+  </div>
+  <div class="foot"><span class="brand">SARIYEV IT SOLUTIONS</span><span>07 · Прайс</span></div>
+</div>
+
+<!-- 8 CTA -->
+<div class="s" style="justify-content:center">
+  <div class="glow" style="background:radial-gradient(760px 460px at 20% 6%,rgba(226,55,68,.16),transparent 60%),radial-gradient(560px 380px at 96% 104%,rgba(210,162,76,.10),transparent 60%)"></div>
+  <div style="position:relative">
+    <div class="k">Начнём</div>
+    <h1 style="font-size:38px;max-width:1000px">Начните с диагностики за 7 дней —<br>увидите прототип на своих данных.</h1>
+    <p class="lead" style="margin-top:18px;max-width:900px">Зафиксируем цену внедрения договором. Диагностика полностью засчитывается в деплой при старте в течение 30 дней — вы ничем не рискуете.</p>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px;max-width:1000px">
+      <div class="card"><div class="mut2" style="font-size:12px">WhatsApp (основной канал)</div><div class="price" style="font-size:20px;color:#fff;margin-top:4px">+7 777 496 13 58</div></div>
+      <div class="card"><div class="mut2" style="font-size:12px">Telegram</div><div class="price" style="font-size:20px;color:#fff;margin-top:4px">@zhanmate</div></div>
+      <div class="card"><div class="mut2" style="font-size:12px">Instagram / сайт</div><div class="price" style="font-size:18px;color:#fff;margin-top:4px">@sariyev.it.solutions</div></div>
+    </div>
+    <p class="lead" style="margin-top:22px;color:var(--gold2);font-weight:600">Автоматизация бизнеса — от 800 000 ₸. Fibonacci Control by SITS.</p>
+  </div>
+  <div class="foot"><span class="brand">SARIYEV IT SOLUTIONS</span><span>Спасибо · sariyev.it.solutions</span></div>
+</div>
+
+</body>
+</html>

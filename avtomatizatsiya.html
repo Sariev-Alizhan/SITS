@@ -1435,20 +1435,17 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 .proto .opt .ic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--gold-soft);color:var(--gold-lit);flex:0 0 auto}
 .proto .opt .k{font-size:12px;color:var(--muted)}
 .proto .opt .v{font-family:var(--font-display);font-weight:600;font-size:16px;margin-top:1px;color:var(--text)}
-/* СПЛЭШ — большое лого SITS по центру первого экрана */
-.a-splash{min-height:calc(100vh - 8px);display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding-top:76px}
-.a-splash::before{content:"";position:absolute;inset:0;pointer-events:none;background:
-  radial-gradient(760px 500px at 50% 32%,rgba(226,55,68,.10),transparent 62%),
-  radial-gradient(520px 340px at 82% 84%,rgba(210,162,76,.09),transparent 60%)}
-.a-splash .wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:24px}
+/* ЗАСТАВКА — лого SITS на весь экран, плавно появляется, держится ~3с и растворяется, открывая контент */
+.a-splash{position:fixed;inset:0;z-index:3000;background:var(--bg);display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;will-change:opacity;animation:splashOut .85s cubic-bezier(.4,0,.2,1) 3s forwards}
+.a-splash.skip{animation:splashOut .5s ease forwards}
+@keyframes splashOut{to{opacity:0;visibility:hidden}}
+.a-splash::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(760px 500px at 50% 34%,rgba(226,55,68,.10),transparent 62%),radial-gradient(520px 340px at 82% 84%,rgba(210,162,76,.09),transparent 60%)}
+.a-splash .wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px;animation:splashIn .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes splashIn{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
 .splash-logo{display:inline-flex;align-items:center;gap:.08em;font-family:var(--font-logo);font-size:clamp(66px,13.5vw,158px);line-height:1;color:var(--text);pointer-events:none;letter-spacing:-.01em}
 .splash-logo .logo-mark{height:.9em;width:auto;display:block}
 .splash-tag{font-family:var(--font-display);font-weight:500;font-size:clamp(15px,1.7vw,21px);letter-spacing:.03em;color:var(--muted)}
-.splash-scroll{margin-top:12px;width:48px;height:48px;border:1px solid var(--glass-line);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);background:var(--surface);box-shadow:0 1px 3px rgba(20,12,13,.05);animation:splashb 2s ease-in-out infinite;transition:border-color .25s,color .25s}
-.splash-scroll:hover{border-color:rgba(197,138,43,.5);color:var(--gold-lit)}
-.splash-scroll svg{width:22px;height:22px}
-@keyframes splashb{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
-@media(max-width:900px){.a-splash{min-height:80vh}.splash-logo{font-size:clamp(54px,22vw,120px)}}
+@media(max-width:900px){.splash-logo{font-size:clamp(54px,22vw,120px)}}
 @media(max-width:900px){
   .a-hero .grid,.sys3,.advg,.trac,.tiers3,.assess,.proto{grid-template-columns:1fr}
   .assess .rt{text-align:left}
@@ -1554,11 +1551,10 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 <div class="auto">
 
 <!-- HERO -->
-<section class="a-splash">
+<section class="a-splash" aria-hidden="true">
   <div class="wrap">
     <div class="splash-logo" aria-label="SITS"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240"/>IT<img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240"/></div>
-    <p class="splash-tag reveal">Автоматизация бизнеса под ключ · Fibonacci Control</p>
-    <a class="splash-scroll" href="#kak" aria-label="Листайте вниз"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+    <p class="splash-tag">Автоматизация бизнеса под ключ · Fibonacci Control</p>
   </div>
 </section>
 
@@ -3202,29 +3198,17 @@ window.__formLoaded = Date.now();
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script>
-/* Сплэш: держим лого ~4с, затем плавно уезжаем к секции #kak. Отменяется, если пользователь сам скроллит. */
+/* Заставка: блокируем скролл, лого держится ~3с и растворяется, открывая контент. Клик или клавиша — пропустить. */
 (function(){
-  if (location.hash) return;
-  var target=document.getElementById('kak'); if(!target) return;
-  var cancelled=false;
-  function cancel(){ cancelled=true; off(); }
-  function off(){ ['wheel','touchstart','keydown','pointerdown'].forEach(function(e){ window.removeEventListener(e,cancel); }); }
-  ['wheel','touchstart','keydown','pointerdown'].forEach(function(e){ window.addEventListener(e,cancel,{passive:true}); });
-  setTimeout(function(){
-    if(cancelled||window.scrollY>40){ off(); return; }
-    off();
-    var startY=window.scrollY;
-    var targetY=Math.max(0, target.getBoundingClientRect().top + window.scrollY);
-    var dist=targetY-startY, dur=1200, t0=null;
-    function step(t){
-      if(cancelled) return;
-      if(t0===null)t0=t;
-      var p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,3);
-      window.scrollTo(0, startY+dist*e);
-      if(p<1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }, 4000);
+  var sp=document.querySelector('.a-splash'); if(!sp) return;
+  var body=document.body;
+  body.style.overflow='hidden';
+  function done(){ sp.style.display='none'; body.style.overflow=''; }
+  function skip(){ sp.classList.add('skip'); }
+  sp.addEventListener('click', skip);
+  window.addEventListener('keydown', skip, { once:true });
+  sp.addEventListener('animationend', function(ev){ if(ev.animationName==='splashOut') done(); });
+  setTimeout(function(){ body.style.overflow=''; }, 4400); /* страховка разблокировки */
 })();
 </script>
 </body>

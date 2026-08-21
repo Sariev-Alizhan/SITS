@@ -770,10 +770,13 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .hero-sub{color:var(--muted);font-size:clamp(17px,1.4vw,19px);line-height:1.55;max-width:440px}
 .hero-sub .em{color:var(--text);font-weight:500}
 .hero-actions{display:flex;align-items:center;gap:26px;flex-shrink:0}
-.hero-meta{display:flex;gap:0;margin-top:48px;border-top:1px solid var(--line);padding-top:24px;flex-wrap:wrap;
+.hero-meta{display:flex;gap:0;margin-top:48px;padding-top:24px;flex-wrap:wrap;
   opacity:0;animation:fade .6s var(--ease) .3s forwards}
-.hero-meta .m{padding-right:46px;margin-right:46px;border-right:1px solid var(--line)}
-.hero-meta .m:last-child{border-right:none;margin-right:0;padding-right:0}
+.hero-meta .m{position:relative;padding-right:46px;margin-right:46px}
+/* мягкий затухающий разделитель вместо жёсткой линии */
+.hero-meta .m:not(:last-child)::after{content:"";position:absolute;right:0;top:12%;height:76%;width:1px;
+  background:linear-gradient(180deg,transparent,var(--line-2),transparent)}
+.hero-meta .m:last-child{margin-right:0;padding-right:0}
 .hero-meta .mv{font-family:var(--font-display);font-weight:500;font-size:clamp(26px,3vw,34px);letter-spacing:-.02em;line-height:1}
 .hero-meta .ml{font-size:13px;color:var(--muted);margin-top:9px}
 
@@ -1318,11 +1321,11 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .kicker{margin-bottom:22px}
   .hero-lower{flex-direction:column;align-items:flex-start;gap:22px;margin-top:26px}
   /* Meta-row на мобилке — каждый блок на своей строке, чтобы длинные подписи не ломали сетку */
-  .hero-meta{display:flex;flex-direction:column;gap:14px;margin-top:28px;padding-top:18px;
-    border-top:1px solid var(--line)}
+  .hero-meta{display:flex;flex-direction:column;gap:18px;margin-top:28px;padding-top:18px}
   .hero-meta .m{padding:0;margin:0;border:none;min-width:0;
     display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline}
-  .hero-meta .m:not(:last-child){padding-bottom:14px;border-bottom:1px solid var(--line)}
+  .hero-meta .m::after{display:none} /* на мобилке вертикальный разделитель не нужен */
+  .hero-meta .m:not(:last-child){padding-bottom:0}
   .hero-meta .mv{font-size:clamp(20px,5.6vw,26px);white-space:nowrap}
   .hero-meta .ml{font-size:12.5px;margin-top:0;line-height:1.4}
   .foot-legal{grid-template-columns:1fr;gap:20px;padding:24px 22px;margin:28px 0 22px}

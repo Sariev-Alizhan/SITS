@@ -197,6 +197,18 @@
   .empty h3{font-family:var(--font-display);font-weight:500;font-size:18px;color:var(--fg)}
   .empty p{font-size:14px;max-width:320px;line-height:1.5}
   .empty .btn{margin-top:4px}
+  /* Премиальные пустые состояния: свечение + лёгкая левитация */
+  .empty .ei{animation:emFloat 5.5s ease-in-out infinite;box-shadow:0 12px 34px -12px rgba(210,162,76,.55)}
+  .empty .eimg{width:clamp(120px,18vw,168px);height:auto;margin-bottom:2px;animation:emFloat 6s ease-in-out infinite;
+    filter:drop-shadow(0 22px 44px rgba(0,0,0,.45)) drop-shadow(0 0 28px rgba(210,162,76,.32))}
+  @keyframes emFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+  /* Мягкий золотой акцент-орб в шапке дашборда */
+  #view-dashboard{position:relative}
+  .dash-head{position:relative;z-index:1}
+  .dash-orb{position:absolute;top:-14px;right:-6px;width:min(20vw,168px);pointer-events:none;z-index:0;opacity:.42;animation:emFloat 9s ease-in-out infinite}
+  .dash-orb img{display:block;width:100%;height:auto;filter:drop-shadow(0 0 34px rgba(210,162,76,.32))}
+  @media(max-width:760px){.dash-orb{width:120px;top:-8px;right:-8px;opacity:.3}}
+  @media(prefers-reduced-motion:reduce){.empty .ei,.empty .eimg,.dash-orb{animation:none!important}}
 
   /* КП generator */
   .kp-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:start}
@@ -657,6 +669,7 @@
   <!-- ---- DEALS ---- -->
   <!-- ---- СВОДКА (dashboard) ---- -->
   <div class="wrap view active" id="view-dashboard">
+    <div class="dash-orb" aria-hidden="true"><img src="/brand/3d/crm-orb-gold.webp" alt="" width="1000" height="1000" loading="lazy"></div>
     <div class="dash-head">
       <div>
         <h2 id="dashHello">Сводка</h2>
@@ -2015,7 +2028,7 @@
     if(!list.length){
       const isFiltered = filterStatus!=='all' || searchQ;
       box.innerHTML = `<div class="empty">
-        <div class="ei">${svg('<path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h4"/>')}</div>
+        ${isFiltered?`<div class="ei">${svg('<path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h4"/>')}</div>`:`<img class="eimg" src="/brand/3d/gold-inbox.webp" alt="" width="1000" height="519" loading="lazy">`}
         <h3>${isFiltered?'Ничего не найдено':'Пока нет сделок'}</h3>
         <p>${isFiltered?'Попробуйте изменить фильтр или поиск.':'Создайте первое коммерческое предложение — сделка появится здесь.'}</p>
         ${isFiltered?'':'<button class="btn btn-gold" id="emptyNew">+ Создать КП</button>'}

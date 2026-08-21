@@ -576,6 +576,7 @@
     <div class="topbar-right">
       <div class="who"><span class="av" id="whoAv">•</span>Менеджер: <b id="whoName">—</b></div>
       <button class="btn btn-ghost btn-sm" id="teamBtn" title="Команда и доступы" style="display:none"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg> Команда</button>
+      <button class="btn btn-ghost btn-sm icon-btn" id="pushBtn" title="Включить уведомления о сообщениях" aria-label="Уведомления"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
       <button class="btn btn-ghost btn-sm icon-btn" id="themeBtn" title="Светлая / тёмная тема" aria-label="Тема"></button>
       <button class="btn btn-ghost btn-sm" id="changePassBtn" title="Сменить свой пароль"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3M17 6l3 3M15 8l2 2"/></svg> Пароль</button>
       <button class="btn btn-ghost btn-sm" id="logoutBtn">Выйти</button>
@@ -1335,6 +1336,25 @@
   $('#pwaInstall') && $('#pwaInstall').addEventListener('click',async ()=>{ if(__pwaPrompt){ __pwaPrompt.prompt(); try{ const r=await __pwaPrompt.userChoice; if(r&&r.outcome==='accepted') closePWA(); }catch(_){} __pwaPrompt=null; } else { toast('Следуйте инструкции для вашего устройства выше','ok'); } });
   window.__openPWA=openPWA;
 
+  // ---------- Push-уведомления (клиент ответил → уведомление менеджеру) ----------
+  const VAPID_PUBLIC='BOy_IEPZjn5mKQrt-EBPtWW-vZoyjySmZo6oCujOxOsgi2YkntUKKZ3ciF8uEkYFyieMFQTiythjpc99W-Vxdcs';
+  function b64toU8(s){ const pad='='.repeat((4-s.length%4)%4); const b=(s+pad).replace(/-/g,'+').replace(/_/g,'/'); const raw=atob(b); const u=new Uint8Array(raw.length); for(let i=0;i<raw.length;i++) u[i]=raw.charCodeAt(i); return u; }
+  async function enablePush(silent){
+    try{
+      if(!('serviceWorker' in navigator) || !('PushManager' in window)){ if(!silent) toast('Уведомления не поддерживаются этим устройством','err'); return; }
+      let perm=Notification.permission;
+      if(perm==='default' && !silent) perm=await Notification.requestPermission();
+      if(perm!=='granted'){ if(!silent) toast('Разрешите уведомления в настройках браузера','err'); return; }
+      const reg=await navigator.serviceWorker.ready;
+      let sub=await reg.pushManager.getSubscription();
+      if(!sub) sub=await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey:b64toU8(VAPID_PUBLIC) });
+      await fetch('/api/crm-users',{method:'POST',headers:{'Content-Type':'application/json','x-crm-login':LOGIN,'x-crm-pass':PASS},body:JSON.stringify({action:'push_subscribe',sub:sub.toJSON()})});
+      if(!silent) toast('Уведомления включены — сообщения клиентов будут приходить','ok');
+    }catch(e){ if(!silent) toast('Не удалось включить: '+e.message,'err'); }
+  }
+  window.__enablePush=enablePush;
+  $('#pushBtn') && $('#pushBtn').addEventListener('click',()=>enablePush(false));
+
   // ---------- Мобильное меню (бургер → выбор раздела + действия) ----------
   function buildMobileMenu(){
     const nav=$('#mMenuNav'); if(!nav) return;
@@ -1342,6 +1362,7 @@
     $$('.tab').forEach(t=>{ const b=document.createElement('button'); b.innerHTML=t.innerHTML; b.classList.toggle('active',t.classList.contains('active')); b.addEventListener('click',()=>{ closeMMenu(); t.click(); }); nav.appendChild(b); });
     const acts=$('#mMenuActs'); if(acts){ acts.innerHTML=''; const mk=(label,cls,fn)=>{ const b=document.createElement('button'); b.textContent=label; if(cls) b.className=cls; b.addEventListener('click',()=>{ closeMMenu(); fn(); }); return b; };
       if($('#teamBtn') && $('#teamBtn').style.display!=='none') acts.appendChild(mk('Команда и доступы','',()=>$('#teamBtn').click()));
+      acts.appendChild(mk('Включить уведомления','',()=>enablePush(false)));
       acts.appendChild(mk('Сменить тему','',()=>$('#themeBtn').click()));
       acts.appendChild(mk('Сменить пароль','',()=>$('#changePassBtn').click()));
       acts.appendChild(mk('Выйти','m-logout',()=>$('#logoutBtn').click()));
@@ -1384,6 +1405,7 @@
     renderDeals();
     loadDashboard();
     try{ if(!localStorage.getItem('sits_crm_pwa_seen') && typeof pwaInstalled==='function' && !pwaInstalled()){ setTimeout(()=>{ if(window.__openPWA) window.__openPWA(); }, 1500); } }catch(_){}
+    try{ if('Notification' in window && Notification.permission==='granted' && window.__enablePush){ setTimeout(()=>window.__enablePush(true),2500); } }catch(_){}
   }
   function logout(){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); PASS=''; LOGIN=''; location.reload(); }
 

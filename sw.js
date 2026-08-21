@@ -4,7 +4,7 @@
    Versioned cache name; old caches purged on activate.
    Bypass: ?nosw=1 query param tells SW to skip caching for that request. */
 
-const CACHE = 'sits-v70';
+const CACHE = 'sits-v71';
 
 /* Файлы, которые точно нужны для офлайн-первой загрузки */
 const PRECACHE = [
@@ -89,6 +89,33 @@ self.addEventListener('fetch', (event) => {
         return res;
       }).catch(() => cached);
       return cached || networkFetch;
+    })
+  );
+});
+
+/* ── Web Push: уведомления менеджерам CRM ── */
+self.addEventListener('push', (e) => {
+  let d = {};
+  try { d = e.data ? e.data.json() : {}; } catch (_) { d = { title: 'SITS CRM', body: (e.data && e.data.text()) || '' }; }
+  const title = d.title || 'Новое сообщение';
+  const opts = {
+    body: d.body || '',
+    icon: '/brand/apple-touch-icon.png',
+    badge: '/brand/favicon.png',
+    tag: d.tag || 'wa-msg',
+    data: { url: d.url || '/crm' },
+    vibrate: [90, 40, 90],
+    renotify: true,
+  };
+  e.waitUntil(self.registration.showNotification(title, opts));
+});
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || '/crm';
+  e.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
+      for (const c of list) { if (c.url.includes('/crm')) { c.focus(); if ('navigate' in c) c.navigate(url); return; } }
+      return clients.openWindow(url);
     })
   );
 });

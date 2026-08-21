@@ -56,9 +56,26 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: false, error: 'Неверный логин или пароль' });
     }
 
-    // ── Действия для админов ──
+    // ── Требуют авторизации ──
     const me = await authUser(req);
     if (!me) return res.status(401).json({ ok: false, error: 'Нужна авторизация' });
+
+    // Подписка на push-уведомления (любой залогиненный менеджер)
+    if (action === 'push_subscribe') {
+      const sub = body.sub || {};
+      if (!sub.endpoint || !sub.keys || !sub.keys.p256dh || !sub.keys.auth) return res.status(400).json({ ok: false, error: 'Некорректная подписка' });
+      const manager = me.name || me.login;
+      try { await authDb.remove('push_subs', `endpoint=eq.${encodeURIComponent(sub.endpoint)}`); } catch {}
+      await authDb.insert('push_subs', { manager, endpoint: sub.endpoint, p256dh: sub.keys.p256dh, auth: sub.keys.auth, created_at: new Date().toISOString() });
+      return res.status(200).json({ ok: true });
+    }
+    if (action === 'push_unsubscribe') {
+      const ep = String(body.endpoint || '');
+      if (ep) { try { await authDb.remove('push_subs', `endpoint=eq.${encodeURIComponent(ep)}`); } catch {} }
+      return res.status(200).json({ ok: true });
+    }
+
+    // ── Действия только для админов ──
 
     if (action === 'list') {
       if (!isAdmin(me)) return res.status(403).json({ ok: false, error: 'Только для админов' });

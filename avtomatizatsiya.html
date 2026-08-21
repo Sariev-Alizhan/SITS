@@ -1445,6 +1445,10 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 .splash-logo{display:inline-flex;align-items:center;gap:.08em;font-family:var(--font-logo);font-size:clamp(66px,13.5vw,158px);line-height:1;color:var(--text);pointer-events:none;letter-spacing:-.01em}
 .splash-logo .logo-mark{height:.9em;width:auto;display:block}
 .splash-tag{font-family:var(--font-display);font-weight:500;font-size:clamp(15px,1.7vw,21px);letter-spacing:.03em;color:var(--muted)}
+.splash-bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:color-mix(in srgb,var(--text) 8%,transparent);overflow:hidden}
+.splash-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff5a67,var(--red));box-shadow:0 0 14px rgba(226,55,68,.55);animation:splashLoad 3s cubic-bezier(.35,0,.25,1) forwards}
+.a-splash.skip .splash-bar i{animation-duration:.5s}
+@keyframes splashLoad{to{width:100%}}
 @media(max-width:900px){.splash-logo{font-size:clamp(54px,22vw,120px)}}
 @media(max-width:900px){
   .a-hero .grid,.sys3,.advg,.trac,.tiers3,.assess,.proto{grid-template-columns:1fr}
@@ -1556,6 +1560,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
     <div class="splash-logo" aria-label="SITS"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240"/>IT<img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240"/></div>
     <p class="splash-tag">Автоматизация бизнеса под ключ · Fibonacci Control</p>
   </div>
+  <div class="splash-bar" aria-hidden="true"><i></i></div>
 </section>
 
 <!-- СИСТЕМА ПОД ВАШ БИЗНЕС -->

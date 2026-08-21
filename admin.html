@@ -144,7 +144,7 @@
     if (!confirm('Удалить заявку «' + name + '»? Это действие необратимо.')) return;
     btn.disabled = true;
     try {
-      const r = await fetch('/api/lead-delete?key=' + encodeURIComponent(PASS), {
+      const r = await fetch('/api/leads?action=delete&key=' + encodeURIComponent(PASS), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id })
@@ -166,7 +166,7 @@
     const next = STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur) + 1) % STATUS_CYCLE.length];
     badge.classList.add('busy');
     try {
-      const r = await fetch('/api/lead-status?key=' + encodeURIComponent(PASS), {
+      const r = await fetch('/api/leads?action=status&key=' + encodeURIComponent(PASS), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, status: next })

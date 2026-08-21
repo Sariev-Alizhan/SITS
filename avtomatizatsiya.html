@@ -3000,15 +3000,18 @@ window.__formLoaded = Date.now();
 
 <!-- Vercel Web Analytics + Speed Insights через ESM — версии залочены от supply-chain.
      При обновлении нужно вручную сменить версию здесь. -->
-<script type="module">
-  try {
-    const { inject } = await import('https://esm.sh/@vercel/analytics@1.5.0');
-    inject();
-  } catch (e) { /* analytics not critical */ }
-  try {
-    const { injectSpeedInsights } = await import('https://esm.sh/@vercel/speed-insights@2.0.0');
-    injectSpeedInsights();
-  } catch (e) { /* speed insights not critical */ }
+<script>
+/* Согласие на cookie — ядро (определяем ДО аналитики) */
+(function(){var K='sits-cookie-consent',s=null;try{s=localStorage.getItem(K)}catch(e){}
+window.sitsConsent=s;window.__sccQ=window.__sccQ||[];
+window.onSitsConsentAll=function(fn){if(window.sitsConsent==='all'){try{fn()}catch(e){}}else{window.__sccQ.push(fn)}};})();
+</script>
+<script>
+/* Vercel Web Analytics + Speed Insights — грузим ТОЛЬКО при согласии «Принять все». Версии залочены от supply-chain. */
+window.onSitsConsentAll(function(){
+  import('https://esm.sh/@vercel/analytics@1.5.0').then(function(m){m.inject()}).catch(function(){});
+  import('https://esm.sh/@vercel/speed-insights@2.0.0').then(function(m){m.injectSpeedInsights()}).catch(function(){});
+});
 </script>
 
 <!-- Service Worker: офлайн-поддержка + cache static.
@@ -3154,8 +3157,9 @@ window.__formLoaded = Date.now();
 </script>
 
 <!-- Vercel Web Analytics (включить в Dashboard → Analytics; до включения запрос тихо 404-ит) -->
-<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
-<script defer src="/_vercel/insights/script.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+/* Vercel insights-скрипт — только при согласии «Принять все». */
+window.onSitsConsentAll(function(){var s=document.createElement('script');s.defer=true;s.src='/_vercel/insights/script.js';document.head.appendChild(s);});</script>
 <script>
 /* Заставка: блокируем скролл, лого держится ~3с и растворяется, открывая контент. Клик или клавиша — пропустить. */
 (function(){
@@ -3170,5 +3174,77 @@ window.__formLoaded = Date.now();
   setTimeout(function(){ body.style.overflow=''; }, 4400); /* страховка разблокировки */
 })();
 </script>
+<!-- ============ SITS · Cookie consent ============ -->
+<div id="scc" class="scc" role="dialog" aria-label="Cookie">
+  <div class="scc-card">
+    <div class="scc-row">
+      <span class="scc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-4-4 4 4 0 0 1-4-4 6 6 0 0 0-2-2Z"/><circle cx="9" cy="10.5" r="1"/><circle cx="14.5" cy="14" r="1"/><circle cx="10" cy="15" r=".7"/><circle cx="15.5" cy="9" r=".7"/></svg></span>
+      <div class="scc-txt">
+        <div class="scc-title"></div>
+        <p class="scc-desc"></p>
+      </div>
+    </div>
+    <div class="scc-acts">
+      <button type="button" class="scc-btn scc-ghost" data-cc="essential"></button>
+      <button type="button" class="scc-btn scc-solid" data-cc="all"></button>
+    </div>
+    <a class="scc-link" href="/privacy"></a>
+  </div>
+</div>
+<style>
+  .scc{position:fixed;left:16px;right:16px;bottom:16px;z-index:9000;display:none;font-family:var(--font-body,'Manrope',system-ui,sans-serif)}
+  .scc.show .scc-card{transform:none;opacity:1}
+  .scc-card{margin:0 auto;max-width:440px;background:var(--surface,#141112);color:var(--text,#f4f1f1);border:1px solid var(--line-2,rgba(255,255,255,.14));border-radius:22px;padding:20px 20px 16px;box-shadow:0 26px 70px -30px rgba(0,0,0,.8);transform:translateY(22px);opacity:0;transition:transform .45s cubic-bezier(.22,.61,.36,1),opacity .45s}
+  .scc-row{display:flex;gap:13px;align-items:flex-start}
+  .scc-ic{flex:none;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--red-soft,rgba(226,55,68,.14));color:var(--red,#e23744)}
+  .scc-title{font-weight:800;font-size:16px;margin-bottom:4px;letter-spacing:-.01em}
+  .scc-desc{margin:0;font-size:13.5px;line-height:1.5;color:var(--muted,#a39d9e)}
+  .scc-acts{display:flex;gap:10px;margin-top:15px}
+  .scc-btn{flex:1;border-radius:13px;padding:11px 14px;font-size:14px;font-weight:700;cursor:pointer;border:1px solid transparent;font-family:inherit;transition:transform .12s ease,background .2s,border-color .2s,color .2s}
+  .scc-btn:active{transform:scale(.97)}
+  .scc-ghost{background:transparent;border-color:var(--line-2,rgba(255,255,255,.16));color:var(--text,#f4f1f1)}
+  .scc-ghost:hover{border-color:var(--red,#e23744);color:var(--red,#e23744)}
+  .scc-solid{background:var(--red,#e23744);color:#fff}
+  .scc-solid:hover{filter:brightness(1.07)}
+  .scc-link{display:inline-block;margin-top:12px;font-size:12.5px;color:var(--faint,#8f8889);text-decoration:underline;text-underline-offset:2px}
+  .scc-link:hover{color:var(--red,#e23744)}
+  @media(max-width:480px){.scc{left:10px;right:10px;bottom:10px}.scc-acts{flex-direction:column-reverse}}
+</style>
+<script>
+(function(){
+  var KEY='sits-cookie-consent';
+  var el=document.getElementById('scc'); if(!el) return;
+  var stored=null; try{stored=localStorage.getItem(KEY);}catch(e){}
+  window.__sccQ=window.__sccQ||[];
+  if(typeof window.onSitsConsentAll!=='function'){
+    window.sitsConsent=stored;
+    window.onSitsConsentAll=function(fn){ if(window.sitsConsent==='all'){try{fn();}catch(e){}} else {window.__sccQ.push(fn);} };
+  }
+  var lang=document.documentElement.getAttribute('data-lang');
+  if(!lang){try{lang=localStorage.getItem('sits-lang');}catch(e){}}
+  if(lang==='kz')lang='kk'; if(['ru','en','kk'].indexOf(lang)<0)lang='ru';
+  var T={
+    ru:{t:'Мы используем cookie',d:'Файлы cookie помогают сайту работать и делают его удобнее. Аналитику включаем только с вашего согласия.',all:'Принять все',ess:'Только необходимые',more:'Политика конфиденциальности'},
+    en:{t:'We use cookies',d:'Cookies keep the site working and make it better. Analytics runs only with your consent.',all:'Accept all',ess:'Essential only',more:'Privacy Policy'},
+    kk:{t:'Біз cookie қолданамыз',d:'Cookie сайттың жұмысын қамтамасыз етеді әрі оны ыңғайлы етеді. Аналитиканы тек сіздің келісіміңізбен қосамыз.',all:'Барлығын қабылдау',ess:'Тек қажеттілері',more:'Құпиялылық саясаты'}
+  }[lang];
+  el.querySelector('.scc-title').textContent=T.t;
+  el.querySelector('.scc-desc').textContent=T.d;
+  el.querySelector('.scc-solid').textContent=T.all;
+  el.querySelector('.scc-ghost').textContent=T.ess;
+  el.querySelector('.scc-link').textContent=T.more;
+  function decide(v){
+    try{localStorage.setItem(KEY,v);localStorage.setItem(KEY+'-ts',String(Date.now()));}catch(e){}
+    window.sitsConsent=v;
+    el.classList.remove('show');
+    setTimeout(function(){el.style.display='none';},450);
+    if(v==='all'){ (window.__sccQ||[]).forEach(function(fn){try{fn();}catch(e){}}); window.__sccQ=[]; }
+    try{window.dispatchEvent(new CustomEvent('sits-consent',{detail:v}));}catch(e){}
+  }
+  el.querySelectorAll('[data-cc]').forEach(function(b){b.addEventListener('click',function(){decide(b.getAttribute('data-cc'));});});
+  if(!stored){ el.style.display='block'; setTimeout(function(){el.classList.add('show');},1400); }
+})();
+</script>
+<!-- ============ /SITS · Cookie consent ============ -->
 </body>
 </html>

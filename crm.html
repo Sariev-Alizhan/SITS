@@ -1417,8 +1417,22 @@
     if(role==='admin'||role==='super_admin'){ const tb=$('#teamBtn'); if(tb) tb.style.display=''; }
     renderDeals();
     loadDashboard();
-    try{ if(!localStorage.getItem('sits_crm_pwa_seen') && typeof pwaInstalled==='function' && !pwaInstalled()){ setTimeout(()=>{ if(window.__openPWA) window.__openPWA(); }, 1500); } }catch(_){}
-    try{ if('Notification' in window && Notification.permission==='granted' && window.__enablePush){ setTimeout(()=>window.__enablePush(true),2500); } }catch(_){}
+    requestAllPermissions();
+    try{ if(!localStorage.getItem('sits_crm_pwa_seen') && typeof pwaInstalled==='function' && !pwaInstalled()){ setTimeout(()=>{ if(window.__openPWA) window.__openPWA(); }, 2200); } }catch(_){}
+  }
+  // При входе в CRM сразу запрашиваем всё нужное: уведомления (push) + постоянное офлайн-хранилище.
+  function requestAllPermissions(){
+    // 1) Постоянное хранилище — чтобы кэш CRM/офлайн не вычищался (без системного диалога).
+    try{ if(navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(()=>{}); }catch(_){}
+    // 2) Уведомления о сообщениях клиентов — просим системное разрешение сразу.
+    try{
+      if('Notification' in window){
+        if(Notification.permission==='granted'){ if(window.__enablePush) setTimeout(()=>window.__enablePush(true),800); }
+        else if(Notification.permission==='default'){
+          setTimeout(()=>{ try{ Notification.requestPermission().then(p=>{ if(p==='granted' && window.__enablePush) window.__enablePush(true); }); }catch(_){} }, 700);
+        }
+      }
+    }catch(_){}
   }
   function logout(){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); PASS=''; LOGIN=''; location.reload(); }
 

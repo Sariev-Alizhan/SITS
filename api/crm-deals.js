@@ -10,7 +10,7 @@ import { authUser } from './_crm-auth.js';
 import { db, dbReady } from './_db.js';
 
 const ALLOWED_ORIGINS = [
-  'https://sits-eta.vercel.app',
+  'https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app',
 ];
 
 const STATUSES = new Set(['new', 'in_progress', 'kp_sent', 'invoice', 'won', 'lost']);

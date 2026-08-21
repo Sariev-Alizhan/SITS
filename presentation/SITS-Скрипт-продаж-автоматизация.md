@@ -253,7 +253,7 @@
 
 **Условия:** договор и NDA · оплата поэтапно · фиксированная цена после Диагностика · гарантия цены.
 
-**Контакты:** WhatsApp +7 777 496 13 58 · Telegram @zhanmate · Instagram @sariyev.it.solutions
+**Контакты:** Сайт sariyev.com · WhatsApp +7 777 496 13 58 · Telegram @zhanmate · Instagram @sariyev.it.solutions
 
 ---
 

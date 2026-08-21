@@ -21,7 +21,7 @@ import { dirname, join } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
-const SITE = 'https://sits-eta.vercel.app';
+const SITE = 'https://sariyev.com';
 const LANG_PATH = { ru: '/', en: '/en', kk: '/kz' };
 const OUT_FILE = { en: 'en.html', kk: 'kz.html' };
 

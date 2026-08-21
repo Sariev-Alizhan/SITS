@@ -7,7 +7,7 @@ import { authUser } from './_crm-auth.js';
 import { db, dbReady } from './_db.js';
 import crypto from 'node:crypto';
 
-const ALLOWED_ORIGINS = ['https://sits-eta.vercel.app'];
+const ALLOWED_ORIGINS = ['https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app'];
 const str = (v, m = 4000) => String(v == null ? '' : v).slice(0, m);
 const fromRow = (r) => ({ id: r.id, author: r.author, text: r.text, pinned: !!r.pinned, createdAt: r.created_at });
 

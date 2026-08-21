@@ -2,7 +2,7 @@
 
 Производственный сайт IT-студии полного цикла + CRM для команды + AI-консультант + маркетинговый инструментарий.
 
-**Прод:** [https://sits-eta.vercel.app](https://sits-eta.vercel.app)
+**Прод:** [https://sariyev.com](https://sariyev.com)
 
 ## Что это
 

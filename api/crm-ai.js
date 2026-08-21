@@ -7,7 +7,7 @@
 import { rateLimit, getClientIp, checkOrigin, readBody } from './_security.js';
 import { authUser } from './_crm-auth.js';
 
-const ALLOWED_ORIGINS = ['https://sits-eta.vercel.app'];
+const ALLOWED_ORIGINS = ['https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app'];
 
 const CATALOG_HINT = `Ориентиры цен (₸; синхронизированы с прайсом сайта; можно корректировать под объём):
 Лендинг 150000; Лендинг с фото/видео 200000; Лендинг+AI 200000; Лендинг+софт 250000; Лендинг+софт+AI 400000; Автоматизация бизнеса под ключ 1000000;

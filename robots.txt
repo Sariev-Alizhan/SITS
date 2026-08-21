@@ -7,8 +7,8 @@ Disallow: /crm.html
 Disallow: /api/
 
 # Поисковикам — карты сайта (страницы + изображения)
-Sitemap: https://sits-eta.vercel.app/sitemap.xml
-Sitemap: https://sits-eta.vercel.app/sitemap-images.xml
+Sitemap: https://sariyev.com/sitemap.xml
+Sitemap: https://sariyev.com/sitemap-images.xml
 
 # AI-краулеры: запрещаем сбор контента для тренировки моделей
 User-agent: GPTBot

@@ -196,7 +196,7 @@ h1 .dot{color:var(--red)}
         <div class="bs">${t.sub.split('—')[1] ? t.sub.split('— ')[1] : t.sub}</div>
       </div>
     </div>
-    <div class="site-pill"><i></i>sits-eta.vercel.app</div>
+    <div class="site-pill"><i></i>sariyev.com</div>
   </div>
   <div class="z">
     <h1>${t.h1}</h1>
@@ -222,7 +222,7 @@ h1 .dot{color:var(--red)}
       <div class="c-row"><div class="c-ico">${MAIL_ICON}</div><div><div class="c-k">Email</div><div class="c-v">raimzhan1907@gmail.com</div></div></div>
       <div class="c-row"><div class="c-ico">${IG_ICON}</div><div><div class="c-k">Instagram</div><div class="c-v">@sariyev.it.solutions</div></div></div>
     </div>
-    <div class="qr"><div class="box"><img src="${qr('https://sits-eta.vercel.app/price')}" alt="QR" /></div><div class="cap">${t.qrSite}</div></div>
+    <div class="qr"><div class="box"><img src="${qr('https://sariyev.com/price')}" alt="QR" /></div><div class="cap">${t.qrSite}</div></div>
     <div class="qr"><div class="box"><img src="${qr('https://wa.me/77774961358?text=' + t.waMsg)}" alt="QR" /></div><div class="cap">${t.qrWa}</div></div>
   </div>
   <div class="z foot">

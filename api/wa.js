@@ -5,7 +5,7 @@ import { rateLimit, getClientIp, checkOrigin, readBody } from './_security.js';
 import { authUser } from './_crm-auth.js';
 import { db, dbReady } from './_db.js';
 
-const ALLOWED_ORIGINS = ['https://sits-eta.vercel.app'];
+const ALLOWED_ORIGINS = ['https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app'];
 const STAGES = ['new', 'dialog', 'qualified', 'quote', 'waiting_payment', 'won', 'lost'];
 
 export default async function handler(req, res) {

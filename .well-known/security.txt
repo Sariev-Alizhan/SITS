@@ -1,5 +1,5 @@
 Contact: mailto:raimzhan1907@gmail.com
-Contact: https://sits-eta.vercel.app/#contact
+Contact: https://sariyev.com/#contact
 Expires: 2027-07-04T00:00:00.000Z
 Preferred-Languages: ru, en, kk
-Canonical: https://sits-eta.vercel.app/.well-known/security.txt
+Canonical: https://sariyev.com/.well-known/security.txt

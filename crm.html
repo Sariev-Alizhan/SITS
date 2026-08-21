@@ -526,6 +526,21 @@
     <input type="password" id="pass" name="fc_key_x" placeholder="••••••••" autocomplete="new-password" autocapitalize="none" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" />
     <button class="btn btn-gold" type="submit" id="loginBtn">Войти</button>
     <div class="err-msg" id="loginErr"></div>
+    <div style="margin-top:14px;text-align:center;font-size:13px;color:var(--dim)">Нет доступа? <a href="#" id="regLink" style="color:var(--gold);text-decoration:none">Запросить аккаунт</a></div>
+  </form>
+  <form class="login" id="regForm" style="display:none">
+    <div class="brand"><img src="/brand/sits-mark-red.png" alt="" /><b>Fibonacci Control</b></div>
+    <h1>Запрос доступа</h1>
+    <p>Заявка уйдёт администратору. Войти сможете после подтверждения.</p>
+    <label for="reg_name">Ваше имя</label>
+    <input type="text" id="reg_name" placeholder="Как вас зовут" autocomplete="off" />
+    <label for="reg_login">Логин (латиница)</label>
+    <input type="text" id="reg_login" placeholder="напр. aidos" autocomplete="off" autocapitalize="none" />
+    <label for="reg_pass">Пароль (мин. 6 символов)</label>
+    <input type="password" id="reg_pass" placeholder="••••••••" autocomplete="new-password" />
+    <button class="btn btn-gold" type="submit" id="regBtn">Отправить заявку</button>
+    <div class="err-msg" id="regErr"></div>
+    <div style="margin-top:14px;text-align:center;font-size:13px;color:var(--dim)"><a href="#" id="backLoginLink" style="color:var(--gold);text-decoration:none">← Назад ко входу</a></div>
   </form>
 </div>
 
@@ -535,6 +550,7 @@
     <div class="brand"><img src="/brand/sits-mark-red.png" alt="" /><b>Fibonacci Control</b> <span>CRM</span></div>
     <div class="topbar-right">
       <div class="who"><span class="av" id="whoAv">•</span>Менеджер: <b id="whoName">—</b></div>
+      <button class="btn btn-ghost btn-sm" id="teamBtn" title="Команда и доступы" style="display:none"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg> Команда</button>
       <button class="btn btn-ghost btn-sm icon-btn" id="themeBtn" title="Светлая / тёмная тема" aria-label="Тема"></button>
       <button class="btn btn-ghost btn-sm" id="changePassBtn" title="Сменить свой пароль"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3M17 6l3 3M15 8l2 2"/></svg> Пароль</button>
       <button class="btn btn-ghost btn-sm" id="logoutBtn">Выйти</button>
@@ -1044,6 +1060,32 @@
 </div>
 </div><!-- /#app -->
 
+<div class="team-modal" id="teamModal">
+  <div class="team-card">
+    <div class="team-head"><b>Команда и доступы</b><button class="kb-iconbtn" id="teamClose" type="button" title="Закрыть"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <div class="team-sub" id="teamSub">Одобряйте заявки на доступ и управляйте ролями.</div>
+    <div class="team-list" id="teamList"><div class="mut">Загрузка…</div></div>
+  </div>
+</div>
+<style>
+  .team-modal{position:fixed;inset:0;z-index:130;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto}
+  .team-modal.open{display:flex}
+  .team-card{width:100%;max-width:620px;background:var(--surface);border:1px solid var(--line-2);border-radius:16px;padding:20px;box-shadow:0 24px 60px -20px rgba(0,0,0,.6)}
+  .team-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .team-head b{font-size:17px}
+  .team-sub{font-size:12.5px;color:var(--dim);margin-bottom:14px}
+  .team-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line);flex-wrap:wrap}
+  .team-row .ti{flex:1;min-width:150px}
+  .team-row .ti b{font-size:14px}
+  .team-row .ti span{display:block;font-size:12px;color:var(--dim)}
+  .team-badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;border:1px solid var(--line)}
+  .team-badge.active{color:#43d18a;border-color:#43d18a55}
+  .team-badge.pending{color:#e6b45a;border-color:#e6b45a55}
+  .team-badge.super{color:var(--gold);border-color:var(--gold)}
+  .team-row select,.team-row button{font-size:12.5px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);cursor:pointer}
+  .team-row .b-appr{background:#1f7a4d;color:#fff;border:none}
+  .team-row .b-rej{background:transparent;color:#e2555f;border-color:#e2555f55}
+</style>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1053,7 +1095,7 @@
   const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
   const fmt = (n)=> (Math.round(n)||0).toLocaleString('ru-RU') + ' ₸';
   const esc = (s)=> String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  const KEY_PASS='sits_crm_pass', KEY_LOGIN='sits_crm_login', KEY_MGR='sits_crm_mgr', KEY_CACHE='sits_crm_deals_cache';
+  const KEY_PASS='sits_crm_pass', KEY_LOGIN='sits_crm_login', KEY_MGR='sits_crm_mgr', KEY_ROLE='sits_crm_role', KEY_CACHE='sits_crm_deals_cache';
   const loadCache=()=>{ try{ return JSON.parse(localStorage.getItem(KEY_CACHE)||'[]'); }catch{ return []; } };
   const saveCache=(arr)=>{ try{ localStorage.setItem(KEY_CACHE, JSON.stringify(arr)); }catch{} };
 
@@ -1149,13 +1191,15 @@
     applyServer(data);
     sessionStorage.setItem(KEY_PASS, pass);
     sessionStorage.setItem(KEY_LOGIN, login);
-    if(data.user && data.user.name) localStorage.setItem(KEY_MGR, data.user.name);
+    if(data.user){ if(data.user.name) localStorage.setItem(KEY_MGR, data.user.name); localStorage.setItem(KEY_ROLE, data.user.role||'manager'); }
   }
   function showApp(){
     $('#login').style.display='none'; $('#app').style.display='block';
     const nm = localStorage.getItem(KEY_MGR)||'—';
     $('#whoName').textContent = nm;
     $('#whoAv').textContent = (nm.trim()[0]||'•').toUpperCase();
+    const role = localStorage.getItem(KEY_ROLE)||'manager';
+    if(role==='admin'||role==='super_admin'){ const tb=$('#teamBtn'); if(tb) tb.style.display=''; }
     renderDeals();
     loadDashboard();
   }
@@ -1176,10 +1220,58 @@
     if(!login || !pass){ $('#loginErr').textContent='Введите логин и пароль'; return; }
     $('#loginErr').textContent=''; $('#loginBtn').textContent='Проверяю…';
     try{ await tryLogin(login, pass); showApp(); }
-    catch(err){ $('#loginErr').textContent = err.message==='401' ? 'Неверный логин или пароль' : ('Ошибка: '+err.message); }
+    catch(err){
+      if(err.message==='401'){
+        let msg='Неверный логин или пароль';
+        try{ const r=await fetch('/api/crm-users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'signin',login,pass})}); const d=await r.json(); if(d && d.pending) msg='Аккаунт ожидает подтверждения администратором.'; }catch(_){}
+        $('#loginErr').textContent=msg;
+      } else $('#loginErr').textContent='Ошибка: '+err.message;
+    }
     finally{ $('#loginBtn').textContent='Войти'; }
   });
   $('#logoutBtn').addEventListener('click', logout);
+
+  // ---------- Регистрация (запрос доступа) ----------
+  $('#regLink') && $('#regLink').addEventListener('click', e=>{ e.preventDefault(); $('#loginForm').style.display='none'; $('#regForm').style.display=''; });
+  $('#backLoginLink') && $('#backLoginLink').addEventListener('click', e=>{ e.preventDefault(); $('#regForm').style.display='none'; $('#loginForm').style.display=''; });
+  $('#regForm') && $('#regForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const name=$('#reg_name').value.trim(), login=$('#reg_login').value.trim().toLowerCase(), pass=$('#reg_pass').value;
+    $('#regErr').textContent=''; $('#regBtn').textContent='Отправляю…';
+    try{
+      const r=await fetch('/api/crm-users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'register',name,login,pass})});
+      const d=await r.json();
+      if(!d.ok) throw new Error(d.error||'Ошибка');
+      $('#regForm').style.display='none'; $('#loginForm').style.display='';
+      $('#loginErr').textContent=''; toast('Заявка отправлена — ждите подтверждения','ok');
+    }catch(err){ $('#regErr').textContent=err.message; }
+    finally{ $('#regBtn').textContent='Отправить заявку'; }
+  });
+
+  // ---------- Команда и доступы (для админов) ----------
+  async function apiUsers(action, extra){ const r=await fetch('/api/crm-users',{method:'POST',headers:{'Content-Type':'application/json','x-crm-login':LOGIN,'x-crm-pass':PASS},body:JSON.stringify(Object.assign({action},extra||{}))}); const d=await r.json().catch(()=>({ok:false,error:'Ошибка ответа'})); if(!d.ok) throw new Error(d.error||('HTTP '+r.status)); return d; }
+  async function openTeam(){ $('#teamModal').classList.add('open'); $('#teamList').innerHTML='<div class="mut">Загрузка…</div>'; try{ const d=await apiUsers('list'); renderTeam(d.users||[], d.me||{}); }catch(e){ $('#teamList').innerHTML='<div class="mut">Ошибка: '+esc(e.message)+'</div>'; } }
+  function renderTeam(users, me){
+    const iAmSuper = me.role==='super_admin';
+    const roleName={super_admin:'владелец',admin:'админ',manager:'менеджер'};
+    $('#teamList').innerHTML = users.map(u=>{
+      const st=u.status, isSuper=u.role==='super_admin';
+      const badge = isSuper?'<span class="team-badge super">владелец</span>':(st==='active'?'<span class="team-badge active">активен</span>':st==='pending'?'<span class="team-badge pending">ждёт</span>':'<span class="team-badge">'+esc(st)+'</span>');
+      let actions='';
+      if(!isSuper){
+        if(st==='pending') actions+='<button class="b-appr" data-act="approve" data-l="'+esc(u.login)+'">Одобрить</button><button class="b-rej" data-act="reject" data-l="'+esc(u.login)+'">Отклонить</button>';
+        else if(st==='active') actions+='<button class="b-rej" data-act="disable" data-l="'+esc(u.login)+'">Отключить</button>';
+        if(iAmSuper && st==='active'){ actions+='<select data-role="'+esc(u.login)+'"><option value="manager"'+(u.role==='manager'?' selected':'')+'>менеджер</option><option value="admin"'+(u.role==='admin'?' selected':'')+'>админ</option></select>'; }
+      }
+      return '<div class="team-row"><div class="ti"><b>'+esc(u.name||u.login)+'</b><span>@'+esc(u.login)+' · '+(roleName[u.role]||u.role)+'</span></div>'+badge+actions+'</div>';
+    }).join('') || '<div class="mut">Пользователей нет</div>';
+    if(!iAmSuper) $('#teamSub').textContent='Одобряйте заявки на доступ. Выдавать админ-доступ может только владелец (alizhan).';
+    $('#teamList').querySelectorAll('button[data-act]').forEach(b=>b.addEventListener('click', async ()=>{ try{ await apiUsers(b.dataset.act,{login:b.dataset.l}); toast('Готово','ok'); openTeam(); }catch(e){ toast('Ошибка: '+e.message,'err'); } }));
+    $('#teamList').querySelectorAll('select[data-role]').forEach(s=>s.addEventListener('change', async ()=>{ try{ await apiUsers('setrole',{login:s.dataset.role,role:s.value}); toast('Роль обновлена','ok'); }catch(e){ toast('Ошибка: '+e.message,'err'); openTeam(); } }));
+  }
+  $('#teamBtn') && $('#teamBtn').addEventListener('click', openTeam);
+  $('#teamClose') && $('#teamClose').addEventListener('click', ()=>$('#teamModal').classList.remove('open'));
+  $('#teamModal') && $('#teamModal').addEventListener('click', e=>{ if(e.target.id==='teamModal') $('#teamModal').classList.remove('open'); });
 
   // ---------- смена пароля ----------
   function openPass(){

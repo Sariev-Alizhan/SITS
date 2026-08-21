@@ -1,0 +1,102 @@
+// /api/crm-users.js — регистрация и управление доступами команды SITS CRM.
+// Данные — в отдельной auth-базе (crm_users), см. _authdb.js.
+// Роли: super_admin (только alizhan) → раздаёт админку; admin → одобряет людей; manager.
+import { rateLimit, getClientIp, checkOrigin, readBody } from './_security.js';
+import { authUser, getAuthUser, sha256 } from './_crm-auth.js';
+import { authDb, authDbReady } from './_authdb.js';
+import crypto from 'node:crypto';
+
+const ALLOWED_ORIGINS = ['https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app'];
+const cleanLogin = (s) => String(s || '').trim().toLowerCase().replace(/[^a-z0-9_]/g, '').slice(0, 32);
+const isAdmin = (u) => u && (u.role === 'admin' || u.role === 'super_admin');
+
+export default async function handler(req, res) {
+  const ip = getClientIp(req);
+  const rl = await rateLimit({ key: `crmusers:${ip}`, limit: 60, windowSec: 300 });
+  if (!rl.ok) { res.setHeader('Retry-After', String(rl.resetSec || 60)); return res.status(429).json({ ok: false, error: 'Слишком много запросов' }); }
+
+  let body = {};
+  if (req.method === 'POST') {
+    if (!checkOrigin(req, ALLOWED_ORIGINS)) return res.status(403).json({ ok: false, error: 'Forbidden origin' });
+    try { body = await readBody(req, 64 * 1024); } catch { return res.status(400).json({ ok: false, error: 'Некорректный запрос' }); }
+  }
+  const action = (req.method === 'POST' ? body.action : req.query.action) || '';
+
+  if (!authDbReady()) return res.status(200).json({ ok: false, error: 'База пользователей не подключена' });
+
+  try {
+    // ── Публичные действия (без авторизации) ──
+    if (action === 'register') {
+      const login = cleanLogin(body.login);
+      const name = String(body.name || '').trim().slice(0, 80);
+      const pass = String(body.pass || '');
+      if (login.length < 3) return res.status(400).json({ ok: false, error: 'Логин: минимум 3 символа (латиница/цифры)' });
+      if (!name) return res.status(400).json({ ok: false, error: 'Укажите имя' });
+      if (pass.length < 6) return res.status(400).json({ ok: false, error: 'Пароль: минимум 6 символов' });
+      const exists = await getAuthUser(login);
+      if (exists) return res.status(409).json({ ok: false, error: 'Такой логин уже занят' });
+      const salt = crypto.randomBytes(12).toString('hex');
+      const hash = sha256(salt + pass);
+      await authDb.insert('crm_users', {
+        login, name, salt, hash, role: 'manager', status: 'pending',
+        created_by: 'self', created_at: new Date().toISOString(), updated_at: new Date().toISOString(),
+      });
+      return res.status(200).json({ ok: true, message: 'Заявка отправлена. Дождитесь подтверждения администратором.' });
+    }
+
+    if (action === 'signin') {
+      // Чёткие сообщения для экрана входа (кто ждёт одобрения, а кто ошибся паролем).
+      const login = cleanLogin(body.login);
+      const pass = String(body.pass || '');
+      const u = await getAuthUser(login);
+      if (u && u.hash === sha256((u.salt || '') + pass)) {
+        if (u.status !== 'active') return res.status(200).json({ ok: false, pending: true, error: 'Аккаунт ожидает подтверждения администратором.' });
+        return res.status(200).json({ ok: true, user: { login: u.login, name: u.name, role: u.role || 'manager' } });
+      }
+      return res.status(200).json({ ok: false, error: 'Неверный логин или пароль' });
+    }
+
+    // ── Действия для админов ──
+    const me = await authUser(req);
+    if (!me) return res.status(401).json({ ok: false, error: 'Нужна авторизация' });
+
+    if (action === 'list') {
+      if (!isAdmin(me)) return res.status(403).json({ ok: false, error: 'Только для админов' });
+      const users = await authDb.select('crm_users', 'select=login,name,role,status,created_by,created_at&order=created_at.asc');
+      return res.status(200).json({ ok: true, users: users || [], me: { login: me.login, role: me.role } });
+    }
+
+    if (action === 'approve' || action === 'reject' || action === 'disable') {
+      if (!isAdmin(me)) return res.status(403).json({ ok: false, error: 'Только админ одобряет доступы' });
+      const login = cleanLogin(body.login);
+      const target = await getAuthUser(login);
+      if (!target) return res.status(404).json({ ok: false, error: 'Пользователь не найден' });
+      if (target.role === 'super_admin') return res.status(403).json({ ok: false, error: 'Нельзя менять супер-админа' });
+      const status = action === 'approve' ? 'active' : (action === 'disable' ? 'disabled' : 'rejected');
+      if (action === 'reject') {
+        await authDb.remove('crm_users', `login=eq.${encodeURIComponent(login)}`);
+      } else {
+        await authDb.update('crm_users', `login=eq.${encodeURIComponent(login)}`, { status, approved_by: me.login, updated_at: new Date().toISOString() });
+      }
+      return res.status(200).json({ ok: true });
+    }
+
+    if (action === 'setrole') {
+      // Выдавать/снимать админку может ТОЛЬКО super_admin (alizhan).
+      if (me.role !== 'super_admin') return res.status(403).json({ ok: false, error: 'Выдавать админ-доступ может только владелец (alizhan)' });
+      const login = cleanLogin(body.login);
+      const role = ['admin', 'manager'].includes(body.role) ? body.role : null;
+      if (!role) return res.status(400).json({ ok: false, error: 'Роль: admin или manager' });
+      const target = await getAuthUser(login);
+      if (!target) return res.status(404).json({ ok: false, error: 'Пользователь не найден' });
+      if (target.role === 'super_admin') return res.status(403).json({ ok: false, error: 'Нельзя менять роль владельца' });
+      await authDb.update('crm_users', `login=eq.${encodeURIComponent(login)}`, { role, updated_at: new Date().toISOString() });
+      return res.status(200).json({ ok: true });
+    }
+
+    return res.status(400).json({ ok: false, error: 'Неизвестное действие' });
+  } catch (e) {
+    console.error('crm-users:', e?.message || e);
+    return res.status(500).json({ ok: false, error: 'Внутренняя ошибка' });
+  }
+}

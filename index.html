@@ -1418,8 +1418,31 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   unicode-range: U+20B8;
 }
 </style>
+<style>
+/* ЗАСТАВКА-ИНТРО с лого SITS (главная) — тема-адаптивно, растворяется через ~3с */
+#splash{position:fixed;inset:0;z-index:4000;background:var(--bg);display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;will-change:opacity;animation:spOut .85s cubic-bezier(.4,0,.2,1) 3s forwards}
+#splash.skip{animation:spOut .5s ease forwards}
+@keyframes spOut{to{opacity:0;visibility:hidden}}
+#splash::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(760px 500px at 50% 34%,rgba(226,55,68,.12),transparent 62%)}
+#splash .sp-in{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px;animation:spIn .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes spIn{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+#splash .sp-logo{display:inline-flex;align-items:center;gap:.08em;font-family:var(--font-logo);font-size:clamp(66px,13.5vw,158px);line-height:1;color:var(--text);letter-spacing:-.01em}
+#splash .sp-logo img{height:.9em;width:auto;display:block}
+#splash .sp-tag{font-family:var(--font-display);font-weight:500;font-size:clamp(15px,1.7vw,21px);letter-spacing:.03em;color:var(--muted)}
+#splash .sp-bar{width:min(230px,56vw);height:5px;border-radius:999px;background:color-mix(in srgb,var(--text) 12%,transparent);overflow:hidden;margin-top:8px}
+#splash .sp-bar i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#ff5a67,var(--red));box-shadow:0 0 12px rgba(226,55,68,.5);animation:spLoad 3s cubic-bezier(.35,0,.25,1) forwards}
+@keyframes spLoad{to{width:100%}}
+@media(max-width:900px){#splash .sp-logo{font-size:clamp(54px,22vw,120px)}}
+</style>
 </head>
 <body>
+<div id="splash" aria-hidden="true">
+  <div class="sp-in">
+    <div class="sp-logo" aria-label="SITS"><img src="brand/sits-mark-red.png" alt=""/>IT<img src="brand/sits-mark-red.png" alt=""/></div>
+    <p class="sp-tag">Sariyev IT Solutions</p>
+    <div class="sp-bar"><i></i></div>
+  </div>
+</div>
 
 <!-- Skip link для клавиатурной навигации (WCAG 2.4.1) -->
 <a href="#main" class="skip-link" data-i18n="a11y.skipToContent">Перейти к содержимому</a>
@@ -3347,5 +3370,18 @@ window.__formLoaded = Date.now();
 <!-- Vercel Web Analytics (включить в Dashboard → Analytics; до включения запрос тихо 404-ит) -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<script>
+/* Заставка главной: лого держится ~3с и растворяется. Клик/клавиша — пропустить. */
+(function(){
+  var sp=document.getElementById('splash'); if(!sp) return;
+  var body=document.body; body.style.overflow='hidden';
+  function done(){ sp.style.display='none'; body.style.overflow=''; }
+  function skip(){ sp.classList.add('skip'); }
+  sp.addEventListener('click', skip);
+  window.addEventListener('keydown', skip, { once:true });
+  sp.addEventListener('animationend', function(ev){ if(ev.animationName==='spOut') done(); });
+  setTimeout(function(){ body.style.overflow=''; }, 4400);
+})();
+</script>
 </body>
 </html>

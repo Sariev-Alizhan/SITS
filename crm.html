@@ -1498,7 +1498,7 @@
     }).join('') || '<div class="mut">Пользователей нет</div>';
     if(!iAmSuper) $('#teamSub').textContent='Одобряйте заявки на доступ. Выдавать админ-доступ может только владелец (alizhan).';
     $('#teamList').querySelectorAll('button[data-act]').forEach(b=>b.addEventListener('click', async ()=>{ try{ await apiUsers(b.dataset.act,{login:b.dataset.l}); toast('Готово','ok'); openTeam(); }catch(e){ toast('Ошибка: '+e.message,'err'); } }));
-    $('#teamList').querySelectorAll('select[data-role]').forEach(s=>s.addEventListener('change', async ()=>{ try{ await apiUsers('setrole',{login:s.dataset.role,role:s.value}); toast('Роль обновлена','ok'); }catch(e){ toast('Ошибка: '+e.message,'err'); openTeam(); } }));
+    $('#teamList').querySelectorAll('select[data-role]').forEach(s=>s.addEventListener('change', async ()=>{ const login=s.dataset.role, val=s.value; s.disabled=true; try{ await apiUsers('setrole',{login,role:val}); toast('Роль сохранена: @'+login+' → '+(val==='admin'?'админ':'менеджер'),'ok'); await openTeam(); /* перечитываем с сервера — подтверждаем, что сохранилось */ }catch(e){ toast('Ошибка: '+e.message,'err'); s.disabled=false; await openTeam(); } }));
   }
   $('#teamBtn') && $('#teamBtn').addEventListener('click', openTeam);
   $('#teamClose') && $('#teamClose').addEventListener('click', ()=>{ $('#teamModal').classList.remove('open'); lockScroll(false); });

@@ -7,6 +7,12 @@
 <meta name="robots" content="noindex, nofollow" />
 <link rel="icon" type="image/png" href="/brand/favicon.png?v=10" />
 <meta name="theme-color" content="#070A10" />
+<link rel="manifest" href="/manifest-crm.webmanifest" />
+<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Fibonacci CRM" />
 <link rel="stylesheet" href="/fonts/fonts.css" />
 <style>
   :root{
@@ -1117,6 +1123,48 @@
   .team-row .b-appr{background:#1f7a4d;color:#fff;border:none}
   .team-row .b-rej{background:transparent;color:#e2555f;border-color:#e2555f55}
 </style>
+<div class="pwa-modal" id="pwaModal">
+  <div class="pwa-card">
+    <button class="pwa-close" id="pwaClose" type="button" aria-label="Закрыть">✕</button>
+    <div class="pwa-top">
+      <div class="pwa-ico"><img src="/brand/apple-touch-icon.png" alt="Fibonacci Control"></div>
+      <h2>Установите Fibonacci&nbsp;Control как приложение</h2>
+      <p>Открывайте CRM с рабочего стола в один тап — на весь экран, как родное приложение.</p>
+    </div>
+    <div class="pwa-body">
+      <div class="pwa-tabs">
+        <button class="pwa-tab" type="button" data-os="android">Android</button>
+        <button class="pwa-tab" type="button" data-os="ios">iPhone</button>
+        <button class="pwa-tab" type="button" data-os="windows">Windows</button>
+        <button class="pwa-tab" type="button" data-os="mac">Mac</button>
+      </div>
+      <ol class="pwa-steps" id="pwaSteps"></ol>
+      <button class="pwa-install" id="pwaInstall" type="button">Установить сейчас</button>
+    </div>
+  </div>
+</div>
+<style>
+  .pwa-modal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;padding:16px}
+  .pwa-modal.open{display:flex}
+  .pwa-card{width:100%;max-width:440px;border-radius:24px;overflow:hidden auto;max-height:94vh;background:#fff;box-shadow:0 34px 90px -22px rgba(0,0,0,.65);position:relative;animation:pwaUp .35s cubic-bezier(.2,.8,.2,1)}
+  @keyframes pwaUp{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+  .pwa-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.16);color:#fff;font-size:15px;cursor:pointer;z-index:2}
+  .pwa-close:hover{background:rgba(255,255,255,.28)}
+  .pwa-top{background:linear-gradient(160deg,#161d2b 0%,#0a0e16 100%);color:#fff;padding:28px 26px 32px}
+  .pwa-ico{width:78px;height:78px;border-radius:19px;overflow:hidden;background:#1b2332;display:flex;align-items:center;justify-content:center;margin-bottom:18px;box-shadow:0 8px 24px -6px rgba(0,0,0,.5)}
+  .pwa-ico img{width:100%;height:100%;object-fit:cover}
+  .pwa-top h2{font-size:23px;font-weight:800;letter-spacing:-.02em;margin:0 0 9px;line-height:1.15}
+  .pwa-top p{font-size:14px;color:#aeb7c6;line-height:1.5;margin:0}
+  .pwa-body{padding:20px 22px 24px;background:#fff}
+  .pwa-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
+  .pwa-tab{padding:13px 4px;border-radius:13px;border:1px solid #e4e7ec;background:#fff;color:#475467;font-size:12.5px;font-weight:600;cursor:pointer}
+  .pwa-tab.active{border-color:#c39a4c;color:#141a26;background:#fbf6ec}
+  .pwa-steps{list-style:none;margin:0 0 18px;padding:0;counter-reset:s}
+  .pwa-steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start;font-size:14px;color:#1a2233;margin:12px 0;line-height:1.42}
+  .pwa-steps li::before{content:counter(s);flex:0 0 auto;width:27px;height:27px;border-radius:50%;background:#c39a4c;color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .pwa-install{width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(180deg,#d0aa5e,#c39a4c);color:#1a1200;font-size:16px;font-weight:800;letter-spacing:.01em;cursor:pointer;box-shadow:0 10px 26px -10px rgba(195,154,76,.7)}
+  .pwa-install:hover{filter:brightness(1.05)}
+</style>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1207,6 +1255,27 @@
   // Блокировка прокрутки фона при открытой модалке (чтобы скролился контент окна, а не задний экран).
   function lockScroll(on){ const v=on?'hidden':''; document.documentElement.style.overflow=v; document.body.style.overflow=v; }
 
+  // ---------- PWA: установка на главный экран ----------
+  if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js').catch(()=>{}); }
+  let __pwaPrompt=null;
+  window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); __pwaPrompt=e; });
+  const PWA_STEPS={
+    android:['Chrome: меню ⋮ вверху справа','«Установить приложение» / «Добавить на главный экран»','Иконка появится на рабочем столе','Открывается на весь экран, как родное'],
+    ios:['Safari: нажмите «Поделиться» (квадрат со стрелкой ↑)','Выберите «На экран «Домой»»','Нажмите «Добавить»','Иконка появится на главном экране'],
+    windows:['Chrome/Edge: значок установки в адресной строке','Нажмите «Установить»','Приложение появится в меню «Пуск»','Открывается отдельным окном, как программа'],
+    mac:['Chrome: значок установки в адресной строке → «Установить»','Safari: меню «Файл» → «Добавить в Dock»','Появится в Launchpad / Dock','Открывается на весь экран, как родное']
+  };
+  function pwaDetectOS(){ const u=navigator.userAgent; if(/android/i.test(u)) return 'android'; if(/iphone|ipad|ipod/i.test(u)||(/macintosh/i.test(u)&&'ontouchend'in document)) return 'ios'; if(/macintosh|mac os x/i.test(u)) return 'mac'; return 'windows'; }
+  function pwaRender(os){ const el=$('#pwaSteps'); if(el) el.innerHTML=PWA_STEPS[os].map(t=>'<li>'+t+'</li>').join(''); $$('.pwa-tab').forEach(b=>b.classList.toggle('active',b.dataset.os===os)); }
+  function pwaInstalled(){ return matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true; }
+  function openPWA(){ if(pwaInstalled()) return; pwaRender(pwaDetectOS()); $('#pwaModal').classList.add('open'); lockScroll(true); }
+  function closePWA(){ $('#pwaModal').classList.remove('open'); lockScroll(false); try{ localStorage.setItem('sits_crm_pwa_seen','1'); }catch(_){} }
+  $$('.pwa-tab').forEach(b=>b.addEventListener('click',()=>pwaRender(b.dataset.os)));
+  $('#pwaClose') && $('#pwaClose').addEventListener('click',closePWA);
+  $('#pwaModal') && $('#pwaModal').addEventListener('click',e=>{ if(e.target.id==='pwaModal') closePWA(); });
+  $('#pwaInstall') && $('#pwaInstall').addEventListener('click',async ()=>{ if(__pwaPrompt){ __pwaPrompt.prompt(); try{ const r=await __pwaPrompt.userChoice; if(r&&r.outcome==='accepted') closePWA(); }catch(_){} __pwaPrompt=null; } else { toast('Следуйте инструкции для вашего устройства выше','ok'); } });
+  window.__openPWA=openPWA;
+
   // ---------- API ----------
   async function api(method, body){
     const opt = { method, headers:{ 'x-crm-login':LOGIN, 'x-crm-pass':PASS } };
@@ -1236,6 +1305,7 @@
     if(role==='admin'||role==='super_admin'){ const tb=$('#teamBtn'); if(tb) tb.style.display=''; }
     renderDeals();
     loadDashboard();
+    try{ if(!localStorage.getItem('sits_crm_pwa_seen') && typeof pwaInstalled==='function' && !pwaInstalled()){ setTimeout(()=>{ if(window.__openPWA) window.__openPWA(); }, 1500); } }catch(_){}
   }
   function logout(){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); PASS=''; LOGIN=''; location.reload(); }
 

@@ -1,0 +1,19 @@
+{
+  "name": "Fibonacci Control — SITS CRM",
+  "short_name": "Fibonacci CRM",
+  "description": "Внутренняя CRM SITS: заявки, сделки, WhatsApp, воронка, созвоны и статистика в одном окне.",
+  "start_url": "/crm",
+  "scope": "/crm",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#070A10",
+  "theme_color": "#070A10",
+  "lang": "ru",
+  "dir": "ltr",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "/brand/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/favicon.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/favicon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

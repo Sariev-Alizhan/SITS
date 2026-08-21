@@ -946,7 +946,10 @@
     #view-whatsapp .kb-card select{font-size:11px;background:var(--surface-2);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:2px 4px;max-width:150px}
     #view-whatsapp .kb-drawer{position:fixed;top:0;right:0;height:100vh;width:min(440px,96vw);background:var(--surface);border-left:1px solid var(--line);box-shadow:-8px 0 40px -8px var(--shadow-c);transform:translateX(101%);transition:transform .25s;display:flex;flex-direction:column;z-index:80}
     #view-whatsapp .kb-drawer.open{transform:translateX(0)}
-    #view-whatsapp .kb-dhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+    #view-whatsapp .kb-dhead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+    #view-whatsapp .kb-tabs{display:flex;gap:4px;overflow-x:auto;max-width:100%}
+    #view-whatsapp .kb-tb{white-space:nowrap}
+    @media(max-width:560px){ #view-whatsapp .kb-head{flex-direction:column;align-items:stretch} #view-whatsapp .kb-mgr{max-width:none;flex:1} }
     #view-whatsapp .kb-dhead b{color:var(--fg);font-size:15px}
     #view-whatsapp .kb-thread{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:9px;background:var(--void)}
     #view-whatsapp .kb-msg{display:flex;flex-direction:column;max-width:80%}

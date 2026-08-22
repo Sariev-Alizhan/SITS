@@ -649,6 +649,11 @@ main, footer{position:relative;z-index:1}
   .arm-l{opacity:.4}
   .deco3d-in{animation:none!important}
 }
+/* Светлая тема: белое гало + глубина, чтобы 3D-объекты не выглядели тёмными пятнами на светлом фоне */
+html[data-theme="light"] .deco3d img,html[data-theme="light"] .hero-arm img{
+  filter:drop-shadow(0 0 16px rgba(255,255,255,.92)) drop-shadow(0 0 40px rgba(255,255,255,.6))
+         drop-shadow(0 20px 40px rgba(20,12,13,.20)) drop-shadow(0 0 30px rgba(226,55,68,.18));}
+html[data-theme="light"] .deco3d{filter:saturate(1.05) contrast(1.03)}
 
 /* === Portfolio 3D tilt + cursor glow === */
 .pf-bento{perspective:800px}

@@ -1045,6 +1045,14 @@
     #view-whatsapp .kb-tabs{display:flex;gap:4px;overflow-x:auto;max-width:100%}
     #view-whatsapp .kb-tb{white-space:nowrap}
     @media(max-width:560px){ #view-whatsapp .kb-head{flex-direction:column;align-items:stretch} #view-whatsapp .kb-mgr{max-width:none;flex:1} }
+    /* Мобилка: панель WhatsApp — всё видно без горизонтального скролла (вкладки переносятся, кнопки на всю ширину) */
+    @media(max-width:680px){
+      #view-whatsapp .kb-head{flex-direction:column;align-items:stretch;gap:10px}
+      #view-whatsapp .kb-head>div:last-child{display:flex!important;flex-wrap:wrap;width:100%;gap:8px}
+      #view-whatsapp .kb-tabs{display:flex!important;flex-wrap:wrap;overflow:visible;max-width:none;width:100%;gap:6px;justify-content:flex-start}
+      #view-whatsapp .kb-tb{flex:0 0 auto;padding:8px 12px;font-size:12.5px}
+      #view-whatsapp #waReload,#view-whatsapp #waNew{flex:1 1 46%;justify-content:center}
+    }
     #view-whatsapp .kb-dhead b{color:var(--fg);font-size:15px}
     #view-whatsapp .kb-thread{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:9px;background:var(--void)}
     #view-whatsapp .kb-msg{display:flex;flex-direction:column;max-width:80%}

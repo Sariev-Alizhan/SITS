@@ -8,6 +8,27 @@
 import { rateLimit, getClientIp, checkOrigin, readBody } from './_security.js';
 import { authUser } from './_crm-auth.js';
 import { db, dbReady } from './_db.js';
+import { authDb, authDbReady } from './_authdb.js';
+
+// Имена/логины super_admin (руководителя) — их сделки видит ТОЛЬКО сам super_admin.
+async function bossKeys() {
+  const fallback = new Set(['Алижан', 'alizhan']);
+  if (!authDbReady()) return fallback;
+  try {
+    const rows = await authDb.select('crm_users', 'select=name,login&role=eq.super_admin');
+    const s = new Set();
+    for (const r of (rows || [])) { if (r.name) s.add(r.name); if (r.login) s.add(r.login); }
+    return s.size ? s : fallback;
+  } catch { return fallback; }
+}
+// Ключи владельца сделки (кому она принадлежит) — сверяем и с именем, и с логином.
+const ownerKeys = (u) => new Set([u.name, u.login].filter(Boolean));
+// Видит ли пользователь конкретную сделку по её полю manager.
+function canSee(deal, user, boss) {
+  if (user.role === 'super_admin') return true;                 // руководитель видит всё
+  if (user.role === 'admin') return !boss.has(deal.manager || ''); // админ — всё, кроме сделок руководителя
+  return ownerKeys(user).has(deal.manager || '');               // менеджер — только свои
+}
 
 const ALLOWED_ORIGINS = [
   'https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app',
@@ -96,7 +117,12 @@ export default async function handler(req, res) {
       if (!dbReady()) return res.status(200).json({ ok: true, deals: [], user, cloud: false });
       try {
         const rows = await db.select('deals', 'select=*&order=created_at.desc&limit=2000');
-        const deals = (rows || []).map(fromRow);
+        let deals = (rows || []).map(fromRow);
+        // Ролевая видимость: менеджер — свои; админ — все, кроме сделок руководителя; руководитель — все.
+        if (user.role !== 'super_admin') {
+          const boss = user.role === 'admin' ? await bossKeys() : null;
+          deals = deals.filter((d) => canSee(d, user, boss || new Set()));
+        }
         return res.status(200).json({ ok: true, deals, user, cloud: true });
       } catch (e) {
         console.error('db read error:', e?.message || e);
@@ -113,7 +139,18 @@ export default async function handler(req, res) {
         if (!id) return res.status(400).json({ ok: false, error: 'Не передан id' });
         let cloud = false;
         if (dbReady()) {
-          try { await db.remove('deals', `id=eq.${encodeURIComponent(id)}`); cloud = true; }
+          try {
+            // Менеджер/админ может удалять только видимые ему сделки (не чужие, не руководителя).
+            if (user.role !== 'super_admin') {
+              const existing = await db.select('deals', `select=manager&id=eq.${encodeURIComponent(id)}&limit=1`);
+              const d = Array.isArray(existing) && existing[0] ? fromRow(existing[0]) : null;
+              if (d) {
+                const boss = user.role === 'admin' ? await bossKeys() : new Set();
+                if (!canSee(d, user, boss)) return res.status(403).json({ ok: false, error: 'Нет доступа к этой сделке' });
+              }
+            }
+            await db.remove('deals', `id=eq.${encodeURIComponent(id)}`); cloud = true;
+          }
           catch (e) { console.error('db delete error:', e?.message || e); }
         }
         return res.status(200).json({ ok: true, cloud });
@@ -121,9 +158,23 @@ export default async function handler(req, res) {
 
       if (action === 'save') {
         const deal = sanitizeDeal(body.deal || {});
+        // Владелец: менеджер всегда владеет своими сделками (переназначить нельзя).
+        // Админ/руководитель могут указать менеджера; если пусто — ставим себя.
+        if (user.role !== 'admin' && user.role !== 'super_admin') deal.manager = user.name || user.login;
+        else if (!deal.manager) deal.manager = user.name || user.login;
         let cloud = false;
         if (dbReady()) {
-          try { const saved = await db.upsert('deals', toRow(deal)); if (Array.isArray(saved) && saved[0]) Object.assign(deal, fromRow(saved[0])); cloud = true; }
+          try {
+            // Нельзя редактировать чужую сделку (проверяем существующую запись по id).
+            if (user.role !== 'super_admin') {
+              const existing = await db.select('deals', `select=manager&id=eq.${encodeURIComponent(deal.id)}&limit=1`);
+              const prev = Array.isArray(existing) && existing[0] ? fromRow(existing[0]) : null;
+              if (prev) {
+                const boss = user.role === 'admin' ? await bossKeys() : new Set();
+                if (!canSee(prev, user, boss)) return res.status(403).json({ ok: false, error: 'Нет доступа к этой сделке' });
+              }
+            }
+            const saved = await db.upsert('deals', toRow(deal)); if (Array.isArray(saved) && saved[0]) Object.assign(deal, fromRow(saved[0])); cloud = true; }
           catch (e) { console.error('db save error:', e?.message || e); }
         }
         return res.status(200).json({ ok: true, deal, cloud });

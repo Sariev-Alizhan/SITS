@@ -1429,6 +1429,8 @@
 
   // ---------- auth ----------
   async function tryLogin(login, pass){
+    // Другой пользователь на этом устройстве — чистим кэш сделок прошлого (никаких чужих данных).
+    if((localStorage.getItem(KEY_LOGIN)||sessionStorage.getItem(KEY_LOGIN)||'') !== login){ try{ localStorage.removeItem(KEY_CACHE); }catch(_){} DEALS=[]; }
     LOGIN = login; PASS = pass;
     const data = await api('GET'); // 401 → throw
     applyServer(data);
@@ -1462,7 +1464,7 @@
       }
     }catch(_){}
   }
-  function logout(){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); PASS=''; LOGIN=''; location.reload(); }
+  function logout(){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); try{ localStorage.removeItem(KEY_CACHE); localStorage.removeItem(KEY_MGR); localStorage.removeItem(KEY_ROLE); }catch(_){} DEALS=[]; PASS=''; LOGIN=''; location.reload(); }
 
   // Подстраховка от автозаполнения: запоминаем то, что реально печатали
   let _mLogin='', _mPass='';

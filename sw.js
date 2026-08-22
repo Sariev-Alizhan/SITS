@@ -4,7 +4,7 @@
    Versioned cache name; old caches purged on activate.
    Bypass: ?nosw=1 query param tells SW to skip caching for that request. */
 
-const CACHE = 'sits-v82';
+const CACHE = 'sits-v83';
 
 /* Файлы, которые точно нужны для офлайн-первой загрузки */
 const PRECACHE = [

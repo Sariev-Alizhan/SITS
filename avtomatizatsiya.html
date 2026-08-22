@@ -747,9 +747,10 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 @media(max-width:900px){.deco3d img{width:var(--wm,180px)}}
 @media(max-width:560px){.deco3d{--op:.24!important}.deco3d img{width:var(--wm,138px)}}
 @media(prefers-reduced-motion:reduce){.deco3d{animation:none!important;opacity:var(--op,.5)}.deco3d-in{animation:none!important}}
-/* Светлая тема: белое гало + глубина, чтобы 3D-объекты читались на светлом фоне */
-html[data-theme="light"] .deco3d img{filter:drop-shadow(0 0 16px rgba(255,255,255,.92)) drop-shadow(0 0 40px rgba(255,255,255,.6)) drop-shadow(0 20px 40px rgba(20,12,13,.20)) drop-shadow(0 0 30px rgba(226,55,68,.18))}
-html[data-theme="light"] .deco3d{filter:saturate(1.05) contrast(1.03)}
+/* Светлая тема: объекты заметнее + мягкая тень/красная подсветка (как фото на белом) */
+@keyframes decoFadeLight{to{opacity:.66}}
+html[data-theme="light"] .deco3d{animation:decoFadeLight 1.3s var(--ease) .15s forwards;filter:saturate(1.07) contrast(1.05)}
+html[data-theme="light"] .deco3d img{filter:drop-shadow(0 20px 40px rgba(20,12,13,.22)) drop-shadow(0 0 22px rgba(226,55,68,.20))}
 .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:64px;flex-wrap:wrap}
 .sec-head .left{max-width:660px}
 .sec-tag{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;letter-spacing:.14em;

@@ -209,9 +209,10 @@
   .dash-orb img{display:block;width:100%;height:auto;filter:drop-shadow(0 0 34px rgba(210,162,76,.32))}
   @media(max-width:760px){.dash-orb{width:120px;top:-8px;right:-8px;opacity:.3}}
   @media(prefers-reduced-motion:reduce){.empty .ei,.empty .eimg,.dash-orb{animation:none!important}}
-  /* Светлая тема CRM: белое гало + глубина, чтобы золотые 3D читались на светлом фоне */
+  /* Светлая тема CRM: мягкая тень + золотая подсветка (как фото на белом) */
   body.light .login-deco .ld img,body.light .dash-orb img,body.light .empty .eimg{
-    filter:drop-shadow(0 0 15px rgba(255,255,255,.92)) drop-shadow(0 16px 34px rgba(20,20,30,.16)) drop-shadow(0 0 24px rgba(210,162,76,.38))}
+    filter:drop-shadow(0 16px 34px rgba(20,20,30,.20)) drop-shadow(0 0 22px rgba(210,162,76,.42))}
+  body.light .dash-orb{opacity:.55}
 
   /* КП generator */
   .kp-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:start}

@@ -721,7 +721,7 @@
         </div>
         <div class="grid2">
           <div class="field"><label>Контакт (тел / @ / email)</label><input id="f_contact" placeholder="+7… / @… / email" /></div>
-          <div class="field"><label>Менеджер (с кем сделка)</label><input id="f_manager" placeholder="Ваше имя" /></div>
+          <div class="field"><label>Менеджер (с кем сделка)</label><input id="f_manager" placeholder="Ваше имя" list="teamDatalist" /><datalist id="teamDatalist"></datalist></div>
         </div>
         <div class="grid2">
           <div class="field"><label>Источник</label>
@@ -1610,6 +1610,8 @@
       s.innerHTML='<option value="">Кто ведёт: все</option><option value="__none">Не назначен</option>'+TEAM.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
       s.value=cur;
     });
+    // Подсказка команды в поле «Менеджер» сделки/КП
+    const dl=$('#teamDatalist'); if(dl) dl.innerHTML=TEAM.map(n=>`<option value="${esc(n)}">`).join('');
   }
   async function loadTeam(){
     if(!LOGIN||!PASS) return;

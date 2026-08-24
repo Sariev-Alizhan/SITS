@@ -1452,6 +1452,7 @@
   }
   function showApp(){
     $('#login').style.display='none'; $('#app').style.display='block';
+    loadTeam(); // подтянуть актуальную команду для «Кто ведёт» (новые менеджеры из crm_users)
     const nm = localStorage.getItem(KEY_MGR)||'—';
     $('#whoName').textContent = nm;
     $('#whoAv').textContent = (nm.trim()[0]||'•').toUpperCase();
@@ -1600,7 +1601,25 @@
   function gotoView(v){ $$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.view===v)); $$('.view').forEach(x=>x.classList.remove('active')); $('#view-'+v).classList.add('active'); if(v==='outreach') ensureOutreach(); }
 
   // ---------- ОБЗВОН ----------
-  const TEAM = ['Алижан','Аблай','Алишер','Айжан'];
+  // Команда для «Кто ведёт»: живой список из базы пользователей CRM (crm_users, status=active).
+  // Хардкод ниже — только фолбэк, если база недоступна.
+  let TEAM = ['Алижан','Аблай','Алишер','Айжан'];
+  function fillWhoFilters(){
+    ['#outWhoFilter','#partWhoFilter'].forEach(sel=>{
+      const s=$(sel); if(!s) return; const cur=s.value;
+      s.innerHTML='<option value="">Кто ведёт: все</option><option value="__none">Не назначен</option>'+TEAM.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+      s.value=cur;
+    });
+  }
+  async function loadTeam(){
+    if(!LOGIN||!PASS) return;
+    try{
+      const r=await fetch('/api/wa?action=managers',{headers:{'x-crm-login':LOGIN,'x-crm-pass':PASS}});
+      const d=await r.json();
+      const names=(d&&d.ok&&Array.isArray(d.managers))?[...new Set(d.managers.map(m=>String(m.name||m.login||'').trim()).filter(Boolean))]:[];
+      if(names.length){ TEAM=names; fillWhoFilters(); if(outLoaded) renderOutreach(); if(partLoaded) renderPartners(); }
+    }catch(e){}
+  }
   const OUT_ST = {new:'Новый', in_progress:'В работе', done:'Выполнено', rejected:'Отказ'};
   const TIER_CLS = {'высокий':'hi','средний':'mid','низкий':'lo'};
   let OUT=[], outLoaded=false, outSearch='', outFilter='all', outMine='all', outWho='', outTier='';
@@ -1714,7 +1733,7 @@
   $('#outSearch') && $('#outSearch').addEventListener('input',e=>{ outSearch=e.target.value.trim(); renderOutreach(); });
   $$('#outStatusFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#outStatusFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); outFilter=b.dataset.f; renderOutreach(); }));
   $$('#outMineFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#outMineFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); outMine=b.dataset.m; renderOutreach(); }));
-  (function(){ const s=$('#outWhoFilter'); if(!s) return; s.insertAdjacentHTML('beforeend','<option value="__none">Не назначен</option>'+TEAM.map(n=>`<option value="${n}">${n}</option>`).join('')); s.addEventListener('change',e=>{ outWho=e.target.value; renderOutreach(); }); })();
+  (function(){ const s=$('#outWhoFilter'); if(!s) return; fillWhoFilters(); s.addEventListener('change',e=>{ outWho=e.target.value; renderOutreach(); }); })();
   $('#outTierFilter') && $('#outTierFilter').addEventListener('change',e=>{ outTier=e.target.value; renderOutreach(); });
 
   // ---------- ПАРТНЁРЫ (рекламные агентства) ----------
@@ -1775,7 +1794,7 @@
   async function delPart(it){ if(!confirm('Удалить партнёра?\n'+it.name)) return; try{ await apiPart('POST',{action:'delete',id:it.id}); PART=PART.filter(x=>x.id!==it.id); renderPartners(); toast('Удалено','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
   $('#partSearch') && $('#partSearch').addEventListener('input',e=>{ partSearch=e.target.value.trim(); renderPartners(); });
   $$('#partStatusFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#partStatusFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); partFilter=b.dataset.f; renderPartners(); }));
-  (function(){ const s=$('#partWhoFilter'); if(!s) return; s.insertAdjacentHTML('beforeend','<option value="__none">Не назначен</option>'+TEAM.map(n=>`<option value="${n}">${n}</option>`).join('')); s.addEventListener('change',e=>{ partWho=e.target.value; renderPartners(); }); })();
+  (function(){ const s=$('#partWhoFilter'); if(!s) return; fillWhoFilters(); s.addEventListener('change',e=>{ partWho=e.target.value; renderPartners(); }); })();
   $('#partReloadBtn') && $('#partReloadBtn').addEventListener('click',loadPartners);
 
   // ---------- КАЛЕНДАРЬ ЛУЧШЕГО ВРЕМЕНИ (Астана, UTC+5) ----------

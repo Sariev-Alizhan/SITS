@@ -29,7 +29,7 @@ async function managerMap() {
 }
 
 const ALLOWED_ORIGINS = ['https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app'];
-const STAGES = ['new', 'dialog', 'qualified', 'quote', 'waiting_payment', 'won', 'lost'];
+const STAGES = ['new', 'dialog', 'qualified', 'call_invited', 'quote', 'contract_invited', 'waiting_payment', 'won', 'lost'];
 
 export default async function handler(req, res) {
   const ip = getClientIp(req);
@@ -46,7 +46,7 @@ export default async function handler(req, res) {
   if (!user) return res.status(401).json({ ok: false, error: 'Неверный логин или пароль' });
 
   const action = (req.method === 'POST' ? body.action : req.query.action) || '';
-  if (!dbReady() && ['chats', 'messages', 'deals', 'calls'].includes(action)) {
+  if (!dbReady() && ['chats', 'messages', 'deals', 'calls', 'schedule'].includes(action)) {
     return res.status(200).json({ ok: true, chats: [], messages: [], deals: [], calls: [], cloud: false });
   }
 
@@ -88,6 +88,11 @@ export default async function handler(req, res) {
     }
     if (req.method === 'GET' && action === 'calls') {
       const calls = await db.select('wa_calls', 'select=id,phone,name,scheduled_at,topic,status&order=scheduled_at.asc&limit=500');
+      return res.status(200).json({ ok: true, calls: calls || [], cloud: true });
+    }
+    // Общее командное расписание созвонов (все менеджеры видят, любой добавляет).
+    if (req.method === 'GET' && action === 'schedule') {
+      const calls = await db.select('wa_calls', 'select=id,phone,name,scheduled_at,topic,status,invited,link,created_by&order=scheduled_at.asc&limit=1000');
       return res.status(200).json({ ok: true, calls: calls || [], cloud: true });
     }
     if (req.method === 'GET' && action === 'messages') {
@@ -181,6 +186,32 @@ export default async function handler(req, res) {
       const id = String(body.id || '');
       if (!id) return res.status(400).json({ ok: false, error: 'Нет id' });
       if (dbReady()) await db.remove('wa_calls', `id=eq.${encodeURIComponent(id)}`);
+      return res.status(200).json({ ok: true });
+    }
+    // Добавить/изменить созвон в общем расписании (гибко: телефон и время — по желанию, участники + ссылка).
+    if (req.method === 'POST' && action === 'sched_add') {
+      const phone = String(body.phone || '').replace(/\D/g, '');
+      const name = String(body.name || '').slice(0, 200);
+      const dt = String(body.datetime || '').trim();
+      const topic = String(body.topic || '').slice(0, 500);
+      const link = String(body.link || '').slice(0, 500);
+      const invited = Array.isArray(body.invited) ? body.invited.map((x) => String(x).slice(0, 80)).filter(Boolean).slice(0, 20) : [];
+      const m = dt.match(/^(\d{4}-\d{2}-\d{2})[ T](\d{2}:\d{2})/);
+      if (!m) return res.status(400).json({ ok: false, error: 'Укажите дату и время' });
+      if (!dbReady()) return res.status(200).json({ ok: false, error: 'CRM (Supabase) не подключён' });
+      const iso = new Date(`${m[1]}T${m[2]}:00+05:00`).toISOString();
+      const createdBy = String(user.name || user.login || '').slice(0, 80);
+      const row = { phone, name, scheduled_at: iso, topic, chat_phone: phone, status: 'scheduled', invited: JSON.stringify(invited), link, created_by: createdBy };
+      let id = String(body.id || '');
+      if (id) { await db.update('wa_calls', `id=eq.${encodeURIComponent(id)}`, row); }
+      else { id = 'call-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); row.id = id; row.created_at = new Date().toISOString(); await db.insert('wa_calls', row); }
+      return res.status(200).json({ ok: true, id });
+    }
+    if (req.method === 'POST' && action === 'sched_status') {
+      const id = String(body.id || '');
+      const status = String(body.status || '').slice(0, 40);
+      if (!id) return res.status(400).json({ ok: false, error: 'Нет id' });
+      if (dbReady()) await db.update('wa_calls', `id=eq.${encodeURIComponent(id)}`, { status });
       return res.status(200).json({ ok: true });
     }
     return res.status(400).json({ ok: false, error: 'Неизвестное действие' });

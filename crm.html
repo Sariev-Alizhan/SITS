@@ -162,6 +162,47 @@
   .st-invoice{color:#c99;border-color:color-mix(in srgb,var(--warn) 45%,transparent);background:color-mix(in srgb,var(--warn) 12%,transparent)}
   .st-won{color:#6cc39a;border-color:color-mix(in srgb,var(--ok) 50%,transparent);background:color-mix(in srgb,var(--ok) 14%,transparent)}
   .st-lost{color:#b98;border-color:color-mix(in srgb,var(--err) 45%,transparent);background:color-mix(in srgb,var(--err) 10%,transparent)}
+  .st-call_invited{color:#7cc6dd;border-color:color-mix(in srgb,#2E86A8 48%,transparent);background:color-mix(in srgb,#2E86A8 14%,transparent)}
+  .st-contract_invited{color:#b9a6e8;border-color:color-mix(in srgb,#7C5CBF 48%,transparent);background:color-mix(in srgb,#7C5CBF 16%,transparent)}
+  /* Расписание созвонов */
+  .sched-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+  .sched-filters{margin-bottom:14px}
+  .sched-day{font-size:12px;font-weight:700;color:var(--gold);text-transform:capitalize;letter-spacing:.02em;margin:18px 0 8px;padding-left:2px}
+  .sched-row{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px;transition:.2s var(--ease)}
+  .sched-row:hover{border-color:var(--line-2)}
+  .sched-row.past{opacity:.55}
+  .sr-time{min-width:52px;text-align:center;padding-top:2px}
+  .sr-time b{font-size:17px;color:var(--fg)}
+  .sr-main{flex:1;min-width:0}
+  .sr-nm{font-weight:700;color:var(--fg);font-size:15px}
+  .sr-ph{font-weight:500;color:var(--dim);font-size:12px}
+  .sr-topic{color:var(--dim);font-size:13px;margin-top:2px}
+  .sr-inv{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+  .inv-lbl{font-size:11px;color:var(--dim)}
+  .inv-chip{font-size:11px;font-weight:600;color:var(--gold);background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--gold) 35%,transparent);border-radius:8px;padding:2px 8px}
+  .sr-by{font-size:11px;color:var(--dim);opacity:.7;margin-top:5px}
+  .sr-acts{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+  .sr-join{font-size:12px;font-weight:700;color:#0b0c10;background:linear-gradient(180deg,var(--gold-lit),var(--gold));border-radius:9px;padding:7px 11px;text-decoration:none;white-space:nowrap;align-self:center}
+  .sr-ic{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;background:var(--ink);border:1px solid var(--line);border-radius:8px;color:var(--dim);cursor:pointer;transition:.15s var(--ease)}
+  .sr-ic:hover{color:var(--fg);border-color:var(--line-2)}
+  .sr-ic.wa:hover{color:#25D366;border-color:#25D366}
+  .sr-ic.del:hover{color:var(--err)}
+  /* модал созвона + чипы участников */
+  .modal-back{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);z-index:120;display:flex;align-items:center;justify-content:center;padding:16px}
+  .modal{background:var(--surface);border:1px solid var(--line-2);border-radius:18px;padding:20px;width:min(460px,96vw);max-height:92vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+  .modal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .modal-top h3{margin:0;font-size:17px}
+  .modal-x{background:transparent;border:none;color:var(--dim);cursor:pointer;padding:4px;display:inline-flex}
+  .modal-x:hover{color:var(--fg)}
+  .f-lbl{display:block;font-size:12px;color:var(--dim);margin:12px 0 5px}
+  .f-inp{width:100%;background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--fg);font-size:14px;font-family:inherit;box-sizing:border-box}
+  .f-inp:focus{outline:none;border-color:var(--gold-soft)}
+  .sched-row2{display:flex;gap:10px}.sched-row2>div{flex:1}
+  .invite-chips{display:flex;flex-wrap:wrap;gap:6px}
+  .inv-toggle{font-size:12px;font-weight:600;color:var(--dim);background:var(--ink);border:1px solid var(--line);border-radius:9px;padding:6px 11px;cursor:pointer;transition:.15s var(--ease)}
+  .inv-toggle:hover{color:var(--fg)}
+  .inv-toggle.on{color:var(--gold);background:var(--gold-soft);border-color:color-mix(in srgb,var(--gold) 45%,transparent)}
+  .modal-acts{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
   .deal .row-actions{display:flex;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
 
   /* kanban board */
@@ -668,7 +709,48 @@
       <button class="tab" data-view="roadmap"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3zM9 3v15M15 6v15"/></svg> Roadmap</button>
       <button class="tab" data-view="strategy"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg> Стратегия</button>
       <button class="tab" data-view="notes"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg> Заметки</button>
+      <button class="tab" data-view="schedule"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M8 14h.01M12 14h.01M16 14h.01"/></svg> Расписание</button>
       <button class="tab" data-view="whatsapp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.2-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg> WhatsApp</button>
+    </div>
+  </div>
+
+  <!-- ---- РАСПИСАНИЕ СОЗВОНОВ (общее для команды) ---- -->
+  <div class="wrap view" id="view-schedule">
+    <div class="sched-head">
+      <div><h2 style="margin:0">Расписание созвонов</h2><p class="mut" style="margin:4px 0 0">Общее для команды: кто с кем созванивается, когда и по какой ссылке. Любой менеджер добавляет — видят все.</p></div>
+      <button class="btn btn-gold btn-sm" id="schedAddBtn">+ Добавить созвон</button>
+    </div>
+    <div class="seg sched-filters">
+      <button class="on" data-sf="upcoming">Предстоящие</button>
+      <button data-sf="all">Все</button>
+      <button data-sf="mine">Мои</button>
+    </div>
+    <div id="schedList"></div>
+  </div>
+
+  <!-- модал созвона -->
+  <div class="modal-back" id="schedModal" style="display:none">
+    <div class="modal sched-modal">
+      <div class="modal-top"><h3 id="schedModalTitle">Новый созвон</h3><button class="modal-x" id="schedX" title="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" style="width:16px;height:16px"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+      <input type="hidden" id="sm_id">
+      <label class="f-lbl">С кем (клиент / компания)</label>
+      <input class="f-inp" id="sm_name" placeholder="Напр. Асхат · ТОО «Кухни Модерн»">
+      <label class="f-lbl">Телефон (для WhatsApp, по желанию)</label>
+      <input class="f-inp" id="sm_phone" placeholder="+7 700 000 00 00">
+      <div class="sched-row2">
+        <div><label class="f-lbl">Дата</label><input class="f-inp" id="sm_date" type="date"></div>
+        <div><label class="f-lbl">Время</label><input class="f-inp" id="sm_time" type="time"></div>
+      </div>
+      <label class="f-lbl">Тема созвона</label>
+      <input class="f-inp" id="sm_topic" placeholder="Напр. презентация CRM, обсуждение договора">
+      <label class="f-lbl">Ссылка на созвон (Google Meet / Zoom)</label>
+      <input class="f-inp" id="sm_link" placeholder="https://meet.google.com/...">
+      <label class="f-lbl">Кто приглашён (участники из команды)</label>
+      <div id="sm_invited" class="invite-chips"></div>
+      <div class="modal-acts">
+        <button class="btn btn-ghost" id="schedCancel">Отмена</button>
+        <button class="btn btn-gold" id="schedSave">Сохранить</button>
+      </div>
     </div>
   </div>
 
@@ -698,8 +780,10 @@
       <div class="seg" id="statusFilter" style="display:none">
         <button class="on" data-f="all">Все</button>
         <button data-f="new">Новые</button>
+        <button data-f="call_invited">На звонок</button>
         <button data-f="in_progress">В работе</button>
         <button data-f="kp_sent">КП отправлено</button>
+        <button data-f="contract_invited">На договор</button>
         <button data-f="won">Выиграно</button>
       </div>
       <button class="btn btn-gold btn-sm" id="newDealBtn">+ Новое КП</button>
@@ -734,8 +818,8 @@
           </div>
           <div class="field"><label>Статус</label>
             <select id="f_status">
-              <option value="new">Новая</option><option value="in_progress">В работе</option>
-              <option value="kp_sent">КП отправлено</option><option value="invoice">Счёт</option>
+              <option value="new">Новая</option><option value="call_invited">Приглашён на звонок</option><option value="in_progress">В работе</option>
+              <option value="kp_sent">КП отправлено</option><option value="contract_invited">Приглашён на договор</option><option value="invoice">Счёт</option>
               <option value="won">Выиграно</option><option value="lost">Проиграно</option>
             </select>
           </div>
@@ -1329,9 +1413,9 @@
     `<optgroup label="${esc(g[0])}">`+
     g[1].map(c=>`<option value="${esc(c[0])}"${c[0]===sel?' selected':''}>${esc(c[0])}${c[1]?' · '+fmt(c[1]):''}</option>`).join('')+
     `</optgroup>`).join('');
-  const ST_LABEL = {new:'Новая',in_progress:'В работе',kp_sent:'КП отправлено',invoice:'Счёт',won:'Выиграно',lost:'Проиграно'};
-  const ST_COLOR = {new:'#35618E',in_progress:'#D2A24C',kp_sent:'#EFC97E',invoice:'#B8542A',won:'#2E7D5B',lost:'#A32118'};
-  const KAN_COLS = ['new','in_progress','kp_sent','invoice','won'];
+  const ST_LABEL = {new:'Новая',call_invited:'Приглашён на звонок',in_progress:'В работе',kp_sent:'КП отправлено',contract_invited:'Приглашён на договор',invoice:'Счёт',won:'Выиграно',lost:'Проиграно'};
+  const ST_COLOR = {new:'#35618E',call_invited:'#2E86A8',in_progress:'#D2A24C',kp_sent:'#EFC97E',contract_invited:'#7C5CBF',invoice:'#B8542A',won:'#2E7D5B',lost:'#A32118'};
+  const KAN_COLS = ['new','call_invited','in_progress','kp_sent','contract_invited','invoice','won'];
 
   let PASS = sessionStorage.getItem(KEY_PASS) || '';
   let LOGIN = sessionStorage.getItem(KEY_LOGIN) || '';
@@ -1602,6 +1686,7 @@
     if(t.dataset.view==='partners') ensurePartners();
     if(t.dataset.view==='calendar') renderCal();
     if(t.dataset.view==='whatsapp') loadWA();
+    if(t.dataset.view==='schedule') loadSchedule();
   }));
   function gotoView(v){ $$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.view===v)); $$('.view').forEach(x=>x.classList.remove('active')); $('#view-'+v).classList.add('active'); if(v==='outreach') ensureOutreach(); }
 
@@ -1913,7 +1998,7 @@
   $('#dashReload') && $('#dashReload').addEventListener('click',loadDashboard);
 
   // ---------- WHATSAPP · КАНБАН ----------
-  const KB_STAGES=[['new','Новый'],['dialog','Диалог'],['qualified','Квалификация'],['quote','КП/Цена'],['waiting_payment','Ожидание оплаты'],['won','Клиент'],['lost','Отказ']];
+  const KB_STAGES=[['new','Новый'],['dialog','Диалог'],['qualified','Квалификация'],['call_invited','Приглашён на звонок'],['quote','КП/Цена'],['contract_invited','Приглашён на договор'],['waiting_payment','Ожидание оплаты'],['won','Клиент'],['lost','Отказ']];
   let KB_DEALS=[], KB_CHATS=[], KB_CALLS=[], KB_CUR=null, WA_POLL=null, KB_LASTCOUNT=0, WA_MODE='chats', KB_MANAGERS=[];
   function fillManagerSelect(){ const s=$('#kbManager'); if(!s) return; const cur=s.value; s.innerHTML='<option value="">— менеджер —</option>'+KB_MANAGERS.map(m=>'<option value="'+esc(m.name||m.login)+'">'+esc(m.name||m.login)+'</option>').join(''); s.value=cur; }
   async function loadManagers(){ try{ const d=await apiWA('/api/wa?action=managers','GET'); KB_MANAGERS=d.managers||[]; fillManagerSelect(); }catch(e){} }
@@ -1930,13 +2015,51 @@
   $('#kbManager') && $('#kbManager').addEventListener('change', async ()=>{ if(!KB_CUR) return; const manager=$('#kbManager').value; try{ await apiWA('/api/wa','POST',{action:'assign',phone:KB_CUR,manager}); const c=KB_CHATS.find(x=>x.phone===KB_CUR); if(c) c.manager=manager||null; renderWAChats(); toast(manager?('Чат закреплён: '+manager):'Менеджер снят','ok'); }catch(e){ toast('Ошибка: '+e.message,'err'); } });
   function renderWAKanban(){ const b=$('#kbBoard'); if(!b) return; b.innerHTML=KB_STAGES.map(([s,label])=>{ const items=KB_DEALS.filter(d=>(d.stage||'new')===s); const cards=items.map(d=>{ const opts=KB_STAGES.map(([v,l])=>'<option value="'+v+'"'+(v===(d.stage||'new')?' selected':'')+'>'+l+'</option>').join(''); return '<div class="kb-card" data-phone="'+esc(d.phone)+'"><b>'+esc(d.name||('+'+d.phone))+'</b><div class="svc">+'+esc(d.phone)+(d.service?' · '+esc(d.service):'')+'</div><div class="row"><select data-phone="'+esc(d.phone)+'" onclick="event.stopPropagation()">'+opts+'</select></div></div>'; }).join('')||'<div class="mut" style="padding:4px 6px">—</div>'; return '<div class="kb-col"><h4>'+label+'<span class="cnt">'+items.length+'</span></h4>'+cards+'</div>'; }).join(''); b.querySelectorAll('.kb-card').forEach(el=>el.addEventListener('click',()=>openChat(el.dataset.phone))); b.querySelectorAll('.kb-card select').forEach(sel=>sel.addEventListener('change',()=>moveStage(sel.dataset.phone,sel.value))); }
   async function moveStage(phone,stage){ try{ await apiWA('/api/wa','POST',{action:'move',phone,stage}); const d=KB_DEALS.find(x=>x.phone===phone); if(d)d.stage=stage; renderWAKanban(); toast('Сделка перемещена','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
-  const WA_STAGE_LABEL={new:'Новый',dialog:'Диалог',qualified:'Квалификация',quote:'КП/Цена',waiting_payment:'Ожидание оплаты',won:'Клиент',lost:'Отказ'};
+  const WA_STAGE_LABEL={new:'Новый',dialog:'Диалог',qualified:'Квалификация',call_invited:'Приглашён на звонок',quote:'КП/Цена',contract_invited:'Приглашён на договор',waiting_payment:'Ожидание оплаты',won:'Клиент',lost:'Отказ'};
   function waFmtDT(s){ if(!s) return '—'; try{ const d=new Date(s); return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}); }catch{ return '—'; } }
   function waMsgHTML(x){ const cls=x.role==='user'?'in':('out '+(x.role==='agent'?'agent':'bot')); const who=x.role==='user'?'':(x.role==='agent'?'вы':'бот'); return '<div class="kb-msg '+cls+'">'+(who?'<span class="kb-who">'+who+'</span>':'')+'<div class="kb-bubble">'+esc(x.text).replace(/\n/g,'<br>')+'</div></div>'; }
   function renderChatStats(phone,msgs){ const el=$('#kbStats'); if(!el) return; const d=KB_DEALS.find(x=>x.phone===phone)||{}; const c=msgs||[]; const byClient=c.filter(x=>x.role==='user').length; const byBot=c.filter(x=>x.role==='assistant').length; const byAgent=c.filter(x=>x.role==='agent').length; const stage=d.stage||'new'; const reach=['qualified','quote','waiting_payment','won'].includes(stage); const lead=[d.name,d.service,d.budget].filter(Boolean).join(' · '); let verdict,warn=false; if(stage==='won'){verdict='Довёл до заказа';} else if(stage==='lost'){verdict='Клиент отказался / не целевой';warn=true;} else if(reach){verdict='Выявил потребность, назвал решение';} else if(byBot>0){verdict='Ведёт диалог, квалифицирует';} else {verdict='Пока без ответа бота';warn=true;} const first=c.length?waFmtDT(c[0].created_at):'—'; const last=c.length?waFmtDT(c[c.length-1].created_at):'—'; el.innerHTML='<div class="st-row"><span class="chip stage">Стадия: '+esc(WA_STAGE_LABEL[stage]||stage)+'</span>'+(lead?'<span class="chip">'+esc(lead)+'</span>':'')+'</div>'+'<div class="st-metrics"><div class="m"><b>'+c.length+'</b>всего</div><div class="m"><b>'+byClient+'</b>клиент</div><div class="m"><b>'+byBot+'</b>бот</div><div class="m"><b>'+byAgent+'</b>вы</div></div>'+'<div class="st-sum"><span class="st-verdict'+(warn?' warn':'')+'">'+esc(verdict)+'</span>'+(d.note?' — '+esc(d.note):'')+'<br><span style="opacity:.7">Первое: '+first+' · Последнее: '+last+'</span></div>'; }
   async function openChat(phone){ KB_CUR=phone; const d=KB_DEALS.find(x=>x.phone===phone); $('#kbTitle').textContent=(d&&d.name)?d.name+' (+'+phone+')':('+'+phone); $('#kbDrawer').classList.add('open'); { const cm=KB_CHATS.find(x=>x.phone===phone); if($('#kbManager')) $('#kbManager').value=(cm&&cm.manager)||''; } $('#kbStats').innerHTML=''; $('#kbThread').innerHTML='<div class="mut">Загрузка…</div>'; try{ const c=await apiWA('/api/wa?action=chats','GET'); const ct=(c.chats||[]).find(x=>x.phone===phone); $('#kbToggle').checked=!(ct&&ct.bot_enabled===false); if($('#kbHideBtn')) $('#kbHideBtn').textContent=(ct&&ct.hidden===true)?'Вернуть':'Скрыть'; }catch{} try{ const m=await apiWA('/api/wa?action=messages&phone='+encodeURIComponent(phone),'GET'); const msgs=m.messages||[]; $('#kbThread').innerHTML=msgs.length? msgs.map(waMsgHTML).join('') : '<div class="mut">Пусто</div>'; const t=$('#kbThread'); t.scrollTop=t.scrollHeight; renderChatStats(phone,msgs); KB_LASTCOUNT=msgs.length; }catch(err){ $('#kbThread').innerHTML='<div class="mut">Ошибка: '+esc(err.message)+'</div>'; } }
   async function toggleKB(){ if(!KB_CUR) return; const enabled=$('#kbToggle').checked; try{ await apiWA('/api/wa','POST',{action:'toggle',phone:KB_CUR,enabled}); const c=KB_CHATS.find(x=>x.phone===KB_CUR); if(c){ c.bot_enabled=enabled; renderWAChats(); } toast(enabled?'Бот включён для чата':'Бот выключен — отвечаете вы','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); $('#kbToggle').checked=!enabled; } }
   $('#waReload') && $('#waReload').addEventListener('click',loadWA);
+
+  // ---------- РАСПИСАНИЕ СОЗВОНОВ (общее для команды) ----------
+  let SCHED=[], SCHED_FILTER='upcoming';
+  function schedInvited(c){ try{ return Array.isArray(c.invited)?c.invited:JSON.parse(c.invited||'[]'); }catch{ return []; } }
+  async function loadSchedule(){ const el=$('#schedList'); if(el) el.innerHTML='<div class="mut" style="padding:14px">Загрузка…</div>'; loadManagers(); try{ const d=await apiWA('/api/wa?action=schedule','GET'); if(d.cloud===false){ if(el) el.innerHTML='<div class="mut" style="padding:14px">CRM не подключён к Supabase — расписание недоступно.</div>'; return; } SCHED=d.calls||[]; renderSchedule(); }catch(err){ if(el) el.innerHTML='<div class="mut" style="padding:14px">Ошибка: '+esc(err.message)+'</div>'; } }
+  function renderSchedule(){ const el=$('#schedList'); if(!el) return; const now=Date.now(); const mine=(localStorage.getItem(KEY_MGR)||'').toLowerCase(); let list=SCHED.slice(); if(SCHED_FILTER==='upcoming') list=list.filter(c=>new Date(c.scheduled_at).getTime()>=now-3600e3); if(SCHED_FILTER==='mine') list=list.filter(c=>{ const inv=schedInvited(c).map(x=>String(x).toLowerCase()); return (c.created_by||'').toLowerCase()===mine || inv.includes(mine); }); if(!list.length){ el.innerHTML='<div class="mut" style="padding:16px">Пока нет созвонов. Нажмите «+ Добавить созвон».</div>'; return; }
+    const groups={}; list.forEach(c=>{ const d=new Date(c.scheduled_at); const key=d.toLocaleDateString('ru-RU',{timeZone:'Asia/Almaty',weekday:'long',day:'2-digit',month:'long'}); (groups[key]=groups[key]||[]).push(c); });
+    el.innerHTML=Object.entries(groups).map(([day,items])=>'<div class="sched-day">'+esc(day)+'</div>'+items.map(schedRow).join('')).join('');
+    el.querySelectorAll('[data-wa]').forEach(b=>b.addEventListener('click',e=>{ e.stopPropagation(); const p=b.dataset.wa; gotoView('whatsapp'); loadWA(); setTimeout(()=>openChat(p),450); }));
+    el.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openSchedModal(SCHED.find(x=>x.id===b.dataset.edit))));
+    el.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',async()=>{ if(!confirm('Удалить созвон?'))return; try{ await apiWA('/api/wa','POST',{action:'del_call',id:b.dataset.del}); SCHED=SCHED.filter(x=>x.id!==b.dataset.del); renderSchedule(); toast('Созвон удалён','ok'); }catch(e){ toast('Ошибка: '+e.message,'err'); } }));
+    el.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>{ try{ navigator.clipboard.writeText(b.dataset.copy); toast('Ссылка скопирована','ok'); }catch{ toast('Скопируйте вручную','err'); } }));
+    el.querySelectorAll('[data-sendlink]').forEach(b=>b.addEventListener('click',async e=>{ e.stopPropagation(); const i=b.dataset.sendlink.indexOf('|'); const p=b.dataset.sendlink.slice(0,i), u=b.dataset.sendlink.slice(i+1); if(!p){ toast('У созвона нет телефона клиента','err'); return; } try{ await apiWA('/api/wa','POST',{action:'send',phone:p,type:'text',text:'Ссылка на наш созвон: '+u}); toast('Ссылка отправлена клиенту','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }));
+  }
+  function schedRow(c){ const d=new Date(c.scheduled_at); const time=d.toLocaleTimeString('ru-RU',{timeZone:'Asia/Almaty',hour:'2-digit',minute:'2-digit'}); const past=d.getTime()<Date.now(); const nm=c.name||(c.phone?'+'+c.phone:'Без имени'); const inv=schedInvited(c); const invHtml=inv.length?inv.map(x=>'<span class="inv-chip">'+esc(x)+'</span>').join(''):'<span class="mut" style="font-size:12px">никто не приглашён</span>'; const link=(c.link||'').trim(); const ic=(attr,val,title,path)=>'<button class="sr-ic" '+attr+'="'+esc(val)+'" title="'+title+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px;height:14px">'+path+'</svg></button>';
+    return '<div class="sched-row'+(past?' past':'')+'">'+
+      '<div class="sr-time"><b>'+esc(time)+'</b></div>'+
+      '<div class="sr-main"><div class="sr-nm">'+esc(nm)+(c.phone?' <span class="sr-ph">+'+esc(c.phone)+'</span>':'')+'</div>'+
+        (c.topic?'<div class="sr-topic">'+esc(c.topic)+'</div>':'')+
+        '<div class="sr-inv"><span class="inv-lbl">Приглашены:</span> '+invHtml+'</div>'+
+        (c.created_by?'<div class="sr-by">создал: '+esc(c.created_by)+'</div>':'')+
+      '</div>'+
+      '<div class="sr-acts">'+
+        (link?'<a class="sr-join" href="'+esc(link)+'" target="_blank" rel="noopener">Войти в созвон</a>'+ic('data-copy',link,'Скопировать ссылку','<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>'):'<span class="mut" style="font-size:12px;align-self:center">нет ссылки</span>')+
+        (c.phone?ic('data-wa',c.phone,'Написать в WhatsApp','<path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.2-5.3A8.5 8.5 0 1 1 21 11.5z"/>'):'')+
+        (link&&c.phone?ic('data-sendlink',c.phone+'|'+link,'Отправить ссылку клиенту','<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>'):'')+
+        ic('data-edit',c.id,'Изменить','<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>')+
+        '<button class="sr-ic del" data-del="'+esc(c.id)+'" title="Удалить"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px;height:14px"><path d="M18 6 6 18M6 6l12 12"/></svg></button>'+
+      '</div></div>';
+  }
+  function renderInviteChips(sel){ const box=$('#sm_invited'); if(!box) return; const chosen=new Set((sel||[]).map(String)); const team=KB_MANAGERS.length?KB_MANAGERS:[{name:localStorage.getItem(KEY_MGR)||'Я'}]; box.innerHTML=team.map(m=>{ const n=m.name||m.login; return '<button type="button" class="inv-toggle'+(chosen.has(n)?' on':'')+'" data-n="'+esc(n)+'">'+esc(n)+'</button>'; }).join(''); box.querySelectorAll('.inv-toggle').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('on'))); }
+  function openSchedModal(c){ c=c||null; loadManagers(); $('#schedModalTitle').textContent=c?'Изменить созвон':'Новый созвон'; $('#sm_id').value=c?c.id:''; $('#sm_name').value=c?(c.name||''):''; $('#sm_phone').value=(c&&c.phone)?('+'+c.phone):''; $('#sm_topic').value=c?(c.topic||''):''; $('#sm_link').value=c?(c.link||''):''; const dd=c?new Date(c.scheduled_at):new Date(Date.now()+3600e3); const p2=n=>String(n).padStart(2,'0'); $('#sm_date').value=dd.getFullYear()+'-'+p2(dd.getMonth()+1)+'-'+p2(dd.getDate()); $('#sm_time').value=p2(dd.getHours())+':'+p2(dd.getMinutes()); setTimeout(()=>renderInviteChips(c?schedInvited(c):[localStorage.getItem(KEY_MGR)].filter(Boolean)),150); renderInviteChips(c?schedInvited(c):[localStorage.getItem(KEY_MGR)].filter(Boolean)); $('#schedModal').style.display='flex'; }
+  async function saveSched(){ const id=$('#sm_id').value; const name=$('#sm_name').value.trim(); const phone=$('#sm_phone').value.replace(/\D/g,''); const date=$('#sm_date').value; const time=$('#sm_time').value; const topic=$('#sm_topic').value.trim(); const link=$('#sm_link').value.trim(); if(!date||!time){ toast('Укажите дату и время','err'); return; } const invited=[...document.querySelectorAll('#sm_invited .inv-toggle.on')].map(b=>b.dataset.n); try{ await apiWA('/api/wa','POST',{action:'sched_add',id,name,phone,datetime:date+' '+time,topic,link,invited}); $('#schedModal').style.display='none'; toast(id?'Созвон обновлён':'Созвон добавлен','ok'); loadSchedule(); }catch(e){ toast('Ошибка: '+e.message,'err'); } }
+  $('#schedAddBtn') && $('#schedAddBtn').addEventListener('click',()=>openSchedModal(null));
+  $('#schedSave') && $('#schedSave').addEventListener('click',saveSched);
+  $('#schedCancel') && $('#schedCancel').addEventListener('click',()=>$('#schedModal').style.display='none');
+  $('#schedX') && $('#schedX').addEventListener('click',()=>$('#schedModal').style.display='none');
+  $$('.sched-filters button').forEach(b=>b.addEventListener('click',()=>{ $$('.sched-filters button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); SCHED_FILTER=b.dataset.sf; renderSchedule(); }));
   $('#kbToggle') && $('#kbToggle').addEventListener('change',toggleKB);
   async function hideChat(){ if(!KB_CUR) return; const c=KB_CHATS.find(x=>x.phone===KB_CUR); const nh=!(c&&c.hidden===true); try{ await apiWA('/api/wa','POST',{action:'hide',phone:KB_CUR,hidden:nh}); if(c) c.hidden=nh; renderWAChats(); toast(nh?'Чат скрыт':'Чат возвращён','ok'); $('#kbDrawer').classList.remove('open'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
   $('#kbHideBtn') && $('#kbHideBtn').addEventListener('click',hideChat);
@@ -2049,7 +2172,7 @@
     return `<div class="kcard deal" data-id="${d.id}" style="--st:${ST_COLOR[d.status]||'var(--gold)'}">
       <div class="kc-top"><div><div class="kc-cl">${esc(d.client||'Без имени')}</div>${d.company?`<div class="kc-co">${esc(d.company)}</div>`:''}</div><div class="kc-sum">${fmt(d.total)}</div></div>
       <div class="kc-meta">${d.no?`<span class="mono">${esc(d.no)}</span>`:''}${d.manager?`<span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${esc(d.manager)}</span>`:''}${d.source?`<span>${esc(d.source)}</span>`:''}<span>${dateShort(d.createdAt)}</span></div>
-      <div class="kc-act"><button class="act-edit">Открыть</button><button class="act-status">Дальше →</button><button class="act-del" title="Удалить"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+      <div class="kc-act"><button class="act-edit">Открыть</button><button class="act-status">Дальше →</button><button class="act-wa" title="Написать в WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.2-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg></button><button class="act-del" title="Удалить"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
     </div>`;
   }
   function renderKanban(box, list){
@@ -2092,6 +2215,7 @@
         <div class="row-actions">
           <button class="btn btn-ghost btn-sm act-edit">Открыть / КП</button>
           <button class="btn btn-ghost btn-sm act-status">Статус →</button>
+          <button class="btn btn-ghost btn-sm act-wa">Написать</button>
           <button class="btn btn-ghost btn-sm btn-danger act-del" style="margin-left:auto">Удалить</button>
         </div>
       </div>`).join('');
@@ -2100,15 +2224,16 @@
   $('#dealsList').addEventListener('click',(e)=>{
     const card=e.target.closest('.deal'); if(!card) return; const id=card.dataset.id;
     const d=DEALS.find(x=>x.id===id); if(!d) return;
-    if(e.target.classList.contains('act-del')){ delDeal(id); return; }
-    if(e.target.classList.contains('act-status')){ cycleStatus(d); return; }
+    if(e.target.closest('.act-wa')){ const ph=(d.contact||'').replace(/\D/g,''); if(ph.length<10){ toast('В контакте сделки нет телефона','err'); return; } gotoView('whatsapp'); loadWA(); setTimeout(()=>openChat(ph),450); return; }
+    if(e.target.closest('.act-del')){ delDeal(id); return; }
+    if(e.target.closest('.act-status')){ cycleStatus(d); return; }
     loadIntoGenerator(d); gotoView('kp');
   });
   $('#dealSearch').addEventListener('input',e=>{ searchQ=e.target.value.trim(); renderDeals(); });
   $$('#statusFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#statusFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); filterStatus=b.dataset.f; renderDeals(); }));
   $$('#viewToggle button').forEach(b=>b.addEventListener('click',()=>{ $$('#viewToggle button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); viewMode=b.dataset.v; $('#statusFilter').style.display = viewMode==='kanban' ? 'none' : ''; renderDeals(); }));
 
-  const ORDER=['new','in_progress','kp_sent','invoice','won'];
+  const ORDER=['new','call_invited','in_progress','kp_sent','contract_invited','invoice','won'];
   async function cycleStatus(d){ const i=ORDER.indexOf(d.status); d.status=ORDER[(i+1)%ORDER.length]; try{ const r=await api('POST',{action:'save',deal:d}); persistLocal(); updateCloud(r.cloud); toast('Статус: '+ST_LABEL[d.status],'ok'); renderDeals(); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
   async function delDeal(id){ if(!confirm('Удалить сделку?')) return; try{ const r=await api('POST',{action:'delete',id}); DEALS=DEALS.filter(x=>x.id!==id); persistLocal(); updateCloud(r.cloud); renderDeals(); toast('Удалено','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
 

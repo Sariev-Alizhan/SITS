@@ -34,7 +34,7 @@ const ALLOWED_ORIGINS = [
   'https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app',
 ];
 
-const STATUSES = new Set(['new', 'in_progress', 'kp_sent', 'invoice', 'won', 'lost']);
+const STATUSES = new Set(['new', 'call_invited', 'in_progress', 'kp_sent', 'contract_invited', 'invoice', 'won', 'lost']);
 
 // Маппинг camelCase (JS/фронт) ↔ snake_case (колонки Postgres)
 function toRow(d) {

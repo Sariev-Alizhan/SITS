@@ -91,8 +91,9 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true, calls: calls || [], cloud: true });
     }
     // Общее командное расписание созвонов (все менеджеры видят, любой добавляет).
+    // Участники/ссылка/автор упакованы в поле topic как JSON — без изменения схемы БД.
     if (req.method === 'GET' && action === 'schedule') {
-      const calls = await db.select('wa_calls', 'select=id,phone,name,scheduled_at,topic,status,invited,link,created_by&order=scheduled_at.asc&limit=1000');
+      const calls = await db.select('wa_calls', 'select=id,phone,name,scheduled_at,topic,status&order=scheduled_at.asc&limit=1000');
       return res.status(200).json({ ok: true, calls: calls || [], cloud: true });
     }
     if (req.method === 'GET' && action === 'messages') {
@@ -201,7 +202,9 @@ export default async function handler(req, res) {
       if (!dbReady()) return res.status(200).json({ ok: false, error: 'CRM (Supabase) не подключён' });
       const iso = new Date(`${m[1]}T${m[2]}:00+05:00`).toISOString();
       const createdBy = String(user.name || user.login || '').slice(0, 80);
-      const row = { phone, name, scheduled_at: iso, topic, chat_phone: phone, status: 'scheduled', invited: JSON.stringify(invited), link, created_by: createdBy };
+      // Пакуем тему + ссылку + участников + автора в поле topic (JSON), чтобы не менять схему wa_calls.
+      const meta = JSON.stringify({ t: topic, link, invited, by: createdBy });
+      const row = { phone, name, scheduled_at: iso, topic: meta, chat_phone: phone, status: 'scheduled' };
       let id = String(body.id || '');
       if (id) { await db.update('wa_calls', `id=eq.${encodeURIComponent(id)}`, row); }
       else { id = 'call-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); row.id = id; row.created_at = new Date().toISOString(); await db.insert('wa_calls', row); }

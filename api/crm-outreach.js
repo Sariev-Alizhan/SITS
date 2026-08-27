@@ -80,8 +80,15 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       if (!dbReady()) return res.status(200).json({ ok: true, items: [], user, cloud: false });
       try {
-        const rows = await db.select('call_list', 'select=*&order=created_at.asc&limit=6000');
-        return res.status(200).json({ ok: true, items: (rows || []).map(fromRow), user, cloud: true });
+        // Supabase PostgREST режет выдачу на max-rows (обычно 1000), поэтому тянем страницами по 1000, пока не кончатся.
+        const rows = [];
+        for (let offset = 0; offset < 30000; offset += 1000) {
+          const chunk = await db.select('call_list', `select=*&order=created_at.asc&limit=1000&offset=${offset}`);
+          if (!chunk || !chunk.length) break;
+          rows.push(...chunk);
+          if (chunk.length < 1000) break;
+        }
+        return res.status(200).json({ ok: true, items: rows.map(fromRow), user, cloud: true });
       } catch (e) {
         console.error('outreach read error:', e?.message || e);
         return res.status(200).json({ ok: true, items: [], user, cloud: false });

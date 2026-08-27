@@ -42,7 +42,7 @@ function toRow(d = {}) {
   if (d.verified !== undefined) row.verified = !!d.verified;
   if (d.qualified !== undefined) row.qualified = !!d.qualified;
   if (d.channels && typeof d.channels === 'object') {
-    const c = {}; const keys = ['instagram', 'whatsapp', 'phone', 'website', 'twogis', 'telegram', 'email'];
+    const c = {}; const keys = ['instagram', 'whatsapp', 'phone', 'website', 'twogis', 'telegram', 'email', 'city'];
     for (const k of keys) if (d.channels[k]) c[k] = String(d.channels[k]).slice(0, 300);
     row.channels = c;
   }

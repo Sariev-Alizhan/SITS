@@ -187,6 +187,39 @@
   .sr-ic:hover{color:var(--fg);border-color:var(--line-2)}
   .sr-ic.wa:hover{color:#25D366;border-color:#25D366}
   .sr-ic.del:hover{color:var(--err)}
+  /* Календарь расписания (Google-стиль) — префикс sc- чтобы не конфликтовать с heatmap .cal-* */
+  .sc-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .sc-nav{display:flex;align-items:center;gap:8px}
+  .sc-navbtn{width:34px;height:34px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;background:var(--surface);border:1px solid var(--line-2);border-radius:10px;color:var(--fg);cursor:pointer;transition:.15s var(--ease)}
+  .sc-navbtn:hover{border-color:var(--gold);color:var(--gold)}
+  .sc-navbtn svg{width:18px;height:18px}
+  .sc-title{font-family:var(--font-display);font-weight:600;font-size:16px;text-transform:capitalize;min-width:150px;text-align:center}
+  .sc-wrap{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .sc-dow{display:grid;grid-template-columns:repeat(7,1fr);background:var(--ink);border-bottom:1px solid var(--line)}
+  .sc-dow span{padding:9px 6px;text-align:center;font-size:11px;font-weight:700;color:var(--dim);letter-spacing:.03em;text-transform:uppercase}
+  .sc-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+  .sc-cell{position:relative;min-height:98px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:6px 6px 5px;cursor:pointer;display:flex;flex-direction:column;gap:3px;transition:.12s var(--ease);overflow:hidden}
+  .sc-cell:nth-child(7n){border-right:none}
+  .sc-grid>.sc-cell:nth-last-child(-n+7){border-bottom:none}
+  .sc-cell:hover{background:var(--surface-2)}
+  .sc-cell.other{opacity:.38}
+  .sc-cell.weekend:not(.today) .sc-dnum{color:var(--gold)}
+  .sc-cell.sel{background:var(--gold-soft);box-shadow:inset 0 0 0 2px var(--gold)}
+  .sc-dnum{font-size:13px;font-weight:600;color:var(--fg);align-self:flex-start;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0}
+  .sc-cell.today .sc-dnum{background:linear-gradient(180deg,var(--gold-lit),var(--gold));color:#241a06}
+  .sc-chips{display:flex;flex-direction:column;gap:2px;min-width:0;width:100%}
+  .sc-chip{display:flex;align-items:baseline;gap:3px;width:100%;text-align:left;font-size:11px;line-height:1.35;padding:2px 5px;border-radius:6px;background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--gold) 24%,transparent);color:var(--fg);cursor:pointer;overflow:hidden;transition:.12s var(--ease)}
+  .sc-chip:hover{background:color-mix(in srgb,var(--gold) 22%,transparent)}
+  .sc-chip b{color:var(--gold);font-weight:700;flex:0 0 auto}
+  .sc-chip .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  .sc-chip.past{opacity:.5}
+  .sc-more{font-size:10px;color:var(--dim);padding:1px 4px}
+  .sc-dot{display:none}
+  /* Панель выбранного дня */
+  .sched-day-panel{margin-top:18px}
+  .sdp-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+  .sdp-title{font-family:var(--font-display);font-weight:600;font-size:15px;text-transform:capitalize}
+  .sdp-empty{color:var(--dim);font-size:13px;background:var(--surface);border:1px dashed var(--line-2);border-radius:12px;padding:18px;text-align:center}
   /* модал созвона + чипы участников */
   .modal-back{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);z-index:120;display:flex;align-items:center;justify-content:center;padding:16px}
   .modal{background:var(--surface);border:1px solid var(--line-2);border-radius:18px;padding:20px;width:min(460px,96vw);max-height:92vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.4)}
@@ -210,7 +243,17 @@
     .sr-time{min-width:44px}
     .sr-acts{width:100%;justify-content:flex-start;margin-top:8px;flex-wrap:wrap}
     .sched-row2{flex-direction:column;gap:0}
-    .sched-filters{width:100%;justify-content:center;display:flex}
+    .sched-filters{justify-content:center}
+    .sc-toolbar{flex-direction:column;align-items:stretch;gap:10px}
+    .sc-nav{justify-content:space-between}
+    .sc-title{flex:1;min-width:0;font-size:15px}
+    .sc-cell{min-height:52px;padding:5px 2px 4px;gap:0;align-items:center}
+    .sc-chips,.sc-more{display:none}
+    .sc-dnum{font-size:12.5px;width:23px;height:23px}
+    .sc-dot{display:flex;gap:3px;flex-wrap:wrap;justify-content:center;margin-top:4px;padding:0 2px}
+    .sc-dot i{width:5px;height:5px;border-radius:50%;background:var(--gold);display:block}
+    .sc-dow span{font-size:10px;padding:7px 2px}
+    .sdp-head .btn{flex:1}
   }
   .deal .row-actions{display:flex;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
 
@@ -442,6 +485,7 @@
   .out-row .b-name .pt-pct{font-size:10px;font-weight:800;color:var(--gold);background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent);border-radius:5px;padding:0 5px;vertical-align:1px;cursor:help}
   #outMineFilter .on{color:var(--gold)}
   .who-filter{width:auto;min-width:150px;padding:8px 12px;font-size:13px;border-radius:10px}
+  .city-tag{display:inline-block;font-size:11px;font-weight:600;color:var(--gold);background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);border-radius:7px;padding:1px 7px;margin-right:4px;white-space:nowrap}
   .preset-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0 14px}
   .preset-lbl{font-size:12px;color:var(--slate)}
   .preset-chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -726,15 +770,26 @@
   <!-- ---- РАСПИСАНИЕ СОЗВОНОВ (общее для команды) ---- -->
   <div class="wrap view" id="view-schedule">
     <div class="sched-head">
-      <div><h2 style="margin:0">Расписание созвонов</h2><p class="mut" style="margin:4px 0 0">Общее для команды: кто с кем созванивается, когда и по какой ссылке. Любой менеджер добавляет — видят все.</p></div>
+      <div><h2 style="margin:0">Расписание созвонов</h2><p class="mut" style="margin:4px 0 0">Общий календарь команды: кто с кем созванивается, когда и по какой ссылке. Любой менеджер добавляет — видят все.</p></div>
       <button class="btn btn-gold btn-sm" id="schedAddBtn">+ Добавить созвон</button>
     </div>
-    <div class="seg sched-filters">
-      <button class="on" data-sf="upcoming">Предстоящие</button>
-      <button data-sf="all">Все</button>
-      <button data-sf="mine">Мои</button>
+    <div class="sc-toolbar">
+      <div class="sc-nav">
+        <button class="sc-navbtn" id="calPrev" title="Предыдущий месяц" aria-label="Предыдущий месяц"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <div class="sc-title" id="calTitle">—</div>
+        <button class="sc-navbtn" id="calNext" title="Следующий месяц" aria-label="Следующий месяц"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+        <button class="btn btn-ghost btn-sm" id="calToday">Сегодня</button>
+      </div>
+      <div class="seg sched-filters">
+        <button class="on" data-sf="all">Все</button>
+        <button data-sf="mine">Мои</button>
+      </div>
     </div>
-    <div id="schedList"></div>
+    <div class="sc-wrap">
+      <div class="sc-dow"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
+      <div class="sc-grid" id="schedGrid"></div>
+    </div>
+    <div id="schedDayPanel" class="sched-day-panel"></div>
   </div>
 
   <!-- модал созвона -->
@@ -887,8 +942,10 @@
         <button class="on" data-m="all">Все</button>
         <button data-m="mine">Мои</button>
       </div>
+      <select id="outCityFilter" class="who-filter" title="Город"><option value="">Город: все</option></select>
       <select id="outWhoFilter" class="who-filter" title="Кто ведёт"><option value="">Кто ведёт: все</option></select>
       <select id="outTierFilter" class="who-filter" title="Бюджет"><option value="">Бюджет: все</option><option value="высокий">Высокий</option><option value="средний">Средний</option></select>
+      <button class="btn btn-gold btn-sm" id="outImportBtn" title="Массовый импорт лидов">+ Импорт лидов</button>
       <button class="btn btn-ghost btn-sm icon-btn" id="outReloadBtn" title="Обновить" aria-label="Обновить"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/></svg></button>
     </div>
     <div class="out-wrap">
@@ -897,7 +954,23 @@
       </div>
       <div id="outList"></div>
     </div>
-    <div id="outEmpty" class="out-empty" style="display:none">Список пуст. Здесь появится база бизнесов Астаны из ресёрча — их можно будет распределять и прорабатывать.</div>
+    <div id="outEmpty" class="out-empty" style="display:none">Список пуст. Нажмите «+ Импорт лидов» и вставьте базу — бизнесы появятся здесь для распределения и проработки.</div>
+  </div>
+
+  <!-- модал массового импорта лидов -->
+  <div class="modal-back" id="outImportModal" style="display:none">
+    <div class="modal" style="width:min(620px,96vw)">
+      <div class="modal-top"><h3 style="margin:0">Импорт лидов пачкой</h3><button class="modal-x" id="outImpX" title="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" style="width:16px;height:16px"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+      <p class="mut" style="font-size:13px;margin:0 0 6px;line-height:1.5">Вставьте по одному лиду в строке. Поля через <b>|</b> (вертикальную черту):</p>
+      <div style="font-family:var(--mono);font-size:12px;color:var(--gold);background:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:8px">Название | Город | Телефон | Категория | Заметка</div>
+      <p class="mut" style="font-size:12.5px;margin:0 0 8px">Обязательны только <b>Название</b> и <b>Телефон</b>. Остальное можно пропустить (оставить пустым между «|»). Пример:<br><span style="font-family:var(--mono);color:var(--fg)">Дент-Люкс | Алматы | +7 700 123 45 67 | Стоматология | нет сайта</span></p>
+      <textarea id="outImpText" rows="9" placeholder="Дент-Люкс | Алматы | +7 700 123 45 67 | Стоматология | нет сайта&#10;Smile Clinic | Астана | +7 701 987 65 43 | Стоматология |" style="width:100%;font-family:var(--mono);font-size:12.5px;line-height:1.5;resize:vertical"></textarea>
+      <div class="mut" id="outImpInfo" style="font-size:12px;margin-top:8px;min-height:16px"></div>
+      <div class="modal-acts">
+        <button class="btn btn-ghost" id="outImpCancel">Отмена</button>
+        <button class="btn btn-gold" id="outImpDo">Импортировать</button>
+      </div>
+    </div>
   </div>
 
   <!-- ---- ПАРТНЁРЫ (рекламные агентства для сотрудничества) ---- -->
@@ -1723,7 +1796,9 @@
   }
   const OUT_ST = {new:'Новый', in_progress:'В работе', done:'Выполнено', rejected:'Отказ'};
   const TIER_CLS = {'высокий':'hi','средний':'mid','низкий':'lo'};
-  let OUT=[], outLoaded=false, outSearch='', outFilter='all', outMine='all', outWho='', outTier='';
+  let OUT=[], outLoaded=false, outSearch='', outFilter='all', outMine='all', outWho='', outTier='', outCity='';
+  const outCityOf=(x)=>String((x.channels&&x.channels.city)||'').trim();
+  function fillCityFilter(){ const s=$('#outCityFilter'); if(!s) return; const cur=s.value; const present=[...new Set(OUT.map(outCityOf).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru')); s.innerHTML='<option value="">Город: все</option>'+present.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join(''); s.value=present.includes(cur)?cur:''; if(!present.includes(cur)) outCity=s.value; }
   async function apiOut(method, body){
     const opt={ method, headers:{ 'x-crm-login':LOGIN, 'x-crm-pass':PASS } };
     if(body){ opt.headers['Content-Type']='application/json'; opt.body=JSON.stringify(body); }
@@ -1774,8 +1849,9 @@
     if(outWho==='__none') list=list.filter(x=>!x.assignee);
     else if(outWho) list=list.filter(x=>x.assignee===outWho);
     if(outTier) list=list.filter(x=>x.budgetTier===outTier);
-    if(outSearch){ const q=outSearch.toLowerCase(); list=list.filter(x=>((x.name||'')+(x.category||'')+(x.contact||'')+(x.segment||'')).toLowerCase().includes(q)); }
-    outStats();
+    if(outCity) list=list.filter(x=>outCityOf(x)===outCity);
+    if(outSearch){ const q=outSearch.toLowerCase(); list=list.filter(x=>((x.name||'')+(x.category||'')+(x.contact||'')+(x.segment||'')+outCityOf(x)).toLowerCase().includes(q)); }
+    outStats(); fillCityFilter();
     const box=$('#outList');
     $('#outEmpty').style.display = OUT.length ? 'none' : 'block';
     box.innerHTML = list.map(it=>{
@@ -1791,7 +1867,7 @@
             <span class="nm">${esc(it.name)}${it.verified?' <span class="vbadge" title="Контакт проверен">✓</span>':''}${it.budgetTier?` <span class="tier tier-${TIER_CLS[it.budgetTier]||'mid'}" title="Оценка бюджета">${esc(it.budgetTier)}</span>`:''}${it.ready===false?' <span class="nrbadge">не готов</span>':''}${hasDetail?' <span class="chev">▸</span>':''}</span>
             ${teaser?`<small class="${it.pain?'pain':''}">${esc(teaser)}</small>`:''}
           </div>
-          <div class="b-cat">${esc(cat)}</div>
+          <div class="b-cat">${outCityOf(it)?`<span class="city-tag">${esc(outCityOf(it))}</span>`:''}${esc(cat)}</div>
           <div class="b-contact">${channelsHtml(it)}</div>
           <select class="o-assignee">${opts}</select>
           <select class="o-status st-${it.status}">${st}</select>
@@ -1836,6 +1912,41 @@
   $$('#outMineFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#outMineFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); outMine=b.dataset.m; renderOutreach(); }));
   (function(){ const s=$('#outWhoFilter'); if(!s) return; fillWhoFilters(); s.addEventListener('change',e=>{ outWho=e.target.value; renderOutreach(); }); })();
   $('#outTierFilter') && $('#outTierFilter').addEventListener('change',e=>{ outTier=e.target.value; renderOutreach(); });
+  $('#outCityFilter') && $('#outCityFilter').addEventListener('change',e=>{ outCity=e.target.value; renderOutreach(); });
+  // ---------- Массовый импорт лидов (вставка списком) ----------
+  function openImport(){ $('#outImpText').value=''; $('#outImpInfo').textContent=''; $('#outImportModal').style.display='flex'; setTimeout(()=>$('#outImpText').focus(),50); }
+  function closeImport(){ $('#outImportModal').style.display='none'; }
+  function parseImport(text){
+    const items=[]; let skipped=0;
+    (text||'').split(/\r?\n/).forEach((line,i)=>{
+      const raw=line.trim(); if(!raw) return;
+      const parts=raw.split(/\s*[|\t;]\s*/);
+      const name=(parts[0]||'').trim();
+      const city=(parts[1]||'').trim();
+      const phone=(parts[2]||'').trim();
+      const category=(parts[3]||'').trim()||'Лид';
+      const note=(parts[4]||'').trim();
+      if(!name){ skipped++; return; }
+      const channels={}; if(city) channels.city=city; const ph=phone.replace(/[^\d+]/g,''); if(ph.length>=6) channels.phone=phone;
+      items.push({ id:'imp-'+Date.now().toString(36)+'-'+i+'-'+Math.random().toString(36).slice(2,6), name, category, status:'new', contact:phone, channels, why:note, source:'Импорт '+new Date().toLocaleDateString('ru-RU') });
+    });
+    return { items, skipped };
+  }
+  async function doImport(){
+    const { items }=parseImport($('#outImpText').value);
+    const info=$('#outImpInfo');
+    if(!items.length){ info.style.color='var(--err)'; info.textContent='Не найдено ни одной строки с названием.'; return; }
+    const btn=$('#outImpDo'); btn.disabled=true; info.style.color='var(--dim)'; info.textContent='Импорт '+items.length+'…';
+    try{ const d=await apiOut('POST',{ action:'import', items }); closeImport(); toast('Импортировано лидов: '+(d.imported||items.length),'ok'); outLoaded=true; await loadOutreach(); }
+    catch(e){ info.style.color='var(--err)'; info.textContent='Ошибка: '+e.message; }
+    finally{ btn.disabled=false; }
+  }
+  $('#outImportBtn') && $('#outImportBtn').addEventListener('click',openImport);
+  $('#outImpX') && $('#outImpX').addEventListener('click',closeImport);
+  $('#outImpCancel') && $('#outImpCancel').addEventListener('click',closeImport);
+  $('#outImportModal') && $('#outImportModal').addEventListener('click',e=>{ if(e.target.id==='outImportModal') closeImport(); });
+  $('#outImpText') && $('#outImpText').addEventListener('input',()=>{ const { items, skipped }=parseImport($('#outImpText').value); const info=$('#outImpInfo'); info.style.color='var(--dim)'; info.textContent=items.length?('Готово к импорту: '+items.length+' лид(ов)'+(skipped?(', пропущено пустых: '+skipped):'')):''; });
+  $('#outImpDo') && $('#outImpDo').addEventListener('click',doImport);
 
   // ---------- ПАРТНЁРЫ (рекламные агентства) ----------
   const PART_ST={new:'Новый',contacted:'Написал',negotiating:'Переговоры',agreed:'Договорились',declined:'Отказ'};
@@ -2032,17 +2143,48 @@
   async function toggleKB(){ if(!KB_CUR) return; const enabled=$('#kbToggle').checked; try{ await apiWA('/api/wa','POST',{action:'toggle',phone:KB_CUR,enabled}); const c=KB_CHATS.find(x=>x.phone===KB_CUR); if(c){ c.bot_enabled=enabled; renderWAChats(); } toast(enabled?'Бот включён для чата':'Бот выключен — отвечаете вы','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); $('#kbToggle').checked=!enabled; } }
   $('#waReload') && $('#waReload').addEventListener('click',loadWA);
 
-  // ---------- РАСПИСАНИЕ СОЗВОНОВ (общее для команды) ----------
-  let SCHED=[], SCHED_FILTER='upcoming';
+  // ---------- РАСПИСАНИЕ СОЗВОНОВ (общий календарь команды, Google-стиль) ----------
+  let SCHED=[], SCHED_FILTER='all';
+  let CAL_Y=0, CAL_M=0, CAL_SEL='', CAL_INIT=false;
+  const RU_MONTHS=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+  const RU_DOW=['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
   // Тема созвона может быть JSON {t,link,invited,by} (наши созвоны) либо простой строкой (созвоны бота).
   function parseCall(c){ let t=c.topic||'', link='', invited=[], by=''; try{ const s=String(t).trim(); if(s && s[0]==='{'){ const j=JSON.parse(s); t=j.t||''; link=j.link||''; invited=Array.isArray(j.invited)?j.invited:[]; by=j.by||''; } }catch{} return {topic:t, link, invited, by}; }
   function schedInvited(c){ return parseCall(c).invited; }
-  async function loadSchedule(){ const el=$('#schedList'); if(el) el.innerHTML='<div class="mut" style="padding:14px">Загрузка…</div>'; loadManagers(); try{ const d=await apiWA('/api/wa?action=schedule','GET'); if(d.cloud===false){ if(el) el.innerHTML='<div class="mut" style="padding:14px">CRM не подключён к Supabase — расписание недоступно.</div>'; return; } SCHED=d.calls||[]; renderSchedule(); }catch(err){ if(el) el.innerHTML='<div class="mut" style="padding:14px">Ошибка: '+esc(err.message)+'</div>'; } }
-  function renderSchedule(){ const el=$('#schedList'); if(!el) return; const now=Date.now(); const mine=(localStorage.getItem(KEY_MGR)||'').toLowerCase(); let list=SCHED.slice(); if(SCHED_FILTER==='upcoming') list=list.filter(c=>new Date(c.scheduled_at).getTime()>=now-3600e3); if(SCHED_FILTER==='mine') list=list.filter(c=>{ const inv=schedInvited(c).map(x=>String(x).toLowerCase()); return (parseCall(c).by||'').toLowerCase()===mine || inv.includes(mine); }); if(!list.length){ el.innerHTML='<div class="mut" style="padding:16px">Пока нет созвонов. Нажмите «+ Добавить созвон».</div>'; return; }
-    const groups={}; list.forEach(c=>{ const d=new Date(c.scheduled_at); const key=d.toLocaleDateString('ru-RU',{timeZone:'Asia/Almaty',weekday:'long',day:'2-digit',month:'long'}); (groups[key]=groups[key]||[]).push(c); });
-    el.innerHTML=Object.entries(groups).map(([day,items])=>'<div class="sched-day">'+esc(day)+'</div>'+items.map(schedRow).join('')).join('');
+  // Ключ дня в таймзоне Астаны (yyyy-mm-dd) — чтобы группировка совпадала с тем, что видит команда.
+  function almatyToday(){ return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Almaty'}).format(new Date()); }
+  function schedKey(c){ return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Almaty',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(c.scheduled_at)); }
+  function schedTime(c){ return new Date(c.scheduled_at).toLocaleTimeString('ru-RU',{timeZone:'Asia/Almaty',hour:'2-digit',minute:'2-digit'}); }
+  function schedFiltered(){ if(SCHED_FILTER!=='mine') return SCHED.slice(); const mine=(localStorage.getItem(KEY_MGR)||'').toLowerCase(); return SCHED.filter(c=>{ const pc=parseCall(c); const inv=pc.invited.map(x=>String(x).toLowerCase()); return (pc.by||'').toLowerCase()===mine || inv.includes(mine); }); }
+  async function loadSchedule(){ const g=$('#schedGrid'); if(g) g.innerHTML='<div class="mut" style="padding:20px;grid-column:1/-1;text-align:center">Загрузка…</div>'; loadManagers(); try{ const d=await apiWA('/api/wa?action=schedule','GET'); if(d.cloud===false){ if(g) g.innerHTML='<div class="mut" style="padding:20px;grid-column:1/-1;text-align:center">CRM не подключён к Supabase — расписание недоступно.</div>'; return; } SCHED=d.calls||[]; if(!CAL_INIT){ const t=almatyToday().split('-'); CAL_Y=+t[0]; CAL_M=+t[1]-1; CAL_SEL=almatyToday(); CAL_INIT=true; } renderSchedule(); }catch(err){ if(g) g.innerHTML='<div class="mut" style="padding:20px;grid-column:1/-1;text-align:center">Ошибка: '+esc(err.message)+'</div>'; } }
+  function renderSchedule(){ renderCalendar(); renderDayPanel(); }
+  function renderCalendar(){ const g=$('#schedGrid'); if(!g){ return; } if(!CAL_INIT){ const t=almatyToday().split('-'); CAL_Y=+t[0]; CAL_M=+t[1]-1; CAL_SEL=almatyToday(); CAL_INIT=true; } const title=$('#calTitle'); if(title) title.textContent=RU_MONTHS[CAL_M]+' '+CAL_Y;
+    const byDay={}; schedFiltered().forEach(c=>{ const k=schedKey(c); (byDay[k]=byDay[k]||[]).push(c); });
+    Object.values(byDay).forEach(a=>a.sort((x,y)=>new Date(x.scheduled_at)-new Date(y.scheduled_at)));
+    const today=almatyToday(), now=Date.now(), p2=n=>String(n).padStart(2,'0');
+    const first=new Date(Date.UTC(CAL_Y,CAL_M,1)); const lead=(first.getUTCDay()+6)%7; // Пн=0
+    const start=new Date(Date.UTC(CAL_Y,CAL_M,1-lead));
+    let html='';
+    for(let i=0;i<42;i++){ const dt=new Date(start.getTime()+i*86400000); const Y=dt.getUTCFullYear(),M=dt.getUTCMonth(),D=dt.getUTCDate(); const key=Y+'-'+p2(M+1)+'-'+p2(D); const dow=dt.getUTCDay(); const other=(M!==CAL_M); const items=byDay[key]||[];
+      const chips=items.slice(0,3).map(c=>{ const past=new Date(c.scheduled_at).getTime()<now; const nm=c.name||(c.phone?'+'+c.phone:'созвон'); return '<button class="sc-chip'+(past?' past':'')+'" data-edit="'+esc(c.id)+'" title="'+esc(schedTime(c)+' · '+nm)+'"><b>'+esc(schedTime(c))+'</b><span class="nm">'+esc(nm)+'</span></button>'; }).join('');
+      const more=items.length>3?'<span class="sc-more">+'+(items.length-3)+' ещё</span>':'';
+      const dots=items.length?'<span class="sc-dot">'+Array.from({length:Math.min(items.length,4)}).map(()=>'<i></i>').join('')+'</span>':'';
+      html+='<div class="sc-cell'+(other?' other':'')+(key===today?' today':'')+(key===CAL_SEL?' sel':'')+((dow===0||dow===6)?' weekend':'')+'" data-key="'+key+'"><span class="sc-dnum">'+D+'</span><div class="sc-chips">'+chips+more+'</div>'+dots+'</div>';
+    }
+    g.innerHTML=html;
+    g.querySelectorAll('.sc-cell').forEach(cell=>cell.addEventListener('click',e=>{ if(e.target.closest('.sc-chip')) return; CAL_SEL=cell.dataset.key; renderSchedule(); }));
+    g.querySelectorAll('.sc-chip').forEach(b=>b.addEventListener('click',e=>{ e.stopPropagation(); const c=SCHED.find(x=>x.id===b.dataset.edit); if(c) openSchedModal(c); }));
+  }
+  function renderDayPanel(){ const el=$('#schedDayPanel'); if(!el) return; const parts=(CAL_SEL||almatyToday()).split('-').map(Number); const dt=new Date(Date.UTC(parts[0],parts[1]-1,parts[2])); const human=parts[2]+' '+RU_MONTHS[parts[1]-1].toLowerCase()+', '+RU_DOW[dt.getUTCDay()];
+    const items=schedFiltered().filter(c=>schedKey(c)===CAL_SEL).sort((a,b)=>new Date(a.scheduled_at)-new Date(b.scheduled_at));
+    const body=items.length?items.map(schedRow).join(''):'<div class="sdp-empty">На этот день созвонов нет. Нажмите «+ Добавить на этот день» — дата подставится сама.</div>';
+    el.innerHTML='<div class="sdp-head"><div class="sdp-title">'+esc(human)+(items.length?' · '+items.length:'')+'</div><button class="btn btn-gold btn-sm" id="sdpAdd">+ Добавить на этот день</button></div>'+body;
+    $('#sdpAdd') && $('#sdpAdd').addEventListener('click',()=>openSchedModal(null,CAL_SEL));
+    bindSchedRows(el);
+  }
+  function bindSchedRows(el){
     el.querySelectorAll('[data-wa]').forEach(b=>b.addEventListener('click',e=>{ e.stopPropagation(); const p=b.dataset.wa; gotoView('whatsapp'); loadWA(); setTimeout(()=>openChat(p),450); }));
-    el.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openSchedModal(SCHED.find(x=>x.id===b.dataset.edit))));
+    el.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>{ const c=SCHED.find(x=>x.id===b.dataset.edit); if(c) openSchedModal(c); }));
     el.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',async()=>{ if(!confirm('Удалить созвон?'))return; try{ await apiWA('/api/wa','POST',{action:'del_call',id:b.dataset.del}); SCHED=SCHED.filter(x=>x.id!==b.dataset.del); renderSchedule(); toast('Созвон удалён','ok'); }catch(e){ toast('Ошибка: '+e.message,'err'); } }));
     el.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>{ try{ navigator.clipboard.writeText(b.dataset.copy); toast('Ссылка скопирована','ok'); }catch{ toast('Скопируйте вручную','err'); } }));
     el.querySelectorAll('[data-sendlink]').forEach(b=>b.addEventListener('click',async e=>{ e.stopPropagation(); const i=b.dataset.sendlink.indexOf('|'); const p=b.dataset.sendlink.slice(0,i), u=b.dataset.sendlink.slice(i+1); if(!p){ toast('У созвона нет телефона клиента','err'); return; } try{ await apiWA('/api/wa','POST',{action:'send',phone:p,type:'text',text:'Ссылка на наш созвон: '+u}); toast('Ссылка отправлена клиенту','ok'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }));
@@ -2064,13 +2206,20 @@
       '</div></div>';
   }
   function renderInviteChips(sel){ const box=$('#sm_invited'); if(!box) return; const chosen=new Set((sel||[]).map(String)); const team=KB_MANAGERS.length?KB_MANAGERS:[{name:localStorage.getItem(KEY_MGR)||'Я'}]; box.innerHTML=team.map(m=>{ const n=m.name||m.login; return '<button type="button" class="inv-toggle'+(chosen.has(n)?' on':'')+'" data-n="'+esc(n)+'">'+esc(n)+'</button>'; }).join(''); box.querySelectorAll('.inv-toggle').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('on'))); }
-  function openSchedModal(c){ c=c||null; loadManagers(); $('#schedModalTitle').textContent=c?'Изменить созвон':'Новый созвон'; $('#sm_id').value=c?c.id:''; $('#sm_name').value=c?(c.name||''):''; $('#sm_phone').value=(c&&c.phone)?('+'+c.phone):''; const _pc=c?parseCall(c):{topic:'',link:''}; $('#sm_topic').value=_pc.topic; $('#sm_link').value=_pc.link; const dd=c?new Date(c.scheduled_at):new Date(Date.now()+3600e3); const p2=n=>String(n).padStart(2,'0'); $('#sm_date').value=dd.getFullYear()+'-'+p2(dd.getMonth()+1)+'-'+p2(dd.getDate()); $('#sm_time').value=p2(dd.getHours())+':'+p2(dd.getMinutes()); setTimeout(()=>renderInviteChips(c?schedInvited(c):[localStorage.getItem(KEY_MGR)].filter(Boolean)),150); renderInviteChips(c?schedInvited(c):[localStorage.getItem(KEY_MGR)].filter(Boolean)); $('#schedModal').style.display='flex'; }
+  function openSchedModal(c, presetDate){ c=c||null; loadManagers(); $('#schedModalTitle').textContent=c?'Изменить созвон':'Новый созвон'; $('#sm_id').value=c?c.id:''; $('#sm_name').value=c?(c.name||''):''; $('#sm_phone').value=(c&&c.phone)?('+'+c.phone):''; const _pc=c?parseCall(c):{topic:'',link:''}; $('#sm_topic').value=_pc.topic; $('#sm_link').value=_pc.link;
+    if(c){ const dd=new Date(c.scheduled_at); $('#sm_date').value=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Almaty'}).format(dd); $('#sm_time').value=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Almaty',hour:'2-digit',minute:'2-digit',hour12:false}).format(dd); }
+    else { $('#sm_date').value=presetDate||CAL_SEL||almatyToday(); $('#sm_time').value='10:00'; }
+    const initInv=c?schedInvited(c):[localStorage.getItem(KEY_MGR)].filter(Boolean); renderInviteChips(initInv); setTimeout(()=>renderInviteChips(initInv),150); $('#schedModal').style.display='flex'; }
   async function saveSched(){ const id=$('#sm_id').value; const name=$('#sm_name').value.trim(); const phone=$('#sm_phone').value.replace(/\D/g,''); const date=$('#sm_date').value; const time=$('#sm_time').value; const topic=$('#sm_topic').value.trim(); const link=$('#sm_link').value.trim(); if(!date||!time){ toast('Укажите дату и время','err'); return; } const invited=[...document.querySelectorAll('#sm_invited .inv-toggle.on')].map(b=>b.dataset.n); try{ await apiWA('/api/wa','POST',{action:'sched_add',id,name,phone,datetime:date+' '+time,topic,link,invited}); $('#schedModal').style.display='none'; toast(id?'Созвон обновлён':'Созвон добавлен','ok'); loadSchedule(); }catch(e){ toast('Ошибка: '+e.message,'err'); } }
   $('#schedAddBtn') && $('#schedAddBtn').addEventListener('click',()=>openSchedModal(null));
   $('#schedSave') && $('#schedSave').addEventListener('click',saveSched);
   $('#schedCancel') && $('#schedCancel').addEventListener('click',()=>$('#schedModal').style.display='none');
   $('#schedX') && $('#schedX').addEventListener('click',()=>$('#schedModal').style.display='none');
+  $('#schedModal') && $('#schedModal').addEventListener('click',e=>{ if(e.target.id==='schedModal') $('#schedModal').style.display='none'; });
   $$('.sched-filters button').forEach(b=>b.addEventListener('click',()=>{ $$('.sched-filters button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); SCHED_FILTER=b.dataset.sf; renderSchedule(); }));
+  $('#calPrev') && $('#calPrev').addEventListener('click',()=>{ CAL_M--; if(CAL_M<0){ CAL_M=11; CAL_Y--; } renderSchedule(); });
+  $('#calNext') && $('#calNext').addEventListener('click',()=>{ CAL_M++; if(CAL_M>11){ CAL_M=0; CAL_Y++; } renderSchedule(); });
+  $('#calToday') && $('#calToday').addEventListener('click',()=>{ const t=almatyToday().split('-'); CAL_Y=+t[0]; CAL_M=+t[1]-1; CAL_SEL=almatyToday(); renderSchedule(); });
   $('#kbToggle') && $('#kbToggle').addEventListener('change',toggleKB);
   async function hideChat(){ if(!KB_CUR) return; const c=KB_CHATS.find(x=>x.phone===KB_CUR); const nh=!(c&&c.hidden===true); try{ await apiWA('/api/wa','POST',{action:'hide',phone:KB_CUR,hidden:nh}); if(c) c.hidden=nh; renderWAChats(); toast(nh?'Чат скрыт':'Чат возвращён','ok'); $('#kbDrawer').classList.remove('open'); }catch(err){ toast('Ошибка: '+err.message,'err'); } }
   $('#kbHideBtn') && $('#kbHideBtn').addEventListener('click',hideChat);

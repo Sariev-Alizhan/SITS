@@ -188,7 +188,19 @@ export default async function handler(req, res) {
       if (type === 'text' && !text) return res.status(400).json({ ok: false, error: 'Пустое сообщение' });
       const id = 'ob-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
       await db.insert('wa_outbox', { id, phone, type, text, media_url, filename, status: 'pending', created_at: new Date().toISOString() });
-      return res.status(200).json({ ok: true });
+      // Удобство: ответил в незакреплённый чат → чат автоматически закрепляется за тобой
+      // (менеджеры забывают назначать себя — статистика оставалась «не назначен»).
+      let assigned = null;
+      try {
+        if (authDbReady()) {
+          const cur = await authDb.select('chat_managers', `phone=eq.${phone}&select=manager`);
+          if (!cur || !cur.length || !cur[0].manager) {
+            assigned = String(user.name || user.login || '').slice(0, 80);
+            if (assigned) await authDb.upsert('chat_managers', { phone, manager: assigned, updated_at: new Date().toISOString() });
+          }
+        }
+      } catch {}
+      return res.status(200).json({ ok: true, assigned });
     }
     if (req.method === 'POST' && action === 'new_chat') {
       // Менеджер начинает диалог с новым клиентом по номеру.
@@ -204,6 +216,13 @@ export default async function handler(req, res) {
       await db.upsert('wa_contacts', contact);
       const id = 'ob-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
       await db.insert('wa_outbox', { id, phone, type: 'text', text, media_url: '', filename: '', status: 'pending', created_at: now });
+      // Начал диалог сам → чат сразу закрепляется за тобой.
+      try {
+        if (authDbReady()) {
+          const mgr = String(user.name || user.login || '').slice(0, 80);
+          if (mgr) await authDb.upsert('chat_managers', { phone, manager: mgr, updated_at: now });
+        }
+      } catch {}
       return res.status(200).json({ ok: true, phone });
     }
     if (req.method === 'POST' && action === 'add_call') {

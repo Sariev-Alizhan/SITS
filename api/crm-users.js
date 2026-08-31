@@ -75,6 +75,61 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true });
     }
 
+    // ── Хранилище доступов команды («Доступы»: Instagram, реклама, домены и т.п.) ──
+    // Пароли лежат в auth-базе (crm_vault), наружу отдаются только залогиненным по видимости.
+    // visibility: 'all' — видят все в команде; 'admins' — только admin/super_admin.
+    const VAULT_SETUP_SQL = "create table if not exists crm_vault (id text primary key, service text not null, login text, secret text, url text, note text, visibility text default 'admins', created_by text, created_at timestamptz default now(), updated_at timestamptz default now());";
+    const isMissingTable = (e) => { const m = String(e && e.message || ''); return m.includes('42P01') || m.includes('schema cache') || m.includes(' 404'); };
+    const vStr = (v, n = 500) => String(v == null ? '' : v).slice(0, n);
+
+    if (action === 'vault_list') {
+      try {
+        const rows = await authDb.select('crm_vault', 'select=*&order=created_at.asc') || [];
+        const admin = isAdmin(me);
+        const items = rows
+          .filter((r) => admin || (r.visibility || 'admins') === 'all')
+          .map((r) => ({ id: r.id, service: r.service, login: r.login, secret: r.secret, url: r.url, note: r.note, visibility: r.visibility || 'admins', createdBy: r.created_by, updatedAt: r.updated_at }));
+        return res.status(200).json({ ok: true, items, canEdit: admin });
+      } catch (e) {
+        if (isMissingTable(e)) return res.status(200).json({ ok: true, items: [], canEdit: isAdmin(me), needsSetup: true, sql: VAULT_SETUP_SQL });
+        throw e;
+      }
+    }
+
+    if (action === 'vault_save') {
+      if (!isAdmin(me)) return res.status(403).json({ ok: false, error: 'Добавлять/менять доступы может только админ' });
+      const d = body.item || {};
+      const service = vStr(d.service, 120).trim();
+      if (!service) return res.status(400).json({ ok: false, error: 'Укажите название сервиса (например, Instagram)' });
+      const row = {
+        id: vStr(d.id, 80) || ('v-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7)),
+        service,
+        login: vStr(d.login, 300),
+        secret: vStr(d.secret, 500),
+        url: vStr(d.url, 500),
+        note: vStr(d.note, 2000),
+        visibility: d.visibility === 'all' ? 'all' : 'admins',
+        created_by: me.name || me.login,
+        updated_at: new Date().toISOString(),
+      };
+      if (!d.id) row.created_at = new Date().toISOString();
+      try {
+        await authDb.upsert('crm_vault', row);
+        return res.status(200).json({ ok: true, item: { id: row.id, service: row.service, login: row.login, secret: row.secret, url: row.url, note: row.note, visibility: row.visibility, createdBy: row.created_by, updatedAt: row.updated_at } });
+      } catch (e) {
+        if (isMissingTable(e)) return res.status(200).json({ ok: false, needsSetup: true, sql: VAULT_SETUP_SQL, error: 'Сначала создайте таблицу доступов (см. инструкцию).' });
+        throw e;
+      }
+    }
+
+    if (action === 'vault_delete') {
+      if (!isAdmin(me)) return res.status(403).json({ ok: false, error: 'Удалять доступы может только админ' });
+      const id = vStr(body.id, 80);
+      if (!id) return res.status(400).json({ ok: false, error: 'Нет id' });
+      try { await authDb.remove('crm_vault', `id=eq.${encodeURIComponent(id)}`); } catch (e) { if (!isMissingTable(e)) throw e; }
+      return res.status(200).json({ ok: true });
+    }
+
     // ── Действия только для админов ──
 
     if (action === 'list') {

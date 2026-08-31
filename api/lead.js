@@ -17,11 +17,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
   }
 
-  // --- Origin check (защита от browser-CSRF) ---
-  if (!checkOrigin(req, ALLOWED_ORIGINS)) {
-    return res.status(403).json({ ok: false, error: 'Forbidden origin' });
-  }
-
   // --- Rate limit: 10 запросов / 5 минут на IP ---
   const ip = getClientIp(req);
   const rl = await rateLimit({ key: `lead:${ip}`, limit: 10, windowSec: 300 });
@@ -37,14 +32,30 @@ export default async function handler(req, res) {
 
     const { name = '', contact = '', service = '', details = '', website = '', formTime = 0 } = body;
 
+    // --- Источник лида: site (по умолчанию), target (реклама), instagram, whatsapp, referral… ---
+    // Лиды с таргета/вебхуков приходят сервер-к-серверу — им Origin-check не проходит, поэтому
+    // разрешаем приём по секрет-токену (LEAD_INTAKE_TOKEN, фолбэк ADMIN_PASSWORD). Браузерные
+    // заявки с сайта проверяем по Origin как раньше.
+    const source = String(body.source || req.query.source || 'site').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 24) || 'site';
+    const campaign = String(body.campaign || req.query.campaign || '').replace(/[^\wа-яА-ЯёЁ .\-]/g, '').slice(0, 60).trim();
+    const intakeToken = String(body.token || req.headers['x-lead-token'] || '');
+    const secret = process.env.LEAD_INTAKE_TOKEN || process.env.ADMIN_PASSWORD || '';
+    const serverIntake = !!(secret && intakeToken && intakeToken === secret);
+
+    // --- Origin check (защита от browser-CSRF) — кроме доверенного серверного приёма по токену ---
+    if (!serverIntake && !checkOrigin(req, ALLOWED_ORIGINS)) {
+      return res.status(403).json({ ok: false, error: 'Forbidden origin' });
+    }
+
     // --- Honeypot: невидимое поле "website". Боты заполняют — silent reject 200 ok. ---
     if (website && String(website).trim().length > 0) {
       return res.status(200).json({ ok: true });
     }
 
     // --- Time-trap: реальный человек не сабмитит форму за <1.5 секунды после загрузки. ---
+    // (только для браузерных заявок — серверный приём таймингом не ограничиваем)
     const dt = Number(formTime);
-    if (dt && Date.now() - dt < 1500) {
+    if (!serverIntake && dt && Date.now() - dt < 1500) {
       return res.status(200).json({ ok: true });
     }
 
@@ -52,12 +63,19 @@ export default async function handler(req, res) {
       return res.status(400).json({ ok: false, error: 'Поля «Имя» и «Контакт» обязательны' });
     }
 
+    // Источник упаковываем машинным тегом в начало details (без изменения схемы БД):
+    // «[src:target]» или «[src:target|Кампания-осень]». Админка распознаёт его и рисует бейдж.
+    const srcTag = (source && source !== 'site') ? `[src:${source}${campaign ? '|' + campaign : ''}] ` : '';
+    const rawDetails = String(details).slice(0, 2000);
+
     const lead = {
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
       name: String(name).slice(0, 200),
       contact: String(contact).slice(0, 200),
       service: String(service).slice(0, 200),
-      details: String(details).slice(0, 2000),
+      details: (srcTag + rawDetails).slice(0, 2100),
+      source,
+      campaign,
       createdAt: new Date().toISOString(),
       status: 'new',
     };
@@ -80,12 +98,15 @@ export default async function handler(req, res) {
       const token = process.env.TELEGRAM_BOT_TOKEN;
       const chatId = process.env.TELEGRAM_CHAT_ID;
       if (token && chatId) {
+        const srcLabels = { site: 'Сайт', target: 'Таргет/реклама', instagram: 'Instagram', whatsapp: 'WhatsApp', referral: 'Реферал' };
+        const srcLine = lead.source && lead.source !== 'site'
+          ? `\n🎯 Источник: ${srcLabels[lead.source] || lead.source}${lead.campaign ? ' · ' + lead.campaign : ''}` : '';
         const text =
-          `🔔 Новая заявка — SITS\n\n` +
+          `🔔 Новая заявка — SITS${srcLine}\n\n` +
           `👤 Имя: ${lead.name}\n` +
           `📞 Контакт: ${lead.contact}\n` +
           `🧩 Услуга: ${lead.service || '—'}\n` +
-          `📝 Описание: ${lead.details || '—'}\n` +
+          `📝 Описание: ${rawDetails || '—'}\n` +
           `🕒 ${new Date(lead.createdAt).toLocaleString('ru-RU')}`;
         await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
           method: 'POST',

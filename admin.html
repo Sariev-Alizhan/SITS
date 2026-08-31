@@ -51,6 +51,9 @@
   .badge-new{background:rgba(255,71,87,.15);color:var(--accent);}
   .badge-progress{background:rgba(255,182,72,.15);color:var(--warn);}
   .badge-closed{background:rgba(57,217,138,.15);color:var(--ok);}
+  .src-badge{display:inline-block;padding:3px 9px;border-radius:100px;font-size:.68rem;font-weight:700;white-space:nowrap;letter-spacing:.02em;}
+  .src-badge.src-site{background:rgba(140,150,170,.14);color:var(--dim);}
+  .src-badge.src-ad{background:rgba(88,140,255,.16);color:#6ea0ff;}
   .del-btn{background:transparent;border:1px solid var(--border);color:var(--dim);
     margin:0;padding:5px 9px;width:auto;font-size:.7rem;font-weight:600;border-radius:8px;
     cursor:pointer;transition:.2s;letter-spacing:.02em;}
@@ -87,7 +90,7 @@
     <button class="btn-ghost" id="exportBtn">Экспорт в CSV</button>
   </div>
   <table>
-    <thead><tr><th>Дата</th><th>Имя</th><th>Контакт</th><th>Услуга</th><th>Описание</th><th>Статус</th><th></th></tr></thead>
+    <thead><tr><th>Дата</th><th>Имя</th><th>Контакт</th><th>Услуга</th><th>Источник</th><th>Описание</th><th>Статус</th><th></th></tr></thead>
     <tbody id="rows"></tbody>
   </table>
   <div class="empty hidden" id="empty">Заявок пока нет.</div>
@@ -97,6 +100,13 @@
   const STATUS_CYCLE = ['new','in_progress','closed'];
   const STATUS_LABEL = { new:'новая', in_progress:'в работе', closed:'закрыта' };
   const STATUS_CLASS = { new:'badge-new', in_progress:'badge-progress', closed:'badge-closed' };
+  // Источник лида зашит в начало details машинным тегом «[src:target|Кампания] …» (см. /api/lead).
+  const SRC_LABEL = { site:'Сайт', target:'Таргет', instagram:'Instagram', whatsapp:'WhatsApp', referral:'Реферал' };
+  function parseSrc(details){
+    const m = String(details||'').match(/^\[src:([a-z0-9_-]+)(?:\|([^\]]*))?\]\s*/i);
+    if(!m) return { source:'site', campaign:'', clean:String(details||'') };
+    return { source:(m[1]||'site').toLowerCase(), campaign:(m[2]||'').trim(), clean:String(details||'').slice(m[0].length) };
+  }
 
   let PASS = '';
   let LEADS = [];
@@ -115,19 +125,27 @@
 
   function render() {
     const q = $('search').value.trim().toLowerCase();
-    const list = LEADS.filter(l =>
-      !q || [l.name, l.contact, l.service, l.details].join(' ').toLowerCase().includes(q)
-    );
+    const list = LEADS.filter(l => {
+      if(!q) return true;
+      const sp = parseSrc(l.details);
+      return [l.name, l.contact, l.service, sp.clean, SRC_LABEL[sp.source]||sp.source, sp.campaign].join(' ').toLowerCase().includes(q);
+    });
     $('stat').textContent = 'Всего заявок: ' + LEADS.length;
     $('rows').innerHTML = list.map(l => {
       const st = STATUS_CYCLE.includes(l.status) ? l.status : 'new';
+      const sp = parseSrc(l.details);
+      const srcLabel = SRC_LABEL[sp.source] || sp.source;
+      const srcBadge = sp.source === 'site'
+        ? '<span class="src-badge src-site">Сайт</span>'
+        : '<span class="src-badge src-ad" title="'+esc(sp.campaign||srcLabel)+'">'+esc(srcLabel)+(sp.campaign?' · '+esc(sp.campaign):'')+'</span>';
       return `
       <tr>
         <td class="muted">${new Date(l.createdAt).toLocaleString('ru-RU')}</td>
         <td>${esc(l.name)}</td>
         <td class="contact">${esc(l.contact)}</td>
         <td>${esc(l.service || '—')}</td>
-        <td class="muted">${esc(l.details || '—')}</td>
+        <td>${srcBadge}</td>
+        <td class="muted">${esc(sp.clean || '—')}</td>
         <td><span class="badge ${STATUS_CLASS[st]}" data-id="${esc(l.id || '')}" data-status="${st}" title="Кликни для смены статуса">${STATUS_LABEL[st]}</span></td>
         <td><button class="del-btn" data-del="${esc(l.id || '')}" data-name="${esc(l.name || '')}" title="Удалить заявку">Удалить</button></td>
       </tr>`;
@@ -184,15 +202,19 @@
 
   function exportCSV() {
     if (!LEADS.length) { alert('Нет данных для экспорта'); return; }
-    const headers = ['date','name','contact','service','details','status'];
-    const rows = LEADS.map(l => [
+    const headers = ['date','name','contact','service','source','campaign','details','status'];
+    const rows = LEADS.map(l => {
+      const sp = parseSrc(l.details);
+      return [
       new Date(l.createdAt).toISOString(),
       l.name || '',
       l.contact || '',
       l.service || '',
-      (l.details || '').replace(/\r?\n/g, ' '),
+      SRC_LABEL[sp.source] || sp.source,
+      sp.campaign || '',
+      (sp.clean || '').replace(/\r?\n/g, ' '),
       STATUS_LABEL[l.status] || l.status || 'new',
-    ]);
+    ];});
     const escape = v => {
       const s = String(v == null ? '' : v);
       return /[",;\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;

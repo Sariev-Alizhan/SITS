@@ -2226,33 +2226,66 @@
   function renderWAChats(){ const el=$('#kbChats'); if(!el) return; const showHidden=(WA_MODE==='hidden'); const list=KB_CHATS.filter(c=>((c.hidden===true)===showHidden)); if(!list.length){ el.innerHTML='<div class="mut">'+(showHidden?'Скрытых чатов нет.':'Пока нет чатов. Когда клиент напишет боту — переписка появится здесь.')+'</div>'; return; } const ini=(c)=>{ const s=(c.name||'').trim(); return s?s[0].toUpperCase():'#'; }; el.innerHTML=list.map(c=>{ const nm=waName(c.name,c.phone); const on=c.bot_enabled!==false; const lt=c.last_text?((c.last_role==='user'?'':'Вы: ')+c.last_text):'—'; return '<div class="kb-li" data-phone="'+esc(c.phone)+'"><div class="av">'+esc(ini(c))+'</div><div class="mid"><div class="nm">'+esc(nm)+(c.manager?' <span class="mgr-tag">'+esc(c.manager)+'</span>':'')+'</div><div class="lt">'+esc(lt)+'</div></div><span class="badge '+(on?'on':'off')+'">'+(on?'бот вкл':'вы')+'</span></div>'; }).join(''); el.querySelectorAll('.kb-li').forEach(li=>li.addEventListener('click',()=>openChat(li.dataset.phone))); }
   function switchWAView(mode){ WA_MODE=mode; $$('.kb-tb').forEach(x=>x.classList.toggle('active',x.dataset.wa===mode)); const showChats=(mode==='chats'||mode==='hidden'); if($('#kbChats')) $('#kbChats').style.display=showChats?'flex':'none'; if($('#kbBoard')) $('#kbBoard').style.display=(mode==='funnel')?'flex':'none'; if($('#kbCalls')) $('#kbCalls').style.display=(mode==='calls')?'flex':'none'; if($('#kbStatsView')) $('#kbStatsView').style.display=(mode==='stats')?'block':'none'; if(mode==='stats') loadWAStats(); else renderWAChats(); }
   $$('.kb-tb').forEach(btn=>btn.addEventListener('click',()=>switchWAView(btn.dataset.wa)));
-  let WA_STATS_MODE='mgr', WA_STATS_DAYS=14;
+  let WA_STATS_MODE='mgr', WA_STATS_DAYS=14, WA_STATS_FROM='', WA_STATS_TO='', WA_STATS_GROUP='day';
+  // Аналитика для директора по продажам: произвольный период, разбивка дни/недели/месяцы,
+  // итоги по менеджерам и «во сколько работал» (первый/последний ответ за день, Астана).
+  const wsToday=()=>new Date(Date.now()+5*3600000).toISOString().slice(0,10);
+  function wsWeekKey(ds){ const d=new Date(ds+'T00:00:00Z'); const wd=(d.getUTCDay()+6)%7; d.setUTCDate(d.getUTCDate()-wd); return d.toISOString().slice(0,10); }
+  function wsGroupKey(ds){ return WA_STATS_GROUP==='month'?ds.slice(0,7):(WA_STATS_GROUP==='week'?wsWeekKey(ds):ds); }
+  function wsGroupLabel(k){
+    if(WA_STATS_GROUP==='month'){ try{ return new Date(k+'-01T00:00:00').toLocaleDateString('ru-RU',{month:'long',year:'numeric'}); }catch(_){ return k; } }
+    if(WA_STATS_GROUP==='week'){ try{ const a=new Date(k+'T00:00:00'); const b=new Date(a.getTime()+6*86400000); const f=(x)=>x.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'}); return 'нед. '+f(a)+'–'+f(b); }catch(_){ return k; } }
+    try{ return new Date(k+'T00:00:00').toLocaleDateString('ru-RU',{weekday:'short',day:'2-digit',month:'2-digit'}); }catch(_){ return k; }
+  }
   async function loadWAStats(){ const el=$('#kbStatsView'); if(!el) return; el.innerHTML='<div class="mut">Загрузка…</div>';
     try{
-      const [d,dd]=await Promise.all([apiWA('/api/wa?action=stats','GET'), apiWA('/api/wa?action=stats_daily&days='+WA_STATS_DAYS,'GET')]);
+      const q=(WA_STATS_FROM&&WA_STATS_TO)?('from='+WA_STATS_FROM+'&to='+WA_STATS_TO):('days='+WA_STATS_DAYS);
+      const [d,dd]=await Promise.all([apiWA('/api/wa?action=stats','GET'), apiWA('/api/wa?action=stats_daily&'+q,'GET')]);
       const st=d.stats||[], rows=dd.rows||[];
-      const head='<div class="wa-stats-seg"><button class="wss-tb'+(WA_STATS_MODE==='mgr'?' active':'')+'" data-sm="mgr">По менеджерам</button><button class="wss-tb'+(WA_STATS_MODE==='day'?' active':'')+'" data-sm="day">По дням</button></div>';
+      const head='<div class="wa-stats-seg"><button class="wss-tb'+(WA_STATS_MODE==='mgr'?' active':'')+'" data-sm="mgr">По менеджерам</button><button class="wss-tb'+(WA_STATS_MODE==='day'?' active':'')+'" data-sm="day">Активность по периодам</button></div>';
       let bodyHTML;
       if(WA_STATS_MODE==='mgr'){
         bodyHTML = !st.length ? '<div class="mut">Пока нет данных по сделкам. Назначайте менеджеров на чаты — статистика появится здесь.</div>'
           : '<table class="stat-tbl"><thead><tr><th>Менеджер</th><th>Чатов/сделок</th><th>Закрыто</th><th>Сумма продаж</th></tr></thead><tbody>'+st.map(s=>'<tr><td><b>'+esc(s.manager)+'</b></td><td>'+s.total+'</td><td>'+s.won+'</td><td>'+fmt(s.sum)+'</td></tr>').join('')+'</tbody></table>';
       } else {
-        const daySel='<div class="wss-days">Период: '+[7,14,30].map(n=>'<button class="wss-d'+(WA_STATS_DAYS===n?' active':'')+'" data-days="'+n+'">'+n+' дн</button>').join('')+'</div>';
-        // Итоги по дню (все менеджеры) — для быстрой сводки «сколько за день обработали».
-        const byDay={}; rows.forEach(r=>{ const t=byDay[r.date]=byDay[r.date]||{chats:0,msgs:0,newDeals:0,won:0}; t.chats+=r.chats; t.msgs+=r.msgs; t.newDeals+=r.newDeals; t.won+=r.won; });
-        const fmtDay=(k)=>{ try{ const dt=new Date(k+'T00:00:00'); return dt.toLocaleDateString('ru-RU',{weekday:'short',day:'2-digit',month:'2-digit'}); }catch{ return k; } };
-        bodyHTML = !rows.length ? '<div class="mut">За выбранный период продавцы ещё не отвечали в чатах. Как только менеджеры начнут отвечать вручную — здесь появится разбивка по дням.</div>'
-          : daySel+'<table class="stat-tbl stat-daily"><thead><tr><th>День</th><th>Менеджер</th><th title="Сколько диалогов вёл в этот день">Диалогов</th><th title="Ответов менеджера">Ответов</th><th>Новых</th><th>Закрыто</th></tr></thead><tbody>'+
-          Object.keys(byDay).sort((a,b)=>b.localeCompare(a)).map(day=>{
-            const drows=rows.filter(r=>r.date===day);
-            const t=byDay[day];
-            const total='<tr class="sd-day"><td rowspan="'+(drows.length+1)+'"><b>'+esc(fmtDay(day))+'</b></td><td><i>Всего за день</i></td><td><b>'+t.chats+'</b></td><td><b>'+t.msgs+'</b></td><td><b>'+t.newDeals+'</b></td><td><b>'+t.won+'</b></td></tr>';
-            return total+drows.map(r=>'<tr><td>'+esc(r.manager)+'</td><td>'+r.chats+'</td><td>'+r.msgs+'</td><td>'+r.newDeals+'</td><td>'+r.won+'</td></tr>').join('');
-          }).join('')+'</tbody></table>';
+        const preset=(WA_STATS_FROM&&WA_STATS_TO)?'':String(WA_STATS_DAYS);
+        const pBtn=(n,label)=>'<button class="wss-d" data-days="'+n+'"'+(preset===String(n)?' class="wss-d active"':'')+'>'+label+'</button>';
+        const isToday=(WA_STATS_FROM&&WA_STATS_FROM===WA_STATS_TO&&WA_STATS_FROM===wsToday());
+        const controls='<div class="wss-days">Период: '
+          +'<button class="wss-d'+(isToday?' active':'')+'" data-days="today">Сегодня</button>'
+          +'<button class="wss-d'+(preset==='7'?' active':'')+'" data-days="7">7 дн</button>'
+          +'<button class="wss-d'+(preset==='30'?' active':'')+'" data-days="30">30 дн</button>'
+          +'<button class="wss-d'+(preset==='90'?' active':'')+'" data-days="90">90 дн</button>'
+          +' <input type="date" id="wssFrom" value="'+esc(isToday?'':WA_STATS_FROM)+'" style="width:auto;padding:6px 8px;display:inline-block"> — <input type="date" id="wssTo" value="'+esc(isToday?'':WA_STATS_TO)+'" style="width:auto;padding:6px 8px;display:inline-block"> <button class="wss-d" id="wssApply">Показать</button></div>'
+          +'<div class="wss-days">Разбивка: '+[['day','Дни'],['week','Недели'],['month','Месяцы']].map(function(p){ return '<button class="wss-g'+(WA_STATS_GROUP===p[0]?' active':'')+'" data-g="'+p[0]+'">'+p[1]+'</button>'; }).join('')+'</div>';
+        if(!rows.length){
+          bodyHTML=controls+'<div class="mut">За выбранный период ответов менеджеров нет. Как только менеджеры начнут отвечать в чатах — здесь появится их активность.</div>';
+        } else {
+          // Итоги за период по каждому менеджеру
+          const tot={};
+          rows.forEach(function(r){ const t=tot[r.manager]=tot[r.manager]||{msgs:0,chats:0,newDeals:0,won:0,daysAct:0}; t.msgs+=r.msgs; t.chats+=r.chats; t.newDeals+=r.newDeals; t.won+=r.won; if(r.msgs>0)t.daysAct++; });
+          const totHTML='<h4 style="margin:16px 0 8px">Итого за период — по менеджерам</h4><table class="stat-tbl"><thead><tr><th>Менеджер</th><th title="Сколько дней менеджер отвечал в чатах">Дней активен</th><th title="Сумма диалогов по дням">Диалогов</th><th>Ответов</th><th>Новых лидов</th><th>Закрыто</th></tr></thead><tbody>'
+            +Object.keys(tot).sort(function(a,b){return tot[b].msgs-tot[a].msgs;}).map(function(m){ const t=tot[m]; return '<tr><td><b>'+esc(m)+'</b></td><td>'+t.daysAct+'</td><td>'+t.chats+'</td><td>'+t.msgs+'</td><td>'+t.newDeals+'</td><td>'+t.won+'</td></tr>'; }).join('')+'</tbody></table>';
+          // Разбивка по выбранной гранулярности
+          const g={};
+          rows.forEach(function(r){ const k=wsGroupKey(r.date); const kk=k+'|'+r.manager; const t=g[kk]=g[kk]||{key:k,manager:r.manager,chats:0,msgs:0,newDeals:0,won:0,from:'',to:''}; t.chats+=r.chats; t.msgs+=r.msgs; t.newDeals+=r.newDeals; t.won+=r.won; if(r.from&&(!t.from||r.from<t.from))t.from=r.from; if(r.to&&(!t.to||r.to>t.to))t.to=r.to; });
+          const keys=[]; Object.values(g).forEach(function(x){ if(keys.indexOf(x.key)<0) keys.push(x.key); }); keys.sort(function(a,b){return b.localeCompare(a);});
+          const timeCol=(WA_STATS_GROUP==='day');
+          const tbl='<h4 style="margin:16px 0 8px">Разбивка</h4><table class="stat-tbl stat-daily"><thead><tr><th>Период</th><th>Менеджер</th>'+(timeCol?'<th title="Первый — последний ответ за день (Астана)">Время</th>':'')+'<th>Диалогов</th><th>Ответов</th><th>Новых</th><th>Закрыто</th></tr></thead><tbody>'
+            +keys.map(function(k){
+              const items=Object.values(g).filter(function(x){return x.key===k;}).sort(function(a,b){return b.msgs-a.msgs;});
+              const t=items.reduce(function(s,x){ return {chats:s.chats+x.chats,msgs:s.msgs+x.msgs,newDeals:s.newDeals+x.newDeals,won:s.won+x.won}; },{chats:0,msgs:0,newDeals:0,won:0});
+              const headRow='<tr class="sd-day"><td rowspan="'+(items.length+1)+'"><b>'+esc(wsGroupLabel(k))+'</b></td><td><i>Всего</i></td>'+(timeCol?'<td></td>':'')+'<td><b>'+t.chats+'</b></td><td><b>'+t.msgs+'</b></td><td><b>'+t.newDeals+'</b></td><td><b>'+t.won+'</b></td></tr>';
+              return headRow+items.map(function(x){ return '<tr><td>'+esc(x.manager)+'</td>'+(timeCol?'<td>'+esc(x.from&&x.to?(x.from+'–'+x.to):'—')+'</td>':'')+'<td>'+x.chats+'</td><td>'+x.msgs+'</td><td>'+x.newDeals+'</td><td>'+x.won+'</td></tr>'; }).join('');
+            }).join('')+'</tbody></table>';
+          bodyHTML=controls+totHTML+tbl;
+        }
       }
       el.innerHTML=head+bodyHTML;
       el.querySelectorAll('.wss-tb').forEach(b=>b.addEventListener('click',()=>{ WA_STATS_MODE=b.dataset.sm; loadWAStats(); }));
-      el.querySelectorAll('.wss-d').forEach(b=>b.addEventListener('click',()=>{ WA_STATS_DAYS=+b.dataset.days; loadWAStats(); }));
+      el.querySelectorAll('.wss-d[data-days]').forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.days==='today'){ WA_STATS_FROM=wsToday(); WA_STATS_TO=wsToday(); } else { WA_STATS_DAYS=+b.dataset.days; WA_STATS_FROM=''; WA_STATS_TO=''; } loadWAStats(); }));
+      el.querySelectorAll('.wss-g').forEach(b=>b.addEventListener('click',()=>{ WA_STATS_GROUP=b.dataset.g; loadWAStats(); }));
+      const ap=el.querySelector('#wssApply'); if(ap) ap.addEventListener('click',()=>{ const f=el.querySelector('#wssFrom').value, t=el.querySelector('#wssTo').value; if(f&&t&&f<=t){ WA_STATS_FROM=f; WA_STATS_TO=t; loadWAStats(); } else toast('Выберите обе даты: от — до','err'); });
     }catch(e){ el.innerHTML='<div class="mut">Ошибка: '+esc(e.message)+'</div>'; }
   }
   $('#kbManager') && $('#kbManager').addEventListener('change', async ()=>{ if(!KB_CUR) return; const manager=$('#kbManager').value; try{ await apiWA('/api/wa','POST',{action:'assign',phone:KB_CUR,manager}); const c=KB_CHATS.find(x=>x.phone===KB_CUR); if(c) c.manager=manager||null; renderWAChats(); toast(manager?('Чат закреплён: '+manager):'Менеджер снят','ok'); }catch(e){ toast('Ошибка: '+e.message,'err'); } });

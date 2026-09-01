@@ -86,37 +86,55 @@ export default async function handler(req, res) {
     // (по его ответам role=agent), сколько ответов, сколько новых сделок и сколько закрыто.
     // Данные берём из существующих таблиц (wa_messages/wa_deals) + карта chat_managers — без изменения схемы.
     if (req.method === 'GET' && action === 'stats_daily') {
-      const days = Math.min(90, Math.max(1, Number(req.query.days) || 30));
-      const sinceISO = new Date(Date.now() - days * 86400000).toISOString();
+      // Период: либо days=N (последние N дней), либо произвольный from/to (YYYY-MM-DD, по Астане).
+      const days = Math.min(366, Math.max(1, Number(req.query.days) || 30));
+      const reDate = /^\d{4}-\d{2}-\d{2}$/;
+      const qFrom = reDate.test(String(req.query.from || '')) ? String(req.query.from) : '';
+      const qTo = reDate.test(String(req.query.to || '')) ? String(req.query.to) : '';
+      // Астана = UTC+5: локальная дата D начинается в (D-1)T19:00Z.
+      let sinceISO, untilISO = null;
+      if (qFrom && qTo && qFrom <= qTo) {
+        sinceISO = new Date(new Date(qFrom + 'T00:00:00Z').getTime() - 5 * 3600000).toISOString();
+        untilISO = new Date(new Date(qTo + 'T00:00:00Z').getTime() + (24 - 5) * 3600000).toISOString();
+        if (new Date(untilISO) - new Date(sinceISO) > 366 * 86400000) sinceISO = new Date(new Date(untilISO).getTime() - 366 * 86400000).toISOString();
+      } else {
+        sinceISO = new Date(Date.now() - days * 86400000).toISOString();
+      }
+      const untilFilter = untilISO ? `&created_at=lt.${untilISO}` : '';
       // Астана = UTC+5 без перевода часов → ключ дня получаем сдвигом на +5ч.
       const dayKey = (ts) => new Date(new Date(ts).getTime() + 5 * 3600000).toISOString().slice(0, 10);
       const mm = await managerMap();
       const map = {}; // 'day|manager' → { date, manager, chats:Set, msgs, newDeals, won }
       const cell = (date, manager) => {
         const k = date + '|' + manager;
-        if (!map[k]) map[k] = { date, manager, chats: new Set(), msgs: 0, newDeals: 0, won: 0 };
+        if (!map[k]) map[k] = { date, manager, chats: new Set(), msgs: 0, newDeals: 0, won: 0, firstTs: null, lastTs: null };
         return map[k];
       };
+      // «Во сколько работал»: первое/последнее сообщение менеджера за день (Астана, ЧЧ:ММ)
+      const hhmm = (ts) => new Date(new Date(ts).getTime() + 5 * 3600000).toISOString().slice(11, 16);
       // Ответы менеджеров (role=agent) — постранично, чтобы обойти max-rows Supabase.
       for (let offset = 0; offset < 60000; offset += 1000) {
-        const chunk = await db.select('wa_messages', `role=eq.agent&created_at=gte.${sinceISO}&select=phone,created_at&order=created_at.asc&limit=1000&offset=${offset}`);
+        const chunk = await db.select('wa_messages', `role=eq.agent&created_at=gte.${sinceISO}${untilFilter}&select=phone,created_at&order=created_at.asc&limit=1000&offset=${offset}`);
         if (!chunk || !chunk.length) break;
         for (const m of chunk) {
           const mgr = mm[m.phone] || '— не назначен';
           const c = cell(dayKey(m.created_at), mgr);
           c.chats.add(m.phone); c.msgs++;
+          if (!c.firstTs || m.created_at < c.firstTs) c.firstTs = m.created_at;
+          if (!c.lastTs || m.created_at > c.lastTs) c.lastTs = m.created_at;
         }
         if (chunk.length < 1000) break;
       }
       // Новые сделки и закрытия по дням.
       const deals = await db.select('wa_deals', `select=phone,stage,created_at,updated_at&limit=5000`) || [];
+      const inRange = (ts) => ts && ts >= sinceISO && (!untilISO || ts < untilISO);
       for (const d of deals) {
         const mgr = mm[d.phone] || '— не назначен';
-        if (d.created_at && d.created_at >= sinceISO) cell(dayKey(d.created_at), mgr).newDeals++;
-        if (d.stage === 'won' && d.updated_at && d.updated_at >= sinceISO) cell(dayKey(d.updated_at), mgr).won++;
+        if (inRange(d.created_at)) cell(dayKey(d.created_at), mgr).newDeals++;
+        if (d.stage === 'won' && inRange(d.updated_at)) cell(dayKey(d.updated_at), mgr).won++;
       }
       const rows = Object.values(map)
-        .map((c) => ({ date: c.date, manager: c.manager, chats: c.chats.size, msgs: c.msgs, newDeals: c.newDeals, won: c.won }))
+        .map((c) => ({ date: c.date, manager: c.manager, chats: c.chats.size, msgs: c.msgs, newDeals: c.newDeals, won: c.won, from: c.firstTs ? hhmm(c.firstTs) : '', to: c.lastTs ? hhmm(c.lastTs) : '' }))
         .sort((a, b) => (a.date === b.date ? b.chats - a.chats : b.date.localeCompare(a.date)));
       return res.status(200).json({ ok: true, days, rows });
     }

@@ -2215,7 +2215,7 @@
   // 14-15-значные «номера» — это внутренние WhatsApp-ID (@lid, приватность клиента), НЕ телефоны.
   // Показываем честно «Без номера», а не фейковый «+1988…». Реальный номер подтянется сам,
   // как только клиент напишет ещё раз (бот перенесёт историю на настоящий телефон).
-  const waIsLid=(p)=>String(p||'').replace(/\D/g,'').length>=14;
+  const waIsLid=(p)=>String(p||'').replace(/\D/g,'').length>=13; // 13+ цифр = внутренний WhatsApp-ID (как в боте), не телефон
   const waName=(name,phone)=>name||(waIsLid(phone)?'Без номера':'+'+phone);
   const waPhoneLabel=(phone)=>waIsLid(phone)?'номер скрыт клиентом':'+'+phone;
   async function loadWA(){ const els=[$('#kbBoard'),$('#kbChats'),$('#kbCalls')]; els.forEach(e=>{if(e)e.innerHTML='<div class="mut">Загрузка…</div>';}); try{ const [dd,cc,kk]=await Promise.all([apiWA('/api/wa?action=deals','GET'),apiWA('/api/wa?action=chats','GET'),apiWA('/api/wa?action=calls','GET')]); KB_DEALS=dd.deals||[]; KB_CHATS=cc.chats||[]; KB_CALLS=kk.calls||[]; renderWAKanban(); renderWAChats(); renderWACalls(); loadManagers(); if($('#waHint')&&dd.cloud===false) $('#waHint').textContent='CRM не подключён к Supabase — данные не отображаются.'; }catch(err){ els.forEach(e=>{if(e)e.innerHTML='<div class="mut">Ошибка: '+esc(err.message)+'</div>';}); } startWAPoll(); }

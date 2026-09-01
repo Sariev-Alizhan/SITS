@@ -1319,7 +1319,12 @@
     #view-whatsapp .wa-stats-seg{display:inline-flex;gap:2px;background:var(--surface-2);padding:3px;border-radius:10px;margin-bottom:12px}
     #view-whatsapp .wss-tb{border:0;background:transparent;color:var(--dim);padding:7px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-weight:600}
     #view-whatsapp .wss-tb.active{background:var(--surface);color:var(--txt);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-    #view-whatsapp .wss-days{display:flex;align-items:center;gap:6px;margin:0 0 10px;color:var(--dim);font-size:12.5px}
+    #view-whatsapp .wss-days{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 10px;color:var(--dim);font-size:12.5px}
+    #view-whatsapp .wss-days input[type=date]{min-width:120px;max-width:150px;flex:0 1 auto}
+    #view-whatsapp .wss-g{border:1px solid var(--line);background:var(--surface);color:var(--dim);padding:4px 10px;border-radius:7px;font-size:12px;cursor:pointer}
+    #view-whatsapp .wss-g.active{background:var(--accent,#22c55e);color:#fff;border-color:transparent}
+    #view-whatsapp .wss-mgr{margin:0 0 12px}
+    #view-whatsapp .wss-mgr select{max-width:280px}
     #view-whatsapp .wss-d{border:1px solid var(--line);background:var(--surface);color:var(--dim);padding:4px 10px;border-radius:7px;font-size:12px;cursor:pointer}
     #view-whatsapp .wss-d.active{background:var(--accent,#22c55e);color:#fff;border-color:transparent}
     #view-whatsapp .stat-daily td{padding:8px 12px}
@@ -2226,7 +2231,7 @@
   function renderWAChats(){ const el=$('#kbChats'); if(!el) return; const showHidden=(WA_MODE==='hidden'); const list=KB_CHATS.filter(c=>((c.hidden===true)===showHidden)); if(!list.length){ el.innerHTML='<div class="mut">'+(showHidden?'Скрытых чатов нет.':'Пока нет чатов. Когда клиент напишет боту — переписка появится здесь.')+'</div>'; return; } const ini=(c)=>{ const s=(c.name||'').trim(); return s?s[0].toUpperCase():'#'; }; el.innerHTML=list.map(c=>{ const nm=waName(c.name,c.phone); const on=c.bot_enabled!==false; const lt=c.last_text?((c.last_role==='user'?'':'Вы: ')+c.last_text):'—'; return '<div class="kb-li" data-phone="'+esc(c.phone)+'"><div class="av">'+esc(ini(c))+'</div><div class="mid"><div class="nm">'+esc(nm)+(c.manager?' <span class="mgr-tag">'+esc(c.manager)+'</span>':'')+'</div><div class="lt">'+esc(lt)+'</div></div><span class="badge '+(on?'on':'off')+'">'+(on?'бот вкл':'вы')+'</span></div>'; }).join(''); el.querySelectorAll('.kb-li').forEach(li=>li.addEventListener('click',()=>openChat(li.dataset.phone))); }
   function switchWAView(mode){ WA_MODE=mode; $$('.kb-tb').forEach(x=>x.classList.toggle('active',x.dataset.wa===mode)); const showChats=(mode==='chats'||mode==='hidden'); if($('#kbChats')) $('#kbChats').style.display=showChats?'flex':'none'; if($('#kbBoard')) $('#kbBoard').style.display=(mode==='funnel')?'flex':'none'; if($('#kbCalls')) $('#kbCalls').style.display=(mode==='calls')?'flex':'none'; if($('#kbStatsView')) $('#kbStatsView').style.display=(mode==='stats')?'block':'none'; if(mode==='stats') loadWAStats(); else renderWAChats(); }
   $$('.kb-tb').forEach(btn=>btn.addEventListener('click',()=>switchWAView(btn.dataset.wa)));
-  let WA_STATS_MODE='mgr', WA_STATS_DAYS=14, WA_STATS_FROM='', WA_STATS_TO='', WA_STATS_GROUP='day';
+  let WA_STATS_MODE='mgr', WA_STATS_DAYS=14, WA_STATS_FROM='', WA_STATS_TO='', WA_STATS_GROUP='day', WA_STATS_MGR='';
   // Аналитика для директора по продажам: произвольный период, разбивка дни/недели/месяцы,
   // итоги по менеджерам и «во сколько работал» (первый/последний ответ за день, Астана).
   const wsToday=()=>new Date(Date.now()+5*3600000).toISOString().slice(0,10);
@@ -2248,6 +2253,9 @@
         bodyHTML = !st.length ? '<div class="mut">Пока нет данных по сделкам. Назначайте менеджеров на чаты — статистика появится здесь.</div>'
           : '<table class="stat-tbl"><thead><tr><th>Менеджер</th><th>Чатов/сделок</th><th>Закрыто</th><th>Сумма продаж</th></tr></thead><tbody>'+st.map(s=>'<tr><td><b>'+esc(s.manager)+'</b></td><td>'+s.total+'</td><td>'+s.won+'</td><td>'+fmt(s.sum)+'</td></tr>').join('')+'</tbody></table>';
       } else {
+        // Фильтр по конкретному менеджеру (директор смотрит одного) — список из данных периода
+        const allMgrs=[...new Set(rows.map(r=>r.manager))].sort();
+        const mgrSel='<div class="wss-mgr"><label style="font-size:12.5px;color:var(--dim)">Менеджер: <select id="wssMgr"><option value="">Все менеджеры</option>'+allMgrs.map(m=>'<option value="'+esc(m)+'"'+(WA_STATS_MGR===m?' selected':'')+'>'+esc(m)+'</option>').join('')+'</select></label></div>';
         const preset=(WA_STATS_FROM&&WA_STATS_TO)?'':String(WA_STATS_DAYS);
         const pBtn=(n,label)=>'<button class="wss-d" data-days="'+n+'"'+(preset===String(n)?' class="wss-d active"':'')+'>'+label+'</button>';
         const isToday=(WA_STATS_FROM&&WA_STATS_FROM===WA_STATS_TO&&WA_STATS_FROM===wsToday());
@@ -2258,17 +2266,18 @@
           +'<button class="wss-d'+(preset==='90'?' active':'')+'" data-days="90">90 дн</button>'
           +' <input type="date" id="wssFrom" value="'+esc(isToday?'':WA_STATS_FROM)+'" style="width:auto;padding:6px 8px;display:inline-block"> — <input type="date" id="wssTo" value="'+esc(isToday?'':WA_STATS_TO)+'" style="width:auto;padding:6px 8px;display:inline-block"> <button class="wss-d" id="wssApply">Показать</button></div>'
           +'<div class="wss-days">Разбивка: '+[['day','Дни'],['week','Недели'],['month','Месяцы']].map(function(p){ return '<button class="wss-g'+(WA_STATS_GROUP===p[0]?' active':'')+'" data-g="'+p[0]+'">'+p[1]+'</button>'; }).join('')+'</div>';
-        if(!rows.length){
-          bodyHTML=controls+'<div class="mut">За выбранный период ответов менеджеров нет. Как только менеджеры начнут отвечать в чатах — здесь появится их активность.</div>';
+        const frows=WA_STATS_MGR?rows.filter(r=>r.manager===WA_STATS_MGR):rows;
+        if(!frows.length){
+          bodyHTML=controls+mgrSel+'<div class="mut">За выбранный период ответов менеджеров нет. Как только менеджеры начнут отвечать в чатах — здесь появится их активность.</div>';
         } else {
           // Итоги за период по каждому менеджеру
           const tot={};
-          rows.forEach(function(r){ const t=tot[r.manager]=tot[r.manager]||{msgs:0,chats:0,newDeals:0,won:0,daysAct:0}; t.msgs+=r.msgs; t.chats+=r.chats; t.newDeals+=r.newDeals; t.won+=r.won; if(r.msgs>0)t.daysAct++; });
+          frows.forEach(function(r){ const t=tot[r.manager]=tot[r.manager]||{msgs:0,chats:0,newDeals:0,won:0,daysAct:0}; t.msgs+=r.msgs; t.chats+=r.chats; t.newDeals+=r.newDeals; t.won+=r.won; if(r.msgs>0)t.daysAct++; });
           const totHTML='<h4 style="margin:16px 0 8px">Итого за период — по менеджерам</h4><table class="stat-tbl"><thead><tr><th>Менеджер</th><th title="Сколько дней менеджер отвечал в чатах">Дней активен</th><th title="Сумма диалогов по дням">Диалогов</th><th>Ответов</th><th>Новых лидов</th><th>Закрыто</th></tr></thead><tbody>'
             +Object.keys(tot).sort(function(a,b){return tot[b].msgs-tot[a].msgs;}).map(function(m){ const t=tot[m]; return '<tr><td><b>'+esc(m)+'</b></td><td>'+t.daysAct+'</td><td>'+t.chats+'</td><td>'+t.msgs+'</td><td>'+t.newDeals+'</td><td>'+t.won+'</td></tr>'; }).join('')+'</tbody></table>';
           // Разбивка по выбранной гранулярности
           const g={};
-          rows.forEach(function(r){ const k=wsGroupKey(r.date); const kk=k+'|'+r.manager; const t=g[kk]=g[kk]||{key:k,manager:r.manager,chats:0,msgs:0,newDeals:0,won:0,from:'',to:''}; t.chats+=r.chats; t.msgs+=r.msgs; t.newDeals+=r.newDeals; t.won+=r.won; if(r.from&&(!t.from||r.from<t.from))t.from=r.from; if(r.to&&(!t.to||r.to>t.to))t.to=r.to; });
+          frows.forEach(function(r){ const k=wsGroupKey(r.date); const kk=k+'|'+r.manager; const t=g[kk]=g[kk]||{key:k,manager:r.manager,chats:0,msgs:0,newDeals:0,won:0,from:'',to:''}; t.chats+=r.chats; t.msgs+=r.msgs; t.newDeals+=r.newDeals; t.won+=r.won; if(r.from&&(!t.from||r.from<t.from))t.from=r.from; if(r.to&&(!t.to||r.to>t.to))t.to=r.to; });
           const keys=[]; Object.values(g).forEach(function(x){ if(keys.indexOf(x.key)<0) keys.push(x.key); }); keys.sort(function(a,b){return b.localeCompare(a);});
           const timeCol=(WA_STATS_GROUP==='day');
           const tbl='<h4 style="margin:16px 0 8px">Разбивка</h4><table class="stat-tbl stat-daily"><thead><tr><th>Период</th><th>Менеджер</th>'+(timeCol?'<th title="Первый — последний ответ за день (Астана)">Время</th>':'')+'<th>Диалогов</th><th>Ответов</th><th>Новых</th><th>Закрыто</th></tr></thead><tbody>'
@@ -2278,13 +2287,14 @@
               const headRow='<tr class="sd-day"><td rowspan="'+(items.length+1)+'"><b>'+esc(wsGroupLabel(k))+'</b></td><td><i>Всего</i></td>'+(timeCol?'<td></td>':'')+'<td><b>'+t.chats+'</b></td><td><b>'+t.msgs+'</b></td><td><b>'+t.newDeals+'</b></td><td><b>'+t.won+'</b></td></tr>';
               return headRow+items.map(function(x){ return '<tr><td>'+esc(x.manager)+'</td>'+(timeCol?'<td>'+esc(x.from&&x.to?(x.from+'–'+x.to):'—')+'</td>':'')+'<td>'+x.chats+'</td><td>'+x.msgs+'</td><td>'+x.newDeals+'</td><td>'+x.won+'</td></tr>'; }).join('');
             }).join('')+'</tbody></table>';
-          bodyHTML=controls+totHTML+tbl;
+          bodyHTML=controls+mgrSel+totHTML+tbl;
         }
       }
       el.innerHTML=head+bodyHTML;
       el.querySelectorAll('.wss-tb').forEach(b=>b.addEventListener('click',()=>{ WA_STATS_MODE=b.dataset.sm; loadWAStats(); }));
       el.querySelectorAll('.wss-d[data-days]').forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.days==='today'){ WA_STATS_FROM=wsToday(); WA_STATS_TO=wsToday(); } else { WA_STATS_DAYS=+b.dataset.days; WA_STATS_FROM=''; WA_STATS_TO=''; } loadWAStats(); }));
       el.querySelectorAll('.wss-g').forEach(b=>b.addEventListener('click',()=>{ WA_STATS_GROUP=b.dataset.g; loadWAStats(); }));
+      const ms=el.querySelector('#wssMgr'); if(ms) ms.addEventListener('change',()=>{ WA_STATS_MGR=ms.value; loadWAStats(); });
       const ap=el.querySelector('#wssApply'); if(ap) ap.addEventListener('click',()=>{ const f=el.querySelector('#wssFrom').value, t=el.querySelector('#wssTo').value; if(f&&t&&f<=t){ WA_STATS_FROM=f; WA_STATS_TO=t; loadWAStats(); } else toast('Выберите обе даты: от — до','err'); });
     }catch(e){ el.innerHTML='<div class="mut">Ошибка: '+esc(e.message)+'</div>'; }
   }

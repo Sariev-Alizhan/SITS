@@ -164,6 +164,18 @@ export default async function handler(req, res) {
       await db.update('wa_deals', `phone=eq.${phone}`, { stage, updated_at: new Date().toISOString() });
       return res.status(200).json({ ok: true, phone, stage });
     }
+    // Менеджер сам вписывает цену/бюджет сделки из чата (поле «Цена» в панели).
+    if (req.method === 'POST' && action === 'budget') {
+      const phone = String(body.phone || '').replace(/\D/g, '');
+      const budget = String(body.budget == null ? '' : body.budget).slice(0, 100);
+      if (!phone) return res.status(400).json({ ok: false, error: 'Нет phone' });
+      if (!dbReady()) return res.status(200).json({ ok: false, error: 'CRM (Supabase) не подключён' });
+      const now = new Date().toISOString();
+      const ex = await db.select('wa_deals', `phone=eq.${phone}&select=phone`);
+      if (ex && ex.length) await db.update('wa_deals', `phone=eq.${phone}`, { budget, updated_at: now });
+      else await db.insert('wa_deals', { phone, budget, stage: 'new', title: 'Заявка WhatsApp', created_at: now, updated_at: now });
+      return res.status(200).json({ ok: true, phone, budget });
+    }
     if (req.method === 'POST' && action === 'send') {
       const phone = String(body.phone || '').replace(/\D/g, '');
       if (!phone) return res.status(400).json({ ok: false, error: 'Нет phone' });

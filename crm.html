@@ -751,7 +751,9 @@
       html,body{overflow-x:hidden}
       #app{overflow-x:hidden}
       .m-menu-btn{display:inline-flex}
-      .topbar{position:sticky;top:0;z-index:40}
+      /* На мобильном верх шапки гарантированно ниже камеры/острова: минимум 50px,
+         а если вырез больше — по фактическому env(safe-area-inset-top). */
+      .topbar{position:sticky;top:0;z-index:40;padding-top:max(50px, calc(15px + env(safe-area-inset-top, 0px)))}
       .topbar .topbar-right>*:not(.m-menu-btn){display:none!important}
       .tabs{display:none!important}
       .topbar .brand b{font-size:16px}

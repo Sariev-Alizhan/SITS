@@ -28,6 +28,24 @@ async function managerMap() {
   } catch { return {}; }
 }
 
+// Ключи владельца (super_admin) — его WhatsApp-чаты/сделки/статистику видит ТОЛЬКО он сам.
+async function bossKeys() {
+  const fb = new Set(['Алижан', 'alizhan']);
+  if (!authDbReady()) return fb;
+  try {
+    const rows = await authDb.select('crm_users', 'select=name,login&role=eq.super_admin');
+    const s = new Set();
+    for (const r of (rows || [])) { if (r.name) s.add(r.name); if (r.login) s.add(r.login); }
+    return s.size ? s : fb;
+  } catch { return fb; }
+}
+// Телефоны, закреплённые за владельцем (по chat_managers) — их прячем от не-владельцев.
+function bossPhones(mm, boss) {
+  const set = new Set();
+  for (const [phone, mgr] of Object.entries(mm)) if (boss.has(mgr)) set.add(phone);
+  return set;
+}
+
 const ALLOWED_ORIGINS = ['https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app'];
 const STAGES = ['new', 'dialog', 'qualified', 'call_invited', 'quote', 'contract_invited', 'waiting_payment', 'won', 'lost'];
 
@@ -52,9 +70,10 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET' && action === 'chats') {
-      const chats = await db.select('wa_contacts', 'select=phone,name,bot_enabled,hidden,service,last_text,last_role,last_at&order=last_at.desc&limit=500') || [];
+      let chats = await db.select('wa_contacts', 'select=phone,name,bot_enabled,hidden,service,last_text,last_role,last_at&order=last_at.desc&limit=500') || [];
       const mm = await managerMap();
       chats.forEach((c) => { c.manager = mm[c.phone] || null; });
+      if (user.role !== 'super_admin') { const bp = bossPhones(mm, await bossKeys()); chats = chats.filter((c) => !bp.has(c.phone)); }
       return res.status(200).json({ ok: true, chats, cloud: true });
     }
     if (req.method === 'GET' && action === 'managers') {
@@ -80,7 +99,9 @@ export default async function handler(req, res) {
         agg[m].total++;
         if (d.stage === 'won') { agg[m].won++; agg[m].sum += Number(String(d.budget || '').replace(/[^\d.]/g, '')) || 0; }
       }
-      return res.status(200).json({ ok: true, stats: Object.values(agg).sort((a, b) => b.sum - a.sum) });
+      let statsOut = Object.values(agg).sort((a, b) => b.sum - a.sum);
+      if (user.role !== 'super_admin') { const boss = await bossKeys(); statsOut = statsOut.filter((r) => !boss.has(r.manager)); }
+      return res.status(200).json({ ok: true, stats: statsOut });
     }
     // Разбивка «сколько продавцы обработали по дням»: за каждый день — сколько диалогов вёл менеджер
     // (по его ответам role=agent), сколько ответов, сколько новых сделок и сколько закрыто.
@@ -133,14 +154,16 @@ export default async function handler(req, res) {
         if (inRange(d.created_at)) cell(dayKey(d.created_at), mgr).newDeals++;
         if (d.stage === 'won' && inRange(d.updated_at)) cell(dayKey(d.updated_at), mgr).won++;
       }
-      const rows = Object.values(map)
+      let rows = Object.values(map)
         .map((c) => ({ date: c.date, manager: c.manager, chats: c.chats.size, msgs: c.msgs, newDeals: c.newDeals, won: c.won, from: c.firstTs ? hhmm(c.firstTs) : '', to: c.lastTs ? hhmm(c.lastTs) : '' }))
         .sort((a, b) => (a.date === b.date ? b.chats - a.chats : b.date.localeCompare(a.date)));
+      if (user.role !== 'super_admin') { const boss = await bossKeys(); rows = rows.filter((r) => !boss.has(r.manager)); }
       return res.status(200).json({ ok: true, days, rows });
     }
     if (req.method === 'GET' && action === 'deals') {
-      const deals = await db.select('wa_deals', 'select=phone,name,title,service,budget,stage,note,updated_at&order=updated_at.desc&limit=1000');
-      return res.status(200).json({ ok: true, deals: deals || [], cloud: true });
+      let deals = await db.select('wa_deals', 'select=phone,name,title,service,budget,stage,note,updated_at&order=updated_at.desc&limit=1000') || [];
+      if (user.role !== 'super_admin') { const bp = bossPhones(await managerMap(), await bossKeys()); deals = deals.filter((d) => !bp.has(d.phone)); }
+      return res.status(200).json({ ok: true, deals, cloud: true });
     }
     if (req.method === 'GET' && action === 'calls') {
       const calls = await db.select('wa_calls', 'select=id,phone,name,scheduled_at,topic,status&order=scheduled_at.asc&limit=500');
@@ -155,6 +178,7 @@ export default async function handler(req, res) {
     if (req.method === 'GET' && action === 'messages') {
       const phone = String(req.query.phone || '').replace(/\D/g, '');
       if (!phone) return res.status(400).json({ ok: false, error: 'Нет phone' });
+      if (user.role !== 'super_admin') { const bp = bossPhones(await managerMap(), await bossKeys()); if (bp.has(phone)) return res.status(403).json({ ok: false, error: 'Нет доступа к этому чату' }); }
       const messages = await db.select('wa_messages', `phone=eq.${phone}&select=id,role,text,created_at&order=created_at.asc&limit=1000`);
       return res.status(200).json({ ok: true, messages: messages || [], cloud: true });
     }

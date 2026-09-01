@@ -2,7 +2,7 @@
 <html lang="ru" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>SITS · CRM — Fibonacci Control</title>
 <meta name="robots" content="noindex, nofollow" />
 <link rel="icon" type="image/png" href="/brand/favicon.png?v=10" />
@@ -50,6 +50,9 @@
   .btn{display:inline-flex;align-items:center;gap:6px;justify-content:center}
   h3 .ic{color:var(--gold)}
   *{margin:0;padding:0;box-sizing:border-box}
+  /* Ощущение нативного приложения на мобилке: без пинч-зума/double-tap-зума и без «резинки» прокрутки. */
+  html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  html,body{overscroll-behavior:none}
   body{color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;
     background:
       radial-gradient(120% 80% at 50% -15%, rgba(210,162,76,.07), transparent 55%),

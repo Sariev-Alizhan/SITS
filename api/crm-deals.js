@@ -25,6 +25,7 @@ async function bossKeys() {
 const ownerKeys = (u) => new Set([u.name, u.login].filter(Boolean));
 // Видит ли пользователь конкретную сделку по её полю manager.
 function canSee(deal, user, boss) {
+  if (!(deal.manager || '')) return true;                       // «ничейные» (напр. новые с WhatsApp) видят все — кто взял, тот и владелец
   if (user.role === 'super_admin') return true;                 // руководитель видит всё
   if (user.role === 'admin') return !boss.has(deal.manager || ''); // админ — всё, кроме сделок руководителя
   return ownerKeys(user).has(deal.manager || '');               // менеджер — только свои

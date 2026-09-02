@@ -1660,8 +1660,16 @@
   // Блокировка прокрутки фона при открытой модалке (чтобы скролился контент окна, а не задний экран).
   function lockScroll(on){ const v=on?'hidden':''; document.documentElement.style.overflow=v; document.body.style.overflow=v; }
   // Загрузочный экран: скрываем, когда система готова.
-  let __splashHidden=false;
-  function hideSplash(){ if(__splashHidden) return; __splashHidden=true; const s=$('#crmSplash'); if(s){ s.classList.add('gone'); setTimeout(()=>{ try{ s.remove(); }catch(_){} }, 550); } }
+  let __splashHidden=false, __splashTimer=null;
+  const __splashStart=Date.now();
+  const SPLASH_MIN=900; // загрузочный экран виден МИНИМУМ 0.9с, чтобы он был заметен, даже если данные готовы мгновенно
+  function hideSplash(){
+    if(__splashHidden) return;
+    const elapsed=Date.now()-__splashStart;
+    if(elapsed<SPLASH_MIN){ if(!__splashTimer){ __splashTimer=setTimeout(()=>{ __splashTimer=null; hideSplash(); }, SPLASH_MIN-elapsed); } return; }
+    __splashHidden=true;
+    const s=$('#crmSplash'); if(s){ s.classList.add('gone'); setTimeout(()=>{ try{ s.remove(); }catch(_){} }, 550); }
+  }
   setTimeout(hideSplash, 9000); // страховка: не держим экран дольше 9 с
 
   // ---------- PWA: установка на главный экран ----------

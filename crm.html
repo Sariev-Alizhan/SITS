@@ -6,6 +6,7 @@
 <title>SITS · CRM — Fibonacci Control</title>
 <meta name="robots" content="noindex, nofollow" />
 <link rel="icon" type="image/png" href="/brand/favicon.png?v=10" />
+<link rel="preload" as="image" href="/brand/sits-mark-red.png" />
 <meta name="theme-color" content="#070A10" />
 <link rel="manifest" href="/manifest-crm.webmanifest" />
 <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
@@ -1787,7 +1788,7 @@
       }
     }catch(_){}
   }
-  function logout(){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); try{ localStorage.removeItem(KEY_CACHE); localStorage.removeItem(KEY_MGR); localStorage.removeItem(KEY_ROLE); }catch(_){} DEALS=[]; PASS=''; LOGIN=''; location.reload(); }
+  function logout(){ sessionStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_LOGIN); try{ localStorage.removeItem(KEY_CACHE); localStorage.removeItem(KEY_MGR); localStorage.removeItem(KEY_ROLE); localStorage.removeItem('sits_dash_cache_'+(LOGIN||'')); }catch(_){} DEALS=[]; PASS=''; LOGIN=''; location.reload(); }
 
   // Подстраховка от автозаполнения: запоминаем то, что реально печатали
   let _mLogin='', _mPass='';
@@ -2258,16 +2259,19 @@
   // ---------- СВОДКА (dashboard) ----------
   let dashLoading=false;
   function goTab(v){ const t=[...document.querySelectorAll('.tab')].find(x=>x.dataset.view===v); if(t) t.click(); }
+  const _dashBindGo=()=>{ $$('#dashTodo [data-go]').forEach(b=>b.addEventListener('click',()=>goTab(b.dataset.go))); $$('#dashGrid [data-go]').forEach(b=>b.addEventListener('click',()=>goTab(b.dataset.go))); };
   async function loadDashboard(){
     const grid=$('#dashGrid'); if(!grid || dashLoading) return; dashLoading=true;
     const nm=localStorage.getItem(KEY_MGR)||'';
     $('#dashHello').textContent = nm ? ('Привет, '+nm+'!') : 'Сводка';
+    // Мгновенный показ из кэша (stale-while-revalidate): открываем готовую сводку сразу, свежие данные подтягиваются в фоне
+    const _dashKey='sits_dash_cache_'+(LOGIN||'');
+    try{ const c=JSON.parse(localStorage.getItem(_dashKey)||'null'); if(c&&c.grid){ if(c.todo)$('#dashTodo').innerHTML=c.todo; grid.innerHTML=c.grid; _dashBindGo(); hideSplash(); } }catch(_){}
     let out=[], part=[];
     try{ out=(await apiOut('GET')).items||[]; }catch(_){}
     try{ part=(await apiPart('GET')).items||[]; }catch(_){}
     const deals=DEALS||[];
     dashLoading=false;
-    hideSplash();
     const oBy=s=>out.filter(x=>x.status===s).length;
     const pBy=s=>part.filter(x=>x.status===s).length;
     const myOut=out.filter(x=>x.assignee===nm).length;
@@ -2283,7 +2287,6 @@
     if(inWork>0) todo.push({t:`<b>${inWork}</b> лидов «в работе» — не забудьте follow-up`, a:'outreach', cta:'Открыть'});
     if(!todo.length) todo.push({t:'Всё под контролем — можно брать новых клиентов из Обзвона', a:'outreach', cta:'К обзвону'});
     $('#dashTodo').innerHTML='<div class="dt-title">Приоритеты на сегодня</div>'+todo.map(x=>`<div class="dt-item"><span>${x.t}</span><button class="btn btn-gold btn-sm" data-go="${x.a}">${x.cta}</button></div>`).join('');
-    $$('#dashTodo [data-go]').forEach(b=>b.addEventListener('click',()=>goTab(b.dataset.go)));
     // by manager (outreach)
     const mgrs={}; out.forEach(x=>{ const a=x.assignee||'— не назначен'; mgrs[a]=(mgrs[a]||0)+1; });
     const mgrRows=Object.entries(mgrs).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="dl-row"><span>${esc(k)}</span><b>${v}</b></div>`).join('');
@@ -2311,7 +2314,9 @@
         <div class="dc-h"><span class="dc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9"/></svg></span>Кто ведёт (Обзвон)</div>
         <div class="dl-list">${mgrRows||'<div class="dc-note">Пока никто не назначен</div>'}</div>
       </div>`;
-    $$('#dashGrid [data-go]').forEach(b=>b.addEventListener('click',()=>goTab(b.dataset.go)));
+    _dashBindGo();
+    hideSplash();
+    try{ localStorage.setItem(_dashKey, JSON.stringify({grid:grid.innerHTML, todo:$('#dashTodo').innerHTML})); }catch(_){}
   }
   $('#dashReload') && $('#dashReload').addEventListener('click',loadDashboard);
 

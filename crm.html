@@ -389,6 +389,17 @@
   .out-del{background:transparent;border:1px solid var(--line);border-radius:8px;color:var(--slate);height:34px;font-size:15px}
   .out-del:hover{border-color:var(--err);color:#e5675e}
   .out-empty{padding:48px 20px;text-align:center;color:var(--slate);font-size:14px}
+  /* Пагинация обзвона */
+  .out-pager{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:14px 2px 6px;font-size:13px;color:var(--slate)}
+  .out-pager .pg-info b{color:var(--fg)}
+  .out-pager .pg-mid{display:flex;flex-wrap:wrap;align-items:center;gap:5px;justify-content:center}
+  .out-pager .pg-num,.out-pager .pg-nav{min-width:34px;height:34px;padding:0 10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+  .out-pager .pg-num:hover,.out-pager .pg-nav:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+  .out-pager .pg-num.cur{background:var(--gold);color:#1a1305;border-color:transparent}
+  .out-pager .pg-nav:disabled{opacity:.4;cursor:default}
+  .out-pager .pg-dots{padding:0 4px;color:var(--slate)}
+  .out-pager .pg-size select{padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg)}
+  @media(max-width:640px){ .out-pager{justify-content:center} .out-pager .pg-info,.out-pager .pg-size{width:100%;text-align:center} }
   /* календарь лучшего времени */
   .cal-now{margin-bottom:16px;padding:14px 18px;border-radius:12px;border:1px solid var(--line-2);background:var(--surface);font-size:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .cal-now .dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
@@ -993,6 +1004,7 @@
       </div>
       <div id="outList"></div>
     </div>
+    <div id="outPager" class="out-pager"></div>
     <div id="outEmpty" class="out-empty" style="display:none">Список пуст. Нажмите «+ Импорт лидов» и вставьте базу — бизнесы появятся здесь для распределения и проработки.</div>
   </div>
 
@@ -1930,6 +1942,39 @@
   const OUT_ST = {new:'Новый', in_progress:'В работе', done:'Выполнено', rejected:'Отказ'};
   const TIER_CLS = {'высокий':'hi','средний':'mid','низкий':'lo'};
   let OUT=[], outLoaded=false, outSearch='', outFilter='all', outMine='all', outWho='', outTier='', outCity='';
+  let outPage=1, OUT_PAGE_SIZE=Number(localStorage.getItem('sits_out_pagesize'))||50;
+  function outResetPage(){ outPage=1; }
+  // Панель пагинации обзвона: «Показано X–Y из Z», номера страниц с многоточиями, выбор размера.
+  function renderOutPager(total, pages, from){
+    const el=$('#outPager'); if(!el) return;
+    const to=Math.min(from+OUT_PAGE_SIZE, total);
+    if(total===0){ el.innerHTML=''; return; }
+    const nums=[]; const add=(n)=>nums.push(n); const near=2;
+    for(let p=1;p<=pages;p++){
+      if(p===1||p===pages||(p>=outPage-near&&p<=outPage+near)) add(p);
+      else if(nums[nums.length-1]!=='…') add('…');
+    }
+    const btns=nums.map(n=> n==='…' ? '<span class="pg-dots">…</span>'
+      : `<button class="pg-num${n===outPage?' cur':''}" data-p="${n}">${n}</button>`).join('');
+    const sizeSel=[25,50,100,200].map(s=>`<option value="${s}"${s===OUT_PAGE_SIZE?' selected':''}>${s}</option>`).join('');
+    el.innerHTML=`
+      <div class="pg-info">Показано <b>${total?from+1:0}–${to}</b> из <b>${total}</b></div>
+      <div class="pg-mid">
+        <button class="pg-nav" data-p="prev"${outPage<=1?' disabled':''}>‹ Назад</button>
+        ${btns}
+        <button class="pg-nav" data-p="next"${outPage>=pages?' disabled':''}>Вперёд ›</button>
+      </div>
+      <div class="pg-size">На странице: <select id="outPageSize">${sizeSel}</select></div>`;
+    el.querySelectorAll('.pg-num,.pg-nav').forEach(b=>b.addEventListener('click',()=>{
+      const v=b.dataset.p;
+      if(v==='prev') outPage=Math.max(1,outPage-1);
+      else if(v==='next') outPage=Math.min(pages,outPage+1);
+      else outPage=Number(v);
+      renderOutreach();
+      const w=document.querySelector('#view-outreach .out-wrap'); if(w) w.scrollIntoView({behavior:'smooth',block:'start'});
+    }));
+    const ss=$('#outPageSize'); if(ss) ss.addEventListener('change',e=>{ OUT_PAGE_SIZE=Number(e.target.value)||50; localStorage.setItem('sits_out_pagesize',OUT_PAGE_SIZE); outPage=1; renderOutreach(); });
+  }
   const outCityOf=(x)=>String((x.channels&&x.channels.city)||'').trim();
   function fillCityFilter(){ const s=$('#outCityFilter'); if(!s) return; const cur=s.value; const present=[...new Set(OUT.map(outCityOf).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru')); s.innerHTML='<option value="">Город: все</option>'+present.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join(''); s.value=present.includes(cur)?cur:''; if(!present.includes(cur)) outCity=s.value; }
   async function apiOut(method, body){
@@ -1987,7 +2032,14 @@
     outStats(); fillCityFilter();
     const box=$('#outList');
     $('#outEmpty').style.display = OUT.length ? 'none' : 'block';
-    box.innerHTML = list.map(it=>{
+    // Пагинация: рендерим только текущую страницу — 7000+ строк разом тормозят и невозможно листать.
+    const total=list.length;
+    const pages=Math.max(1, Math.ceil(total/OUT_PAGE_SIZE));
+    if(outPage>pages) outPage=pages;
+    const from=(outPage-1)*OUT_PAGE_SIZE;
+    const pageList=list.slice(from, from+OUT_PAGE_SIZE);
+    renderOutPager(total, pages, from);
+    box.innerHTML = pageList.map(it=>{
       const opts=['<option value="">— не назначен</option>'].concat(TEAM.map(n=>`<option value="${esc(n)}"${it.assignee===n?' selected':''}>${esc(n)}</option>`)).join('');
       const st=Object.keys(OUT_ST).map(s=>`<option value="${s}"${it.status===s?' selected':''}>${OUT_ST[s]}</option>`).join('');
       const cat=(it.category||'').replace(/\s*—\s*Астана.*/,'').replace(/\s*\(Астана\)/,'');
@@ -2040,12 +2092,12 @@
     try{ await apiOut('POST',{action:'delete', id:it.id}); OUT=OUT.filter(x=>x.id!==it.id); renderOutreach(); toast('Удалено','ok'); }
     catch(err){ toast('Ошибка: '+err.message,'err'); }
   }
-  $('#outSearch') && $('#outSearch').addEventListener('input',e=>{ outSearch=e.target.value.trim(); renderOutreach(); });
-  $$('#outStatusFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#outStatusFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); outFilter=b.dataset.f; renderOutreach(); }));
-  $$('#outMineFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#outMineFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); outMine=b.dataset.m; renderOutreach(); }));
-  (function(){ const s=$('#outWhoFilter'); if(!s) return; fillWhoFilters(); s.addEventListener('change',e=>{ outWho=e.target.value; renderOutreach(); }); })();
-  $('#outTierFilter') && $('#outTierFilter').addEventListener('change',e=>{ outTier=e.target.value; renderOutreach(); });
-  $('#outCityFilter') && $('#outCityFilter').addEventListener('change',e=>{ outCity=e.target.value; renderOutreach(); });
+  $('#outSearch') && $('#outSearch').addEventListener('input',e=>{ outSearch=e.target.value.trim(); outResetPage(); renderOutreach(); });
+  $$('#outStatusFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#outStatusFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); outFilter=b.dataset.f; outResetPage(); renderOutreach(); }));
+  $$('#outMineFilter button').forEach(b=>b.addEventListener('click',()=>{ $$('#outMineFilter button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); outMine=b.dataset.m; outResetPage(); renderOutreach(); }));
+  (function(){ const s=$('#outWhoFilter'); if(!s) return; fillWhoFilters(); s.addEventListener('change',e=>{ outWho=e.target.value; outResetPage(); renderOutreach(); }); })();
+  $('#outTierFilter') && $('#outTierFilter').addEventListener('change',e=>{ outTier=e.target.value; outResetPage(); renderOutreach(); });
+  $('#outCityFilter') && $('#outCityFilter').addEventListener('change',e=>{ outCity=e.target.value; outResetPage(); renderOutreach(); });
   // ---------- Массовый импорт лидов (вставка списком) ----------
   function openImport(){ $('#outImpText').value=''; $('#outImpInfo').textContent=''; $('#outImportModal').style.display='flex'; setTimeout(()=>$('#outImpText').focus(),50); }
   function closeImport(){ $('#outImportModal').style.display='none'; }

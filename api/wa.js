@@ -1,6 +1,6 @@
 // /api/wa.js — единый эндпоинт WhatsApp-канбана для CRM (укладываемся в лимит функций Hobby).
 // GET  ?action=chats | ?action=deals | ?action=messages&phone=...
-// POST { action:'toggle', phone, enabled } | { action:'move', phone, stage }
+// POST { action:'toggle', phone, enabled } | { action:'move', phone, stage } | { action:'ai_toggle', enabled }
 import { rateLimit, getClientIp, checkOrigin, readBody } from './_security.js';
 import { authUser } from './_crm-auth.js';
 import { db, dbReady } from './_db.js';
@@ -46,6 +46,11 @@ function bossPhones(mm, boss) {
   return set;
 }
 
+// Главный рубильник ИИ-агента. Отдельной таблицы настроек нет, поэтому состояние живёт
+// служебной строкой wa_contacts с этим «телефоном»: bot_enabled=false → агент молчит во всех
+// чатах (его читает бот на VPS). Пер-чатные тумблеры при этом не трогаются.
+const AI_ROW = '__ai__';
+
 const ALLOWED_ORIGINS = ['https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app'];
 const STAGES = ['new', 'dialog', 'qualified', 'call_invited', 'quote', 'contract_invited', 'waiting_payment', 'won', 'lost'];
 
@@ -71,10 +76,13 @@ export default async function handler(req, res) {
   try {
     if (req.method === 'GET' && action === 'chats') {
       let chats = await db.select('wa_contacts', 'select=phone,name,bot_enabled,hidden,service,last_text,last_role,last_at&order=last_at.desc&limit=500') || [];
+      const aiRow = chats.find((c) => c.phone === AI_ROW);
+      const aiOn = !(aiRow && aiRow.bot_enabled === false);
+      chats = chats.filter((c) => c.phone !== AI_ROW); // служебная строка — не чат
       const mm = await managerMap();
       chats.forEach((c) => { c.manager = mm[c.phone] || null; });
       if (user.role !== 'super_admin') { const bp = bossPhones(mm, await bossKeys()); chats = chats.filter((c) => !bp.has(c.phone)); }
-      return res.status(200).json({ ok: true, chats, cloud: true });
+      return res.status(200).json({ ok: true, chats, ai_on: aiOn, cloud: true });
     }
     if (req.method === 'GET' && action === 'managers') {
       let managers = [];
@@ -189,6 +197,20 @@ export default async function handler(req, res) {
       if (!dbReady()) return res.status(200).json({ ok: false, error: 'CRM (Supabase) не подключён' });
       await db.upsert('wa_contacts', { phone, bot_enabled: enabled, updated_at: new Date().toISOString() });
       return res.status(200).json({ ok: true, phone, enabled });
+    }
+    // Главный рубильник ИИ-агента по всем чатам (кнопка в шапке раздела WhatsApp).
+    // Меняют только владелец и админы — у менеджеров кнопка не активна.
+    if (req.method === 'POST' && action === 'ai_toggle') {
+      if (user.role !== 'super_admin' && user.role !== 'admin') {
+        return res.status(403).json({ ok: false, error: 'Менять ИИ-агента может только владелец или админ' });
+      }
+      if (!dbReady()) return res.status(200).json({ ok: false, error: 'CRM (Supabase) не подключён' });
+      const enabled = !!body.enabled;
+      await db.upsert('wa_contacts', {
+        phone: AI_ROW, bot_enabled: enabled, hidden: true,
+        name: 'ИИ-агент (служебная строка)', updated_at: new Date().toISOString(),
+      });
+      return res.status(200).json({ ok: true, ai_on: enabled });
     }
     if (req.method === 'POST' && action === 'hide') {
       const phone = String(body.phone || '').replace(/\D/g, '');

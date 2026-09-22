@@ -525,10 +525,7 @@ html[data-theme="dark"]{
   --fx-glow-2:rgba(226,55,68,.18);
   --fx-dot:rgba(255,255,255,.055);
   --fx-grain:.06;
-  --fx-cursor:rgba(226,55,68,.22);
-  --fx-cursor-2:rgba(226,55,68,.10);
-  --fx-cursor-core:rgba(255,142,98,.22);
-  --fx-cursor-blend:screen;
+  --fx-trail-blend:screen;
 }
 html[data-theme="light"]{
   --bg:#f6f3f3;
@@ -553,10 +550,7 @@ html[data-theme="light"]{
   --fx-glow-2:rgba(179,29,34,.10);
   --fx-dot:rgba(179,29,34,.07);
   --fx-grain:.035;
-  --fx-cursor:rgba(226,55,68,.15);
-  --fx-cursor-2:rgba(226,86,60,.07);
-  --fx-cursor-core:rgba(255,158,120,.20);
-  --fx-cursor-blend:normal;
+  --fx-trail-blend:normal;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
@@ -596,21 +590,14 @@ main, footer{position:relative;z-index:1}
 }
 @media(prefers-reduced-motion:reduce){.fx-aurora{animation:none !important}}
 
-/* === Cursor spotlight (z-index 0, между фоном и контентом) === */
-.fx-cursor{position:fixed;top:0;left:0;width:420px;height:420px;border-radius:50%;
-  background:radial-gradient(circle at 50% 50%,var(--fx-cursor) 0%,var(--fx-cursor-2) 42%,transparent 70%);
-  filter:blur(22px);pointer-events:none;z-index:0;opacity:0;
-  mix-blend-mode:var(--fx-cursor-blend);
-  transition:opacity .45s var(--ease);will-change:transform;
-  transform:translate3d(-50vw,-50vh,0)}
-/* тёплая сердцевина — даёт свечению объём вместо плоского пятна */
-.fx-cursor::after{content:'';position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;
-  border-radius:50%;background:radial-gradient(circle at 50% 50%,var(--fx-cursor-core),transparent 70%);
-  filter:blur(14px);opacity:.95;
-  transition:transform .55s var(--ease),opacity .55s var(--ease)}
-.fx-cursor.on{opacity:1}
-/* над кнопкой или ссылкой сияние подбирается и разгорается */
-.fx-cursor.hot::after{transform:scale(1.35);opacity:1}
+/* === Шлейф-комета за курсором (canvas, z-index 0 — между фоном и контентом) ===
+   Голова догоняет мышь с инерцией, за ней тянется затухающий след и мягкий прожектор.
+   Только мышь на компьютере; кадры считаются, пока есть живые точки. */
+.fx-trail{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0;
+  mix-blend-mode:var(--fx-trail-blend);
+  transition:opacity .5s var(--ease)}
+.fx-trail.on{opacity:1}
+@media (hover:none),(prefers-reduced-motion:reduce){.fx-trail{display:none}}
 
 /* === Magnetic CTA: только will-change, transition уже у .btn === */
 .magnetic{will-change:transform}
@@ -990,6 +977,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .pf-10{grid-column:span 3}
 .pf-11{grid-column:span 3}
 .pf-12{grid-column:span 3}
+.pf-13{grid-column:span 6}
 
 /* ============ PRICING ============ */
 .promo-pill{display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;
@@ -1325,7 +1313,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .p-row{grid-template-columns:70px 1fr;gap:22px}
   .p-row p{grid-column:2}
   .pf-bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:220px}
-  .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10,.pf-11,.pf-12{grid-column:span 2;grid-row:span 1}
+  .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10,.pf-11,.pf-12,.pf-13{grid-column:span 2;grid-row:span 1}
   .about-grid{grid-template-columns:1fr;gap:40px;max-width:520px}
   .contact-grid{grid-template-columns:1fr;gap:36px}
 }
@@ -1351,7 +1339,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .s-sites,.s-mobile,.s-ai,.s-support{grid-column:auto}
   /* Portfolio: image on top, text below on solid surface — fully readable on touch */
   .pf-bento{grid-template-columns:1fr;grid-auto-rows:auto}
-  .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10,.pf-11,.pf-12{grid-column:auto;grid-row:auto}
+  .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10,.pf-11,.pf-12,.pf-13{grid-column:auto;grid-row:auto}
   .pf{display:flex;flex-direction:column;background:var(--surface)}
   .pf img{position:relative;inset:auto;height:200px}
   .pf .grad{display:none}
@@ -1396,7 +1384,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
     text-shadow:none!important;box-shadow:none!important;animation:none!important;transition:none!important;
     backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
   body{font-size:12pt;line-height:1.4}
-  .nav,.fx-bg,.fx-cursor,.mobile-menu,.burger,
+  .nav,.fx-bg,.fx-trail,.mobile-menu,.burger,
   .lang-switch,.icon-btn,.theme-toggle,.skip-link,
   form.contact-form,.contact-info .cinfo .ci-arr{display:none!important}
   main,footer{position:static!important}
@@ -1574,7 +1562,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   <div class="fx-dots"></div>
   <div class="fx-grain"></div>
 </div>
-<div class="fx-cursor" aria-hidden="true"></div>
+<canvas class="fx-trail" aria-hidden="true"></canvas>
 
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
@@ -2180,13 +2168,14 @@ const I18N = {
     },
     portfolio: {
       tag:'Портфолио', h2:'Избранные работы',
-      desc:'Десять запущенных проектов — от интерьерных бутиков до B2B-платформ и игровых студий.',
+      desc:'Больше десяти запущенных проектов — от интерьерных бутиков до B2B-платформ, игровых студий и собственных SaaS.',
       open:'Открыть',
       cat: {
         '01':'Сайт-визитка', '02':'Игровая студия', '03':'E-commerce / fashion',
         '04':'E-commerce / премиум', '05':'B2B-платформа', '06':'Dev-инструмент / SaaS',
         '07':'Маркетплейс', '08':'B2B-маркетплейс', '09':'Каталог / городской сервис',
         '10':'Премиум-шоурум', '11':'Меншікті өнім · CRM', '12':'Claude негізіндегі AI', '11':'Собственный продукт · CRM', '12':'AI на базе Claude',
+        '13':'SaaS · CRM + техподдержка',
       },
       desc_: {
         '01':'Студия интерьерного дизайна и бутик (Алматы). Элегантный мультиязычный сайт.',
@@ -2199,6 +2188,7 @@ const I18N = {
         '08':'Торговая площадка для поставщиков и магазинов. 3D-иллюстрации, регистрация и каталог.',
         '09':'Каталог акций и магазинов города (Усть-Каменогорск). Карточки товаров и акций.',
         '10':'Премиум-сайт шоурума камня (Астана). Спечённый камень SINISO, керамогранит, мрамор. Расчёт, 3D-визуализация, монтаж под ключ.', '11':'Fibonacci Control — наша CRM-платформа: ИИ-сотрудник, WhatsApp и учёт сделок для любого бизнеса Казахстана.', '12':'AI-консультант сайта SITS: отвечает про услуги и цены на трёх языках и принимает заявки прямо в чате. Нажмите кнопку чата и попробуйте.',
+        '13':'SmartAdmin — облачная CRM для спа, бань и комплексов отдыха: ИИ-администратор в WhatsApp, брони без накладок, касса и склад. SITS ведёт техническую поддержку и развитие платформы.',
       },
     },
     pricing: {
@@ -2444,13 +2434,14 @@ const I18N = {
     },
     portfolio: {
       tag:'Work', h2:'Selected projects',
-      desc:'Ten projects shipped to production — from interior boutiques to B2B platforms and game studios.',
+      desc:'More than ten projects shipped to production — from interior boutiques to B2B platforms, game studios and our own SaaS.',
       open:'Open',
       cat: {
         '01':'Showcase site', '02':'Game studio', '03':'E-commerce / fashion',
         '04':'E-commerce / premium', '05':'B2B platform', '06':'Dev tool / SaaS',
         '07':'Marketplace', '08':'B2B marketplace', '09':'Catalog / local service',
         '10':'Premium showroom', '11':'Own product · CRM', '12':'AI powered by Claude',
+        '13':'SaaS · CRM + tech support',
       },
       desc_: {
         '01':'Interior design studio and boutique (Almaty). An elegant multilingual site.',
@@ -2463,6 +2454,7 @@ const I18N = {
         '08':'Marketplace for suppliers and retailers. 3D illustrations, sign-up and catalog.',
         '09':'Local catalog of deals and stores (Oskemen). Product and promo cards.',
         '10':'Premium stone showroom site (Astana). SINISO sintered stone, porcelain, marble. Calculation, 3D viz, turn-key installation.', '11':'Fibonacci Control — our own CRM platform: an AI employee, WhatsApp and deal tracking for any business in Kazakhstan.', '12':'The AI consultant on the SITS site: answers about services and prices in three languages and takes leads right in the chat. Tap the chat button and try it.',
+        '13':'SmartAdmin — cloud CRM for spas, bathhouses and leisure complexes: an AI administrator in WhatsApp, conflict-free bookings, POS and inventory. SITS runs the platform\'s tech support and development.',
       },
     },
     pricing: {
@@ -2708,13 +2700,14 @@ const I18N = {
     },
     portfolio: {
       tag:'Жұмыстар', h2:'Таңдаулы жобалар',
-      desc:'Он өндіріске енгізілген жоба — интерьер бутиктерінен бастап B2B-платформалар мен ойын студияларына дейін.',
+      desc:'Оннан астам өндіріске енгізілген жоба — интерьер бутиктерінен бастап B2B-платформалар, ойын студиялары және меншікті SaaS-қа дейін.',
       open:'Ашу',
       cat: {
         '01':'Визитка-сайт', '02':'Ойын студиясы', '03':'E-commerce / fashion',
         '04':'E-commerce / премиум', '05':'B2B-платформа', '06':'Dev-құрал / SaaS',
         '07':'Маркетплейс', '08':'B2B-маркетплейс', '09':'Каталог / қалалық сервис',
         '10':'Премиум-шоурум',
+        '13':'SaaS · CRM + техқолдау',
       },
       desc_: {
         '01':'Интерьер дизайн студиясы және бутик (Алматы). Талғампаз, көп тілді сайт.',
@@ -2727,6 +2720,7 @@ const I18N = {
         '08':'Жеткізушілер мен дүкендерге арналған сауда алаңы. 3D-иллюстрациялар, тіркеу және каталог.',
         '09':'Қаладағы акциялар мен дүкендердің каталогы (Өскемен). Тауар мен акциялардың карточкалары.',
         '10':'Астана тас шоурумының премиум-сайты. SINISO спечен тас, керамогранит, мрамор. Есептеу, 3D-визуализация, кілт астында монтаж.', '11':'Fibonacci Control — өз CRM-платформамыз: ИИ-қызметкер, WhatsApp және мәмілелер есебі кез келген бизнеске.', '12':'SITS сайтындағы AI-кеңесші: қызметтер мен бағалар туралы үш тілде жауап беріп, өтінімдерді чатта қабылдайды. Чат батырмасын басып көріңіз.',
+        '13':'SmartAdmin — спа, монша және демалыс кешендеріне арналған бұлттық CRM: WhatsApp-тағы ИИ-әкімші, қабаттаспайтын брондар, касса және қойма. SITS платформаның техникалық қолдауы мен дамуын жүргізеді.',
       },
     },
     pricing: {
@@ -2926,6 +2920,7 @@ const PORTFOLIO = [
   { id:'10', name:'PRO CERAMIC',         url:'https://pro-ceramic.kz',                         img:'portfolio/10_pro-ceramic.webp',   cls:'pf-10' },
   { id:'11', name:'Fibonacci Control',   url:'https://fibonaccicontrol.com',                   img:'portfolio/11_fibonacci-control.webp', cls:'pf-11' },
   { id:'12', name:'AI-консультант SITS', url:'/price',                                         img:'portfolio/12_ai-assistant.webp',  cls:'pf-12' },
+  { id:'13', name:'SmartAdmin',         url:'https://smartadmin.kz',                          img:'portfolio/13_smartadmin.webp',    cls:'pf-13' },
 ];
 
 function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
@@ -3335,29 +3330,82 @@ window.__formLoaded = Date.now();
   const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
   if (!fine || reduce) return;
 
-  /* --- Cursor spotlight: один rAF-цикл с lerp .15 --- */
-  const cur = document.querySelector('.fx-cursor');
-  if (cur) {
-    // половину берём из самого элемента — размер живёт в CSS и не рассинхронится
-    let HALF = cur.offsetWidth / 2 || 330;
-    addEventListener('resize', () => { HALF = cur.offsetWidth / 2 || HALF; }, { passive: true });
-    let mx = -9999, my = -9999, cx = -9999, cy = -9999, started = false, hot = false;
-    addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      if (!started) { started = true; cx = mx; cy = my; cur.classList.add('on'); }
-      // над кликабельным — сердцевина разгорается
-      const over = !!(e.target instanceof Element && e.target.closest('a,button,.b-card,.cmp-card,input,textarea,select'));
-      if (over !== hot) { hot = over; cur.classList.toggle('hot', hot); }
-    }, { passive: true });
-    addEventListener('mouseleave', () => cur.classList.remove('on'), { passive: true });
-    addEventListener('mouseenter', () => { if (started) cur.classList.add('on'); }, { passive: true });
-    const loop = () => {
-      cx += (mx - cx) * 0.26;
-      cy += (my - cy) * 0.26;
-      cur.style.transform = 'translate3d(' + (cx - HALF) + 'px,' + (cy - HALF) + 'px,0)';
-      requestAnimationFrame(loop);
+  /* --- Шлейф-комета за курсором: один rAF-цикл, кадры только пока есть движение --- */
+  const trail = document.querySelector('.fx-trail');
+  if (trail && trail.getContext) {
+    const ctx = trail.getContext('2d');
+    let dpr = 1, W = 0, H = 0;
+    const resize = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+      W = innerWidth; H = innerHeight;
+      trail.width = Math.round(W * dpr); trail.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
-    requestAnimationFrame(loop);
+    resize();
+    addEventListener('resize', resize, { passive: true });
+
+    const LIFE = 820, MAX = 160;
+    const light = () => document.documentElement.getAttribute('data-theme') === 'light';
+    let pts = [], mx = -1e4, my = -1e4, hx = mx, hy = my, inside = false, frame = 0, prev = 0;
+
+    const draw = (now) => {
+      const L = light();
+      ctx.clearRect(0, 0, W, H);
+      // на тёмной теме свет складывается, на светлой — просто копится краска
+      ctx.globalCompositeOperation = L ? 'source-over' : 'lighter';
+      for (let i = 0; i < pts.length; i++) {
+        const p = pts[i], age = (now - p.t) / LIFE, a = (1 - age) * (1 - age), r = 10 + 26 * (1 - age);
+        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
+        if (L) { g.addColorStop(0, 'rgba(226,55,68,' + (0.062 * a) + ')'); g.addColorStop(0.45, 'rgba(226,96,70,' + (0.038 * a) + ')'); }
+        else   { g.addColorStop(0, 'rgba(255,152,120,' + (0.085 * a) + ')'); g.addColorStop(0.45, 'rgba(226,55,68,' + (0.05 * a) + ')'); }
+        g.addColorStop(1, 'rgba(226,55,68,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.2832); ctx.fill();
+      }
+      if (inside) {
+        const R = 210, g2 = ctx.createRadialGradient(hx, hy, 0, hx, hy, R);
+        if (L) { g2.addColorStop(0, 'rgba(226,55,68,.15)'); g2.addColorStop(0.38, 'rgba(226,96,70,.067)'); }
+        else   { g2.addColorStop(0, 'rgba(226,55,68,.20)'); g2.addColorStop(0.38, 'rgba(255,142,98,.10)'); }
+        g2.addColorStop(1, 'rgba(226,55,68,0)');
+        ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(hx, hy, R, 0, 6.2832); ctx.fill();
+        const c = ctx.createRadialGradient(hx, hy, 0, hx, hy, 13);
+        c.addColorStop(0, L ? 'rgba(226,55,68,.28)' : 'rgba(255,178,152,.5)');
+        c.addColorStop(1, 'rgba(226,55,68,0)');
+        ctx.fillStyle = c; ctx.beginPath(); ctx.arc(hx, hy, 13, 0, 6.2832); ctx.fill();
+      }
+    };
+
+    const step = (now) => {
+      frame = 0;
+      const dt = Math.min(48, now - (prev || now)); prev = now;
+      const k = 1 - Math.pow(0.0015, dt / 1000);
+      hx += (mx - hx) * k; hy += (my - hy) * k;
+      if (inside) {
+        const p = pts[pts.length - 1], fresh = p && now - p.t < 320;
+        if (!fresh) { if (!p || Math.hypot(p.x - hx, p.y - hy) > 2) pts.push({ x: hx, y: hy, t: now }); }
+        else {
+          const d = Math.hypot(p.x - hx, p.y - hy);
+          if (d > 3) {
+            const n = Math.min(14, Math.ceil(d / 5));
+            for (let i = 1; i <= n; i++) { const f = i / n; pts.push({ x: p.x + (hx - p.x) * f, y: p.y + (hy - p.y) * f, t: p.t + (now - p.t) * f }); }
+          }
+        }
+      }
+      while (pts.length && now - pts[0].t > LIFE) pts.shift();
+      if (pts.length > MAX) pts.splice(0, pts.length - MAX);
+      draw(now);
+      const moving = Math.hypot(mx - hx, my - hy) > 0.5;
+      if (pts.length || (inside && moving)) frame = requestAnimationFrame(step); else prev = 0;
+    };
+
+    addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY; inside = true;
+      if (hx < -1e3) { hx = mx; hy = my; }
+      trail.classList.add('on');
+      if (!frame) frame = requestAnimationFrame(step);
+    }, { passive: true });
+    addEventListener('mouseout', (e) => {
+      if (!e.relatedTarget && !e.toElement) { inside = false; if (!frame) frame = requestAnimationFrame(step); }
+    }, { passive: true });
   }
 
   /* --- Magnetic CTA (~35% от смещения) --- */

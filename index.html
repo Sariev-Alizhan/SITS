@@ -525,7 +525,10 @@ html[data-theme="dark"]{
   --fx-glow-2:rgba(226,55,68,.18);
   --fx-dot:rgba(255,255,255,.055);
   --fx-grain:.06;
-  --fx-cursor:rgba(226,55,68,.16);
+  --fx-cursor:rgba(226,55,68,.22);
+  --fx-cursor-2:rgba(226,55,68,.10);
+  --fx-cursor-core:rgba(255,142,98,.22);
+  --fx-cursor-blend:screen;
 }
 html[data-theme="light"]{
   --bg:#f6f3f3;
@@ -550,7 +553,10 @@ html[data-theme="light"]{
   --fx-glow-2:rgba(179,29,34,.10);
   --fx-dot:rgba(179,29,34,.07);
   --fx-grain:.035;
-  --fx-cursor:rgba(179,29,34,.10);
+  --fx-cursor:rgba(226,55,68,.15);
+  --fx-cursor-2:rgba(226,86,60,.07);
+  --fx-cursor-core:rgba(255,158,120,.20);
+  --fx-cursor-blend:normal;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
@@ -591,12 +597,20 @@ main, footer{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){.fx-aurora{animation:none !important}}
 
 /* === Cursor spotlight (z-index 0, между фоном и контентом) === */
-.fx-cursor{position:fixed;top:0;left:0;width:520px;height:520px;border-radius:50%;
-  background:radial-gradient(circle at 50% 50%,var(--fx-cursor),transparent 70%);
-  filter:blur(28px);pointer-events:none;z-index:0;opacity:0;
-  transition:opacity .4s var(--ease);will-change:transform;
+.fx-cursor{position:fixed;top:0;left:0;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,var(--fx-cursor) 0%,var(--fx-cursor-2) 42%,transparent 70%);
+  filter:blur(22px);pointer-events:none;z-index:0;opacity:0;
+  mix-blend-mode:var(--fx-cursor-blend);
+  transition:opacity .45s var(--ease);will-change:transform;
   transform:translate3d(-50vw,-50vh,0)}
+/* тёплая сердцевина — даёт свечению объём вместо плоского пятна */
+.fx-cursor::after{content:'';position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;
+  border-radius:50%;background:radial-gradient(circle at 50% 50%,var(--fx-cursor-core),transparent 70%);
+  filter:blur(14px);opacity:.95;
+  transition:transform .55s var(--ease),opacity .55s var(--ease)}
 .fx-cursor.on{opacity:1}
+/* над кнопкой или ссылкой сияние подбирается и разгорается */
+.fx-cursor.hot::after{transform:scale(1.35);opacity:1}
 
 /* === Magnetic CTA: только will-change, transition уже у .btn === */
 .magnetic{will-change:transform}
@@ -3324,15 +3338,22 @@ window.__formLoaded = Date.now();
   /* --- Cursor spotlight: один rAF-цикл с lerp .15 --- */
   const cur = document.querySelector('.fx-cursor');
   if (cur) {
-    const HALF = 260;
-    let mx = -9999, my = -9999, cx = -9999, cy = -9999, started = false;
+    // половину берём из самого элемента — размер живёт в CSS и не рассинхронится
+    let HALF = cur.offsetWidth / 2 || 330;
+    addEventListener('resize', () => { HALF = cur.offsetWidth / 2 || HALF; }, { passive: true });
+    let mx = -9999, my = -9999, cx = -9999, cy = -9999, started = false, hot = false;
     addEventListener('mousemove', e => {
       mx = e.clientX; my = e.clientY;
       if (!started) { started = true; cx = mx; cy = my; cur.classList.add('on'); }
+      // над кликабельным — сердцевина разгорается
+      const over = !!(e.target instanceof Element && e.target.closest('a,button,.b-card,.cmp-card,input,textarea,select'));
+      if (over !== hot) { hot = over; cur.classList.toggle('hot', hot); }
     }, { passive: true });
+    addEventListener('mouseleave', () => cur.classList.remove('on'), { passive: true });
+    addEventListener('mouseenter', () => { if (started) cur.classList.add('on'); }, { passive: true });
     const loop = () => {
-      cx += (mx - cx) * 0.15;
-      cy += (my - cy) * 0.15;
+      cx += (mx - cx) * 0.26;
+      cy += (my - cy) * 0.26;
       cur.style.transform = 'translate3d(' + (cx - HALF) + 'px,' + (cy - HALF) + 'px,0)';
       requestAnimationFrame(loop);
     };

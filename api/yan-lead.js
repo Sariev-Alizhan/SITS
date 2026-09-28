@@ -6,8 +6,9 @@ import { getClientIp, checkOrigin, readBody } from './_security.js';
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZW3Op75X3orzmHdjWlDT8CG3WXHvvBkfqHyDGKi_TcdxckH9OV_VVq6PN6QhJK6LW/exec';
 const SCRIPT_TOKEN = 'yan-wa-7f3k';
 const ALLOWED_ORIGINS = ['https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app'];
-// Apps Script после простоя «просыпается» 8–15 с — две попытки 14 с + 12 с укладываются в 30 с.
-export const config = { maxDuration: 30 };
+// Apps Script обычно отвечает за 3–6 с, но изредка «просыпается» 30+ с. Клиента это не задерживает
+// (страница шлёт keepalive-запрос и сразу уходит в WhatsApp), поэтому ждём до ~55 с.
+export const config = { maxDuration: 60 };
 
 const BOT_UA = /facebookexternalhit|facebookcatalog|meta-externalagent|headless|lighthouse|bot|crawler|spider|preview/i;
 
@@ -35,9 +36,10 @@ export default async function handler(req, res) {
   });
   // Apps Script иногда отвечает 404/HTML или «просыпается» дольше обычного — одна повторная попытка.
   // Дубли исключены: скрипт не пишет код, который уже есть в таблице.
-  for (let attempt = 1; attempt <= 2; attempt++) {
+  const deadline = Date.now() + 55000;
+  for (let attempt = 1; attempt <= 2 && Date.now() < deadline - 3000; attempt++) {
     try {
-      const r = await fetch(`${SCRIPT_URL}?${params}`, { redirect: 'follow', signal: AbortSignal.timeout(attempt === 1 ? 14000 : 12000) });
+      const r = await fetch(`${SCRIPT_URL}?${params}`, { redirect: 'follow', signal: AbortSignal.timeout(deadline - Date.now()) });
       const text = await r.text();
       let j = {}; try { j = JSON.parse(text); } catch { /* HTML-ответ Google */ }
       if (j.ok) return res.status(200).json({ ok: true });

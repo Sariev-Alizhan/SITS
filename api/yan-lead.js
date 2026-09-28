@@ -28,7 +28,7 @@ function decodeTwice(v) {
   return s;
 }
 
-const BOT_UA = /facebookexternalhit|facebookcatalog|meta-externalagent|headless|lighthouse|bot|crawler|spider|preview/i;
+const BOT_UA = /facebookexternalhit|facebookcatalog|meta-externalagent|headless|lighthouse|\bbot\b|bot\/|crawler|spider|preview/i;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ ok: false });
@@ -47,6 +47,8 @@ export default async function handler(req, res) {
   const utm = v => (String(v || '').includes('{{') ? '' : v);
 
   const clean = (v, n) => decodeTwice(v).replace(/[\u0000-\u001f<>]/g, '').slice(0, n);
+  // Текст, начинающийся с = + - @, таблица приняла бы за формулу — апостроф делает его обычным текстом (сам апостроф не виден).
+  const txt = v => (/^[=+\-@]/.test(v) ? "'" + v : v);
   const code = clean(body.code, 16).replace(/[^A-Z0-9]/gi, '');
   if (!code) return res.status(400).json({ ok: false });
 
@@ -55,8 +57,8 @@ export default async function handler(req, res) {
     cr: body.cr === 'rest' ? 'rest' : 'spa',
     ad: clean(utm(body.ad), 120), adset: clean(utm(body.adset), 120), campaign: clean(utm(body.campaign), 120),
     placement: clean(utm(body.placement), 60) || 'Сайт', device: clean(body.device, 20),
-    name: clean(body.name, 120).trim(), phone: '+' + phoneDigits.slice(0, 15), gis: clean(body.gis, 300).trim(),
-    note: String(body.note || '').replace(/[\u0000-\u0009\u000b-\u001f<>]/g, '').slice(0, 1000),
+    name: txt(clean(body.name, 120).replace(/\s+/g, ' ').trim()), phone: '+' + phoneDigits.slice(0, 15), gis: txt(clean(body.gis, 300).trim()),
+    note: txt(String(body.note || '').replace(/[\u0000-\u0009\u000b-\u001f<>]/g, '').trim().slice(0, 1000)),
   });
   // Apps Script иногда отвечает 404/HTML или «просыпается» дольше обычного — одна повторная попытка.
   // Дубли исключены: скрипт не пишет код, который уже есть в таблице.

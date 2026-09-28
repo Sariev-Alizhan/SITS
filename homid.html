@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>HOMID · Написать в WhatsApp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<style>body{font-family:system-ui,sans-serif;background:#0b0b0d;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:0 16px;gap:16px;text-align:center}h1{font-size:24px;margin:0;letter-spacing:.1em}a.btn{background:#25D366;color:#0b0b0d;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;font-size:18px}p{color:#9aa0a6;margin:0}</style>
+</head>
+<body>
+<h1>HOMID</h1>
+<p>Увлажнение и чистый воздух · Шоурум: Астана, ул. Сауран 8, 3 этаж</p>
+<a class="btn" id="w" href="#">Написать в WhatsApp</a>
+<!-- Реклама @homid.tech: JS-редирект на WhatsApp (прямые wa.me Meta в рекламе блокирует). -->
+<script>
+(function(){
+  var u = ["https:", "//wa.me", "/77783247046", "?text=", encodeURIComponent("Здравствуйте! Интересует увлажнитель HOMID")].join("");
+  document.getElementById("w").setAttribute("href", u);
+  setTimeout(function(){ window.location.href = u; }, 450);
+})();
+</script>
+</body>
+</html>

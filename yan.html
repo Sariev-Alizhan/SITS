@@ -64,7 +64,7 @@ button.busy .spin{display:block} button.busy svg{display:none}
     </div>
     <div class="f" data-f="phone">
       <label for="phone">Телефон / WhatsApp <i>*</i></label>
-      <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (7__) ___-__-__" maxlength="18" required>
+      <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (7__) ___-__-__" maxlength="24" required>
       <div class="msg">Введите номер полностью: +7 и 10 цифр</div>
     </div>
     <div class="f">
@@ -107,8 +107,13 @@ button.busy .spin{display:block} button.busy svg{display:none}
   var t0 = Date.now();
 
   var ph = document.getElementById("phone");
-  function digits(v){ var d = v.replace(/\D/g, ""); if (d[0] === "8") d = "7" + d.slice(1); if (d && d[0] !== "7") d = "7" + d; return d.slice(0, 11); }
-  function fmt(d){ var r = "+7"; if (d.length > 1) r += " (" + d.slice(1, 4); if (d.length >= 4) r += ")"; if (d.length > 4) r += " " + d.slice(4, 7);
+  // Номер → "7" + 10 цифр. Поле всегда начинается с «+7», поэтому набранные следом 8 или 7 (8 777…, 7 777…) — код страны, а не оператора.
+  function digits(v){ var d = v.replace(/\D/g, ""), n;
+    if (!d) return "";
+    if (/^\s*\+\s*7/.test(v) || (d.length === 11 && /^[78]/.test(d))) n = d.slice(1); else n = d;
+    if (n[0] === "8" || (n.length > 10 && n[0] === "7")) n = n.slice(1);
+    return ("7" + n).slice(0, 11); }
+  function fmt(d){ var r = "+7"; if (d.length > 1) r += " (" + d.slice(1, 4); if (d.length > 4) r += ") " + d.slice(4, 7);
     if (d.length > 7) r += "-" + d.slice(7, 9); if (d.length > 9) r += "-" + d.slice(9, 11); return r; }
   ph.addEventListener("focus", function(){ if (!ph.value) ph.value = "+7 ("; });
   ph.addEventListener("input", function(){ var d = digits(ph.value); ph.value = d.length ? fmt(d) : ""; clr(ph); });

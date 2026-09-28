@@ -46,18 +46,19 @@ export default async function handler(req, res) {
   if (String(body.name || '').trim().length < 2 || phoneDigits.length < 10) return res.status(400).json({ ok: false, error: 'form' });
   const utm = v => (String(v || '').includes('{{') ? '' : v);
 
-  const clean = (v, n) => decodeTwice(v).replace(/[\u0000-\u001f<>]/g, '').slice(0, n);
+  const strip = (v, n) => String(v || '').replace(/[\u0000-\u001f<>]/g, '').slice(0, n);
+  const clean = (v, n) => strip(decodeTwice(v), n); // только для меток рекламы: Meta кодирует их дважды
   // Текст, начинающийся с = + - @, таблица приняла бы за формулу — апостроф делает его обычным текстом (сам апостроф не виден).
   const txt = v => (/^[=+\-@]/.test(v) ? "'" + v : v);
-  const code = clean(body.code, 16).replace(/[^A-Z0-9]/gi, '');
+  const code = strip(body.code, 16).replace(/[^A-Z0-9]/gi, '');
   if (!code) return res.status(400).json({ ok: false });
 
   const params = new URLSearchParams({
     t: SCRIPT_TOKEN, code,
     cr: body.cr === 'rest' ? 'rest' : 'spa',
     ad: clean(utm(body.ad), 120), adset: clean(utm(body.adset), 120), campaign: clean(utm(body.campaign), 120),
-    placement: clean(utm(body.placement), 60) || 'Сайт', device: clean(body.device, 20),
-    name: txt(clean(body.name, 120).replace(/\s+/g, ' ').trim()), phone: '+' + phoneDigits.slice(0, 15), gis: txt(clean(body.gis, 300).trim()),
+    placement: clean(utm(body.placement), 60) || 'Сайт', device: strip(body.device, 20),
+    name: txt(strip(body.name, 120).replace(/\s+/g, ' ').trim()), phone: '+' + phoneDigits.slice(0, 15), gis: txt(strip(body.gis, 300).trim()),
     note: txt(String(body.note || '').replace(/[\u0000-\u0009\u000b-\u001f<>]/g, '').trim().slice(0, 1000)),
   });
   // Apps Script иногда отвечает 404/HTML или «просыпается» дольше обычного — одна повторная попытка.

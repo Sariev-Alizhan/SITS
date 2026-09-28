@@ -28,7 +28,7 @@
   var placement = [src, q.get("placement") || ""].filter(Boolean).join(" · ");
   try {
     fetch("/api/yan-lead", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code: code, cr: cr, ad: q.get("utm_content") || "", adset: q.get("utm_term") || "",
+      body: JSON.stringify({ code: code, cr: cr, src: q.get("utm_source") || "", fb: q.has("fbclid") ? 1 : 0, ad: q.get("utm_content") || "", adset: q.get("utm_term") || "",
         campaign: q.get("utm_campaign") || "", placement: placement, device: device }) });
   } catch (e) {}
   setTimeout(function(){ window.location.href = u; }, 450);

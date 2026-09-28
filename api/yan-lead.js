@@ -9,7 +9,7 @@ const ALLOWED_ORIGINS = ['https://sariyev.com', 'https://www.sariyev.com', 'http
 // Apps Script после простоя «просыпается» 8–15 с — отсюда длинный таймаут.
 export const config = { maxDuration: 30 };
 
-const BOT_UA = /facebookexternalhit|facebookcatalog|meta-externalagent|bot|crawler|spider|preview/i;
+const BOT_UA = /facebookexternalhit|facebookcatalog|meta-externalagent|headless|lighthouse|bot|crawler|spider|preview/i;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ ok: false });
@@ -17,6 +17,11 @@ export default async function handler(req, res) {
   try { body = await readBody(req, 4 * 1024); } catch { return res.status(400).json({ ok: false }); }
   if (!checkOrigin(req, ALLOWED_ORIGINS)) return res.status(403).json({ ok: false });
   if (BOT_UA.test(req.headers['user-agent'] || '')) return res.status(200).json({ ok: true, skipped: 'bot' });
+
+  // Реальный клик из рекламы всегда несёт подставленный utm_source (ig/fb…). Превью в Ads Manager
+  // и проверки Meta открывают страницу без меток или с сырыми {{ad.name}} — это не лиды.
+  const raw = [body.src, body.ad, body.adset, body.campaign, body.placement].map(v => String(v || ''));
+  if (!raw[0] || raw.some(v => v.includes('{{'))) return res.status(200).json({ ok: true, skipped: 'preview' });
 
   const clean = (v, n) => String(v || '').replace(/[\u0000-\u001f<>]/g, '').slice(0, n);
   const code = clean(body.code, 16).replace(/[^A-Z0-9]/gi, '');

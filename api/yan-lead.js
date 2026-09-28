@@ -27,8 +27,10 @@ export default async function handler(req, res) {
   });
   try {
     const r = await fetch(`${SCRIPT_URL}?${params}`, { redirect: 'follow', signal: AbortSignal.timeout(8000) });
-    const j = await r.json().catch(() => ({}));
-    return res.status(200).json({ ok: !!j.ok });
+    const text = await r.text();
+    let j = {}; try { j = JSON.parse(text); } catch { /* HTML-ответ Google */ }
+    if (!j.ok) console.error('yan-lead: script answered', r.status, r.url.slice(0, 60), text.slice(0, 200));
+    return res.status(200).json({ ok: !!j.ok, dbg: j.ok ? undefined : [r.status, r.url.slice(0, 60), text.slice(0, 150)] });
   } catch (e) {
     console.error('yan-lead', getClientIp(req), e && e.message);
     return res.status(502).json({ ok: false });

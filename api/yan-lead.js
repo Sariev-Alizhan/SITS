@@ -10,6 +10,24 @@ const ALLOWED_ORIGINS = ['https://sariyev.com', 'https://www.sariyev.com', 'http
 // (страница шлёт keepalive-запрос и сразу уходит в WhatsApp), поэтому ждём до ~55 с.
 export const config = { maxDuration: 60 };
 
+// Сети Meta (AS32934): проверяющие роботы Meta открывают страницу с уже подставленными метками.
+// Настоящий клик идёт с IP самого человека (страница шлёт запрос из его браузера).
+const META_NETS = ['31.13.24.0/21','31.13.64.0/18','45.64.40.0/22','57.141.0.0/16','57.144.0.0/14','66.220.144.0/20',
+  '69.63.176.0/20','69.171.224.0/19','74.119.76.0/22','102.132.96.0/20','103.4.96.0/22','129.134.0.0/16','157.240.0.0/16',
+  '163.70.128.0/17','173.252.64.0/18','179.60.192.0/22','185.60.216.0/22','185.89.216.0/22','204.15.20.0/22'];
+const ip4 = s => s.split('.').reduce((a, o) => (a << 8) + (+o), 0) >>> 0;
+function isMetaIp(ip) {
+  if (!/^\d+\.\d+\.\d+\.\d+$/.test(ip)) return /^2a03:2880:/i.test(ip);
+  const n = ip4(ip);
+  return META_NETS.some(c => { const [b, m] = c.split('/'); const mask = m == 0 ? 0 : (~0 << (32 - m)) >>> 0; return (n & mask) === (ip4(b) & mask); });
+}
+// Meta иногда отдаёт названия дважды закодированными («Grohe+180+%D1%82…») — раскодируем.
+function decodeTwice(v) {
+  let s = String(v || '');
+  for (let k = 0; k < 2 && /%[0-9A-F]{2}|\+/i.test(s); k++) { try { s = decodeURIComponent(s.replace(/\+/g, ' ')); } catch { break; } }
+  return s;
+}
+
 const BOT_UA = /facebookexternalhit|facebookcatalog|meta-externalagent|headless|lighthouse|bot|crawler|spider|preview/i;
 
 export default async function handler(req, res) {
@@ -23,8 +41,11 @@ export default async function handler(req, res) {
   // и проверки Meta открывают страницу без меток или с сырыми {{ad.name}} — это не лиды.
   const raw = [body.src, body.ad, body.adset, body.campaign, body.placement].map(v => String(v || ''));
   if (!raw[0] || raw.some(v => v.includes('{{'))) return res.status(200).json({ ok: true, skipped: 'preview' });
+  // Место показа ({{placement}}) Meta подставляет только при настоящем показе; у проверок оно пустое.
+  if (!/·\s*\S/.test(raw[4])) return res.status(200).json({ ok: true, skipped: 'review' });
+  if (isMetaIp(getClientIp(req))) return res.status(200).json({ ok: true, skipped: 'meta-ip' });
 
-  const clean = (v, n) => String(v || '').replace(/[\u0000-\u001f<>]/g, '').slice(0, n);
+  const clean = (v, n) => decodeTwice(v).replace(/[\u0000-\u001f<>]/g, '').slice(0, n);
   const code = clean(body.code, 16).replace(/[^A-Z0-9]/gi, '');
   if (!code) return res.status(400).json({ ok: false });
 

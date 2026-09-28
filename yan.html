@@ -2,36 +2,149 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<title>Ян Ильченко · Написать в WhatsApp</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ян Ильченко · Заявка на скрининг</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<style>body{font-family:system-ui,sans-serif;background:#0b0b0d;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:0 16px;gap:16px;text-align:center}h1{font-size:22px;margin:0}a.btn{background:#25D366;color:#0b0b0d;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;font-size:18px}p{color:#9aa0a6;margin:0}</style>
+<meta name="theme-color" content="#0b0b0d">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0b0d;--card:#141417;--line:#2a2a30;--text:#f5f1ea;--muted:#9a958c;--gold:#d9b46a;--gold2:#b98c43;--err:#f87171;--ok:#25D366}
+html,body{background:var(--bg);color:var(--text);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;min-height:100dvh;display:flex;justify-content:center;padding:max(20px,env(safe-area-inset-top)) 16px max(28px,env(safe-area-inset-bottom));
+  background:radial-gradient(600px 420px at 100% 0,rgba(217,180,106,.16),transparent 60%),radial-gradient(500px 400px at 0 100%,rgba(217,180,106,.08),transparent 60%),var(--bg)}
+main{width:100%;max-width:460px}
+.brand{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.brand b{color:var(--text)}
+h1{margin:14px 0 8px;font-size:30px;line-height:1.1;font-weight:800;letter-spacing:-.01em}
+h1 span{color:var(--gold)}
+.lead{color:var(--muted);font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 20px}
+.chips span{border:1px solid rgba(217,180,106,.4);border-radius:999px;padding:6px 12px;font-size:13px;color:#e8dfcf}
+form{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 18px}
+.f{margin-bottom:14px}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#e8dfcf}
+label i{color:var(--gold);font-style:normal}
+label small{color:var(--muted);font-weight:400}
+input,textarea{width:100%;background:#0e0e11;border:1.5px solid var(--line);border-radius:12px;color:var(--text);font:inherit;font-size:16px;padding:13px 14px;outline:none;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none;appearance:none}
+textarea{min-height:84px;resize:vertical}
+input::placeholder,textarea::placeholder{color:#5f5a52}
+input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,180,106,.18)}
+.bad input,.bad textarea{border-color:var(--err)}
+.msg{display:none;color:var(--err);font-size:12.5px;margin-top:5px}
+.bad .msg{display:block}
+button{width:100%;margin-top:6px;border:0;border-radius:14px;padding:16px;font:inherit;font-size:17px;font-weight:800;color:#15120c;
+  background:linear-gradient(90deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer}
+button:disabled{opacity:.7}
+button svg{width:22px;height:22px}
+.spin{width:18px;height:18px;border:2.5px solid rgba(21,18,12,.3);border-top-color:#15120c;border-radius:50%;animation:s .7s linear infinite;display:none}
+button.busy .spin{display:block} button.busy svg{display:none}
+@keyframes s{to{transform:rotate(360deg)}}
+.note{margin-top:12px;font-size:12px;color:var(--muted);text-align:center}
+.done{display:none;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px 20px}
+.done .ic{width:64px;height:64px;border-radius:50%;background:rgba(37,211,102,.14);display:grid;place-items:center;margin:0 auto 14px}
+.done h2{font-size:22px;margin-bottom:6px}
+.done p{color:var(--muted);font-size:15px;margin-bottom:18px}
+.wa{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--ok);color:#0b1a10;font-weight:800;font-size:17px;border-radius:14px;padding:15px;text-decoration:none}
+.foot{margin-top:18px;text-align:center;font-size:12px;color:#6f6a62;letter-spacing:.06em}
+.hp{position:absolute;left:-9999px;opacity:0}
+</style>
 </head>
 <body>
-<h1>Ян Ильченко · Эксперт по сервису</h1>
-<p>Открываем WhatsApp…</p>
-<a class="btn" id="w" href="#">Написать в WhatsApp</a>
-<!-- Реклама @yan.expert.service: пишет клик в Google-таблицу (через /api/yan-lead) и открывает чат.
-     Прямые wa.me Meta в рекламе блокирует — только JS-редирект, без meta-refresh. -->
+<main>
+  <div class="brand"><b>Ян Ильченко</b> · эксперт по сервису</div>
+  <h1 id="h">Скрининг вашего <span>SPA / бани</span></h1>
+  <p class="lead" id="lead">Найдём, где уходит прибыль, и покажем, как её вернуть. Оставьте заявку — свяжемся в WhatsApp.</p>
+  <div class="chips" id="chips"><span>26 лет опыта</span><span>Казахстан · Дубай</span><span>Ответ в течение дня</span></div>
+
+  <form id="f" novalidate>
+    <div class="f" data-f="name">
+      <label for="name">ФИО <i>*</i></label>
+      <input id="name" name="name" autocomplete="name" placeholder="Иванов Иван" maxlength="120" required>
+      <div class="msg">Укажите имя и фамилию</div>
+    </div>
+    <div class="f" data-f="phone">
+      <label for="phone">Телефон / WhatsApp <i>*</i></label>
+      <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (7__) ___-__-__" maxlength="18" required>
+      <div class="msg">Введите номер полностью: +7 и 10 цифр</div>
+    </div>
+    <div class="f">
+      <label for="gis">Ваше заведение в 2ГИС <small>— ссылка или название</small></label>
+      <input id="gis" name="gis" inputmode="url" autocomplete="off" placeholder="2gis.kz/… или «Баня на Сарайшык»" maxlength="300">
+    </div>
+    <div class="f">
+      <label for="note">Комментарий <small>— что хотите улучшить</small></label>
+      <textarea id="note" name="note" maxlength="1000" placeholder="Например: падает выручка, текучка персонала…"></textarea>
+    </div>
+    <input class="hp" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button id="b" type="submit"><span class="spin"></span>
+      <svg viewBox="0 0 32 32" fill="#15120c"><path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm5.9 15.5c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.2 1.3 3.4c.2.2 2.3 3.5 5.6 4.9 2.1.9 2.9 1 4 .8.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg>
+      <span id="bt">Отправить заявку</span></button>
+    <p class="note">После отправки откроется WhatsApp — можно сразу написать нам.</p>
+  </form>
+
+  <div class="done" id="done">
+    <div class="ic"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <h2>Заявка отправлена!</h2>
+    <p>Спасибо! Мы свяжемся с вами в WhatsApp. Открываем чат…</p>
+    <a class="wa" id="wa" href="#">Открыть WhatsApp</a>
+  </div>
+  <div class="foot">Казахстан · Дубай · Украина · Азербайджан</div>
+</main>
+<!-- Реклама @yan.expert.service: форма заявки → /api/yan-lead → Google-таблица «Лиды WhatsApp», затем WhatsApp +77058032098.
+     Прямые wa.me Meta в рекламе блокирует — ссылка в WhatsApp собирается скриптом. -->
 <script>
 (function(){
   var q = new URLSearchParams(location.search);
   var cr = q.get("cr") === "rest" ? "rest" : "spa";
+  if (cr === "rest") {
+    document.getElementById("h").innerHTML = "Настроим ваш <span>ресторан</span>";
+    document.getElementById("lead").textContent = "Найдём потери, настроим продажи, сервис и управление. Оставьте заявку — свяжемся в WhatsApp.";
+    document.getElementById("note").placeholder = "Например: мало повторных гостей, слабый сервис…";
+    document.getElementById("gis").placeholder = "2gis.kz/… или название ресторана";
+  }
   var abc = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", code = "Y";
   for (var i = 0; i < 5; i++) code += abc.charAt(Math.floor(Math.random() * abc.length));
-  var intro = cr === "rest" ? "Здравствуйте! Хочу настроить свой ресторан." : "Здравствуйте! Хочу скрининг SPA / банного комплекса.";
-  var u = ["https:", "//wa.me", "/77058032098", "?text=", encodeURIComponent(intro + " Код: " + code)].join("");
-  document.getElementById("w").setAttribute("href", u);
+  var t0 = Date.now();
+
+  var ph = document.getElementById("phone");
+  function digits(v){ var d = v.replace(/\D/g, ""); if (d[0] === "8") d = "7" + d.slice(1); if (d && d[0] !== "7") d = "7" + d; return d.slice(0, 11); }
+  function fmt(d){ var r = "+7"; if (d.length > 1) r += " (" + d.slice(1, 4); if (d.length >= 4) r += ")"; if (d.length > 4) r += " " + d.slice(4, 7);
+    if (d.length > 7) r += "-" + d.slice(7, 9); if (d.length > 9) r += "-" + d.slice(9, 11); return r; }
+  ph.addEventListener("focus", function(){ if (!ph.value) ph.value = "+7 ("; });
+  ph.addEventListener("input", function(){ var d = digits(ph.value); ph.value = d.length ? fmt(d) : ""; clr(ph); });
+  ph.addEventListener("blur", function(){ if (digits(ph.value).length <= 1) ph.value = ""; });
+  function clr(el){ el.closest(".f").classList.remove("bad"); }
+  document.getElementById("name").addEventListener("input", function(e){ clr(e.target); });
+
   var ua = navigator.userAgent;
   var device = /iPhone|iPad|iPod/.test(ua) ? "iPhone" : /Android/.test(ua) ? "Android" : "Компьютер";
   var src = { fb: "Facebook", ig: "Instagram", an: "Audience Network", msg: "Messenger" }[q.get("utm_source")] || q.get("utm_source") || "";
   var placement = [src, q.get("placement") || ""].filter(Boolean).join(" · ");
-  try {
-    fetch("/api/yan-lead", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code: code, cr: cr, src: q.get("utm_source") || "", fb: q.has("fbclid") ? 1 : 0, ad: q.get("utm_content") || "", adset: q.get("utm_term") || "",
-        campaign: q.get("utm_campaign") || "", placement: placement, device: device }) });
-  } catch (e) {}
-  setTimeout(function(){ window.location.href = u; }, 450);
+
+  var f = document.getElementById("f"), b = document.getElementById("b"), sent = false;
+  f.addEventListener("submit", function(e){
+    e.preventDefault();
+    if (sent) return;
+    var name = document.getElementById("name").value.trim().replace(/\s+/g, " ");
+    var d = digits(ph.value), okN = name.length >= 2, okP = d.length === 11;
+    document.querySelector('[data-f="name"]').classList.toggle("bad", !okN);
+    document.querySelector('[data-f="phone"]').classList.toggle("bad", !okP);
+    if (!okN) { document.getElementById("name").focus(); return; }
+    if (!okP) { ph.focus(); return; }
+    sent = true; b.disabled = true; b.classList.add("busy"); document.getElementById("bt").textContent = "Отправляем…";
+    var gis = document.getElementById("gis").value.trim(), note = document.getElementById("note").value.trim();
+    var intro = cr === "rest" ? "Здравствуйте! Оставил(а) заявку: хочу настроить ресторан." : "Здравствуйте! Оставил(а) заявку на скрининг SPA / банного комплекса.";
+    var text = intro + "\nИмя: " + name + (gis ? "\nЗаведение: " + gis : "") + "\nКод: " + code;
+    var wa = ["https:", "//wa.me", "/77058032098", "?text=", encodeURIComponent(text)].join("");
+    var body = JSON.stringify({ code: code, cr: cr, name: name, phone: "+" + d, gis: gis, note: note, website: document.getElementById("website").value,
+      ms: Date.now() - t0, src: q.get("utm_source") || "", ad: q.get("utm_content") || "", adset: q.get("utm_term") || "",
+      campaign: q.get("utm_campaign") || "", placement: placement, device: device });
+    var go = function(){ document.getElementById("wa").href = wa; f.style.display = "none"; document.getElementById("done").style.display = "block";
+      window.scrollTo(0, 0); setTimeout(function(){ location.href = wa; }, 900); };
+    var timer = setTimeout(go, 6000); // если сеть медленная — не держим человека, запрос дойдёт (keepalive)
+    fetch("/api/yan-lead", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" }, body: body })
+      .then(function(){ clearTimeout(timer); go(); }, function(){ clearTimeout(timer); go(); });
+  });
 })();
 </script>
 </body>

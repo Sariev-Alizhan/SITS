@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Ян Ильченко · Написать в WhatsApp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<style>body{font-family:system-ui,sans-serif;background:#0b0b0d;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:0 16px;gap:16px;text-align:center}h1{font-size:22px;margin:0}a.btn{background:#25D366;color:#0b0b0d;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;font-size:18px}p{color:#9aa0a6;margin:0}</style>
+</head>
+<body>
+<h1>Ян Ильченко · Эксперт по сервису</h1>
+<p>Открываем WhatsApp…</p>
+<a class="btn" id="w" href="#">Написать в WhatsApp</a>
+<!-- Реклама @yan.expert.service: пишет клик в Google-таблицу (через /api/yan-lead) и открывает чат.
+     Прямые wa.me Meta в рекламе блокирует — только JS-редирект, без meta-refresh. -->
+<script>
+(function(){
+  var q = new URLSearchParams(location.search);
+  var cr = q.get("cr") === "rest" ? "rest" : "spa";
+  var abc = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", code = "Y";
+  for (var i = 0; i < 5; i++) code += abc.charAt(Math.floor(Math.random() * abc.length));
+  var intro = cr === "rest" ? "Здравствуйте! Хочу настроить свой ресторан." : "Здравствуйте! Хочу скрининг SPA / банного комплекса.";
+  var u = ["https:", "//wa.me", "/77058032098", "?text=", encodeURIComponent(intro + " Код: " + code)].join("");
+  document.getElementById("w").setAttribute("href", u);
+  var ua = navigator.userAgent;
+  var device = /iPhone|iPad|iPod/.test(ua) ? "iPhone" : /Android/.test(ua) ? "Android" : "Компьютер";
+  var src = { fb: "Facebook", ig: "Instagram", an: "Audience Network", msg: "Messenger" }[q.get("utm_source")] || q.get("utm_source") || "";
+  var placement = [src, q.get("placement") || ""].filter(Boolean).join(" · ");
+  try {
+    fetch("/api/yan-lead", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code: code, cr: cr, ad: q.get("utm_content") || "", adset: q.get("utm_term") || "",
+        campaign: q.get("utm_campaign") || "", placement: placement, device: device }) });
+  } catch (e) {}
+  setTimeout(function(){ window.location.href = u; }, 450);
+})();
+</script>
+</body>
+</html>

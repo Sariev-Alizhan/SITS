@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ACUTE · Заказать в WhatsApp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<style>body{font-family:system-ui,sans-serif;background:#0b0b0d;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:0 16px;gap:16px;text-align:center}h1{font-size:28px;margin:0;letter-spacing:.18em;font-weight:900}a.btn{background:#25D366;color:#0b0b0d;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;font-size:18px}p{color:#9aa0a6;margin:0}</style>
+</head>
+<body>
+<h1>ACUTE</h1>
+<p>Think sharp, look sharper · Алматы</p>
+<a class="btn" id="w" href="#">Заказать в WhatsApp</a>
+<!-- Реклама @acute.vision: JS-редирект на WhatsApp +77085150815 (прямые wa.me Meta в рекламе блокирует).
+     ?item=… меняет название вещи в сообщении (по умолчанию — SOVIET ZIP-UP). -->
+<script>
+(function(){
+  var item = (new URLSearchParams(location.search).get("item") || "SOVIET ZIP-UP").slice(0, 60);
+  var u = ["https:", "//wa.me", "/77085150815", "?text=", encodeURIComponent("Здравствуйте! Хочу заказать ACUTE «" + item + "». Мой размер: ")].join("");
+  document.getElementById("w").setAttribute("href", u);
+  setTimeout(function(){ window.location.href = u; }, 450);
+})();
+</script>
+</body>
+</html>

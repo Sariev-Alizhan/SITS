@@ -28,6 +28,8 @@ function decodeTwice(v) {
   return s;
 }
 
+const KIND_LABEL = { rest: 'Ресторан / кафе', spa: 'SPA', banya: 'Баня / сауна', other: 'Отель / другое' };
+
 const BOT_UA = /facebookexternalhit|facebookcatalog|meta-externalagent|headless|lighthouse|\bbot\b|bot\/|crawler|spider|preview/i;
 
 export default async function handler(req, res) {
@@ -55,7 +57,8 @@ export default async function handler(req, res) {
 
   const params = new URLSearchParams({
     t: SCRIPT_TOKEN, code,
-    cr: body.cr === 'rest' ? 'rest' : 'spa',
+    // Тип заведения, который выбрал клиент, — в колонку «Направление». Без выбора (старая версия страницы) — по объявлению.
+    cr: KIND_LABEL[body.kind] || (body.cr === 'rest' ? 'rest' : 'spa'),
     ad: clean(utm(body.ad), 120), adset: clean(utm(body.adset), 120), campaign: clean(utm(body.campaign), 120),
     placement: clean(utm(body.placement), 60) || 'Сайт', device: strip(body.device, 20),
     name: txt(strip(body.name, 120).replace(/\s+/g, ' ').trim()), phone: '+' + phoneDigits.slice(0, 15), gis: txt(strip(body.gis, 300).trim()),

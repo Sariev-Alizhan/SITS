@@ -25,6 +25,7 @@ form{background:var(--card);border:1px solid var(--line);border-radius:20px;padd
 label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#e8dfcf}
 label i{color:var(--gold);font-style:normal}
 label small{color:var(--muted);font-weight:400}
+.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#e8dfcf}.lbl i{color:var(--gold);font-style:normal}
 input,textarea{width:100%;background:#0e0e11;border:1.5px solid var(--line);border-radius:12px;color:var(--text);font:inherit;font-size:16px;padding:13px 14px;outline:none;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none;appearance:none}
 textarea{min-height:84px;resize:vertical}
 input::placeholder,textarea::placeholder{color:#5f5a52}
@@ -47,6 +48,13 @@ button.busy .spin{display:block} button.busy svg{display:none}
 .wa{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--ok);color:#0b1a10;font-weight:800;font-size:17px;border-radius:14px;padding:15px;text-decoration:none}
 .foot{margin-top:18px;text-align:center;font-size:12px;color:#6f6a62;letter-spacing:.06em}
 .hp{position:absolute;left:-9999px;opacity:0}
+.kinds{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kinds label{margin:0;display:flex;align-items:center;justify-content:center;text-align:center;min-height:48px;padding:10px 8px;border:1.5px solid var(--line);border-radius:12px;background:#0e0e11;
+  font-size:15px;font-weight:600;color:var(--text);cursor:pointer;transition:border-color .15s,background .15s;-webkit-tap-highlight-color:transparent}
+.kinds input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.kinds input:checked+label{border-color:var(--gold);background:rgba(217,180,106,.14);color:var(--gold)}
+.kinds input:focus-visible+label{box-shadow:0 0 0 3px rgba(217,180,106,.25)}
+.bad .kinds label{border-color:var(--err)}
 </style>
 </head>
 <body>
@@ -66,6 +74,16 @@ button.busy .spin{display:block} button.busy svg{display:none}
       <label for="phone">Телефон / WhatsApp <i>*</i></label>
       <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (7__) ___-__-__" maxlength="24" required>
       <div class="msg">Введите номер полностью: +7 и 10 цифр</div>
+    </div>
+    <div class="f" data-f="kind">
+      <span class="lbl" id="kl">Тип заведения <i>*</i></span>
+      <div class="kinds" role="radiogroup" aria-labelledby="kl">
+        <input type="radio" name="kind" id="k-rest" value="rest"><label for="k-rest">Ресторан / кафе</label>
+        <input type="radio" name="kind" id="k-spa" value="spa"><label for="k-spa">SPA</label>
+        <input type="radio" name="kind" id="k-banya" value="banya"><label for="k-banya">Баня / сауна</label>
+        <input type="radio" name="kind" id="k-other" value="other"><label for="k-other">Отель / другое</label>
+      </div>
+      <div class="msg">Выберите тип заведения</div>
     </div>
     <div class="f">
       <label for="gis">Ваше заведение в 2ГИС <small>— ссылка или название</small></label>
@@ -95,13 +113,25 @@ button.busy .spin{display:block} button.busy svg{display:none}
 <script>
 (function(){
   var q = new URLSearchParams(location.search);
-  var cr = q.get("cr") === "rest" ? "rest" : "spa";
-  if (cr === "rest") {
-    document.getElementById("h").innerHTML = "Настроим ваш <span>ресторан</span>";
-    document.getElementById("lead").textContent = "Найдём потери, настроим продажи, сервис и управление. Оставьте заявку — свяжемся в WhatsApp.";
-    document.getElementById("note").placeholder = "Например: мало повторных гостей, слабый сервис…";
-    document.getElementById("gis").placeholder = "2gis.kz/… или название ресторана";
-  }
+  var cr = q.get("cr") === "rest" ? "rest" : "spa"; // из какого объявления пришёл человек
+  // Тип заведения выбирает сам клиент: он и пишется в таблицу в колонку «Направление».
+  var KINDS = {
+    rest:  { h: "Настроим ваш <span>ресторан</span>", lead: "Найдём потери, настроим продажи, сервис и управление. Оставьте заявку — свяжемся в WhatsApp.",
+             note: "Например: мало повторных гостей, слабый сервис…", gis: "2gis.kz/… или название ресторана", intro: "хочу настроить ресторан / кафе" },
+    spa:   { h: "Скрининг вашего <span>SPA</span>", lead: "Найдём, где уходит прибыль, и покажем, как её вернуть. Оставьте заявку — свяжемся в WhatsApp.",
+             note: "Например: падает выручка, текучка персонала…", gis: "2gis.kz/… или название SPA", intro: "скрининг SPA" },
+    banya: { h: "Скрининг вашей <span>бани</span>", lead: "Найдём, где уходит прибыль, и покажем, как её вернуть. Оставьте заявку — свяжемся в WhatsApp.",
+             note: "Например: мало повторных гостей, простои…", gis: "2gis.kz/… или «Баня на Сарайшык»", intro: "скрининг бани / сауны" },
+    other: { h: "Настроим ваше <span>заведение</span>", lead: "Найдём потери, настроим продажи, сервис и управление. Оставьте заявку — свяжемся в WhatsApp.",
+             note: "Например: отель, что хотите улучшить…", gis: "2gis.kz/… или название заведения", intro: "разбор заведения" }
+  };
+  function applyKind(k){ var K = KINDS[k]; document.getElementById("h").innerHTML = K.h; document.getElementById("lead").textContent = K.lead;
+    document.getElementById("note").placeholder = K.note; document.getElementById("gis").placeholder = K.gis; }
+  function kind(){ var el = document.querySelector('input[name="kind"]:checked'); return el ? el.value : ""; }
+  if (cr === "rest") { document.getElementById("k-rest").checked = true; applyKind("rest"); }
+  else document.getElementById("h").innerHTML = "Скрининг вашего <span>SPA / бани</span>";
+  [].forEach.call(document.querySelectorAll('input[name="kind"]'), function(r){ r.addEventListener("change", function(){
+    applyKind(r.value); document.querySelector('[data-f="kind"]').classList.remove("bad"); }); });
   var abc = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", code = "Y";
   for (var i = 0; i < 5; i++) code += abc.charAt(Math.floor(Math.random() * abc.length));
   var t0 = Date.now();
@@ -131,17 +161,19 @@ button.busy .spin{display:block} button.busy svg{display:none}
     e.preventDefault();
     if (sent) return;
     var name = document.getElementById("name").value.trim().replace(/\s+/g, " ");
-    var d = digits(ph.value), okN = name.length >= 2, okP = d.length === 11;
+    var d = digits(ph.value), okN = name.length >= 2, okP = d.length === 11, k = kind();
     document.querySelector('[data-f="name"]').classList.toggle("bad", !okN);
     document.querySelector('[data-f="phone"]').classList.toggle("bad", !okP);
+    document.querySelector('[data-f="kind"]').classList.toggle("bad", !k);
     if (!okN) { document.getElementById("name").focus(); return; }
     if (!okP) { ph.focus(); return; }
+    if (!k) { document.querySelector('[data-f="kind"]').scrollIntoView({ block: "center", behavior: "smooth" }); return; }
     sent = true; b.disabled = true; b.classList.add("busy"); document.getElementById("bt").textContent = "Отправляем…";
     var gis = document.getElementById("gis").value.trim(), note = document.getElementById("note").value.trim();
-    var intro = cr === "rest" ? "Здравствуйте! Оставил(а) заявку: хочу настроить ресторан." : "Здравствуйте! Оставил(а) заявку на скрининг SPA / банного комплекса.";
+    var intro = "Здравствуйте! Оставил(а) заявку: " + KINDS[k].intro + ".";
     var text = intro + "\nИмя: " + name + (gis ? "\nЗаведение: " + gis : "") + "\nКод: " + code;
     var wa = ["https:", "//wa.me", "/77058032098", "?text=", encodeURIComponent(text)].join("");
-    var body = JSON.stringify({ code: code, cr: cr, name: name, phone: "+" + d, gis: gis, note: note, website: document.getElementById("website").value,
+    var body = JSON.stringify({ code: code, cr: cr, kind: k, name: name, phone: "+" + d, gis: gis, note: note, website: document.getElementById("website").value,
       ms: Date.now() - t0, src: q.get("utm_source") || "", ad: q.get("utm_content") || "", adset: q.get("utm_term") || "",
       campaign: q.get("utm_campaign") || "", placement: placement, device: device });
     var go = function(){ document.getElementById("wa").href = wa; f.style.display = "none"; document.getElementById("done").style.display = "block";

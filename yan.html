@@ -60,7 +60,7 @@ button.busy .spin{display:block} button.busy svg{display:none}
 <body>
 <main>
   <div class="brand"><b>Ян Ильченко</b> · эксперт по сервису</div>
-  <h1 id="h">Скрининг вашего <span>SPA / бани</span></h1>
+  <h1 id="h">Разбор вашего <span>заведения</span></h1>
   <p class="lead" id="lead">Найдём, где уходит прибыль, и покажем, как её вернуть. Оставьте заявку — свяжемся в WhatsApp.</p>
   <div class="chips" id="chips"><span>26 лет опыта</span><span>Казахстан · Дубай</span><span>Ответ в течение дня</span></div>
 
@@ -113,7 +113,8 @@ button.busy .spin{display:block} button.busy svg{display:none}
 <script>
 (function(){
   var q = new URLSearchParams(location.search);
-  var cr = q.get("cr") === "rest" ? "rest" : "spa"; // из какого объявления пришёл человек
+  // Из какого объявления пришёл человек: spa — реклама SPA и бань, rest — ресторанов, пусто — общая ссылка.
+  var cr = q.get("cr") === "rest" ? "rest" : q.get("cr") === "spa" ? "spa" : "";
   // Тип заведения выбирает сам клиент: он и пишется в таблицу в колонку «Направление».
   var KINDS = {
     rest:  { h: "Настроим ваш <span>ресторан</span>", lead: "Найдём потери, настроим продажи, сервис и управление. Оставьте заявку — свяжемся в WhatsApp.",
@@ -128,8 +129,21 @@ button.busy .spin{display:block} button.busy svg{display:none}
   function applyKind(k){ var K = KINDS[k]; document.getElementById("h").innerHTML = K.h; document.getElementById("lead").textContent = K.lead;
     document.getElementById("note").placeholder = K.note; document.getElementById("gis").placeholder = K.gis; }
   function kind(){ var el = document.querySelector('input[name="kind"]:checked'); return el ? el.value : ""; }
-  if (cr === "rest") { document.getElementById("k-rest").checked = true; applyKind("rest"); }
-  else document.getElementById("h").innerHTML = "Скрининг вашего <span>SPA / бани</span>";
+  // Своя форма под каждую рекламу: ресторанам тип не нужен, SPA-рекламе — выбор «SPA или баня», общей ссылке — все варианты.
+  var fk = document.querySelector('[data-f="kind"]');
+  function hideKinds(list){ list.forEach(function(v){ var i = document.getElementById("k-" + v); i.disabled = true; i.style.display = "none";
+    document.querySelector('label[for="k-' + v + '"]').style.display = "none"; }); }
+  if (cr === "rest") { document.getElementById("k-rest").checked = true; applyKind("rest"); fk.style.display = "none"; }
+  else if (cr === "spa") {
+    hideKinds(["rest", "other"]);
+    document.getElementById("kl").innerHTML = "У вас <i>*</i>";
+    document.getElementById("h").innerHTML = "Скрининг вашего <span>SPA или бани</span>";
+    document.getElementById("gis").placeholder = "2gis.kz/… или «Баня на Сарайшык»";
+  } else {
+    document.getElementById("h").innerHTML = "Разбор вашего <span>заведения</span>";
+    document.getElementById("lead").textContent = "Рестораны, SPA, бани и отели: найдём, где уходит прибыль, и покажем, как её вернуть. Оставьте заявку — свяжемся в WhatsApp.";
+    document.getElementById("gis").placeholder = "2gis.kz/… или название заведения";
+  }
   [].forEach.call(document.querySelectorAll('input[name="kind"]'), function(r){ r.addEventListener("change", function(){
     applyKind(r.value); document.querySelector('[data-f="kind"]').classList.remove("bad"); }); });
   var abc = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", code = "Y";
@@ -173,7 +187,7 @@ button.busy .spin{display:block} button.busy svg{display:none}
     var intro = "Здравствуйте! Оставил(а) заявку: " + KINDS[k].intro + ".";
     var text = intro + "\nИмя: " + name + (gis ? "\nЗаведение: " + gis : "") + "\nКод: " + code;
     var wa = ["https:", "//wa.me", "/77058032098", "?text=", encodeURIComponent(text)].join("");
-    var body = JSON.stringify({ code: code, cr: cr, kind: k, name: name, phone: "+" + d, gis: gis, note: note, website: document.getElementById("website").value,
+    var body = JSON.stringify({ code: code, cr: cr || k, kind: k, name: name, phone: "+" + d, gis: gis, note: note, website: document.getElementById("website").value,
       ms: Date.now() - t0, src: q.get("utm_source") || "", ad: q.get("utm_content") || "", adset: q.get("utm_term") || "",
       campaign: q.get("utm_campaign") || "", placement: placement, device: device });
     var go = function(){ document.getElementById("wa").href = wa; f.style.display = "none"; document.getElementById("done").style.display = "block";

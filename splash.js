@@ -37,7 +37,9 @@
   '@keyframes ssB{to{transform:scaleX(1)}}' +
   '#sits-splash .n{font-family:Unbounded,system-ui,sans-serif;font-weight:500;font-size:12px;color:#a39d9e;min-width:3.2em;text-align:right;font-variant-numeric:tabular-nums}' +
   '@media (max-width:420px){#sits-splash .t{letter-spacing:.24em;font-size:11px}}' +
-  '@media (prefers-reduced-motion:reduce){#sits-splash *{animation-duration:.01s!important;animation-delay:0s!important}}';
+  '@media (prefers-reduced-motion:reduce){#sits-splash *{animation-duration:.01s!important;animation-delay:0s!important}}' +
+  /* входные анимации первого экрана ждут конца заставки и играют, когда она растворяется */
+  'html.sits-splashing .rise,html.sits-splashing .arm-l,html.sits-splashing .arm-r{animation-play-state:paused!important}';
 
   var letters = '';
   for (var i = 0; i < TAG.length; i++) {
@@ -56,6 +58,7 @@
 
   var html = document.documentElement, prevOverflow = html.style.overflow;
   html.style.overflow = 'hidden';
+  html.classList.add('sits-splashing');
 
   var n = el.querySelector('.n'), t0 = performance.now(), gone = false;
   (function step(t) {
@@ -67,6 +70,7 @@
   function hide() {
     if (gone) return; gone = true;
     el.classList.add('out');
+    html.classList.remove('sits-splashing');
     html.style.overflow = prevOverflow;
     setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); if (st.parentNode) st.parentNode.removeChild(st); }, 700);
   }

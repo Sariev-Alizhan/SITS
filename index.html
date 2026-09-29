@@ -795,6 +795,34 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .sec-tag i{width:6px;height:6px;border-radius:50%;background:var(--red);display:block}
 .sec-head h2,.sec-head h1{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,4.6vw,52px);line-height:1.04;letter-spacing:-.03em}
 .sec-head .desc{color:var(--muted);font-size:17px;max-width:380px;line-height:1.55}
+/* ---- Главная новость (Roblox) ---- */
+.news-top{padding:8px 0 40px;position:relative}
+.news-top>.wrap{position:relative;z-index:1}
+.news-card{display:grid;grid-template-columns:1.15fr 1fr;gap:0;border:1px solid var(--glass-line);background:var(--glass);
+  border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow);transition:border-color .3s var(--ease),transform .4s var(--ease)}
+.news-card:hover{border-color:var(--line-2);transform:translateY(-3px)}
+.news-media{position:relative;display:block;min-height:260px;background:#1a1147;overflow:hidden}
+.news-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.news-card:hover .news-media img{transform:scale(1.04)}
+.news-media .nm-chip{position:absolute;left:18px;top:18px;display:inline-flex;align-items:center;gap:8px;font-family:var(--font-display);
+  font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#0b0820;background:#6cff2e;
+  padding:7px 13px 8px;border-radius:12px;border:2px solid #0b0820;box-shadow:0 4px 0 #0b0820}
+.news-body{padding:36px 38px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.news-label{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.news-label i{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 var(--red);animation:newsPing 1.8s infinite}
+@keyframes newsPing{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--red) 70%,transparent)}80%,100%{box-shadow:0 0 0 10px transparent}}
+@media(prefers-reduced-motion:reduce){.news-label i{animation:none}}
+.news-label span.d{color:var(--muted);font-weight:600;letter-spacing:.06em}
+.news-body h2{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,2.8vw,34px);line-height:1.08;letter-spacing:-.02em}
+.news-body p{color:var(--muted);font-size:16px;line-height:1.6}
+.news-partners{display:flex;flex-wrap:wrap;gap:8px}
+.news-partners span{font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:100px;border:1px solid var(--glass-line);background:var(--glass-2)}
+.news-actions{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin-top:6px}
+@media (max-width: 860px){
+  .news-card{grid-template-columns:1fr}
+  .news-media{min-height:0;aspect-ratio:1410/676}
+  .news-body{padding:24px 20px 26px}
+}
 
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .reveal.in{opacity:1;transform:none}
@@ -1648,6 +1676,28 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   </div>
 </section>
 
+<!-- ============ ГЛАВНАЯ НОВОСТЬ ============ -->
+<section class="news-top" id="news" aria-labelledby="newsTitle">
+  <div class="wrap">
+    <article class="news-card reveal">
+      <a class="news-media" href="/roblox" aria-hidden="true" tabindex="-1">
+        <img src="/brand/roblox/steal-a-chibi.webp" alt="" width="1410" height="676" loading="lazy" decoding="async" />
+        <span class="nm-chip" data-i18n="news.chip">Сервер онлайн</span>
+      </a>
+      <div class="news-body">
+        <div class="news-label"><i></i><span data-i18n="news.label">Главная новость</span><span class="d" data-i18n="news.date">29.09.2026</span></div>
+        <h2 id="newsTitle" data-i18n="news.title">🎉 Наш сервер в Roblox запущен!</h2>
+        <p data-i18n="news.text">Официальный запуск сервера Atla Games. SITS — Sariyev IT Solutions выступает технологическим партнёром. Первая игра — Steal a Chibi. Приглашаем игроков и разработчиков из Казахстана!</p>
+        <div class="news-partners"><span>Atla Games × SITS</span><span data-i18n="news.tp">🚀 Технологический партнёр</span><span>🇰🇿 Made in Kazakhstan</span></div>
+        <div class="news-actions">
+          <a href="/roblox" class="btn btn-primary magnetic" data-i18n="news.read">Читать новость</a>
+          <a href="https://www.roblox.com/games/115656980952933/Steal-a-Chibi" target="_blank" rel="noopener" class="alink"><span data-i18n="news.play">Играть в Roblox</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
 <!-- ============ SERVICES ============ -->
 <section class="section" id="services">
   <div class="sec-deco" aria-hidden="true"><div class="deco3d d-right" style="--w:300px;--wm:170px;--op:.5;--par:80;--rot:-8deg;--dur:9s"><div class="deco3d-in"><img src="/brand/3d/phone-3d.webp" alt="" width="1000" height="1000" loading="lazy"></div></div></div>
@@ -2107,6 +2157,7 @@ const I18N = {
       toggleTheme:'Сменить тему', hintTheme:'Светлая / тёмная',
       open:'Открыть командную палитру (⌘K)',
     },
+    news: { chip:'Сервер онлайн', label:'Главная новость', date:'29.09.2026', title:'🎉 Наш сервер в Roblox запущен!', text:'Официальный запуск сервера Atla Games. SITS — Sariyev IT Solutions выступает технологическим партнёром. Первая игра — Steal a Chibi. Приглашаем игроков и разработчиков из Казахстана!', tp:'🚀 Технологический партнёр', read:'Читать новость', play:'Играть в Roblox' },
     hero: {
       kicker: 'Sariyev IT Solutions — IT-студия полного цикла',
       titleA: 'Превращаем', titleB: 'идеи в', titleC: 'продукты',
@@ -2373,6 +2424,7 @@ const I18N = {
       toggleTheme:'Toggle theme', hintTheme:'Light / dark',
       open:'Open command palette (⌘K)',
     },
+    news: { chip:'Server online', label:'Top news', date:'Sep 29, 2026', title:'🎉 Our Roblox server is live!', text:'Official launch of the Atla Games server, with SITS — Sariyev IT Solutions as technology partner. First game: Steal a Chibi. Players and developers from Kazakhstan — welcome aboard!', tp:'🚀 Technology Partner', read:'Read the news', play:'Play on Roblox' },
     hero: {
       kicker: 'Sariyev IT Solutions — full-cycle IT studio',
       titleA: 'Turning', titleB: 'ideas into', titleC: 'products',
@@ -2639,6 +2691,7 @@ const I18N = {
       toggleTheme:'Тақырыпты ауыстыру', hintTheme:'Ашық / қара',
       open:'Командалық палитраны ашу (⌘K)',
     },
+    news: { chip:'Сервер онлайн', label:'Басты жаңалық', date:'29.09.2026', title:'🎉 Roblox-тағы серверіміз іске қосылды!', text:'Atla Games серверінің ресми іске қосылуы. SITS — Sariyev IT Solutions технологиялық серіктес ретінде қатысады. Алғашқы ойын — Steal a Chibi. Қазақстандық ойыншылар мен әзірлеушілерді шақырамыз!', tp:'🚀 Технологиялық серіктес', read:'Жаңалықты оқу', play:'Roblox-та ойнау' },
     hero: {
       kicker: 'Sariyev IT Solutions — толық циклді IT-студия',
       titleA: 'Идеяларды', titleB: 'цифрлық өнімдерге', titleC: 'айналдырамыз',

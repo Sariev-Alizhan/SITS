@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Загрузочный экран — варианты · SITS</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/png" href="brand/favicon.png?v=10" />
+<link rel="stylesheet" href="/fonts/fonts.css" />
+<style>
+:root{--bg:#0c0a0b;--card:#141112;--line:rgba(255,255,255,.1);--text:#f4f1f1;--muted:#a39d9e;--red:#e23744;
+  --font-display:'Unbounded','Arial Black',system-ui,sans-serif;--font-body:'Manrope',system-ui,sans-serif;--font-logo:'PT Serif',Georgia,serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+.lab-wrap{max-width:1180px;margin:0 auto;padding:40px 32px 80px}
+@media(max-width:640px){.lab-wrap{padding:24px 16px 60px}}
+.lab-head h1{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,4vw,42px);letter-spacing:-.02em;line-height:1.1}
+.lab-head p{color:var(--muted);margin-top:12px;max-width:640px;line-height:1.6}
+.v{margin-top:44px;padding:24px;border:1px solid var(--line);border-radius:28px;background:var(--card)}
+@media(max-width:640px){.v{padding:16px;border-radius:22px;margin-top:28px}}
+.v-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.v-num{font-family:var(--font-display);font-weight:700;color:var(--red);font-size:14px;letter-spacing:.1em}
+.v-title{font-family:var(--font-display);font-weight:600;font-size:22px;margin-top:4px}
+.v-desc{color:var(--muted);font-size:15px;margin-top:6px;max-width:560px;line-height:1.55}
+.v-btns{display:flex;gap:10px;flex-wrap:wrap}
+.v-btns button,.v-btns a{font:600 14px var(--font-body);color:var(--text);background:rgba(255,255,255,.06);border:1px solid var(--line);
+  padding:10px 16px;border-radius:100px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.v-btns .pri{background:var(--red);border-color:transparent}
+.frames{display:grid;grid-template-columns:1fr 230px;gap:18px;align-items:end}
+@media(max-width:760px){.frames{grid-template-columns:1fr 38%}}
+.fr{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000}
+.fr.pc{aspect-ratio:16/10}
+.fr.mob{aspect-ratio:390/844;border-radius:26px;border:6px solid #222;box-sizing:content-box}
+.fr .sc{position:absolute;left:0;top:0;transform-origin:0 0}
+.fr.pc .sc{width:1440px;height:900px}
+.fr.mob .sc{width:390px;height:844px}
+.fr-l{position:absolute;left:10px;top:8px;z-index:50;font-size:11px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.45);text-transform:uppercase;pointer-events:none}
+/* полноэкранный просмотр одного варианта: ?v=N */
+.full{position:fixed;inset:0;z-index:100;background:#000}
+.full .sp{position:absolute;inset:0}
+.full-bar{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:200;display:flex;gap:8px}
+.full-bar button,.full-bar a{font:600 14px var(--font-body);color:#fff;background:rgba(20,17,18,.8);border:1px solid rgba(255,255,255,.15);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:11px 16px;border-radius:100px;cursor:pointer;text-decoration:none}
+
+/* ================= ОБЩЕЕ ДЛЯ ЗАСТАВОК ================= */
+.sp{position:absolute;inset:0;container-type:size;overflow:hidden;background:#0c0a0b;color:#f4f1f1;display:grid;place-items:center;
+  font-family:var(--font-body)}
+.sp *{box-sizing:border-box}
+.sp .mk{display:block;overflow:visible}
+.sp .word{font-family:var(--font-logo);font-weight:700;letter-spacing:.02em;line-height:1;display:inline-flex;align-items:center;gap:.06em}
+.sp .word svg{height:.86em;width:auto}
+
+/* ---------- V1 · Чертёж ---------- */
+.v1 .grid{position:absolute;inset:-2px;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:4cqmin 4cqmin;background-position:center;mask-image:radial-gradient(closest-side,#000,transparent);-webkit-mask-image:radial-gradient(closest-side,#000,transparent);
+  opacity:0;animation:v1g 2.4s ease forwards}
+@keyframes v1g{0%{opacity:0;transform:scale(1.08)}40%{opacity:1}100%{opacity:.55;transform:none}}
+.v1 .glow{position:absolute;width:70cqmin;height:70cqmin;border-radius:50%;background:radial-gradient(closest-side,rgba(226,55,68,.28),transparent);opacity:0;animation:v1glow 1s ease 1.1s forwards}
+@keyframes v1glow{to{opacity:1}}
+.v1 .in{position:relative;display:flex;flex-direction:column;align-items:center;gap:4.2cqmin}
+.v1 .mk{height:clamp(90px,30cqmin,280px)}
+.v1 .mk path{fill:#e23744;fill-opacity:0;stroke:#ff5a67;stroke-width:3;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;
+  animation:v1draw 1.15s cubic-bezier(.6,0,.3,1) .15s forwards,v1fill .55s ease 1.15s forwards}
+@keyframes v1draw{to{stroke-dashoffset:0}}
+@keyframes v1fill{to{fill-opacity:1;stroke-opacity:0}}
+.v1 .mk{filter:drop-shadow(0 0 0 rgba(226,55,68,0));animation:v1sh 1s ease 1.2s forwards}
+@keyframes v1sh{to{filter:drop-shadow(0 0 3cqmin rgba(226,55,68,.55))}}
+.v1 .tag{display:flex;gap:.02em;font-family:var(--font-display);font-weight:500;font-size:clamp(12px,2.6cqmin,20px);letter-spacing:.32em;text-transform:uppercase;color:#a39d9e;overflow:hidden}
+.v1 .tag span{display:inline-block;transform:translateY(110%);animation:v1up .6s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes v1up{to{transform:none}}
+.v1 .meter{display:flex;align-items:center;gap:14px;width:clamp(160px,36cqmin,300px);opacity:0;animation:v1fade .4s ease .3s forwards}
+@keyframes v1fade{to{opacity:1}}
+.v1 .meter .b{flex:1;height:2px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.v1 .meter .b i{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);background:#e23744;animation:v1bar 2.1s cubic-bezier(.4,0,.2,1) .2s forwards}
+@keyframes v1bar{to{transform:scaleX(1)}}
+.v1 .meter .n{font-family:var(--font-display);font-weight:500;font-size:12px;color:#a39d9e;min-width:3.2em;text-align:right;font-variant-numeric:tabular-nums}
+
+/* ---------- V2 · Сборка ---------- */
+.v2::before{content:"";position:absolute;inset:0;background:radial-gradient(60cqmin 40cqmin at 50% 50%,rgba(226,55,68,.16),transparent 70%)}
+.v2{align-content:center;gap:5cqmin}
+.v2 .lock{position:relative;display:flex;align-items:center;gap:.08em;font-family:var(--font-logo);font-weight:700;font-size:clamp(64px,19cqmin,180px);line-height:1}
+.v2 .mk{height:.9em;width:auto}
+.v2 .p1,.v2 .p2{fill:#e23744}
+.v2 .p1{animation:v2p1 .95s cubic-bezier(.7,0,.2,1) .1s both}
+.v2 .p2{animation:v2p2 .95s cubic-bezier(.7,0,.2,1) .1s both}
+@keyframes v2p1{from{transform:translate(-120px,-150px);opacity:0}40%{opacity:1}to{transform:none;opacity:1}}
+@keyframes v2p2{from{transform:translate(120px,150px);opacity:0}40%{opacity:1}to{transform:none;opacity:1}}
+.v2 .mkwrap{position:relative;display:grid;place-items:center}
+.v2 .ring{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px;border-radius:50%;border:2px solid #ff5a67;opacity:0;
+  animation:v2ring .9s cubic-bezier(.1,.6,.3,1) 1.02s forwards}
+@keyframes v2ring{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(70)}}
+.v2 .flash{position:absolute;inset:0;background:#fff;opacity:0;animation:v2fl .5s ease 1.02s}
+@keyframes v2fl{0%{opacity:.14}100%{opacity:0}}
+.v2 .rest{display:inline-flex;align-items:center;gap:.08em;clip-path:inset(-10% 100% -10% 0);animation:v2wipe .75s cubic-bezier(.7,0,.2,1) 1.15s forwards}
+.v2 .rest .mk2{height:.9em;width:auto}
+@keyframes v2wipe{to{clip-path:inset(-10% -2% -10% 0)}}
+.v2 .sub{position:relative;font-family:var(--font-display);font-weight:500;font-size:clamp(11px,2.4cqmin,18px);letter-spacing:.3em;text-transform:uppercase;color:#a39d9e;
+  text-align:center;opacity:0;transform:translateY(8px);animation:v2sub .6s ease 1.6s forwards}
+@keyframes v2sub{to{opacity:1;transform:none}}
+
+/* ---------- V3 · Терминал ---------- */
+.v3{background:#09080a}
+.v3::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px)}
+.v3 .term{width:min(560px,84cqw);font:500 clamp(12px,2.6cqmin,17px)/1.75 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#d8d2d3;
+  animation:v3out .35s ease 1.85s forwards}
+@keyframes v3out{to{opacity:0;transform:scale(.96);filter:blur(4px)}}
+.v3 .term .l{white-space:pre;overflow:hidden}
+.v3 .term .pr{color:#e23744}
+.v3 .term .ok{color:#6fe3a0}
+.v3 .term .cur{display:inline-block;width:.6em;height:1.1em;background:#e23744;vertical-align:-.2em;animation:v3b .8s steps(1) infinite}
+@keyframes v3b{50%{opacity:0}}
+.v3 .final{position:absolute;display:flex;flex-direction:column;align-items:center;gap:3.4cqmin;opacity:0;animation:v3in .7s cubic-bezier(.2,.7,.2,1) 2s forwards}
+@keyframes v3in{from{opacity:0;transform:scale(1.12);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+.v3 .word{font-size:clamp(50px,16cqmin,160px);text-shadow:.03em 0 0 rgba(0,229,255,.0)}
+.v3 .final .word{animation:v3gl .5s steps(2) 2s 1}
+@keyframes v3gl{0%{text-shadow:.05em 0 0 rgba(0,229,255,.7),-.05em 0 0 rgba(226,55,68,.9)}100%{text-shadow:none}}
+.v3 .sub{font:500 clamp(11px,2.3cqmin,16px) ui-monospace,Menlo,monospace;letter-spacing:.2em;color:#8f8889;text-transform:uppercase}
+
+/* ---------- V4 · Кубы ---------- */
+.v4 canvas{position:absolute;inset:0;width:100%;height:100%}
+.v4 .cap{position:absolute;left:0;right:0;bottom:14cqh;display:flex;flex-direction:column;align-items:center;gap:1.6cqmin;opacity:0;animation:v4cap .7s ease 1.35s forwards}
+@keyframes v4cap{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.v4 .word{font-size:clamp(28px,7cqmin,64px)}
+.v4 .sub{font-family:var(--font-display);font-weight:500;font-size:clamp(10px,2cqmin,15px);letter-spacing:.3em;text-transform:uppercase;color:#a39d9e}
+
+/* ---------- V5-8 · Higgsfield 3D ---------- */
+.vi img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.14);opacity:0;
+  animation:viIn 1.1s ease .05s forwards,viZoom 3.2s cubic-bezier(.2,.6,.2,1) .05s forwards}
+@keyframes viIn{to{opacity:1}}
+@keyframes viZoom{to{transform:scale(1)}}
+.vi .sweep{position:absolute;inset:-20%;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.14) 50%,transparent 60%);transform:translateX(-80%);
+  animation:viSw 1.4s cubic-bezier(.4,0,.2,1) .9s forwards;mix-blend-mode:screen}
+@keyframes viSw{to{transform:translateX(80%)}}
+.vi .vign{position:absolute;inset:0;background:radial-gradient(closest-side,transparent 55%,rgba(0,0,0,.55))}
+.vi .ui{position:absolute;left:0;right:0;bottom:8cqh;display:flex;flex-direction:column;align-items:center;gap:2.2cqmin;opacity:0;animation:v4cap .7s ease 1s forwards}
+.vi .word{font-size:clamp(26px,6cqmin,52px)}
+.vi .b{width:clamp(120px,24cqmin,220px);height:2px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.vi .b i{display:block;height:100%;transform-origin:left;transform:scaleX(0);background:#e23744;animation:v1bar 1.8s cubic-bezier(.4,0,.2,1) 1s forwards}
+</style>
+</head>
+<body>
+
+<!-- Вектор знака SITS (обводка по brand/sits-mark.png, расхождение <2%) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="m1" d="M170 0 333 113 290 180 252 155 270 125 170 57 42 144 215 270 178 297 0 171 1 115Z"/>
+    <path id="m2" d="M170 416 7 303 50 236 88 261 70 291 170 359 298 272 125 146 162 119 340 245 339 301Z"/>
+  </defs>
+</svg>
+
+<div class="lab-wrap" id="lab">
+  <header class="lab-head">
+    <div class="v-num">SITS · ЗАГРУЗОЧНЫЙ ЭКРАН</div>
+    <h1>Выберите вариант заставки</h1>
+    <p>Каждый вариант показан сразу как на компьютере и как на телефоне и повторяется сам. «На весь экран» — посмотреть вживую, удобно открыть с телефона. Напишите номер понравившегося.</p>
+  </header>
+  <div id="list"></div>
+</div>
+
+<template id="t1">
+  <div class="sp v1">
+    <div class="grid"></div><div class="glow"></div>
+    <div class="in">
+      <svg class="mk" viewBox="-4 -4 348 424"><path pathLength="1" d="M170 0 333 113 290 180 252 155 270 125 170 57 42 144 215 270 178 297 0 171 1 115Z M170 416 7 303 50 236 88 261 70 291 170 359 298 272 125 146 162 119 340 245 339 301Z"/></svg>
+      <div class="tag" data-letters="Sariyev IT Solutions"></div>
+      <div class="meter"><div class="b"><i></i></div><div class="n">0%</div></div>
+    </div>
+  </div>
+</template>
+
+<template id="t2">
+  <div class="sp v2">
+    <div class="flash"></div>
+    <div class="lock">
+      <div class="mkwrap">
+        <div class="ring"></div>
+        <svg class="mk" viewBox="0 0 340 416"><use class="p1" href="#m1"/><use class="p2" href="#m2"/></svg>
+      </div>
+      <div class="rest"><span class="it">IT</span><svg class="mk2" viewBox="0 0 340 416" fill="#e23744"><use href="#m1"/><use href="#m2"/></svg></div>
+    </div>
+    <div class="sub">Sariyev IT Solutions</div>
+  </div>
+</template>
+
+<template id="t3">
+  <div class="sp v3">
+    <div class="term"></div>
+    <div class="final">
+      <div class="word"><svg viewBox="0 0 340 416" fill="#e23744"><use href="#m1"/><use href="#m2"/></svg>IT<svg viewBox="0 0 340 416" fill="#e23744"><use href="#m1"/><use href="#m2"/></svg></div>
+      <div class="sub">Идеи → продукты</div>
+    </div>
+  </div>
+</template>
+
+<template id="t4">
+  <div class="sp v4">
+    <canvas></canvas>
+    <div class="cap"><div class="word"><svg viewBox="0 0 340 416" fill="#e23744"><use href="#m1"/><use href="#m2"/></svg>IT<svg viewBox="0 0 340 416" fill="#e23744"><use href="#m1"/><use href="#m2"/></svg></div><div class="sub">Sariyev IT Solutions</div></div>
+  </div>
+</template>
+
+<template id="ti">
+  <div class="sp vi">
+    <img class="bg" alt="" />
+    <div class="vign"></div><div class="sweep"></div>
+    <div class="ui"><div class="word"><svg viewBox="0 0 340 416" fill="#e23744"><use href="#m1"/><use href="#m2"/></svg>IT<svg viewBox="0 0 340 416" fill="#e23744"><use href="#m1"/><use href="#m2"/></svg></div><div class="b"><i></i></div></div>
+  </div>
+</template>
+
+<script>
+const VARIANTS = [
+  { t:'t1', title:'Чертёж', desc:'Знак SITS рисуется красной линией, заливается и мягко светится. Под ним по буквам появляется «Sariyev IT Solutions» и счётчик загрузки. Строго и технологично.' },
+  { t:'t2', title:'Сборка', desc:'Две половинки знака прилетают с разных сторон и защёлкиваются со вспышкой и волной, затем шторкой открывается остальной логотип — ровно как в шапке сайта.' },
+  { t:'t3', title:'Терминал', desc:'Команды сборки печатаются как в консоли разработчика: идея, дизайн, код, запуск. Потом всё схлопывается в логотип с «глитч»-эффектом.' },
+  { t:'t4', title:'Кубы', desc:'Знак собирается из сотен маленьких красных кубиков — отсылка к играм и Roblox. Каждый кубик подлетает со своей задержкой.' },
+  { t:'ti', img:'/brand/splash/hf-0.webp', title:'3D · Стекло (Higgsfield)', desc:'3D-рендер знака из красного стекла на чёрном. Плавный наезд камеры, блик света, логотип и полоска загрузки снизу.' },
+  { t:'ti', img:'/brand/splash/hf-1.webp', title:'3D · Неон и металл (Higgsfield)', desc:'Знак из тёмного металла с красным неоном в гранях, дымка и лучи света.' },
+  { t:'ti', img:'/brand/splash/hf-2.webp', title:'3D · Воксели (Higgsfield)', desc:'Знак, собирающийся из глянцевых красных кубиков — игровой, но премиальный.' },
+  { t:'ti', img:'/brand/splash/hf-3.webp', title:'3D · Камень и свет (Higgsfield)', desc:'Знак, вырезанный в чёрном камне, с красным светом изнутри. Минимализм и архитектурность.' },
+];
+
+// ---------- инициализация одного экземпляра заставки ----------
+function initSplash(root, v){
+  if (v.img) root.querySelector('img.bg').src = v.img;
+  if (root.classList.contains('v1')){
+    const tag = root.querySelector('.tag');
+    tag.innerHTML = [...tag.dataset.letters].map((c,i)=>`<span style="animation-delay:${1.05+i*.028}s">${c===' '?'&nbsp;':c}</span>`).join('');
+    const n = root.querySelector('.n'); const t0 = performance.now();
+    (function step(t){ const k=Math.min(1,(t-t0-200)/2100); const e=k<=0?0:1-Math.pow(1-k,3); n.textContent=Math.round(e*100)+'%'; if(k<1 && root.isConnected) requestAnimationFrame(step); })(t0);
+  }
+  if (root.classList.contains('v3')){
+    const lines = [
+      ['<span class="pr">➜</span> sits new «ваш проект»', 0],
+      ['  <span class="ok">✓</span> идея и прототип', 1],
+      ['  <span class="ok">✓</span> дизайн интерфейсов', 1],
+      ['  <span class="ok">✓</span> разработка и AI', 1],
+      ['  <span class="ok">✓</span> запуск 🚀', 1],
+    ];
+    const term = root.querySelector('.term'); let i = 0;
+    const plain = s => s.replace(/<[^>]+>/g,'');
+    (function next(){
+      if (!root.isConnected || i >= lines.length) return;
+      const [html, instant] = lines[i++]; const el = document.createElement('div'); el.className='l'; term.appendChild(el);
+      if (instant){ el.innerHTML = html; setTimeout(next, 150); return; }
+      const txt = plain(html); let k = 0;
+      (function type(){ if(!root.isConnected) return; k++; el.innerHTML = '<span class="pr">➜</span>'+txt.slice(1,k)+'<span class="cur"></span>'; if(k<txt.length) setTimeout(type, 12); else { el.innerHTML = html; setTimeout(next, 130);} })();
+    })();
+  }
+  if (root.classList.contains('v4')) cubes(root);
+}
+
+// ---------- V4: кубы на canvas ----------
+function cubes(root){
+  const cv = root.querySelector('canvas'), ctx = cv.getContext('2d');
+  const W = () => cv.clientWidth, H = () => cv.clientHeight;
+  const dpr = Math.min(devicePixelRatio||1, 2);
+  function size(){ cv.width = W()*dpr; cv.height = H()*dpr; }
+  size();
+  // растеризуем знак в сетку
+  const COLS = 30, ROWS = Math.round(COLS*416/340);
+  const off = document.createElement('canvas'); off.width = COLS; off.height = ROWS;
+  const o = off.getContext('2d'); o.scale(COLS/340, ROWS/416);
+  o.fill(new Path2D(document.getElementById('m1').getAttribute('d'))); o.fill(new Path2D(document.getElementById('m2').getAttribute('d')));
+  const data = o.getImageData(0,0,COLS,ROWS).data, cells = [];
+  for (let y=0;y<ROWS;y++) for (let x=0;x<COLS;x++) if (data[(y*COLS+x)*4+3] > 110){
+    const a = Math.random()*Math.PI*2, r = 0.6+Math.random()*0.8;
+    cells.push({x,y,d:(x+y)/(COLS+ROWS)*0.75+Math.random()*0.18, dx:Math.cos(a)*r, dy:Math.sin(a)*r, sh:Math.random()});
+  }
+  const t0 = performance.now();
+  function frame(t){
+    if (!root.isConnected) return;
+    if (cv.width !== Math.round(W()*dpr)) size();
+    const s = (t - t0)/1000, w = W(), h = H();
+    ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+    const markH = Math.min(h*0.46, w*0.62*416/340), cell = markH/ROWS, gap = Math.max(1, cell*0.12);
+    const ox = w/2 - COLS*cell/2, oy = h*0.43 - ROWS*cell/2;
+    const g = ctx.createRadialGradient(w/2,h*0.43,0,w/2,h*0.43,markH*0.9);
+    g.addColorStop(0,'rgba(226,55,68,'+(0.2*Math.min(1,s))+')'); g.addColorStop(1,'rgba(226,55,68,0)');
+    ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
+    for (const c of cells){
+      const k = Math.min(1, Math.max(0, (s - c.d*1.1)/0.55));
+      if (k <= 0) continue;
+      const e = 1 - Math.pow(1-k, 3);
+      const px = ox + c.x*cell + c.dx*(1-e)*w*0.5, py = oy + c.y*cell + c.dy*(1-e)*h*0.5;
+      const sz = (cell - gap) * (0.4 + 0.6*e);
+      ctx.globalAlpha = Math.min(1, k*1.6);
+      ctx.fillStyle = c.sh > .85 ? '#ff6b76' : (c.sh < .12 ? '#b8202c' : '#e23744');
+      ctx.fillRect(px, py, sz, sz);
+      ctx.fillStyle = 'rgba(255,255,255,.22)'; ctx.fillRect(px, py, sz, Math.max(1, sz*0.18));
+      ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(px, py + sz*0.82, sz, sz*0.18);
+    }
+    ctx.globalAlpha = 1;
+    if (s < 3) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+function mount(slot, v){
+  slot.querySelectorAll('.sp').forEach(n => n.remove());
+  const node = document.getElementById(v.t).content.firstElementChild.cloneNode(true);
+  slot.appendChild(node); initSplash(node, v);
+}
+
+const params = new URLSearchParams(location.search);
+if (params.has('v')){
+  // полноэкранный просмотр
+  const idx = Math.max(0, Math.min(VARIANTS.length-1, (+params.get('v')||1) - 1)), v = VARIANTS[idx];
+  document.getElementById('lab').remove();
+  const full = document.createElement('div'); full.className = 'full'; document.body.appendChild(full);
+  const bar = document.createElement('div'); bar.className = 'full-bar';
+  bar.innerHTML = `<button type="button">↻ Ещё раз</button><a href="?v=${idx===0?VARIANTS.length:idx}">←</a><a href="?v=${idx+2>VARIANTS.length?1:idx+2}">→</a><a href="/splash-lab">Все варианты</a>`;
+  document.body.appendChild(bar);
+  bar.querySelector('button').onclick = () => mount(full, v);
+  full.onclick = () => mount(full, v);
+  mount(full, v);
+} else {
+  const list = document.getElementById('list');
+  VARIANTS.forEach((v, i) => {
+    const el = document.createElement('section'); el.className = 'v';
+    el.innerHTML = `<div class="v-top"><div><div class="v-num">ВАРИАНТ ${i+1}</div><div class="v-title">${v.title}</div><p class="v-desc">${v.desc}</p></div>
+      <div class="v-btns"><button type="button" class="rep">↻ Повторить</button><a class="pri" href="?v=${i+1}">На весь экран</a></div></div>
+      <div class="frames"><div class="fr pc"><span class="fr-l">ПК</span><div class="sc"></div></div><div class="fr mob"><span class="fr-l">Телефон</span><div class="sc"></div></div></div>`;
+    list.appendChild(el);
+    const slots = el.querySelectorAll('.fr .sc');
+    el.querySelectorAll('.fr').forEach(fr => {
+      const sc = fr.querySelector('.sc');
+      new ResizeObserver(() => { sc.style.transform = `scale(${fr.clientWidth / sc.offsetWidth})`; }).observe(fr);
+    });
+    const play = () => slots.forEach(s => mount(s, v));
+    el.querySelector('.rep').onclick = play;
+    let timer = null;
+    new IntersectionObserver(es => {
+      if (es[0].isIntersecting){ play(); timer = setInterval(play, 4600); }
+      else { clearInterval(timer); timer = null; }
+    }, { threshold: .35 }).observe(el);
+  });
+}
+</script>
+</body>
+</html>

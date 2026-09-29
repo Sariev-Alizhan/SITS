@@ -46,6 +46,7 @@ button.busy .spin{display:block} button.busy svg{display:none}
 .done h2{font-size:22px;margin-bottom:6px}
 .done p{color:var(--muted);font-size:15px;margin-bottom:18px}
 .wa{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--ok);color:#0b1a10;font-weight:800;font-size:17px;border-radius:14px;padding:15px;text-decoration:none}
+.quick{display:block;margin:12px auto 0;text-align:center;color:#25D366;font-weight:700;font-size:15px;text-decoration:none;padding:10px}
 .foot{margin-top:18px;text-align:center;font-size:12px;color:#6f6a62;letter-spacing:.06em}
 .hp{position:absolute;left:-9999px;opacity:0}
 .kinds{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -99,6 +100,7 @@ button.busy .spin{display:block} button.busy svg{display:none}
       <span id="bt">Отправить заявку</span></button>
     <p class="note">После отправки откроется WhatsApp — можно сразу написать нам.</p>
   </form>
+  <a class="quick" id="quick" href="#">Нет времени на форму? Сразу написать в WhatsApp →</a>
 
   <div class="done" id="done">
     <div class="ic"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
@@ -169,6 +171,19 @@ button.busy .spin{display:block} button.busy svg{display:none}
   var device = /iPhone|iPad|iPod/.test(ua) ? "iPhone" : /Android/.test(ua) ? "Android" : "Компьютер";
   var src = { fb: "Facebook", ig: "Instagram", an: "Audience Network", msg: "Messenger" }[q.get("utm_source")] || q.get("utm_source") || "";
   var placement = [src, q.get("placement") || ""].filter(Boolean).join(" · ");
+
+  // Кто не хочет заполнять форму — сразу в WhatsApp. Клик пишется в таблицу с кодом, код уходит в сообщении, чтобы найти лид.
+  document.getElementById("quick").addEventListener("click", function(e){
+    e.preventDefault();
+    var k = kind() || cr || "other";
+    var text = "Здравствуйте! Хочу " + KINDS[k].intro + ".\nКод: " + code;
+    var wa = ["https:", "//wa.me", "/77058032098", "?text=", encodeURIComponent(text)].join("");
+    try { fetch("/api/yan-lead", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ quick: 1, code: code, cr: cr || k, kind: k, website: document.getElementById("website").value,
+        ms: Date.now() - t0, src: q.get("utm_source") || "", ad: q.get("utm_content") || "", adset: q.get("utm_term") || "",
+        campaign: q.get("utm_campaign") || "", placement: placement, device: device }) }); } catch (_) {}
+    setTimeout(function(){ location.href = wa; }, 150);
+  });
 
   var f = document.getElementById("f"), b = document.getElementById("b"), sent = false;
   f.addEventListener("submit", function(e){

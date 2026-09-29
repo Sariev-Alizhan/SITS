@@ -45,7 +45,9 @@ export default async function handler(req, res) {
   if (Number(body.ms) > 0 && Number(body.ms) < 1500) return res.status(200).json({ ok: true, skipped: 'fast' });
   if (isMetaIp(getClientIp(req))) return res.status(200).json({ ok: true, skipped: 'meta-ip' });
   const phoneDigits = String(body.phone || '').replace(/\D/g, '');
-  if (String(body.name || '').trim().length < 2 || phoneDigits.length < 10) return res.status(400).json({ ok: false, error: 'form' });
+  // quick — «Сразу написать в WhatsApp» без формы: имя и телефон не обязательны.
+  const quick = Number(body.quick) === 1;
+  if (!quick && (String(body.name || '').trim().length < 2 || phoneDigits.length < 10)) return res.status(400).json({ ok: false, error: 'form' });
   const utm = v => (String(v || '').includes('{{') ? '' : v);
 
   const strip = (v, n) => String(v || '').replace(/[\u0000-\u001f<>]/g, '').slice(0, n);
@@ -56,12 +58,12 @@ export default async function handler(req, res) {
   if (!code) return res.status(400).json({ ok: false });
 
   const params = new URLSearchParams({
-    t: SCRIPT_TOKEN, code,
+    t: SCRIPT_TOKEN, code, quick: quick ? '1' : '',
     // Тип заведения, который выбрал клиент, — в колонку «Направление». Без выбора (старая версия страницы) — по объявлению.
     cr: KIND_LABEL[body.kind] || (body.cr === 'rest' ? 'rest' : 'spa'),
     ad: clean(utm(body.ad), 120), adset: clean(utm(body.adset), 120), campaign: clean(utm(body.campaign), 120),
     placement: clean(utm(body.placement), 60) || 'Сайт', device: strip(body.device, 20),
-    name: txt(strip(body.name, 120).replace(/\s+/g, ' ').trim()), phone: '+' + phoneDigits.slice(0, 15), gis: txt(strip(body.gis, 300).trim()),
+    name: txt(strip(body.name, 120).replace(/\s+/g, ' ').trim()), phone: phoneDigits ? '+' + phoneDigits.slice(0, 15) : '', gis: txt(strip(body.gis, 300).trim()),
     note: txt(String(body.note || '').replace(/[\u0000-\u0009\u000b-\u001f<>]/g, '').trim().slice(0, 1000)),
   });
   // Apps Script иногда отвечает 404/HTML или «просыпается» дольше обычного — одна повторная попытка.

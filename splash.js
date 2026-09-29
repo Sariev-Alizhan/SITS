@@ -1,11 +1,9 @@
 /* Загрузочный экран SITS «Чертёж» — общий для всех публичных страниц.
    Подключение: <script src="/splash.js"></script> первой строкой внутри <body>.
    Знак рисуется линией → заливается и светится → буквы «Sariyev IT Solutions» → счётчик 0–100%.
-   Показывается один раз за визит (sessionStorage), клик или клавиша — пропустить.
+   Показывается при каждом открытии и обновлении страницы, клик или клавиша — пропустить.
    Превью и другие варианты: /splash-lab */
 (function () {
-  var KEY = 'sits-splash-seen';
-  try { if (sessionStorage.getItem(KEY)) return; sessionStorage.setItem(KEY, '1'); } catch (e) {}
   if (/[?&]nosplash\b/.test(location.search)) return;
 
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -48,33 +46,43 @@
   }
 
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
-  var el = document.createElement('div');
-  el.id = 'sits-splash'; el.setAttribute('aria-hidden', 'true');
-  el.innerHTML = '<div class="g"></div><div class="h"></div><div class="c">' +
-    '<svg viewBox="-4 -4 348 424"><path pathLength="1" d="' + D + '"/></svg>' +
-    '<div class="t">' + letters + '</div>' +
-    '<div class="m"><div class="b"><i></i></div><div class="n">0%</div></div></div>';
-  document.body.insertBefore(el, document.body.firstChild);
+  var html = document.documentElement;
 
-  var html = document.documentElement, prevOverflow = html.style.overflow;
-  html.style.overflow = 'hidden';
-  html.classList.add('sits-splashing');
+  function show() {
+    var old = document.getElementById('sits-splash'); if (old) old.parentNode.removeChild(old);
+    var el = document.createElement('div');
+    el.id = 'sits-splash'; el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = '<div class="g"></div><div class="h"></div><div class="c">' +
+      '<svg viewBox="-4 -4 348 424"><path pathLength="1" d="' + D + '"/></svg>' +
+      '<div class="t">' + letters + '</div>' +
+      '<div class="m"><div class="b"><i></i></div><div class="n">0%</div></div></div>';
+    document.body.insertBefore(el, document.body.firstChild);
 
-  var n = el.querySelector('.n'), t0 = performance.now(), gone = false;
-  (function step(t) {
-    var k = Math.min(1, Math.max(0, (t - t0 - 150) / 1850)), e = 1 - Math.pow(1 - k, 3);
-    n.textContent = Math.round((reduce ? 1 : e) * 100) + '%';
-    if (k < 1 && !gone) requestAnimationFrame(step);
-  })(t0);
+    var prevOverflow = html.style.overflow === 'hidden' ? '' : html.style.overflow;
+    html.style.overflow = 'hidden';
+    html.classList.add('sits-splashing');
 
-  function hide() {
-    if (gone) return; gone = true;
-    el.classList.add('out');
-    html.classList.remove('sits-splashing');
-    html.style.overflow = prevOverflow;
-    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); if (st.parentNode) st.parentNode.removeChild(st); }, 700);
+    var n = el.querySelector('.n'), t0 = performance.now(), gone = false;
+    (function step(t) {
+      var k = Math.min(1, Math.max(0, (t - t0 - 150) / 1850)), e = 1 - Math.pow(1 - k, 3);
+      n.textContent = Math.round((reduce ? 1 : e) * 100) + '%';
+      if (k < 1 && !gone) requestAnimationFrame(step);
+    })(t0);
+
+    function hide() {
+      if (gone) return; gone = true;
+      el.classList.add('out');
+      html.classList.remove('sits-splashing');
+      html.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', hide);
+      setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 700);
+    }
+    setTimeout(hide, HOLD);
+    el.addEventListener('click', hide);
+    window.addEventListener('keydown', hide);
   }
-  setTimeout(hide, HOLD);
-  el.addEventListener('click', hide);
-  window.addEventListener('keydown', hide, { once: true });
+
+  show();
+  // «Назад/Вперёд» восстанавливает страницу из памяти браузера без перезагрузки — показываем заставку и тогда
+  window.addEventListener('pageshow', function (e) { if (e.persisted) show(); });
 })();

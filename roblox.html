@@ -11,7 +11,7 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="SITS — Sariyev IT Solutions" />
-<meta property="og:title" content="🎉 Наш сервер в Roblox запущен — Atla Games × SITS" />
+<meta property="og:title" content="Наш сервер в Roblox запущен — Atla Games × SITS" />
 <meta property="og:description" content="Официальный запуск сервера Atla Games 29.09.2026. SITS — технологический партнёр. Играйте в Steal a Chibi!" />
 <meta property="og:url" content="https://sariyev.com/roblox" />
 <meta property="og:image" content="https://sariyev.com/brand/roblox/og-roblox.jpg" />
@@ -20,7 +20,7 @@
 <meta property="og:locale" content="ru_RU" />
 <meta property="article:published_time" content="2026-09-29" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="🎉 Наш сервер в Roblox запущен — Atla Games × SITS" />
+<meta name="twitter:title" content="Наш сервер в Roblox запущен — Atla Games × SITS" />
 <meta name="twitter:description" content="Официальный запуск сервера Atla Games 29.09.2026. SITS — технологический партнёр." />
 <meta name="twitter:image" content="https://sariyev.com/brand/roblox/og-roblox.jpg" />
 <meta name="theme-color" content="#1a1147" />
@@ -248,6 +248,19 @@ h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48
 .foot a{text-decoration:underline;text-underline-offset:3px}
 
 main,.foot{position:relative;z-index:2}
+.ic{width:1.15em;height:1.15em;fill:currentColor;flex:none;display:inline-block;vertical-align:-.18em}
+.stats span{display:inline-flex;align-items:center;gap:8px}
+.stats .ic{color:var(--cyan);width:18px;height:18px}
+.article .date{display:inline-flex;align-items:center;gap:8px}
+.article .date .ic{width:18px;height:18px}
+.scard .ico .ic{width:28px;height:28px;color:var(--ink)}
+.scard .ico{box-shadow:inset 0 -4px 0 rgba(0,0,0,.18),inset 0 2px 0 rgba(255,255,255,.45)}
+.rt{width:34px;height:34px;border-radius:10px;background:var(--c);display:grid;place-items:center;flex:none;
+  box-shadow:inset 0 -3px 0 rgba(0,0,0,.18),inset 0 2px 0 rgba(255,255,255,.35)}
+.rt .ic{width:19px;height:19px;color:#fff}
+.roles span{padding:8px 16px 8px 8px}
+.sign .lines span{display:inline-flex;align-items:center;gap:8px}
+.sign .lines .ic{width:17px;height:17px;color:var(--yellow)}
 .em{font-style:normal;display:inline-block;min-width:1.3em;margin-right:.25em;text-align:center}
 @media(max-width:640px){
   .status{gap:12px;margin-top:28px}
@@ -257,8 +270,9 @@ main,.foot{position:relative;z-index:2}
   .scard p{font-size:14.5px;margin-top:4px}
   .scard .dot{top:18px;right:16px;font-size:10.5px}
   .roles{gap:8px;margin:22px 0 26px}
-  .roles span{font-size:13px;padding:8px 10px;border-radius:12px;gap:6px;border-width:2.5px;box-shadow:0 3px 0 var(--ink)}
-  .roles span em{font-size:16px}
+  .roles span{font-size:13px;padding:6px 12px 6px 6px;border-radius:12px;gap:8px;border-width:2.5px;box-shadow:0 3px 0 var(--ink)}
+  .rt{width:28px;height:28px;border-radius:8px}.rt .ic{width:16px;height:16px}
+  .scard .ico .ic{width:24px;height:24px}
   .join h2{font-size:26px}
   .join-actions{flex-direction:column}
   .sign{padding:56px 16px 44px}
@@ -276,6 +290,23 @@ main,.foot{position:relative;z-index:2}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M8.3 17.7 2.6 12l5.7-5.7 1.8 1.8L6.2 12l3.9 3.9zm7.4 0-1.8-1.8 3.9-3.9-3.9-3.9 1.8-1.8 5.7 5.7z"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 1.8 21 7v10l-9 5.2L3 17V7zm0 2.6L6.2 7.7 12 11l5.8-3.3zM5 9.4v6.4l6 3.4v-6.4zm8 9.8 6-3.4V9.4l-6 3.4z"/></symbol>
+    <symbol id="i-dice" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6 3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3zm2 3.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm8 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-4 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-4 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm8 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></symbol>
+    <symbol id="i-tilt" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M5.3.4 23.6 5.3 18.7 23.6.4 18.7zm4.9 8.4-1.4 5 5 1.4 1.4-5z"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M10 2.5l1.9 5.6 5.6 1.9-5.6 1.9L10 17.5l-1.9-5.6L2.5 10l5.6-1.9zM18.5 13l1 2.5 2.5 1-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z"/></symbol>
+    <symbol id="i-rocket" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M21.4 2.6c.4 4.6-1.3 8.6-5 11.6l.1 3.9-3.6 3.4-1.4-4.3-4.7-4.7-4.3-1.4L5.9 7.5l3.9.1c3-3.7 7-5.4 11.6-5zM15.5 6.3a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4zM6.2 15.6l2.2 2.2c-.9 1.6-2.8 2.5-5.4 2.6.1-2.6 1-4.5 2.6-5.4z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 1.8 20.5 5v6.3c0 5.3-3.5 9.6-8.5 11-5-1.4-8.5-5.7-8.5-11V5zm4.6 7.3-1.6-1.6-4.3 4.3-2-2L7.1 11.4l3.6 3.6z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M9 11.5a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4zM1.5 20.5c0-4 3.3-7 7.5-7s7.5 3 7.5 7v.5h-15zM16.6 11a3.4 3.4 0 1 0 0-6.8 3.9 3.9 0 0 1 0 6.8zM18 21h4.5v-.6c0-3.1-2.3-5.5-5.4-6.2 1.8 1.6 2.9 3.9 2.9 6.3z"/></symbol>
+    <symbol id="i-pad" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7 5.5h10a5 5 0 0 1 4.9 5.9l-.9 4.9a3 3 0 0 1-5.1 1.5L14.3 16H9.7l-1.6 1.8A3 3 0 0 1 3 16.3l-.9-4.9A5 5 0 0 1 7 5.5zM7 8.5V10H5.5v2H7v1.5h2V12h1.5v-2H9V8.5zm9.8.3a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zm-2.2 2.2a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></symbol>
+    <symbol id="i-flower" viewBox="0 0 24 24"><path d="M12 10.2a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2zm4.8 3.4a3.6 3.6 0 1 1 1.9-6.9 3.6 3.6 0 0 1-1.9 6.9zm-1.8 5.6a3.6 3.6 0 1 1-5.9-4.2 3.6 3.6 0 0 1 5.9 4.2zm-5.9 0a3.6 3.6 0 1 1-4-5.6 3.6 3.6 0 0 1 4 5.6zM5.3 6.7a3.6 3.6 0 1 1 1.9 6.9 3.6 3.6 0 0 1-1.9-6.9z"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7 1.5h2v2h6v-2h2v2h2a2.5 2.5 0 0 1 2.5 2.5v13a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 19V6A2.5 2.5 0 0 1 5 3.5h2zM4.8 9v10a.5.5 0 0 0 .5.5h13.4a.5.5 0 0 0 .5-.5V9zm2.7 2.5h3v3h-3z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 1.5a7.5 7.5 0 0 1 7.5 7.5c0 5.3-7.5 13.5-7.5 13.5S4.5 14.3 4.5 9A7.5 7.5 0 0 1 12 1.5zm0 4.7a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6z"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4.5 4h15A1.5 1.5 0 0 1 21 5.5V16H3V5.5A1.5 1.5 0 0 1 4.5 4zm.8 2.2v7.6h13.4V6.2zM.8 17.5h22.4v.5a2 2 0 0 1-2 2H2.8a2 2 0 0 1-2-2z"/></symbol>
+  </defs>
+</svg>
 
 <header class="top">
   <div class="wrap">
@@ -332,7 +363,7 @@ main,.foot{position:relative;z-index:2}
       <div class="tag">Первая игра на сервере</div>
       <h3>Steal a <span class="y">Chibi</span></h3>
       <p>Укради чиби и унеси его на свою базу — но осторожно! Стражник, который тебя поймает, выбьет чиби из рук.</p>
-      <div class="stats"><span><i class="em">🎮</i>Roblox</span><span><i class="em">👥</i>Мультиплеер</span><span><i class="em">🌸</i>Аниме-стиль</span></div>
+      <div class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-pad"/></svg>Roblox</span><span><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>Мультиплеер</span><span><svg class="ic" aria-hidden="true"><use href="#i-flower"/></svg>Аниме-стиль</span></div>
       <a class="rbtn" href="https://www.roblox.com/games/115656980952933/Steal-a-Chibi" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>Играть сейчас
       </a>
@@ -348,9 +379,9 @@ main,.foot{position:relative;z-index:2}
 <section id="news" style="background:linear-gradient(180deg,transparent,var(--bg-2) 30%,var(--bg-2) 70%,transparent)">
   <div class="wrap">
     <article class="article">
-      <div class="date rv"><i class="em">🎉</i>29.09.2026 · Новости SITS</div>
+      <div class="date rv"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>29.09.2026 · Новости SITS</div>
       <h2 class="rv">Сегодня состоялся запуск нашего сервера в Roblox!</h2>
-      <p class="rv"><b>29 сентября 2026 года</b> — официальный запуск сервера <b>Atla Games</b> 🚀</p>
+      <p class="rv"><b>29 сентября 2026 года</b> — официальный запуск сервера <b>Atla Games</b>.</p>
       <p class="rv">Мы рады объявить о нашем сотрудничестве с Atla Games, где компания <b>SITS — Sariyev IT Solutions</b> выступает в качестве технологического партнёра.</p>
 
       <div class="partners rv">
@@ -360,9 +391,9 @@ main,.foot{position:relative;z-index:2}
       </div>
 
       <div class="status">
-        <div class="scard rv"><span class="dot">Online</span><div class="ico" style="background:var(--lime)">🚀</div><h3>Сервер запущен</h3><p>Игра доступна всем игрокам Roblox прямо сейчас.</p></div>
-        <div class="scard rv"><span class="dot">OK</span><div class="ico" style="background:var(--cyan)">⚙️</div><h3>Системы стабильны</h3><p><i class="em">🔥</i>На старте всё работает отлично — основные системы работают стабильно.</p></div>
-        <div class="scard rv"><span class="dot">Open</span><div class="ico" style="background:var(--yellow)">🤝</div><h3>Ждём вас</h3><p>Готовы встречать игроков и разработчиков.</p></div>
+        <div class="scard rv"><span class="dot">Online</span><div class="ico" style="background:var(--lime)"><svg class="ic" aria-hidden="true"><use href="#i-rocket"/></svg></div><h3>Сервер запущен</h3><p>Игра доступна всем игрокам Roblox прямо сейчас.</p></div>
+        <div class="scard rv"><span class="dot">OK</span><div class="ico" style="background:var(--cyan)"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></div><h3>Системы стабильны</h3><p>На старте всё работает отлично — основные системы работают стабильно.</p></div>
+        <div class="scard rv"><span class="dot">Open</span><div class="ico" style="background:var(--yellow)"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></div><h3>Ждём вас</h3><p>Готовы встречать игроков и разработчиков.</p></div>
       </div>
     </article>
   </div>
@@ -372,15 +403,15 @@ main,.foot{position:relative;z-index:2}
 <section id="join">
   <div class="wrap">
     <div class="join rv">
-      <div class="tag" style="color:#fff"><i class="em">🇰🇿</i>Разработчикам из Казахстана</div>
+      <div class="tag" style="color:#fff">Разработчикам из Казахстана</div>
       <h2 class="stroke">Строим игровую индустрию вместе</h2>
       <p class="sub">Отдельно приглашаем разработчиков из Казахстана — будем рады видеть талантливых специалистов и всех, кто хочет развиваться в игровой индустрии вместе с нами.</p>
       <div class="roles">
-        <span><em>💻</em>Программисты</span>
-        <span><em>🧊</em>3D-художники</span>
-        <span><em>🎲</em>Геймдизайнеры</span>
-        <span><em>🟥</em>Roblox-разработчики</span>
-        <span><em>✨</em>Все, кто хочет расти</span>
+        <span><b class="rt" style="--c:#00b2ff"><svg class="ic" aria-hidden="true"><use href="#i-code"/></svg></b>Программисты</span>
+        <span><b class="rt" style="--c:#8b3dff"><svg class="ic" aria-hidden="true"><use href="#i-cube"/></svg></b>3D-художники</span>
+        <span><b class="rt" style="--c:#ff4d8d"><svg class="ic" aria-hidden="true"><use href="#i-dice"/></svg></b>Геймдизайнеры</span>
+        <span><b class="rt" style="--c:#e23744"><svg class="ic" aria-hidden="true"><use href="#i-tilt"/></svg></b>Roblox-разработчики</span>
+        <span><b class="rt" style="--c:#ffb800"><svg class="ic" aria-hidden="true"><use href="#i-spark"/></svg></b>Все, кто хочет расти</span>
       </div>
       <div class="join-actions">
         <a class="rbtn yellow" href="https://wa.me/77018101397?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B2%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%83%20Atla%20Games%20%C3%97%20SITS%20(Roblox)." target="_blank" rel="noopener">
@@ -396,12 +427,12 @@ main,.foot{position:relative;z-index:2}
 
 <!-- ============ SIGN ============ -->
 <div class="sign wrap">
-  <p class="rv" style="color:var(--muted);max-width:620px;margin:0 auto 28px"><i class="em">🎮</i>Заходите на наш сервер, знакомьтесь, играйте и присоединяйтесь к сообществу! Мы только начинаем — дальше будет ещё больше проектов, возможностей и новых идей. ❤️‍🔥</p>
+  <p class="rv" style="color:var(--muted);max-width:620px;margin:0 auto 28px">Заходите на наш сервер, знакомьтесь, играйте и присоединяйтесь к сообществу! Мы только начинаем — дальше будет ещё больше проектов, возможностей и новых идей.</p>
   <div class="big stroke rv">Atla Games <span class="y">×</span> SITS</div>
   <div class="lines rv">
-    <span><i class="em">🇰🇿</i>Made in Kazakhstan</span>
-    <span><i class="em">💻</i>SITS — Sariyev IT Solutions</span>
-    <span><i class="em">🚀</i>Technology Partner</span>
+    <span><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Made in Kazakhstan</span>
+    <span><svg class="ic" aria-hidden="true"><use href="#i-laptop"/></svg>SITS — Sariyev IT Solutions</span>
+    <span><svg class="ic" aria-hidden="true"><use href="#i-rocket"/></svg>Technology Partner</span>
   </div>
 </div>
 </main>

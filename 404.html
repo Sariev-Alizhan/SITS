@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>404 — SITS · Sariyev IT Solutions</title>
 <meta name="robots" content="noindex" />
-<link rel="icon" type="image/png" href="/brand/favicon.png?v=10" />
-<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png?v=10" />
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg?v=11" />
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png?v=11" />
+<link rel="apple-touch-icon" href="/brand/apple-touch-icon-v2.png?v=11" />
 <meta name="theme-color" content="#0c0a0b" />
 <link rel="stylesheet" href="/fonts/fonts.css" />
 <style>
@@ -34,9 +35,11 @@ html[data-theme="light"]{
 body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;
   display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;
   -webkit-font-smoothing:antialiased;text-align:center}
-.logo{position:fixed;top:24px;left:32px;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-logo);font-weight:700;font-size:22px;letter-spacing:.04em;color:var(--text)}
-.logo b{color:var(--red)}
-.logo-mark{height:.92em;width:auto;display:block;flex-shrink:0}
+.logo{position:fixed;top:24px;left:32px;display:inline-flex;align-items:center;gap:11px;line-height:1;color:var(--text);text-decoration:none;white-space:nowrap}
+.logo-mark{height:34px;width:auto;display:block;flex-shrink:0;fill:var(--red)}
+.logo-txt{display:flex;flex-direction:column;gap:4px}
+.logo-txt b{font-family:'Unbounded','Arial Black',system-ui,sans-serif;font-weight:700;font-size:18px;letter-spacing:.05em;color:var(--text)}
+.logo-txt small{font-family:'Manrope',system-ui,sans-serif;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .fx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .fx::before{content:"";position:absolute;width:60vw;height:60vw;max-width:700px;max-height:700px;
   top:-18%;right:-10%;border-radius:50%;filter:blur(90px);
@@ -67,7 +70,7 @@ p{color:var(--muted);font-size:16px;line-height:1.6;margin-bottom:36px}
 </style>
 </head>
 <body>
-<a class="logo" aria-label="SITS" href="/"><img src="/brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" />IT<img src="/brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" /></a>
+<a class="logo" aria-label="SITS — Sariyev IT Solutions" href="/"><svg class="logo-mark" viewBox="-6 -6 352 428" aria-hidden="true"><path d="M170 0 333 113 290 180 252 155 270 125 170 57 42 144 215 270 178 297 0 171 1 115Z M170 416 7 303 50 236 88 261 70 291 170 359 298 272 125 146 162 119 340 245 339 301Z"/></svg><span class="logo-txt"><b>SITS</b><small>Sariyev IT Solutions</small></span></a>
 <div class="fx" aria-hidden="true"></div>
 
 <div class="wrap">

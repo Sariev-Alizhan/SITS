@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Автоматизация бизнеса — SITS · Fibonacci Control</title>
 <meta name="description" content="Автоматизация бизнеса под ключ от SITS: CRM Fibonacci Control, ИИ-агенты, WhatsApp Business, 1С, Kaspi и ЭСФ в одной системе. Внедрение от 800 000 ₸, старт с диагностики за 7 дней." />
-<link rel="icon" type="image/png" href="brand/favicon.png?v=10" />
-<link rel="apple-touch-icon" href="brand/apple-touch-icon.png?v=10" />
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg?v=11" />
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png?v=11" />
+<link rel="apple-touch-icon" href="/brand/apple-touch-icon-v2.png?v=11" />
 <link rel="manifest" href="/manifest.webmanifest" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -620,13 +621,21 @@ main, footer{position:relative;z-index:1}
   box-shadow:inset 0 1px 0 var(--glass-hi),0 16px 40px -26px rgba(0,0,0,.5);
   transition:box-shadow .4s var(--ease),background .4s var(--ease)}
 .nav.scrolled .wrap{box-shadow:inset 0 1px 0 var(--glass-hi),0 22px 50px -22px rgba(0,0,0,.55)}
-.logo{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-logo);font-weight:700;font-size:23px;letter-spacing:.04em;line-height:1;color:var(--text)}
-.logo b{color:var(--red);font-weight:700}
-.logo-mark{height:.92em;width:auto;display:block;flex-shrink:0}
+.logo{display:inline-flex;align-items:center;gap:11px;line-height:1;color:var(--text);text-decoration:none;white-space:nowrap}
+.logo-mark{height:34px;width:auto;display:block;flex-shrink:0;fill:var(--red)}
+.logo-txt{display:flex;flex-direction:column;gap:4px}
+.logo-txt b{font-family:'Unbounded','Arial Black',system-ui,sans-serif;font-weight:700;font-size:18px;letter-spacing:.05em;color:var(--text)}
+.logo-txt small{font-family:'Manrope',system-ui,sans-serif;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .nav-links{display:flex;align-items:center;gap:22px}.cmdk-hint{display:none!important}
 .nav-links a{font-size:14px;font-weight:500;color:var(--muted);transition:color .25s;white-space:nowrap}
 .nav-links a:hover{color:var(--text)}
 .nav-actions{display:flex;align-items:center;gap:12px}
+/* Шапка с логотипом «знак + SITS + Sariyev IT Solutions»: шире капсула, плотнее меню */
+.nav .wrap{max-width:min(1300px,calc(100vw - 32px))}
+.nav .logo{margin-right:20px}
+@media(max-width:1360px){.nav-links{gap:16px}.nav-links a{font-size:13.5px}.nav-actions{gap:8px}}
+@media(min-width:941px) and (max-width:1200px){.nav-links a[data-i18n="nav.process"],.nav-links a[data-i18n="nav.about"]{display:none}}
+@media(min-width:941px) and (max-width:1040px){.nav-links a[data-i18n="nav.auto"]{display:none}}
 /* ⌘K discovery hint — отображается только на десктопе с pointer:fine */
 .cmdk-hint{display:none;align-items:center;gap:8px;height:40px;padding:0 11px 0 13px;
   border:1px solid var(--glass-line);border-radius:100px;background:var(--glass);color:var(--muted);
@@ -1147,7 +1156,10 @@ form .btn-primary{width:100%;justify-content:center;margin-top:6px}
 footer{border-top:1px solid var(--line);padding:64px 0 38px}
 .foot-top{display:flex;justify-content:space-between;gap:50px;flex-wrap:wrap;align-items:flex-start;margin-bottom:56px}
 .foot-brand{max-width:300px}
-.foot-brand .logo{font-size:27px;margin-bottom:14px}
+.foot-brand .logo{margin-bottom:16px;gap:14px}
+.foot-brand .logo-mark{height:48px}
+.foot-brand .logo-txt b{font-size:25px}
+.foot-brand .logo-txt small{font-size:11.5px}
 .foot-brand p{color:var(--muted);font-size:14.5px;line-height:1.6}
 .foot-cols{display:flex;gap:64px;flex-wrap:wrap}
 .foot-col h3{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:16px;font-weight:600}
@@ -1508,7 +1520,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
   <div class="wrap">
-    <a href="/" class="logo" aria-label="SITS"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" />IT<img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" /></a>
+    <a href="/" class="logo" aria-label="SITS — Sariyev IT Solutions"><svg class="logo-mark" viewBox="-6 -6 352 428" aria-hidden="true"><path d="M170 0 333 113 290 180 252 155 270 125 170 57 42 144 215 270 178 297 0 171 1 115Z M170 416 7 303 50 236 88 261 70 291 170 359 298 272 125 146 162 119 340 245 339 301Z"/></svg><span class="logo-txt"><b>SITS</b><small>Sariyev IT Solutions</small></span></a>
     <div class="nav-links">
       <a href="/#services" data-i18n="nav.services">Услуги</a>
       <a href="/#process" data-i18n="nav.process">Как работаем</a>
@@ -1683,7 +1695,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
   <div class="wrap">
     <div class="foot-top">
       <div class="foot-brand">
-        <div class="logo" aria-label="SITS"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" />IT<img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240" /></div>
+        <div class="logo" aria-label="SITS — Sariyev IT Solutions"><svg class="logo-mark" viewBox="-6 -6 352 428" aria-hidden="true"><path d="M170 0 333 113 290 180 252 155 270 125 170 57 42 144 215 270 178 297 0 171 1 115Z M170 416 7 303 50 236 88 261 70 291 170 359 298 272 125 146 162 119 340 245 339 301Z"/></svg><span class="logo-txt"><b>SITS</b><small>Sariyev IT Solutions</small></span></div>
         <p data-i18n="footer.tagline">IT-студия полного цикла. Превращаем идеи в цифровые продукты.</p>
       </div>
       <div class="foot-cols">

@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Наш сервер в Roblox запущен — Atla Games × SITS</title>
 <meta name="description" content="29 сентября 2026 года — официальный запуск сервера Atla Games в Roblox. SITS — Sariyev IT Solutions выступает технологическим партнёром. Заходите в Steal a Chibi!" />
-<link rel="icon" type="image/png" href="brand/favicon.png?v=10" />
-<link rel="apple-touch-icon" href="brand/apple-touch-icon.png?v=10" />
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg?v=11" />
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png?v=11" />
+<link rel="apple-touch-icon" href="/brand/apple-touch-icon-v2.png?v=11" />
 <link rel="canonical" href="https://sariyev.com/roblox" />
 
 <meta property="og:type" content="article" />
@@ -98,10 +99,13 @@ img{max-width:100%;height:auto;display:block}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .back{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:14px;color:var(--muted);transition:color .2s}
 .back:hover{color:#fff}
-.back img{width:18px;height:auto}
-.back b{font-family:'PT Serif',Georgia,serif;font-size:20px;letter-spacing:.04em;color:#fff}
+.back .lm{height:32px;width:auto;fill:#e23744;flex:none}
+.back .lt{display:flex;flex-direction:column;gap:4px;line-height:1}
+.back .lt b{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:.05em;color:#fff}
+.back .lt small{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.back .nw{margin-left:6px;padding:5px 10px;border-radius:100px;border:1px solid var(--line);font-size:12px;color:var(--muted)}
 .back svg{width:18px;height:18px}
-@media(max-width:640px){.top .rbtn.sm{width:auto}.back span{display:none}}
+@media(max-width:640px){.top .rbtn.sm{width:auto}.back .nw{display:none}}
 
 /* ---------- Hero ---------- */
 .hero{position:relative;overflow:hidden;padding:40px 0 34px;
@@ -313,7 +317,7 @@ main,.foot{position:relative;z-index:2}
   <div class="wrap">
     <a href="/" class="back" aria-label="На главную SITS">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-      <img src="brand/sits-mark-red.png" alt="" width="196" height="240" /><b>SITS</b><span>· Новости</span>
+      <svg class="lm" viewBox="-6 -6 352 428" aria-hidden="true"><path d="M170 0 333 113 290 180 252 155 270 125 170 57 42 144 215 270 178 297 0 171 1 115Z M170 416 7 303 50 236 88 261 70 291 170 359 298 272 125 146 162 119 340 245 339 301Z"/></svg><span class="lt"><b>SITS</b><small>Sariyev IT Solutions</small></span><span class="nw">Новости</span>
     </a>
     <a class="rbtn sm" href="https://www.roblox.com/games/115656980952933/Steal-a-Chibi" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>Играть

@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SITS — CRM · Заявки</title>
 <meta name="robots" content="noindex">
-<link rel="icon" type="image/png" href="brand/favicon.png?v=10">
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg?v=11" />
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png?v=11" />
 <link rel="stylesheet" href="/fonts/fonts.css">
 <style>
   :root{
@@ -18,11 +19,11 @@
   body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
   .wrap{max-width:1180px;margin:0 auto;padding:32px 22px;}
   header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px;}
-  .logo{display:flex;flex-direction:row;align-items:center;gap:11px;line-height:1;}
-  .logo-mark{height:2.1rem;width:auto;display:block;flex-shrink:0;}
-  .logo-text{display:flex;flex-direction:column;line-height:1;}
-  .logo-word{font-family:'PT Serif',serif;font-weight:700;font-size:1.5rem;color:var(--logo);letter-spacing:.07em;}
-  .logo-tag{font-family:'PT Serif',serif;font-size:.56rem;color:var(--logo);letter-spacing:.02em;opacity:.9;}
+  .logo{display:flex;align-items:center;gap:12px;line-height:1;}
+  .logo-mark{height:2.2rem;width:auto;display:block;flex-shrink:0;fill:var(--logo);}
+  .logo-txt{display:flex;flex-direction:column;gap:5px;}
+  .logo-txt b{font-family:'Unbounded','Arial Black',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:.05em;color:var(--text);}
+  .logo-txt small{font-family:'Manrope',system-ui,sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);}
   h1{font-family:'Unbounded';font-size:1.1rem;font-weight:600;}
   .stat{color:var(--dim);font-size:.9rem;}
   .login{max-width:360px;margin:14vh auto;background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:34px;}
@@ -70,7 +71,7 @@
 
 <!-- ЛОГИН -->
 <div class="login" id="loginBox">
-  <div class="logo" aria-label="SITS" style="margin-bottom:18px;"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240"><div class="logo-text"><span class="logo-word">ITS</span><span class="logo-tag">Sariyev IT Solutions</span></div></div>
+  <div class="logo" aria-label="SITS" style="margin-bottom:18px;"><svg class="logo-mark" viewBox="-6 -6 352 428" aria-hidden="true"><path d="M170 0 333 113 290 180 252 155 270 125 170 57 42 144 215 270 178 297 0 171 1 115Z M170 416 7 303 50 236 88 261 70 291 170 359 298 272 125 146 162 119 340 245 339 301Z"/></svg><span class="logo-txt"><b>SITS</b><small>Sariyev IT Solutions</small></span></div>
   <h2>CRM · вход</h2>
   <p>Введите пароль администратора, чтобы посмотреть заявки.</p>
   <input type="password" id="pass" placeholder="Пароль" autocomplete="current-password">
@@ -81,7 +82,7 @@
 <!-- ПАНЕЛЬ -->
 <div class="wrap hidden" id="panel">
   <header>
-    <div class="logo" aria-label="SITS"><img src="brand/sits-mark-red.png" alt="" class="logo-mark" width="196" height="240"><div class="logo-text"><span class="logo-word">ITS</span><span class="logo-tag">Sariyev IT Solutions · CRM</span></div></div>
+    <div class="logo" aria-label="SITS"><svg class="logo-mark" viewBox="-6 -6 352 428" aria-hidden="true"><path d="M170 0 333 113 290 180 252 155 270 125 170 57 42 144 215 270 178 297 0 171 1 115Z M170 416 7 303 50 236 88 261 70 291 170 359 298 272 125 146 162 119 340 245 339 301Z"/></svg><span class="logo-txt"><b>SITS</b><small>Sariyev IT Solutions · CRM</small></span></div>
     <div class="stat" id="stat"></div>
   </header>
   <div class="controls">

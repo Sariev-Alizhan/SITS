@@ -4,7 +4,7 @@
    Versioned cache name; old caches purged on activate.
    Bypass: ?nosw=1 query param tells SW to skip caching for that request. */
 
-const CACHE = 'sits-v130';
+const CACHE = 'sits-v131';
 
 /* Файлы, которые точно нужны для офлайн-первой загрузки */
 const PRECACHE = [
@@ -12,8 +12,8 @@ const PRECACHE = [
   '/en',
   '/kz',
   '/manifest.webmanifest',
-  '/brand/favicon.png',
-  '/brand/apple-touch-icon.png',
+  '/brand/favicon.svg',
+  '/brand/apple-touch-icon-v2.png',
 ];
 
 self.addEventListener('install', (event) => {
@@ -100,8 +100,8 @@ self.addEventListener('push', (e) => {
   const title = d.title || 'Новое сообщение';
   const opts = {
     body: d.body || '',
-    icon: '/brand/apple-touch-icon.png',
-    badge: '/brand/favicon.png',
+    icon: '/brand/apple-touch-icon-v2.png',
+    badge: '/brand/favicon.svg',
     tag: d.tag || 'wa-msg',
     data: { url: d.url || '/crm' },
     vibrate: [90, 40, 90],

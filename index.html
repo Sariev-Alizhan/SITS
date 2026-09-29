@@ -633,16 +633,16 @@ main, footer{position:relative;z-index:1}
 .arm-l{left:-90px;top:2%;width:min(30vw,360px);opacity:.5;animation:armInL 1.4s var(--ease) .35s both}
 .arm-l img{width:100%}
 .arm-l .deco3d-in{animation:floatY 12s ease-in-out infinite .4s}
-@keyframes armInR{from{opacity:0;transform:translateX(80px) rotate(6deg)}to{opacity:1;transform:none}}
+@keyframes armInR{from{opacity:0;transform:translateX(80px) rotate(6deg)}to{opacity:var(--arm-op,1);transform:none}}
 @keyframes armInL{from{opacity:0;transform:translateX(-70px) rotate(-6deg)}to{opacity:.5;transform:none}}
 /* Планшеты/телефоны на мобиле — мельче и слабее, чтобы не мешать тексту */
 @media(max-width:900px){
-  .arm-r{width:min(64vw,320px);right:-30px;bottom:24px;opacity:.7}
+  .arm-r{width:min(64vw,320px);right:-30px;bottom:24px;--arm-op:.55}
   .arm-l{display:none}
   .deco3d img{width:var(--wm,180px)}
 }
 @media(max-width:560px){
-  .arm-r{opacity:.5;width:min(70vw,280px)}
+  .arm-r{--arm-op:.32;width:min(62vw,250px);right:-56px;bottom:0}
   .deco3d{--op:.28!important}
   .deco3d img{width:var(--wm,140px)}
 }
@@ -779,7 +779,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .hero-title .rise{display:block;transform:translateY(108%);opacity:0;animation:rise 1s var(--ease) forwards}
 @keyframes rise{to{transform:translateY(0);opacity:1}}
 .dot{color:var(--red)}
-.hero-lower{display:flex;justify-content:space-between;align-items:flex-end;gap:48px;margin-top:36px;flex-wrap:wrap;
+.hero-lower{display:flex;flex-direction:column;align-items:flex-start;gap:26px;margin-top:36px;flex-wrap:wrap;
   }
 @keyframes fade{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 .hero-sub{color:var(--muted);font-size:clamp(17px,1.4vw,19px);line-height:1.55;max-width:440px}
@@ -880,13 +880,8 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .p-row h3{font-family:var(--font-display);font-weight:500;font-size:21px;letter-spacing:-.01em;line-height:1.2}
 .p-row p{color:var(--muted);font-size:16px;line-height:1.6;max-width:520px}
 
-/* Lazy-rendering для секций ниже hero (browser skip paint когда офф-экран).
-   contain-intrinsic-size резервирует место → нет CLS. Не трогаем hero и services
-   (выше fold или сразу под ним → пользователь видит на первом paint). */
-#process, #approach, #portfolio, #pricing, #about, #contact, footer{
-  content-visibility:auto;
-  contain-intrinsic-size:auto 800px;
-}
+/* content-visibility:auto убран: на телефоне оценка высоты секций промахивалась на тысячи px,
+   и переходы по меню (#portfolio, #contact…) приземлялись не на тот раздел. */
 
 /* ============ APPROACH ============ */
 .approach{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px}
@@ -2219,7 +2214,7 @@ const I18N = {
         '01':'Сайт-визитка', '02':'Игровая студия', '03':'E-commerce / fashion',
         '04':'E-commerce / премиум', '05':'B2B-платформа', '06':'Dev-инструмент / SaaS',
         '07':'Маркетплейс', '08':'B2B-маркетплейс', '09':'Каталог / городской сервис',
-        '10':'Премиум-шоурум', '11':'Меншікті өнім · CRM', '12':'Claude негізіндегі AI', '11':'Собственный продукт · CRM', '12':'AI на базе Claude',
+        '10':'Премиум-шоурум', '11':'Собственный продукт · CRM', '12':'AI на базе Claude',
         '13':'SaaS · CRM + техподдержка',
       },
       desc_: {
@@ -2753,7 +2748,7 @@ const I18N = {
         '01':'Визитка-сайт', '02':'Ойын студиясы', '03':'E-commerce / fashion',
         '04':'E-commerce / премиум', '05':'B2B-платформа', '06':'Dev-құрал / SaaS',
         '07':'Маркетплейс', '08':'B2B-маркетплейс', '09':'Каталог / қалалық сервис',
-        '10':'Премиум-шоурум',
+        '10':'Премиум-шоурум', '11':'Меншікті өнім · CRM', '12':'Claude негізіндегі AI',
         '13':'SaaS · CRM + техқолдау',
       },
       desc_: {
@@ -3113,6 +3108,8 @@ document.querySelectorAll('#langSwitch button, #mmLang button').forEach(b => {
   b.addEventListener('click', () => {
     const lang = b.dataset.lang;
     if (!LANGS.includes(lang)) return;
+    // выбор языка в мобильном меню — закрываем меню, чтобы оно не оставалось поверх страницы
+    if (b.closest('#mmLang') && mm.classList.contains('open')) toggleMenu(false);
     const path = LANG_PATH[lang] || '/';
     if (location.pathname !== path) history.pushState({ lang }, '', path);
     applyLang(lang); // меняет тексты, обновляет localStorage и <html lang>
@@ -3642,6 +3639,7 @@ window.onSitsConsentAll(function(){
       if (panel.classList.contains('open')) return;
       document.getElementById('aiwTeaserTxt').textContent = L[lang()].teaser;
       teaser.classList.add('show');
+      setTimeout(function(){ teaser.classList.remove('show'); }, 9000); // не висим над контентом постоянно
     }, 10000);
   } catch (e) {}
 })();
@@ -3671,6 +3669,8 @@ window.onSitsConsentAll(function(){var s=document.createElement('script');s.defe
 <style>
   .scc{position:fixed;left:16px;right:16px;bottom:16px;z-index:9000;display:none;font-family:var(--font-body,'Manrope',system-ui,sans-serif)}
   .scc.show .scc-card{transform:none;opacity:1}
+  .scc{pointer-events:none}.scc.show .scc-card{pointer-events:auto}
+  @media(max-width:640px){body:has(.scc.show) .aiw-fab,body:has(.scc.show) .aiw-teaser{opacity:0;visibility:hidden;pointer-events:none}}
   .scc-card{margin:0 auto;max-width:440px;background:var(--surface,#141112);color:var(--text,#f4f1f1);border:1px solid var(--line-2,rgba(255,255,255,.14));border-radius:22px;padding:20px 20px 16px;box-shadow:0 26px 70px -30px rgba(0,0,0,.8);transform:translateY(22px);opacity:0;transition:transform .45s cubic-bezier(.22,.61,.36,1),opacity .45s}
   .scc-row{display:flex;gap:13px;align-items:flex-start}
   .scc-ic{flex:none;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--red-soft,rgba(226,55,68,.14));color:var(--red,#e23744)}
@@ -3713,13 +3713,15 @@ window.onSitsConsentAll(function(){var s=document.createElement('script');s.defe
   function decide(v){
     try{localStorage.setItem(KEY,v);localStorage.setItem(KEY+'-ts',String(Date.now()));}catch(e){}
     window.sitsConsent=v;
+    clearTimeout(showT);
     el.classList.remove('show');
     setTimeout(function(){el.style.display='none';},450);
     if(v==='all'){ (window.__sccQ||[]).forEach(function(fn){try{fn();}catch(e){}}); window.__sccQ=[]; }
     try{window.dispatchEvent(new CustomEvent('sits-consent',{detail:v}));}catch(e){}
   }
   el.querySelectorAll('[data-cc]').forEach(function(b){b.addEventListener('click',function(){decide(b.getAttribute('data-cc'));});});
-  if(!stored){ el.style.display='block'; setTimeout(function(){el.classList.add('show');},1400); }
+  var showT=0;
+  if(!stored){ el.style.display='block'; showT=setTimeout(function(){el.classList.add('show');},1400); }
 })();
 </script>
 <!-- ============ /SITS · Cookie consent ============ -->

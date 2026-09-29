@@ -28,8 +28,8 @@
 <meta property="og:image:alt" content="SITS — Sariyev IT Solutions" />
 <meta property="og:locale" content="ru_RU" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Прайс SITS — пакеты, медиа-продакшн и AI-видео" />
-<meta name="twitter:description" content="IT-студия полного цикла: сайты, мобильные приложения, игры, бизнес-автоматизация, AI-контент." />
+<meta name="twitter:title" content="Автоматизация бизнеса — SITS · Fibonacci Control" />
+<meta name="twitter:description" content="CRM Fibonacci Control с ИИ-агентами: заявки, КП, счета, WhatsApp Business, 1С и Kaspi в одной системе. Внедрение от 800 000 ₸." />
 <meta name="twitter:image" content="https://sariyev.com/brand/og-image.png?v=12" />
 <meta name="twitter:image:alt" content="SITS — Sariyev IT Solutions" />
 <meta name="author" content="Alizhan Sariyev (Сариев Алижан Сабитулы)" />
@@ -815,13 +815,8 @@ html[data-theme="light"] .deco3d img{filter:drop-shadow(0 16px 30px rgba(20,12,1
 .p-row h3{font-family:var(--font-display);font-weight:500;font-size:21px;letter-spacing:-.01em;line-height:1.2}
 .p-row p{color:var(--muted);font-size:16px;line-height:1.6;max-width:520px}
 
-/* Lazy-rendering для секций ниже hero (browser skip paint когда офф-экран).
-   contain-intrinsic-size резервирует место → нет CLS. Не трогаем hero и services
-   (выше fold или сразу под ним → пользователь видит на первом paint). */
-#process, #approach, #portfolio, #pricing, #about, #contact, footer{
-  content-visibility:auto;
-  contain-intrinsic-size:auto 800px;
-}
+/* content-visibility:auto убран: на телефоне оценка высоты секций промахивалась на тысячи px,
+   и переходы по меню (#portfolio, #contact…) приземлялись не на тот раздел. */
 
 /* ============ APPROACH ============ */
 .approach{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px}
@@ -1385,7 +1380,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 .auto .sec-tag{color:var(--gold-lit);background:var(--gold-soft);border:1px solid rgba(197,138,43,.32);padding:7px 14px;border-radius:999px}
 .auto #kak{padding-top:calc(var(--nav-h) + 46px)}
 .auto .sec-tag i{background:var(--gold)}
-.auto h2.big{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,4.4vw,50px);line-height:1.05;letter-spacing:-.03em;max-width:18ch}
+.auto h2.big,.auto h1.big{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,4.4vw,50px);line-height:1.05;letter-spacing:-.03em;max-width:18ch}
 .auto .subt{color:var(--muted);font-size:18px;line-height:1.6;max-width:620px;margin-top:16px}
 /* HERO */
 .a-hero{padding-top:150px;padding-bottom:70px;position:relative;overflow:hidden}
@@ -1578,7 +1573,7 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
   <div class="sec-deco" aria-hidden="true"><div class="deco3d d-right" style="--w:340px;--wm:180px;--op:.5;--par:70;--rot:-6deg;--dur:9s"><div class="deco3d-in"><img src="/brand/3d/robot-3d.webp" alt="" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="left"><div class="sec-tag"><i></i><span data-i18n="a.kakTag">Как это работает</span></div><h2 class="big" data-i18n="a.kakH">Система, собранная под ваш бизнес</h2></div>
+      <div class="left"><div class="sec-tag"><i></i><span data-i18n="a.kakTag">Как это работает</span></div><h1 class="big" data-i18n="a.kakH">Система, собранная под ваш бизнес</h1></div>
       <p class="desc" data-i18n="a.kakDesc">Не «коробка», а рабочий процесс именно вашей компании. ИИ учится на реальных действиях сотрудников и постепенно берёт рутину на себя.</p>
     </div>
     <div class="sys3 reveal">
@@ -2702,6 +2697,8 @@ document.querySelectorAll('#langSwitch button, #mmLang button').forEach(b => {
   b.addEventListener('click', () => {
     const lang = b.dataset.lang;
     if (!LANGS.includes(lang)) return;
+    // выбор языка в мобильном меню — закрываем меню, чтобы оно не оставалось поверх страницы
+    if (b.closest('#mmLang') && mm.classList.contains('open')) toggleMenu(false);
     applyLang(lang); // на /price язык переключается на месте, без смены URL
   });
 });
@@ -3169,6 +3166,7 @@ window.onSitsConsentAll(function(){
       if (panel.classList.contains('open')) return;
       document.getElementById('aiwTeaserTxt').textContent = L[lang()].teaser;
       teaser.classList.add('show');
+      setTimeout(function(){ teaser.classList.remove('show'); }, 9000); // не висим над контентом постоянно
     }, 10000);
   } catch (e) {}
 })();
@@ -3198,6 +3196,8 @@ window.onSitsConsentAll(function(){var s=document.createElement('script');s.defe
 <style>
   .scc{position:fixed;left:16px;right:16px;bottom:16px;z-index:9000;display:none;font-family:var(--font-body,'Manrope',system-ui,sans-serif)}
   .scc.show .scc-card{transform:none;opacity:1}
+  .scc{pointer-events:none}.scc.show .scc-card{pointer-events:auto}
+  @media(max-width:640px){body:has(.scc.show) .aiw-fab,body:has(.scc.show) .aiw-teaser{opacity:0;visibility:hidden;pointer-events:none}}
   .scc-card{margin:0 auto;max-width:440px;background:var(--surface,#141112);color:var(--text,#f4f1f1);border:1px solid var(--line-2,rgba(255,255,255,.14));border-radius:22px;padding:20px 20px 16px;box-shadow:0 26px 70px -30px rgba(0,0,0,.8);transform:translateY(22px);opacity:0;transition:transform .45s cubic-bezier(.22,.61,.36,1),opacity .45s}
   .scc-row{display:flex;gap:13px;align-items:flex-start}
   .scc-ic{flex:none;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--red-soft,rgba(226,55,68,.14));color:var(--red,#e23744)}
@@ -3240,13 +3240,15 @@ window.onSitsConsentAll(function(){var s=document.createElement('script');s.defe
   function decide(v){
     try{localStorage.setItem(KEY,v);localStorage.setItem(KEY+'-ts',String(Date.now()));}catch(e){}
     window.sitsConsent=v;
+    clearTimeout(showT);
     el.classList.remove('show');
     setTimeout(function(){el.style.display='none';},450);
     if(v==='all'){ (window.__sccQ||[]).forEach(function(fn){try{fn();}catch(e){}}); window.__sccQ=[]; }
     try{window.dispatchEvent(new CustomEvent('sits-consent',{detail:v}));}catch(e){}
   }
   el.querySelectorAll('[data-cc]').forEach(function(b){b.addEventListener('click',function(){decide(b.getAttribute('data-cc'));});});
-  if(!stored){ el.style.display='block'; setTimeout(function(){el.classList.add('show');},1400); }
+  var showT=0;
+  if(!stored){ el.style.display='block'; showT=setTimeout(function(){el.classList.add('show');},1400); }
 })();
 </script>
 <!-- ============ /SITS · Cookie consent ============ -->

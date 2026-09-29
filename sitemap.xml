@@ -32,6 +32,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sariyev.com/" />
   </url>
   <url>
+    <loc>https://sariyev.com/avtomatizatsiya</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://sariyev.com/price</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>

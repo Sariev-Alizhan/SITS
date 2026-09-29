@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Логотип — варианты · SITS</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/png" href="brand/favicon.png?v=10" />
+<link rel="stylesheet" href="/fonts/fonts.css" />
+<style>
+:root{--font-display:'Unbounded','Arial Black',system-ui,sans-serif;--font-body:'Manrope',system-ui,sans-serif;--font-logo:'PT Serif',Georgia,serif;--red:#e23744}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0c0a0b;color:#f4f1f1;font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 32px 80px}
+@media(max-width:640px){.wrap{padding:24px 16px 60px}}
+.kick{font-family:var(--font-display);font-weight:700;color:var(--red);font-size:13px;letter-spacing:.1em}
+h1{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,4vw,42px);letter-spacing:-.02em;line-height:1.1;margin-top:6px}
+.lead{color:#a39d9e;margin-top:12px;max-width:640px;line-height:1.6}
+.v{margin-top:36px;padding:24px;border:1px solid rgba(255,255,255,.1);border-radius:28px;background:#141112}
+@media(max-width:640px){.v{padding:16px;border-radius:22px;margin-top:24px}}
+.vn{font-family:var(--font-display);font-weight:700;color:var(--red);font-size:13px;letter-spacing:.1em}
+.vt{font-family:var(--font-display);font-weight:600;font-size:21px;margin-top:4px}
+.vd{color:#a39d9e;font-size:15px;margin-top:6px;max-width:640px;line-height:1.55}
+.demo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+@media(max-width:860px){.demo{grid-template-columns:1fr}}
+.sc{border-radius:20px;padding:26px 18px;display:flex;flex-direction:column;gap:18px;overflow:hidden}
+.sc.light{background:linear-gradient(135deg,#f6f3f3,#f3e6e7);--text:#171314;--muted:#6a6364;--pill:rgba(255,255,255,.75);--pline:rgba(20,12,13,.06)}
+.sc.dark{background:radial-gradient(120% 120% at 80% 0%,#2a1215,#0c0a0b 60%);--text:#f4f1f1;--muted:#a39d9e;--pill:rgba(255,255,255,.05);--pline:rgba(255,255,255,.11)}
+.lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--pill);border:1px solid var(--pline);border-radius:100px;
+  padding:12px 12px 12px 24px;box-shadow:0 14px 40px -24px rgba(0,0,0,.4);color:var(--text)}
+.nav .links{display:flex;gap:18px;font-size:13px;color:var(--muted)}
+.nav .cta{background:#b31d22;color:#fff;font-weight:600;font-size:13px;padding:10px 16px;border-radius:100px;white-space:nowrap}
+.sc.dark .nav .cta{background:#e23744}
+.nav.mob{max-width:360px;padding:10px 10px 10px 18px}
+.nav.mob .bg{width:38px;height:38px;border-radius:50%;border:1px solid var(--pline);display:grid;place-items:center}
+.nav.mob .bg i{display:block;width:16px;height:1.5px;background:var(--text);box-shadow:0 5px 0 var(--text),0 -5px 0 var(--text)}
+.nav .links span:nth-child(n+3){display:none}
+@media(max-width:1100px){.nav .links{display:none}}
+.big{display:flex;align-items:center;gap:16px;color:var(--text);padding:8px 4px}
+.big .lg{font-size:40px}
+.fav{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex:none}
+
+/* ============ ЗНАК ============ */
+.lg{display:inline-flex;align-items:center;line-height:1;color:var(--text);white-space:nowrap}
+.lg svg.m{display:block;flex:none;fill:#e23744}
+.sc.light .lg svg.m{fill:#c8232d}
+
+/* 1 · Классика+ : как сейчас, но знаки по высоте заглавных и ровные отступы */
+.l1{font-family:var(--font-logo);font-weight:700;font-size:25px;letter-spacing:.02em;gap:.1em}
+.l1 svg.m{height:.74em;transform:translateY(-.02em)}
+
+/* 2 · Геометрия : тот же знак-IT-знак, но шрифтом заголовков сайта (Unbounded) */
+.l2{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:.01em;gap:.12em}
+.l2 svg.m{height:.8em}
+
+/* 3 · SITS : знак + слово */
+.l3{font-family:var(--font-display);font-weight:700;font-size:21px;letter-spacing:.04em;gap:.42em}
+.l3 svg.m{height:1.15em}
+
+/* 4 · Полное имя : знак + SITS + подпись */
+.l4{gap:12px}
+.l4 svg.m{height:34px}
+.l4 .t{display:flex;flex-direction:column;gap:3px}
+.l4 .t b{font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:.05em}
+.l4 .t small{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.nav.mob .l4 small,.big .l4 small{display:block}
+.big .l4 svg.m{height:56px}.big .l4 .t b{font-size:30px}.big .l4 .t small{font-size:13px}
+
+/* 5 · Значок : знак в красной плитке + SITS */
+.l5{gap:11px;font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:.05em}
+.l5 .tile{width:1.85em;height:1.85em;border-radius:.5em;display:grid;place-items:center;flex:none;
+  background:linear-gradient(160deg,#ff5a67,#c8232d);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 8px 18px -8px rgba(226,55,68,.7)}
+.l5 .tile svg.m{height:1.1em;fill:#fff}
+
+/* 6 · Sariyev IT : знак + фамилия бренда засечками + красное IT */
+.l6{gap:.42em;font-family:var(--font-logo);font-weight:700;font-size:23px;letter-spacing:.01em}
+.l6 svg.m{height:1.08em}
+.l6 em{font-style:normal;color:#e23744;margin-left:.22em}
+.sc.light .l6 em{color:#c8232d}
+
+/* 7 · Разделитель : знак | SITS + IT STUDIO */
+.l7{gap:14px}
+.l7 svg.m{height:30px}
+.l7 .sep{width:1px;height:28px;background:currentColor;opacity:.2}
+.l7 .t{display:flex;flex-direction:column;gap:4px}
+.l7 .t b{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:.2em;line-height:1}
+.l7 .t small{font-family:var(--font-display);font-weight:500;font-size:8.5px;letter-spacing:.42em;color:var(--muted)}
+.big .l7 svg.m{height:52px}.big .l7 .sep{height:48px}.big .l7 .t b{font-size:30px}.big .l7 .t small{font-size:12px}
+
+/* 8 · Контур : знак линией как на заставке + SITS */
+.l8{gap:.45em;font-family:var(--font-display);font-weight:600;font-size:21px;letter-spacing:.06em}
+.l8 svg.m{height:1.2em;fill:none;stroke:#e23744;stroke-width:26;stroke-linejoin:miter}
+.sc.light .l8 svg.m{fill:none;stroke:#c8232d}
+.l8 span{background:linear-gradient(90deg,currentColor 55%,#e23744);-webkit-background-clip:text;background-clip:text;color:transparent}
+.l8 span{color:transparent}
+.sc.light .l8 span{background-image:linear-gradient(90deg,#171314 55%,#c8232d)}
+.sc.dark .l8 span{background-image:linear-gradient(90deg,#f4f1f1 55%,#e23744)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="mk" viewBox="-6 -6 352 428"><path d="M170 0 333 113 290 180 252 155 270 125 170 57 42 144 215 270 178 297 0 171 1 115Z M170 416 7 303 50 236 88 261 70 291 170 359 298 272 125 146 162 119 340 245 339 301Z"/></symbol>
+</defs></svg>
+
+<div class="wrap">
+  <div class="kick">SITS · ЛОГОТИП</div>
+  <h1>Выберите вариант логотипа</h1>
+  <p class="lead">Каждый вариант показан прямо в шапке сайта — в светлой и тёмной теме, в полной шапке компьютера и в компактной телефонной, плюс крупно (подвал) и как иконка. Знак S везде ваш, в точной векторной форме. Напишите номер.</p>
+  <div id="list"></div>
+</div>
+
+<script>
+const M = '<svg class="m" viewBox="-6 -6 352 428" aria-hidden="true"><use href="#mk"/></svg>';
+const V = [
+  { c:'l1', t:'Классика+', d:'Ваш текущий логотип, но выверенный: знаки S подогнаны по высоте заглавных букв и стоят на одной линии с «IT», отступы одинаковые. Меняется минимум — узнаваемость сохраняется.',
+    h:`${M}IT${M}` },
+  { c:'l2', t:'Геометрия', d:'Та же идея «S·IT·S», но буквы набраны шрифтом заголовков сайта (Unbounded). Логотип и сайт начинают говорить одним голосом — современнее и технологичнее, чем засечки.',
+    h:`${M}IT${M}` },
+  { c:'l3', t:'Знак + SITS', d:'Классическая схема крупных IT-компаний: знак слева, название справа. Читается мгновенно, «SITS» не нужно собирать из знаков.',
+    h:`${M}<span>SITS</span>` },
+  { c:'l4', t:'Полное имя', d:'Знак, «SITS» и расшифровка «Sariyev IT Solutions» мелкой строкой. Солидно и понятно новому клиенту, кто вы.',
+    h:`${M}<span class="t"><b>SITS</b><small>Sariyev IT Solutions</small></span>` },
+  { c:'l5', t:'Значок-плитка', d:'Белый знак в красной плитке, как иконка приложения, и рядом «SITS». Совпадает с фавиконкой и иконкой на телефоне — единый стиль везде.',
+    h:`<span class="tile">${M}</span><span>SITS</span>` },
+  { c:'l6', t:'Sariyev IT', d:'Знак + имя бренда засечками и красное «IT». Звучит как студия с именем — премиально, лично, запоминается фамилия основателя.',
+    h:`${M}<span>Sariyev<em>IT</em></span>` },
+  { c:'l7', t:'Разделитель', d:'Знак, тонкая черта и «SITS» с разрядкой, под ним «IT STUDIO». Строгий, «архитектурный» вид, как у дизайн-бюро.',
+    h:`${M}<span class="sep"></span><span class="t"><b>SITS</b><small>IT STUDIO</small></span>` },
+  { c:'l8', t:'Контур', d:'Знак нарисован линией — как в первом кадре новой заставки, а «SITS» перетекает в красный. Связывает логотип с загрузочным экраном.',
+    h:`${M}<span>SITS</span>` },
+];
+const list = document.getElementById('list');
+V.forEach((v, i) => {
+  const L = `<span class="lg ${v.c}" role="img" aria-label="SITS">${v.h}</span>`;
+  const fav = v.c==='l5'||v.c==='l8' ? `<span class="fav" style="background:linear-gradient(160deg,#ff5a67,#c8232d)"><svg viewBox="-6 -6 352 428" width="22" height="27" fill="#fff"><use href="#mk"/></svg></span>`
+    : `<span class="fav" style="background:#0c0a0b;border:1px solid rgba(255,255,255,.12)"><svg viewBox="-6 -6 352 428" width="22" height="27" fill="#e23744"><use href="#mk"/></svg></span>`;
+  const scene = (theme) => `<div class="sc ${theme}">
+      <div class="lbl">${theme==='light'?'Светлая тема':'Тёмная тема'} · шапка ПК</div>
+      <div class="nav">${L}<span class="links"><span>Услуги</span><span>Портфолио</span><span>Прайс</span><span>Контакты</span></span><span class="cta">Обсудить проект</span></div>
+      <div class="lbl">Телефон</div>
+      <div class="nav mob">${L}<span class="bg"><i></i></span></div>
+      <div class="lbl">Крупно (подвал) и иконка</div>
+      <div class="big">${fav}${L}</div>
+    </div>`;
+  const el = document.createElement('section'); el.className = 'v';
+  el.innerHTML = `<div class="vn">ВАРИАНТ ${i+1}</div><div class="vt">${v.t}</div><p class="vd">${v.d}</p><div class="demo">${scene('light')}${scene('dark')}</div>`;
+  list.appendChild(el);
+});
+</script>
+</body>
+</html>

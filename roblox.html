@@ -24,6 +24,7 @@
 <meta name="twitter:description" content="Официальный запуск сервера Atla Games 29.09.2026. SITS — технологический партнёр." />
 <meta name="twitter:image" content="https://sariyev.com/brand/roblox/og-roblox.jpg" />
 <meta name="theme-color" content="#1a1147" />
+<script>document.documentElement.classList.add('js')</script>
 
 <script type="application/ld+json">
 {
@@ -103,7 +104,7 @@ img{max-width:100%;height:auto;display:block}
 @media(max-width:640px){.top .rbtn.sm{width:auto}.back span{display:none}}
 
 /* ---------- Hero ---------- */
-.hero{position:relative;overflow:hidden;padding:56px 0 40px;
+.hero{position:relative;overflow:hidden;padding:40px 0 34px;
   background:
     radial-gradient(60% 60% at 80% 20%,rgba(0,178,255,.35),transparent 70%),
     radial-gradient(50% 50% at 10% 80%,rgba(139,61,255,.45),transparent 70%),
@@ -112,32 +113,45 @@ img{max-width:100%;height:auto;display:block}
 .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
   background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
   background-size:48px 48px;mask-image:linear-gradient(180deg,#000 0%,transparent 85%);-webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 85%)}
-.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:24px;align-items:center}
-@media(max-width:960px){.hero-grid{grid-template-columns:1fr}}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center;
+  min-height:min(680px,calc(100svh - 150px))}
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:0;min-height:0}
+  .hero-copy{display:contents}
+  .hero-copy .badge-row{order:1}.hero-copy h1{order:2}.stage{order:3}.hero-copy .lead{order:4}.hero-copy .hero-actions{order:5}
+}
 .badge-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+@media(max-width:640px){.badge-row{gap:8px;margin-bottom:18px}.badge{font-size:11px;padding:7px 11px}.badge.opt{display:none}}
 .badge{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;
   padding:8px 14px;border-radius:100px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2)}
 .badge.live{background:var(--red);border-color:transparent}
 .badge.live i{width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 0 rgba(255,255,255,.8);animation:ping 1.6s infinite}
 @keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,255,255,.8)}80%,100%{box-shadow:0 0 0 10px rgba(255,255,255,0)}}
-h1{font-family:var(--font-display);font-weight:800;font-size:clamp(36px,6vw,74px);line-height:.98;letter-spacing:-.02em;
+h1{font-family:var(--font-display);font-weight:800;font-size:clamp(34px,5vw,64px);line-height:.98;letter-spacing:-.02em;
   text-transform:uppercase;text-wrap:balance}
 .stroke{color:#fff;-webkit-text-stroke:0;paint-order:stroke fill;
   text-shadow:0 4px 0 var(--ink),3px 0 0 var(--ink),-3px 0 0 var(--ink),0 -3px 0 var(--ink),3px 4px 0 var(--ink),-3px 4px 0 var(--ink)}
 h1 .y{color:var(--yellow)}
-.lead{margin-top:22px;font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:540px}
+.lead{margin-top:22px;font-size:clamp(16px,1.4vw,19px);color:var(--muted);max-width:520px}
+@media(max-width:960px){.lead{margin-top:6px}}
 .lead b{color:#fff}
-.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
-.stage{position:relative;aspect-ratio:1/1;max-height:620px;width:100%;justify-self:center}
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:30px}
+.glink{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:15px;color:#fff;padding:10px 4px;
+  border-bottom:2px solid rgba(255,255,255,.3);transition:border-color .2s,gap .2s var(--ease)}
+.glink:hover{border-color:var(--cyan);gap:12px}
+.glink svg{width:16px;height:16px}
+@media(max-width:640px){.hero-actions{flex-direction:column;align-items:stretch;gap:10px}.glink{justify-content:center;border:0}}
+.stage{position:relative;aspect-ratio:1/1;max-height:640px;width:100%;justify-self:center}
 .stage canvas{width:100%!important;height:100%!important;display:block;cursor:grab;touch-action:pan-y}
 .stage canvas:active{cursor:grabbing}
-.stage .hint{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font-size:12.5px;font-weight:700;color:var(--muted);
+.stage .hint{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);font-size:12.5px;font-weight:700;color:var(--muted);
   background:rgba(11,8,32,.55);padding:6px 12px;border-radius:100px;white-space:nowrap;pointer-events:none;transition:opacity .4s}
 .stage .fallback{position:absolute;inset:8%;border-radius:28px;overflow:hidden;border:4px solid var(--ink);display:none}
 .stage .fallback img{width:100%;height:100%;object-fit:cover}
 .stage.no-gl .fallback{display:block}
 .stage.no-gl .hint{display:none}
-@media(max-width:960px){.stage{max-height:440px;aspect-ratio:1/.85}}
+@media(max-width:960px){.stage{max-height:520px;aspect-ratio:1/.92;margin:4px auto 0}}
+@media(max-width:640px){.stage{margin:0 -16px;width:calc(100% + 32px);max-height:none}}
 
 /* ---------- Ticker ---------- */
 .ticker{background:var(--yellow);color:var(--ink);border-block:4px solid var(--ink);overflow:hidden;transform:rotate(-1.2deg);margin:18px -20px 0}
@@ -193,7 +207,7 @@ h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48
 .pbox.sits{background:var(--red)}
 .pbox.sits .r{color:#ffe1e3}
 .x{font-family:var(--font-display);font-weight:800;font-size:36px;color:var(--yellow)}
-@media(max-width:560px){.partners{grid-template-columns:1fr}.x{text-align:center;font-size:28px}}
+@media(max-width:560px){.partners{gap:8px;margin-top:32px}.pbox{padding:16px 8px;border-radius:18px}.pbox .n{font-size:15px}.pbox .r{font-size:11.5px}.x{font-size:22px}}
 
 /* ---------- Status cards ---------- */
 .status{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
@@ -208,15 +222,19 @@ h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48
 /* ---------- Join (KZ devs) ---------- */
 .join{background:linear-gradient(135deg,#00a3e8,#0061d6 55%,#3a1fb8);border:4px solid var(--ink);border-radius:36px;padding:56px;
   box-shadow:0 10px 0 var(--ink);position:relative;overflow:hidden}
-@media(max-width:640px){.join{padding:30px 20px;border-radius:26px}}
-.join::after{content:"🇰🇿";position:absolute;right:-10px;top:-24px;font-size:180px;opacity:.14;transform:rotate(12deg);pointer-events:none}
+@media(max-width:640px){.join{padding:28px 16px;border-radius:26px}}
+.join::before,.join::after{content:"";position:absolute;pointer-events:none;border-radius:26px;background:rgba(255,255,255,.1);border:3px solid rgba(255,255,255,.16)}
+.join::after{width:240px;height:240px;right:-60px;top:-70px;transform:rotate(18deg)}
+.join::before{width:130px;height:130px;right:120px;bottom:-50px;transform:rotate(-14deg);background:rgba(255,213,46,.18);border-color:rgba(255,213,46,.3)}
+.join>*{position:relative;z-index:1}
+@media(max-width:640px){.join::after{width:150px;height:150px;right:-50px;top:-50px}.join::before{display:none}}
 .join h2{max-width:720px}
 .join .sub{color:#e3f2ff;max-width:680px}
 .roles{display:flex;flex-wrap:wrap;gap:12px;margin:30px 0 34px}
 .roles span{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:15px;padding:12px 18px;border-radius:14px;
   background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:0 4px 0 var(--ink);transition:transform .2s var(--pop)}
 .roles span:hover{transform:translateY(-3px) rotate(-1.5deg)}
-.roles span em{font-style:normal;font-size:20px}
+.roles span em{font-style:normal;font-size:20px;min-width:1.2em;text-align:center}
 .join-actions{display:flex;flex-wrap:wrap;gap:14px}
 
 /* ---------- Footer ---------- */
@@ -229,10 +247,26 @@ h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48
 .foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 .foot a{text-decoration:underline;text-underline-offset:3px}
 
+main,.foot{position:relative;z-index:2}
+.em{font-style:normal;display:inline-block;min-width:1.3em;margin-right:.25em;text-align:center}
+@media(max-width:640px){
+  .status{gap:12px;margin-top:28px}
+  .scard{display:grid;grid-template-columns:auto 1fr;column-gap:14px;padding:18px;border-radius:20px}
+  .scard .ico{grid-row:span 2;width:46px;height:46px;font-size:22px;margin:0;border-radius:14px}
+  .scard h3{font-size:16px;align-self:end;padding-right:64px}
+  .scard p{font-size:14.5px;margin-top:4px}
+  .scard .dot{top:18px;right:16px;font-size:10.5px}
+  .roles{gap:8px;margin:22px 0 26px}
+  .roles span{font-size:13px;padding:8px 10px;border-radius:12px;gap:6px;border-width:2.5px;box-shadow:0 3px 0 var(--ink)}
+  .roles span em{font-size:16px}
+  .join h2{font-size:26px}
+  .join-actions{flex-direction:column}
+  .sign{padding:56px 16px 44px}
+}
 /* reveal */
-.rv{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.rv.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.js .rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}}
 
 /* petals (CSS, фон секций) */
 .petal{position:fixed;top:-20px;width:12px;height:10px;background:var(--pink);border-radius:10px 0 10px 0;opacity:.75;pointer-events:none;z-index:1;
@@ -259,19 +293,19 @@ h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48
 <!-- ============ HERO ============ -->
 <section class="hero" aria-labelledby="h1">
   <div class="wrap hero-grid">
-    <div>
+    <div class="hero-copy">
       <div class="badge-row">
         <span class="badge live"><i></i>Сервер онлайн</span>
         <span class="badge">29 сентября 2026</span>
-        <span class="badge">Roblox</span>
+        <span class="badge opt">Roblox</span>
       </div>
       <h1 id="h1" class="stroke">Наш сервер<br>в <span class="y">Roblox</span><br>запущен!</h1>
-      <p class="lead">Сегодня — официальный запуск сервера <b>Atla Games</b> 🚀 Компания <b>SITS — Sariyev IT Solutions</b> выступает технологическим партнёром проекта. Первая игра — <b>Steal a Chibi</b>.</p>
+      <p class="lead">Сегодня — официальный запуск сервера <b>Atla Games</b>. Компания <b>SITS — Sariyev IT Solutions</b> выступает технологическим партнёром проекта. Первая игра — <b>Steal a Chibi</b>.</p>
       <div class="hero-actions">
         <a class="rbtn" href="https://www.roblox.com/games/115656980952933/Steal-a-Chibi" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>Играть в Roblox
         </a>
-        <a class="rbtn blue" href="#join">Присоединиться</a>
+        <a class="glink" href="#join">Для разработчиков <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
     <div class="stage" id="stage">
@@ -298,7 +332,7 @@ h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48
       <div class="tag">Первая игра на сервере</div>
       <h3>Steal a <span class="y">Chibi</span></h3>
       <p>Укради чиби и унеси его на свою базу — но осторожно! Стражник, который тебя поймает, выбьет чиби из рук.</p>
-      <div class="stats"><span>🎮 Roblox</span><span>👥 Мультиплеер</span><span>🌸 Аниме-стиль</span></div>
+      <div class="stats"><span><i class="em">🎮</i>Roblox</span><span><i class="em">👥</i>Мультиплеер</span><span><i class="em">🌸</i>Аниме-стиль</span></div>
       <a class="rbtn" href="https://www.roblox.com/games/115656980952933/Steal-a-Chibi" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>Играть сейчас
       </a>
@@ -314,7 +348,7 @@ h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48
 <section id="news" style="background:linear-gradient(180deg,transparent,var(--bg-2) 30%,var(--bg-2) 70%,transparent)">
   <div class="wrap">
     <article class="article">
-      <div class="date rv">🎉 29.09.2026 · Новости SITS</div>
+      <div class="date rv"><i class="em">🎉</i>29.09.2026 · Новости SITS</div>
       <h2 class="rv">Сегодня состоялся запуск нашего сервера в Roblox!</h2>
       <p class="rv"><b>29 сентября 2026 года</b> — официальный запуск сервера <b>Atla Games</b> 🚀</p>
       <p class="rv">Мы рады объявить о нашем сотрудничестве с Atla Games, где компания <b>SITS — Sariyev IT Solutions</b> выступает в качестве технологического партнёра.</p>
@@ -327,7 +361,7 @@ h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48
 
       <div class="status">
         <div class="scard rv"><span class="dot">Online</span><div class="ico" style="background:var(--lime)">🚀</div><h3>Сервер запущен</h3><p>Игра доступна всем игрокам Roblox прямо сейчас.</p></div>
-        <div class="scard rv"><span class="dot">OK</span><div class="ico" style="background:var(--cyan)">⚙️</div><h3>Системы стабильны</h3><p>🔥 На старте всё работает отлично — основные системы работают стабильно.</p></div>
+        <div class="scard rv"><span class="dot">OK</span><div class="ico" style="background:var(--cyan)">⚙️</div><h3>Системы стабильны</h3><p><i class="em">🔥</i>На старте всё работает отлично — основные системы работают стабильно.</p></div>
         <div class="scard rv"><span class="dot">Open</span><div class="ico" style="background:var(--yellow)">🤝</div><h3>Ждём вас</h3><p>Готовы встречать игроков и разработчиков.</p></div>
       </div>
     </article>
@@ -338,7 +372,7 @@ h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48
 <section id="join">
   <div class="wrap">
     <div class="join rv">
-      <div class="tag" style="color:#fff">🇰🇿 Разработчикам из Казахстана</div>
+      <div class="tag" style="color:#fff"><i class="em">🇰🇿</i>Разработчикам из Казахстана</div>
       <h2 class="stroke">Строим игровую индустрию вместе</h2>
       <p class="sub">Отдельно приглашаем разработчиков из Казахстана — будем рады видеть талантливых специалистов и всех, кто хочет развиваться в игровой индустрии вместе с нами.</p>
       <div class="roles">
@@ -362,12 +396,12 @@ h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48
 
 <!-- ============ SIGN ============ -->
 <div class="sign wrap">
-  <p class="rv" style="color:var(--muted);max-width:620px;margin:0 auto 28px">🎮 Заходите на наш сервер, знакомьтесь, играйте и присоединяйтесь к сообществу! Мы только начинаем — дальше будет ещё больше проектов, возможностей и новых идей. ❤️‍🔥</p>
+  <p class="rv" style="color:var(--muted);max-width:620px;margin:0 auto 28px"><i class="em">🎮</i>Заходите на наш сервер, знакомьтесь, играйте и присоединяйтесь к сообществу! Мы только начинаем — дальше будет ещё больше проектов, возможностей и новых идей. ❤️‍🔥</p>
   <div class="big stroke rv">Atla Games <span class="y">×</span> SITS</div>
   <div class="lines rv">
-    <span>🇰🇿 Made in Kazakhstan</span>
-    <span>💻 SITS — Sariyev IT Solutions</span>
-    <span>🚀 Technology Partner</span>
+    <span><i class="em">🇰🇿</i>Made in Kazakhstan</span>
+    <span><i class="em">💻</i>SITS — Sariyev IT Solutions</span>
+    <span><i class="em">🚀</i>Technology Partner</span>
   </div>
 </div>
 </main>
@@ -433,11 +467,13 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 stage.prepend(renderer.domElement);
+renderer.domElement.setAttribute('role','img');
+renderer.domElement.setAttribute('aria-label','3D-сцена: персонажи в стиле Roblox на острове с сакурой и воротами тории');
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-camera.position.set(0, 7.6, 19);
-camera.lookAt(0, 1.8, 0);
+camera.position.set(0, 7, 17.5);
+camera.lookAt(0, .9, 0);
 
 scene.add(new THREE.HemisphereLight(0xcfe8ff, 0x5a3d8a, 1.5));
 const sun = new THREE.DirectionalLight(0xffffff, 2.4);
@@ -473,7 +509,7 @@ const R = 5;
 for (let x = -R; x <= R; x++) for (let z = -R; z <= R; z++) {
   const d = Math.hypot(x, z);
   if (d > R + .3) continue;
-  const depth = Math.max(1, Math.round((R + .5 - d) * 1.1));
+  const depth = Math.max(1, Math.round((R + .5 - d) * .65));
   const g = [0x5fd14a, 0x55c23f, 0x6ddb55][(x * 7 + z * 13 + 99) % 3];
   box(1, .5, 1, g, x, -.25, z);
   for (let k = 0; k < depth; k++) box(1, 1, 1, k === 0 ? 0x8b5a2b : (k % 2 ? 0x6e4523 : 0x7a4d27), x, -1 - k, z);
@@ -503,7 +539,7 @@ function sakura(x, z, s = 1) {
   }
   return t;
 }
-sakura(-3.6, -1.2, 1); sakura(3.7, -.4, .85); sakura(-3, 3, .6);
+sakura(-3.7, -2.6, 1); sakura(3.8, -2.4, .85);
 
 // ---- Лица (canvas-текстуры) ----
 function faceTex(kind, skin) {
@@ -616,11 +652,11 @@ for (let i = 0; i < 3; i++) {
 const walker = avatar({ shirt: 0xe23744, pants: 0x222233, hairStyle: 'cap', hairColor: 0x111122, face: 'wink', scale: .92 });
 world.add(walker);
 const girl = avatar({ skin: '#f3c9a0', shirt: 0xffd52e, pants: 0x3d5afe, hairStyle: 'bob', hairColor: 0x2a1a14, face: 'smile', scale: .88 });
-girl.position.set(2.6, 0, 2.2); girl.rotation.y = -.7; world.add(girl);
+girl.position.set(2.3, 0, 2.9); girl.rotation.y = -.45; world.add(girl);
 girl.userData.armR.rotation.x = -2.6;
 
 // Стражник-дерево (отсылка к обложке) — медленно тянется к игроку
-const guard = new THREE.Group(); world.add(guard); guard.position.set(-2.9, 0, 1.4); guard.rotation.y = .9;
+const guard = new THREE.Group(); world.add(guard); guard.position.set(-3.3, 0, .2); guard.rotation.y = .75;
 box(1.1, 3.6, 1, 0x6b4526, 0, 1.8, 0, guard);
 box(1.5, 1.4, 1.2, 0x7a5030, 0, 3.9, 0, guard);
 const gface = box(1.1, .95, .1, 0xf3f0ff, 0, 3.9, .62, guard);
@@ -632,7 +668,7 @@ box(.4, .4, 1.8, 0x6b4526, 0, 0, .9, gArm);
 const purple = new THREE.PointLight(0x9b4dff, 6, 6); purple.position.set(0, 3.6, 1.4); guard.add(purple);
 
 // Пьедестал с золотым чиби-кубом (то, что крадут)
-const ped = new THREE.Group(); world.add(ped); ped.position.set(2.8, 0, -1.8);
+const ped = new THREE.Group(); world.add(ped); ped.position.set(3.3, 0, .3);
 box(1.4, .5, 1.4, 0xb9b4c9, 0, .25, 0, ped); box(1, .6, 1, 0xa8a2bb, 0, .8, 0, ped);
 const gem = new THREE.Mesh(new THREE.OctahedronGeometry(.45), new THREE.MeshStandardMaterial({ color: 0xffd52e, emissive: 0xffa000, emissiveIntensity: .6, roughness: .3, metalness: .4, flatShading: true }));
 gem.position.y = 1.8; gem.castShadow = true; ped.add(gem);
@@ -666,13 +702,13 @@ function resize() {
 new ResizeObserver(resize).observe(stage); resize();
 
 // ---- Вращение мышью / пальцем ----
-let rotY = -.35, velY = 0, dragging = false, lastX = 0, hinted = false;
+let userRot = 0, velY = 0, dragging = false, lastX = 0, hinted = false, lastTouch = -10;
 const cv = renderer.domElement;
 cv.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; cv.setPointerCapture(e.pointerId); });
 cv.addEventListener('pointermove', e => {
   if (!dragging) return;
   const dx = e.clientX - lastX; lastX = e.clientX;
-  velY = dx * .008; rotY += velY;
+  velY = dx * .008; userRot += velY; lastTouch = clock.getElapsedTime();
   if (!hinted) { hinted = true; hint.style.opacity = 0; }
 });
 const up = () => { dragging = false; };
@@ -686,12 +722,15 @@ let raf = 0;
 function tick() {
   cancelAnimationFrame(raf);
   const t = clock.getElapsedTime();
-  if (!dragging) { velY *= .94; rotY += velY + (reduce ? 0 : .0025); }
-  world.rotation.y = rotY;
+  if (!dragging) {
+    velY *= .93; userRot += velY;
+    if (t - lastTouch > 3) userRot *= .985; // плавно возвращаемся к лучшему ракурсу
+  }
+  world.rotation.y = -.25 + (reduce ? 0 : Math.sin(t * .28) * .38) + userRot;
 
   // герой убегает с чиби по кругу
   const a = t * .55;
-  hero.position.set(Math.cos(a) * 2.2, Math.abs(Math.sin(t * 7)) * .12, Math.sin(a) * 2.2 + .8);
+  hero.position.set(Math.cos(a) * 1.9, Math.abs(Math.sin(t * 7)) * .12, Math.sin(a) * 1.5 + .7);
   hero.rotation.y = -a;
   const sw = Math.sin(t * 7) * .8;
   hero.userData.legL.rotation.x = sw; hero.userData.legR.rotation.x = -sw;
@@ -705,7 +744,7 @@ function tick() {
   });
 
   // игрок в кепке машет и прыгает
-  walker.position.set(-1.1, Math.max(0, Math.sin(t * 2.4)) * .7, 3.2);
+  walker.position.set(-2.1, Math.max(0, Math.sin(t * 2.4)) * .7, 3.1);
   walker.rotation.y = .3 + Math.sin(t * .8) * .3;
   walker.userData.armR.rotation.z = 2.6 + Math.sin(t * 8) * .35;
   walker.userData.armL.rotation.x = Math.sin(t * 2.4) * .5;
@@ -740,6 +779,7 @@ if (reduce) {
   // без автоанимации — рендерим по взаимодействию
   cv.addEventListener('pointermove', () => { if (dragging) tick(); });
 }
+setTimeout(() => { hint.style.opacity = 0; }, 7000);
 tick();
 </script>
 </body>

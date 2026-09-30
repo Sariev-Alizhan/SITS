@@ -67,6 +67,11 @@ p{color:var(--muted);font-size:16px;line-height:1.6;margin-bottom:36px}
 .btn svg{width:14px;height:14px;transition:transform .3s var(--ease)}
 .btn:hover svg{transform:translate(-2px,0)}
 .foot{position:fixed;bottom:22px;left:0;right:0;text-align:center;color:var(--faint);font-size:12px}
+
+/* Длинные слова (особенно казахские) не должны вылезать за экран на узких телефонах */
+h1,h2,h3,h4{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+p,li{overflow-wrap:break-word}
+@media(max-width:400px){.fibo-lead{hyphens:auto;-webkit-hyphens:auto}}
 </style>
 </head>
 <body>

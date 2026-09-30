@@ -692,6 +692,9 @@ html[data-theme="light"] .hero-arm img{filter:drop-shadow(0 20px 38px rgba(20,12
 @media(max-width:1360px){.nav-links{gap:16px}.nav-links a{font-size:13.5px}.nav-actions{gap:8px}}
 @media(min-width:941px) and (max-width:1200px){.nav-links a[data-i18n="nav.process"],.nav-links a[data-i18n="nav.about"]{display:none}}
 @media(min-width:941px) and (max-width:1040px){.nav-links a[data-i18n="nav.auto"]{display:none}}
+/* Казахские пункты меню длиннее — второстепенные прячем на ширинах раньше */
+@media(min-width:941px) and (max-width:1360px){html[lang="kk"] .nav-links a[data-i18n="nav.process"],html[lang="kk"] .nav-links a[data-i18n="nav.about"]{display:none}}
+@media(min-width:941px) and (max-width:1200px){html[lang="kk"] .nav-links a[data-i18n="nav.auto"]{display:none}}
 /* ⌘K discovery hint — отображается только на десктопе с pointer:fine */
 .cmdk-hint{display:none;align-items:center;gap:8px;height:40px;padding:0 11px 0 13px;
   border:1px solid var(--glass-line);border-radius:100px;background:var(--glass);color:var(--muted);
@@ -897,6 +900,7 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 
 /* ============ FIBONACCI CONTROL ============ */
 .fibo-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:stretch;margin-top:8px}
+.fibo-grid>*{min-width:0}
 .fibo-copy{padding:38px;border:1px solid var(--glass-line);border-radius:var(--r-xl);background:var(--glass);box-shadow:inset 0 1px 0 var(--glass-hi);display:flex;flex-direction:column}
 .fibo-badge{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--red);background:var(--red-soft);border:1px solid color-mix(in srgb,var(--red) 30%,transparent);padding:6px 13px;border-radius:100px;margin-bottom:18px}
 .fibo-badge i{width:6px;height:6px;border-radius:50%;background:var(--red)}
@@ -1537,6 +1541,11 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 @media(max-width:520px){.cmp-grid{grid-template-columns:repeat(2,1fr);gap:11px}
   .cmp-card{padding:18px 12px 15px;gap:12px}
   .cmp-plate,.cmp-plate img{height:62px}}
+
+/* Длинные слова (особенно казахские) не должны вылезать за экран на узких телефонах */
+h1,h2,h3,h4{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+p,li{overflow-wrap:break-word}
+@media(max-width:400px){.fibo-lead{hyphens:auto;-webkit-hyphens:auto}}
 </style>
 </head>
 <body>

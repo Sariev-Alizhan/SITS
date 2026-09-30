@@ -636,6 +636,9 @@ main, footer{position:relative;z-index:1}
 @media(max-width:1360px){.nav-links{gap:16px}.nav-links a{font-size:13.5px}.nav-actions{gap:8px}}
 @media(min-width:941px) and (max-width:1200px){.nav-links a[data-i18n="nav.process"],.nav-links a[data-i18n="nav.about"]{display:none}}
 @media(min-width:941px) and (max-width:1040px){.nav-links a[data-i18n="nav.auto"]{display:none}}
+/* Казахские пункты меню длиннее — второстепенные прячем на ширинах раньше */
+@media(min-width:941px) and (max-width:1360px){html[lang="kk"] .nav-links a[data-i18n="nav.process"],html[lang="kk"] .nav-links a[data-i18n="nav.about"]{display:none}}
+@media(min-width:941px) and (max-width:1200px){html[lang="kk"] .nav-links a[data-i18n="nav.auto"]{display:none}}
 /* ⌘K discovery hint — отображается только на десктопе с pointer:fine */
 .cmdk-hint{display:none;align-items:center;gap:8px;height:40px;padding:0 11px 0 13px;
   border:1px solid var(--glass-line);border-radius:100px;background:var(--glass);color:var(--muted);
@@ -1369,6 +1372,11 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   src: url('/fonts/manrope-700-tenge.woff2') format('woff2');
   unicode-range: U+20B8;
 }
+
+/* Длинные слова (особенно казахские) не должны вылезать за экран на узких телефонах */
+h1,h2,h3,h4{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+p,li{overflow-wrap:break-word}
+@media(max-width:400px){.fibo-lead{hyphens:auto;-webkit-hyphens:auto}}
 </style>
 
 <style>
@@ -1460,11 +1468,13 @@ html[data-theme="dark"] .auto{--gold:#D2A24C;--gold-lit:#EFC97E;--gold-soft:rgba
 .proto h2{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,3.4vw,38px);line-height:1.08;letter-spacing:-.02em;position:relative}
 .proto p{color:var(--muted);font-size:16px;line-height:1.6;margin-top:14px;position:relative}
 .proto .opts{display:flex;flex-direction:column;gap:12px;position:relative}
+.proto>*{min-width:0}.proto .opt{min-width:0}.proto .opt .k,.proto .opt .v{overflow-wrap:anywhere}
+@media(max-width:420px){.proto{padding:26px 20px}.proto .opt{padding:14px;gap:12px}}
 .proto .opt{display:flex;align-items:center;gap:14px;border:1px solid var(--glass-line);background:color-mix(in srgb,var(--text) 3%,transparent);border-radius:14px;padding:16px 18px;transition:border-color .25s,background .25s}
 .proto .opt:hover{border-color:rgba(197,138,43,.42);background:var(--gold-soft)}
 .proto .opt .ic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--gold-soft);color:var(--gold-lit);flex:0 0 auto}
-.proto .opt .k{font-size:12px;color:var(--muted)}
-.proto .opt .v{font-family:var(--font-display);font-weight:600;font-size:16px;margin-top:1px;color:var(--text)}
+.proto .opt .k{display:block;font-size:12px;color:var(--muted)}
+.proto .opt .v{display:block;font-family:var(--font-display);font-weight:600;font-size:16px;margin-top:1px;color:var(--text)}
 @media(max-width:900px){
   .a-hero .grid,.sys3,.advg,.trac,.tiers3,.assess,.proto{grid-template-columns:1fr}
   .assess .rt{text-align:left}

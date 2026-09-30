@@ -92,6 +92,7 @@ img{max-width:100%;height:auto;display:block}
 .rbtn.yellow{--c:var(--yellow);--d:#e0a800}
 .rbtn.sm{font-size:14px;padding:11px 18px 13px;border-radius:13px}
 @media(max-width:640px){.rbtn{font-size:16px;padding:14px 20px 16px;width:100%}}
+@media(max-width:380px){.rbtn{font-size:14px;padding:13px 14px 15px;gap:8px;white-space:normal;text-align:center;line-height:1.15}.rbtn svg{width:18px;height:18px}}
 
 /* ---------- Top bar ---------- */
 .top{position:sticky;top:0;z-index:50;padding:12px 0;background:rgba(18,12,51,.72);backdrop-filter:blur(16px) saturate(1.6);
@@ -102,7 +103,8 @@ img{max-width:100%;height:auto;display:block}
 .back .lm{height:32px;width:auto;fill:#e23744;flex:none}
 .back .lt{display:flex;flex-direction:column;gap:4px;line-height:1}
 .back .lt b{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:.05em;color:#fff}
-.back .lt small{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.back .lt small{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+@media(max-width:380px){.back{gap:7px}.back .lm{height:26px}.back .lt b{font-size:15px}.back .lt small{font-size:8px;letter-spacing:.08em}.top .rbtn.sm{padding:9px 12px 11px;font-size:12px}}
 .back .nw{margin-left:6px;padding:5px 10px;border-radius:100px;border:1px solid var(--line);font-size:12px;color:var(--muted)}
 .back svg{width:18px;height:18px}
 @media(max-width:640px){.top .rbtn.sm{width:auto}.back .nw{display:none}}
@@ -171,7 +173,7 @@ section{padding:96px 0;position:relative}
 @media(max-width:640px){section{padding:64px 0}}
 .tag{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
 .tag::before{content:"";width:10px;height:10px;background:var(--cyan);border:2px solid var(--ink);transform:rotate(45deg)}
-h2{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48px);line-height:1.04;letter-spacing:-.02em;text-transform:uppercase;text-wrap:balance}
+h2{overflow-wrap:break-word;hyphens:auto;font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48px);line-height:1.04;letter-spacing:-.02em;text-transform:uppercase;text-wrap:balance}
 .sub{color:var(--muted);max-width:620px;margin-top:14px}
 
 /* ---------- Game card ---------- */

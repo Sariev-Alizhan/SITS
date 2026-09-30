@@ -82,7 +82,7 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
 main{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:130px 24px 40px}
 .kicker{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
 .kicker i{width:6px;height:6px;border-radius:50%;background:var(--red)}
-h1{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,5vw,44px);line-height:1.08;letter-spacing:-.03em;margin-bottom:12px}
+h1{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,6.4vw,44px);line-height:1.08;letter-spacing:-.03em;margin-bottom:12px}
 .updated{color:var(--faint);font-size:13.5px;margin-bottom:34px}
 .doc{display:none}
 html[data-lang="ru"] .doc[data-l="ru"]{display:block}
@@ -108,6 +108,15 @@ footer{max-width:var(--maxw);margin:0 auto;padding:10px 24px 40px;color:var(--fa
   .card{padding:26px 22px;border-radius:22px}
   .lang-switch button{min-width:30px;padding:6px 8px}
 }
+
+/* Длинные слова (особенно казахские) не должны вылезать за экран на узких телефонах */
+h1,h2,h3,h4{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+p,li{overflow-wrap:break-word}
+@media(max-width:400px){.fibo-lead{hyphens:auto;-webkit-hyphens:auto}}
+/* Узкие телефоны: компактная шапка (в конце, чтобы перебить базовые стили) */
+@media(max-width:420px){.logo{gap:8px}.logo-mark{height:27px}.logo-txt{gap:3px}.logo-txt b{font-size:15px}.logo-txt small{font-size:8.5px;letter-spacing:.08em}
+  .nav{padding:0 10px}.nav .bar{padding-left:16px;padding-right:8px}.nav-right{gap:6px}.lang-switch{height:34px}.lang-switch button{min-width:0;padding:5px 6px;font-size:11px}.icon-btn{width:34px;height:34px}}
+@media(max-width:340px){.lang-switch button{padding:5px 4px;letter-spacing:.02em}.logo-txt small{letter-spacing:.05em}}
 </style>
 </head>
 <body>

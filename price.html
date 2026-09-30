@@ -636,6 +636,9 @@ main, footer{position:relative;z-index:1}
 @media(max-width:1360px){.nav-links{gap:16px}.nav-links a{font-size:13.5px}.nav-actions{gap:8px}}
 @media(min-width:941px) and (max-width:1200px){.nav-links a[data-i18n="nav.process"],.nav-links a[data-i18n="nav.about"]{display:none}}
 @media(min-width:941px) and (max-width:1040px){.nav-links a[data-i18n="nav.auto"]{display:none}}
+/* Казахские пункты меню длиннее — второстепенные прячем на ширинах раньше */
+@media(min-width:941px) and (max-width:1360px){html[lang="kk"] .nav-links a[data-i18n="nav.process"],html[lang="kk"] .nav-links a[data-i18n="nav.about"]{display:none}}
+@media(min-width:941px) and (max-width:1200px){html[lang="kk"] .nav-links a[data-i18n="nav.auto"]{display:none}}
 /* ⌘K discovery hint — отображается только на десктопе с pointer:fine */
 .cmdk-hint{display:none;align-items:center;gap:8px;height:40px;padding:0 11px 0 13px;
   border:1px solid var(--glass-line);border-radius:100px;background:var(--glass);color:var(--muted);
@@ -1347,6 +1350,11 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   src: url('/fonts/manrope-700-tenge.woff2') format('woff2');
   unicode-range: U+20B8;
 }
+
+/* Длинные слова (особенно казахские) не должны вылезать за экран на узких телефонах */
+h1,h2,h3,h4{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+p,li{overflow-wrap:break-word}
+@media(max-width:400px){.fibo-lead{hyphens:auto;-webkit-hyphens:auto}}
 </style>
 </head>
 <body>

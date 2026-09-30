@@ -5,6 +5,7 @@ import { getClientIp, checkOrigin, readBody } from './_security.js';
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZW3Op75X3orzmHdjWlDT8CG3WXHvvBkfqHyDGKi_TcdxckH9OV_VVq6PN6QhJK6LW/exec';
 const SCRIPT_TOKEN = 'yan-wa-7f3k';
+const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSenPzvS8EqZISzmdBqYE-aENmp0R_Vl0F6Ihiz3iuSKjWT5lg/formResponse';
 const ALLOWED_ORIGINS = ['https://sariyev.com', 'https://www.sariyev.com', 'https://sits-eta.vercel.app'];
 // Apps Script обычно отвечает за 3–6 с, но изредка «просыпается» 30+ с. Клиента это не задерживает
 // (страница шлёт keepalive-запрос и сразу уходит в WhatsApp), поэтому ждём до ~55 с.
@@ -66,6 +67,32 @@ export default async function handler(req, res) {
     name: txt(strip(body.name, 120).replace(/\s+/g, ' ').trim()), phone: phoneDigits ? '+' + phoneDigits.slice(0, 15) : '', gis: txt(strip(body.gis, 300).trim()),
     note: txt(String(body.note || '').replace(/[\u0000-\u0009\u000b-\u001f<>]/g, '').trim().slice(0, 1000)),
   });
+  // Основная запись — Google-форма «Заявки Yan · рестораны / SPA» → таблица 1hyBM8pS…oE (лист «Ответы на форму»).
+  // Форма принимает POST без авторизации, так что заявка не зависит от развёртывания Apps Script.
+  const dir = KIND_LABEL[body.kind] || { rest: 'Ресторан / кафе', spa: 'SPA / баня' }[body.cr] || '';
+  const F = {
+    1305946587: quick ? 'Сразу в WhatsApp (без формы)' : 'Форма', 328029511: code, 80215347: dir,
+    424671936: quick ? '' : strip(body.name, 120).replace(/\s+/g, ' ').trim(), 1557097862: phoneDigits ? '+' + phoneDigits.slice(0, 15) : '',
+    1211775789: strip(body.gis, 300).trim(), 725277419: String(body.note || '').replace(/[\u0000-\u0009\u000b-\u001f<>]/g, '').trim().slice(0, 1000),
+    494714248: params.get('ad'), 717843200: params.get('placement'), 1226810863: params.get('device'),
+    1308079505: [params.get('campaign'), params.get('adset')].filter(Boolean).join(' / '),
+  };
+  let formOk = false;
+  for (let attempt = 1; attempt <= 2 && !formOk; attempt++) {
+    try {
+      const r = await fetch(FORM_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(Object.entries(F).map(([k, v]) => ['entry.' + k, v || ''])), signal: AbortSignal.timeout(15000) });
+      formOk = r.ok;
+      if (!formOk) console.error('yan-lead: form answered', attempt, r.status);
+    } catch (e) { console.error('yan-lead: form', attempt, e && e.message); }
+  }
+  // Старая таблица (Apps Script) — дополнительно и без ожидания ответа для клиента.
+  if (formOk) {
+    try { await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(Object.fromEntries(params)), redirect: 'follow', signal: AbortSignal.timeout(8000) }); } catch { /* не важно */ }
+    return res.status(200).json({ ok: true });
+  }
+
   // Apps Script иногда отвечает 404/HTML или «просыпается» дольше обычного — одна повторная попытка.
   // Дубли исключены: скрипт не пишет код, который уже есть в таблице.
   const deadline = Date.now() + 55000;

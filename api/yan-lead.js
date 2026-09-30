@@ -69,7 +69,7 @@ export default async function handler(req, res) {
   });
   // Основная запись — Google-форма «Заявки Yan · рестораны / SPA» → таблица 1hyBM8pS…oE (лист «Ответы на форму»).
   // Форма принимает POST без авторизации, так что заявка не зависит от развёртывания Apps Script.
-  const dir = KIND_LABEL[body.kind] || { rest: 'Ресторан / кафе', spa: 'SPA / баня' }[body.cr] || '';
+  const dir = KIND_LABEL[body.kind] || { rest: 'Ресторан / кафе', spa: 'SPA / баня' }[body.cr] || (quick ? 'Не выбрано (общая ссылка)' : '');
   const F = {
     1305946587: quick ? 'Сразу в WhatsApp (без формы)' : 'Форма', 328029511: code, 80215347: dir,
     424671936: quick ? '' : strip(body.name, 120).replace(/\s+/g, ' ').trim(), 1557097862: phoneDigits ? '+' + phoneDigits.slice(0, 15) : '',

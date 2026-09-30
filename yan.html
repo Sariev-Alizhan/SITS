@@ -179,7 +179,7 @@ button.busy .spin{display:block} button.busy svg{display:none}
     var text = "Здравствуйте! Хочу " + KINDS[k].intro + ".\nКод: " + code;
     var wa = ["https:", "//wa.me", "/77058032098", "?text=", encodeURIComponent(text)].join("");
     try { fetch("/api/yan-lead", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ quick: 1, code: code, cr: cr || k, kind: k, website: document.getElementById("website").value,
+      body: JSON.stringify({ quick: 1, code: code, cr: cr, kind: kind(), website: document.getElementById("website").value,
         ms: Date.now() - t0, src: q.get("utm_source") || "", ad: q.get("utm_content") || "", adset: q.get("utm_term") || "",
         campaign: q.get("utm_campaign") || "", placement: placement, device: device }) }); } catch (_) {}
     setTimeout(function(){ location.href = wa; }, 150);

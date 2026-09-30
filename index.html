@@ -1001,6 +1001,14 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .pf:hover .pf-open{transform:none;opacity:1}
 .pf .pf-open svg{width:14px;height:14px;color:var(--red);transition:transform .3s}
 .pf:hover .pf-open:hover svg{transform:translate(2px,-2px)}
+.pf-nav{display:none;align-items:center;justify-content:center;gap:14px;margin-top:18px}
+.pf-count{font-family:var(--font-display);font-size:12.5px;font-weight:500;color:var(--muted);min-width:44px;text-align:center;font-variant-numeric:tabular-nums}
+.pf-dots{display:flex;gap:6px;align-items:center}
+.pf-dots button{width:6px;height:6px;border-radius:6px;border:0;padding:0;background:color-mix(in srgb,var(--text) 22%,transparent);cursor:pointer;transition:width .3s var(--ease),background .3s}
+.pf-dots button.on{width:20px;background:var(--red)}
+.pf-arrow{width:36px;height:36px;border-radius:50%;border:1px solid var(--glass-line);background:var(--glass);color:var(--text);display:grid;place-items:center;cursor:pointer}
+.pf-arrow svg{width:16px;height:16px}
+.pf-arrow:disabled{opacity:.35;cursor:default}
 .pf-1{grid-column:span 3;grid-row:span 2}
 .pf-2{grid-column:span 3}
 .pf-3{grid-column:span 3}
@@ -1377,7 +1385,12 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .bento{grid-template-columns:1fr}
   .s-sites,.s-mobile,.s-ai,.s-support{grid-column:auto}
   /* Portfolio: image on top, text below on solid surface — fully readable on touch */
-  .pf-bento{grid-template-columns:1fr;grid-auto-rows:auto}
+  /* Телефон: проекты — горизонтальная карусель, свайп влево/вправо, карточка встаёт по центру */
+  .pf-bento{display:flex;gap:12px;overflow-x:auto;contain:layout paint;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
+    margin:0 -22px;padding:4px 22px 6px;scroll-padding:0 22px;scrollbar-width:none;-webkit-overflow-scrolling:touch;perspective:none}
+  .pf-bento::-webkit-scrollbar{display:none}
+  .pf-bento .pf{flex:0 0 86%;scroll-snap-align:center;scroll-snap-stop:always;opacity:1;transform:none}
+  .pf-nav{display:flex}
   .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10,.pf-11,.pf-12,.pf-13{grid-column:auto;grid-row:auto}
   .pf{display:flex;flex-direction:column;background:var(--surface)}
   .pf img{position:relative;inset:auto;height:200px}
@@ -1518,7 +1531,15 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 }
 
 /* Опыт команды: логотипы компаний, из которых пришли разработчики SITS */
-.cmp-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:14px}
+/* Лента компаний: бесконечно едет справа налево, края растворяются, пауза при наведении/касании */
+.cmp-marquee{position:relative;overflow:hidden;contain:paint;padding:10px 0 14px;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14%,#000 86%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 14%,#000 86%,transparent 100%)}
+@media(max-width:600px){.cmp-marquee{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 88%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 88%,transparent 100%)}}
+.cmp-track{--cmp-gap:14px;display:flex;gap:var(--cmp-gap);width:max-content;animation:cmpScroll var(--cmp-dur,50s) linear infinite;will-change:transform}
+.cmp-track .cmp-card{flex:0 0 172px}
+.cmp-marquee:hover .cmp-track,.cmp-marquee.hold .cmp-track{animation-play-state:paused}
+@keyframes cmpScroll{from{transform:translateX(0)}to{transform:translateX(calc(-50% - var(--cmp-gap) / 2))}}
+@media(prefers-reduced-motion:reduce){.cmp-track{animation:none}.cmp-marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}}
 .cmp-card{margin:0;border:1px solid var(--glass-line);background:var(--glass);border-radius:var(--r-lg);
   padding:24px 16px 18px;display:flex;flex-direction:column;align-items:center;gap:15px;text-align:center;
   backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
@@ -1535,10 +1556,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 .cmp-name{font-size:13.5px;font-weight:500;color:var(--muted);letter-spacing:.01em;line-height:1.35;
   transition:color .4s var(--ease)}
 .cmp-card:hover .cmp-name{color:var(--text)}
-.cmp-grid .reveal{transition-delay:calc(var(--reveal-i, 0) * 70ms)}
-@media(max-width:1080px){.cmp-grid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:820px){.cmp-grid{grid-template-columns:repeat(3,1fr);gap:12px}}
-@media(max-width:520px){.cmp-grid{grid-template-columns:repeat(2,1fr);gap:11px}
+@media(max-width:520px){.cmp-track{--cmp-gap:11px}.cmp-track .cmp-card{flex-basis:140px}
   .cmp-card{padding:18px 12px 15px;gap:12px}
   .cmp-plate,.cmp-plate img{height:62px}}
 
@@ -1884,6 +1902,12 @@ p,li{overflow-wrap:break-word}
       <p class="desc" data-i18n="portfolio.desc">Десять запущенных проектов — от интерьерных бутиков до B2B-платформ и игровых студий.</p>
     </div>
     <div class="pf-bento" id="pfBento"></div>
+    <div class="pf-nav" id="pfNav" aria-label="Портфолио — навигация">
+      <button type="button" class="pf-arrow" id="pfPrev" aria-label="Предыдущий проект"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="pf-dots" id="pfDots"></div>
+      <span class="pf-count" id="pfCount">1 / 13</span>
+      <button type="button" class="pf-arrow" id="pfNext" aria-label="Следующий проект"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
   </div>
 </section>
 
@@ -1968,39 +1992,41 @@ p,li{overflow-wrap:break-word}
       </div>
       <p class="desc" data-i18n="team.desc">Разработчики SITS и наши продукты — из ведущих технологических и бизнес-компаний. Мы знаем, как строить продукт, который работает.</p>
     </div>
-    <div class="cmp-grid">
-      <figure class="cmp-card reveal">
+    <div class="cmp-marquee reveal" id="cmpMarquee">
+      <div class="cmp-track" id="cmpTrack">
+      <figure class="cmp-card">
         <div class="cmp-plate"><img src="/brand/companies/redpad.webp" alt="RedPad Games" width="320" height="320" loading="lazy" decoding="async"></div>
         <figcaption class="cmp-name">RedPad Games</figcaption>
       </figure>
-      <figure class="cmp-card reveal">
+      <figure class="cmp-card">
         <div class="cmp-plate"><img src="/brand/companies/grandmobile.webp" alt="Grand Mobile" width="320" height="320" loading="lazy" decoding="async"></div>
         <figcaption class="cmp-name">Grand Mobile</figcaption>
       </figure>
-      <figure class="cmp-card reveal">
+      <figure class="cmp-card">
         <div class="cmp-plate"><img src="/brand/companies/kpmg.webp" alt="KPMG" width="320" height="320" loading="lazy" decoding="async"></div>
         <figcaption class="cmp-name">KPMG</figcaption>
       </figure>
-      <figure class="cmp-card reveal">
+      <figure class="cmp-card">
         <div class="cmp-plate"><img src="/brand/companies/ozen.svg" alt="Ozen" width="400" height="400" loading="lazy" decoding="async"></div>
         <figcaption class="cmp-name">Ozen</figcaption>
       </figure>
-      <figure class="cmp-card reveal">
+      <figure class="cmp-card">
         <div class="cmp-plate"><img class="on-light" src="/brand/companies/astanahub.webp" alt="Astana Hub" width="440" height="224" loading="lazy" decoding="async"></div>
         <figcaption class="cmp-name">Astana Hub</figcaption>
       </figure>
-      <figure class="cmp-card reveal">
+      <figure class="cmp-card">
         <div class="cmp-plate"><img src="/brand/companies/etg.webp" alt="ETG" width="320" height="320" loading="lazy" decoding="async"></div>
         <figcaption class="cmp-name">ETG</figcaption>
       </figure>
-      <figure class="cmp-card reveal">
+      <figure class="cmp-card">
         <div class="cmp-plate"><img src="/brand/companies/taldau.webp" alt="Taldau AI Analytics" width="320" height="320" loading="lazy" decoding="async"></div>
         <figcaption class="cmp-name">Taldau AI Analytics</figcaption>
       </figure>
-      <figure class="cmp-card reveal">
+      <figure class="cmp-card">
         <div class="cmp-plate"><img src="/brand/companies/roblox-studio.webp" alt="Roblox Studio" width="320" height="320" loading="lazy" decoding="async"></div>
         <figcaption class="cmp-name">Roblox Studio</figcaption>
       </figure>
+      </div>
     </div>
   </div>
 </section>
@@ -3043,13 +3069,50 @@ const io = new IntersectionObserver(es => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* Назначаем индексы для stagger-анимации — внутри bento, pf-bento, process-rows */
-['.bento', '.pf-bento', '#process', '.price-grid', '.sup-grid', '.cmp-grid'].forEach(sel => {
+['.bento', '.pf-bento', '#process', '.price-grid', '.sup-grid'].forEach(sel => {
   const parent = document.querySelector(sel);
   if (!parent) return;
   parent.querySelectorAll('.reveal').forEach((el, i) => {
     el.style.setProperty('--reveal-i', i.toString());
   });
 });
+
+/* ============ ЛЕНТА КОМПАНИЙ ============ */
+/* Дублируем логотипы (копия скрыта от скринридеров), скорость — постоянная в px/с на любой ширине,
+   пауза: наведение, удержание пальцем, вне экрана (экономим батарею). */
+(function(){
+  const mq = document.getElementById('cmpMarquee'), track = document.getElementById('cmpTrack');
+  if (!mq || !track) return;
+  [...track.children].forEach(el => { const c = el.cloneNode(true); c.setAttribute('aria-hidden','true'); c.querySelectorAll('img').forEach(i => i.alt=''); track.appendChild(c); });
+  const setSpeed = () => { const half = track.scrollWidth / 2; track.style.setProperty('--cmp-dur', Math.max(20, half / 42) + 's'); };
+  setSpeed(); window.addEventListener('resize', setSpeed, { passive:true });
+  mq.addEventListener('touchstart', () => mq.classList.add('hold'), { passive:true });
+  const release = () => mq.classList.remove('hold');
+  mq.addEventListener('touchend', release, { passive:true }); mq.addEventListener('touchcancel', release, { passive:true });
+  new IntersectionObserver(es => { track.style.animationPlayState = es[0].isIntersecting ? '' : 'paused'; }).observe(mq);
+})();
+
+/* ============ ПОРТФОЛИО: карусель на телефоне ============ */
+(function(){
+  const box = document.getElementById('pfBento'), dots = document.getElementById('pfDots'),
+        cnt = document.getElementById('pfCount'), prev = document.getElementById('pfPrev'), next = document.getElementById('pfNext');
+  if (!box || !dots) return;
+  const cards = () => [...box.querySelectorAll('.pf')];
+  let cur = 0;
+  function build(){ const n = cards().length; dots.innerHTML = '';
+    for (let i = 0; i < n; i++){ const b = document.createElement('button'); b.type='button'; b.setAttribute('aria-label', (i+1)+' / '+n); b.onclick = () => go(i); dots.appendChild(b); }
+    update(); }
+  function nearest(){ const cs = cards(), mid = box.scrollLeft + box.clientWidth/2; let best = 0, d = Infinity;
+    cs.forEach((c,i) => { const cm = c.offsetLeft + c.offsetWidth/2; const dd = Math.abs(cm - mid); if (dd < d){ d = dd; best = i; } }); return best; }
+  function update(){ const cs = cards(); cur = nearest();
+    [...dots.children].forEach((b,i) => b.classList.toggle('on', i === cur));
+    cnt.textContent = (cur+1) + ' / ' + cs.length; prev.disabled = cur === 0; next.disabled = cur === cs.length-1; }
+  function go(i){ const c = cards()[i]; if (!c) return; box.scrollTo({ left: c.offsetLeft - (box.clientWidth - c.offsetWidth)/2, behavior:'smooth' }); }
+  let raf = 0; box.addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive:true });
+  prev.onclick = () => go(cur-1); next.onclick = () => go(cur+1);
+  new MutationObserver(build).observe(box, { childList:true }); // перерисовка при смене языка
+  build();
+})();
 
 /* ============ APPLY LANG ============ */
 function applyLang(lang) {

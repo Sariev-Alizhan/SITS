@@ -173,17 +173,20 @@ button.busy .spin{display:block} button.busy svg{display:none}
   var placement = [src, q.get("placement") || ""].filter(Boolean).join(" · ");
 
   // Кто не хочет заполнять форму — сразу в WhatsApp. Клик пишется в таблицу с кодом, код уходит в сообщении, чтобы найти лид.
-  document.getElementById("quick").addEventListener("click", function(e){
-    e.preventDefault();
+  // auto — переход из рекламы сразу в WhatsApp: формы человек не видит, поэтому проверка «слишком быстро» (ms) не нужна.
+  function quickGo(auto){
     var k = kind() || cr || "other";
     var text = "Здравствуйте! Хочу " + KINDS[k].intro + ".\nКод: " + code;
     var wa = ["https:", "//wa.me", "/77058032098", "?text=", encodeURIComponent(text)].join("");
     try { fetch("/api/yan-lead", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ quick: 1, code: code, cr: cr, kind: kind(), website: document.getElementById("website").value,
-        ms: Date.now() - t0, src: q.get("utm_source") || "", ad: q.get("utm_content") || "", adset: q.get("utm_term") || "",
+        ms: auto ? 0 : Date.now() - t0, src: q.get("utm_source") || "", ad: q.get("utm_content") || "", adset: q.get("utm_term") || "",
         campaign: q.get("utm_campaign") || "", placement: placement, device: device }) }); } catch (_) {}
     setTimeout(function(){ location.href = wa; }, 150);
-  });
+  }
+  document.getElementById("quick").addEventListener("click", function(e){ e.preventDefault(); quickGo(false); });
+  // С 06.10 реклама ведёт сразу в WhatsApp Яна (форму почти никто не заполнял). Форма осталась по ссылке ?form=1.
+  if (q.get("form") !== "1") { document.querySelector("main").style.visibility = "hidden"; quickGo(true); return; }
 
   var f = document.getElementById("f"), b = document.getElementById("b"), sent = false;
   f.addEventListener("submit", function(e){

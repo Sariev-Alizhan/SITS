@@ -176,7 +176,8 @@ button.busy .spin{display:block} button.busy svg{display:none}
   // auto — переход из рекламы сразу в WhatsApp: формы человек не видит, поэтому проверка «слишком быстро» (ms) не нужна.
   function quickGo(auto){
     var k = kind() || cr || "other";
-    var text = "Здравствуйте! Хочу " + KINDS[k].intro + ".\nКод: " + code;
+    var intro = KINDS[k].intro, want = /^хочу /.test(intro) ? "Х" + intro.slice(1) : "Хочу " + intro;
+    var text = "Здравствуйте! " + want + ".\nКод: " + code;
     var wa = ["https:", "//wa.me", "/77058032098", "?text=", encodeURIComponent(text)].join("");
     try { fetch("/api/yan-lead", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ quick: 1, code: code, cr: cr, kind: kind(), website: document.getElementById("website").value,

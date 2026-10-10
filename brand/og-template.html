@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Source template for brand/og-image.png. Rendered at 1200x630 in Chrome and screenshotted. -->
+<!-- Источник brand/og-image.png: рендер 1200×630 при deviceScaleFactor 2 (2400×1260). Акций в превью не держать — их забывают снять. -->
 <html lang="ru">
 <head>
 <meta charset="UTF-8" />
@@ -13,14 +13,12 @@
       background:radial-gradient(60% 90% at 100% 0%, rgba(226,55,68,.22), transparent 60%)}
   .inner{position:relative;z-index:1;width:100%;height:100%;
       padding:72px 76px;display:flex;flex-direction:column;justify-content:space-between}
-  /* logo lockup */
-  .brand{display:flex;flex-direction:column;gap:12px}
-  .lockup{display:flex;align-items:center;gap:14px}
-  .brand-mark{height:98px;width:auto;display:block}
-  .brand-word{font-family:'PT Serif',Georgia,serif;font-weight:700;font-size:90px;
-      line-height:.86;letter-spacing:.04em;color:#e23744}
-  .brand-tag{font-family:'Manrope',sans-serif;font-weight:600;font-size:27px;
-      letter-spacing:.02em;color:#e23744}
+  /* логотип — вариант 4, как в шапке сайта: знак + SITS + Sariyev IT Solutions */
+  .brand{display:flex;align-items:center;gap:22px}
+  .lm{height:112px;width:auto;fill:#e23744;flex:none}
+  .lt{display:flex;flex-direction:column;gap:12px;line-height:1}
+  .lt b{font-family:'Unbounded','Arial Black',sans-serif;font-weight:800;font-size:64px;letter-spacing:.05em;color:#f4f1f1}
+  .lt small{font-family:'Manrope',sans-serif;font-weight:700;font-size:21px;letter-spacing:.16em;text-transform:uppercase;color:#a39d9e}
   /* headline */
   .headline{font-family:'Manrope',sans-serif;font-weight:600;font-size:60px;
       line-height:1.12;letter-spacing:-.015em;color:#f4f1f1}
@@ -41,21 +39,14 @@
 <body>
 <div class="og">
   <div class="inner">
-    <div class="brand">
-      <div class="lockup">
-        <img class="brand-mark" src="/brand/sits-mark-red.png" alt="" />
-        <div class="brand-word">IT</div>
-        <img class="brand-mark" src="/brand/sits-mark-red.png" alt="" />
-      </div>
-      <div class="brand-tag">Sariyev IT Solutions</div>
-    </div>
+    <div class="brand"><svg class="lm" viewBox="-6 -6 352 428" aria-hidden="true"><path d="M170 0 333 113 290 180 252 155 270 125 170 57 42 144 215 270 178 297 0 171 1 115Z M170 416 7 303 50 236 88 261 70 291 170 359 298 272 125 146 162 119 340 245 339 301Z"/></svg><span class="lt"><b>SITS</b><small>Sariyev IT Solutions</small></span></div>
     <div style="display:flex;flex-direction:column">
       <div class="headline">Превращаем идеи<br/>в цифровые продукты</div>
     </div>
     <div class="foot">
       <div class="divider"></div>
       <div class="services">Сайты · приложения · игры · автоматизация · AI-контент</div>
-      <div class="handle">sariyev-it-solutions</div>
+      <div class="handle">sariyev.com</div>
     </div>
   </div>
 </div>

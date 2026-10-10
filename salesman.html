@@ -14,9 +14,15 @@
 <meta property="og:title" content="Работа в SITS — 40% с первой продажи" />
 <meta property="og:description" content="Продавай IT‑решения SITS и получай 40% с первой продажи. Одна продажа — и ты в команде: трудоустройство в отдел продаж." />
 <meta property="og:url" content="https://sariyev.com/salesman" />
-<meta property="og:image" content="https://sariyev.com/brand/og-image.png?v=12" />
+<meta property="og:image" content="https://sariyev.com/brand/og-salesman.jpg?v=1" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Работа в SITS — 40% с первой продажи" />
 <meta property="og:locale" content="ru_RU" />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Работа в SITS — 40% с первой продажи" />
+<meta name="twitter:image" content="https://sariyev.com/brand/og-salesman.jpg?v=1" />
 <meta name="theme-color" content="#0c0a0b" />
 <script>document.documentElement.classList.add('js')</script>
 <link rel="preload" href="/fonts/unbounded-800-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
@@ -76,7 +82,7 @@ html:not(.js) .rv{opacity:1;transform:none}
 /* ---------- шапка ---------- */
 .top{position:sticky;top:0;z-index:50;padding:12px 0;background:rgba(12,10,11,.74);backdrop-filter:blur(16px) saturate(1.6);-webkit-backdrop-filter:blur(16px) saturate(1.6);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;padding:6px 0;min-height:44px}
 .brand .lm{height:32px;width:auto;fill:var(--red);flex:none}
 .brand .lt{display:flex;flex-direction:column;gap:4px;line-height:1}
 .brand .lt b{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:.05em}
@@ -541,10 +547,18 @@ details p{padding:0 0 22px;color:var(--muted);font-size:16px;line-height:1.55}
   });
   calc();
 
-  // Плавающая кнопка WhatsApp на телефоне прячется у финального блока со своей кнопкой.
-  var fab = document.querySelector('.fab'), fin = document.getElementById('final');
-  if (fab && fin && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) { fab.classList.toggle('hide', es[0].isIntersecting); }).observe(fin);
+  // Плавающая кнопка WhatsApp на телефоне: прячется, пока видны свои большие кнопки —
+  // на первом экране (иначе закрывает «Как попасть в команду») и в финальном блоке.
+  var fab = document.querySelector('.fab');
+  var own = [document.querySelector('.hero .cta'), document.getElementById('final')].filter(Boolean);
+  if (fab && own.length && 'IntersectionObserver' in window) {
+    var seen = new Set();
+    fab.classList.add('hide');
+    var obs = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.isIntersecting ? seen.add(e.target) : seen.delete(e.target); });
+      fab.classList.toggle('hide', seen.size > 0);
+    });
+    own.forEach(function (el) { obs.observe(el); });
   }
 })();
 </script>

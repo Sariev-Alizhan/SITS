@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- Источник brand/og-salesman.png: рендер 1200×630 при deviceScaleFactor 2 (2400×1260). Акций в превью не держать — их забывают снять. -->
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="/fonts/fonts.css" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  .og{position:relative;width:1200px;height:630px;background:#0c0a0b;
+      font-family:'Manrope',system-ui,sans-serif;overflow:hidden}
+  .og::before{content:"";position:absolute;inset:0;
+      background:radial-gradient(60% 90% at 100% 0%, rgba(226,55,68,.22), transparent 60%)}
+  .inner{position:relative;z-index:1;width:100%;height:100%;
+      padding:72px 76px;display:flex;flex-direction:column;justify-content:space-between}
+  /* логотип — вариант 4, как в шапке сайта: знак + SITS + Sariyev IT Solutions */
+  .brand{display:flex;align-items:center;gap:22px}
+  .lm{height:112px;width:auto;fill:#e23744;flex:none}
+  .lt{display:flex;flex-direction:column;gap:12px;line-height:1}
+  .lt b{font-family:'Unbounded','Arial Black',sans-serif;font-weight:800;font-size:64px;letter-spacing:.05em;color:#f4f1f1}
+  .lt small{font-family:'Manrope',sans-serif;font-weight:700;font-size:21px;letter-spacing:.16em;text-transform:uppercase;color:#a39d9e}
+  /* headline */
+  .headline{font-family:'Manrope',sans-serif;font-weight:600;font-size:60px;
+      line-height:1.12;letter-spacing:-.015em;color:#f4f1f1}
+  .promo{display:inline-flex;align-items:center;gap:14px;align-self:flex-start;margin-top:24px;
+      padding:15px 26px;border-radius:100px;font-family:'Manrope',sans-serif;font-weight:700;font-size:28px;color:#f4f1f1;
+      border:1px solid rgba(226,55,68,.5);background:linear-gradient(135deg,rgba(226,55,68,.22),rgba(226,55,68,.07))}
+  .promo b{color:#e23744}
+  .promo i{width:12px;height:12px;border-radius:50%;background:#e23744}
+  /* footer */
+  .foot{}
+  .divider{height:1px;width:100%;background:rgba(255,255,255,.12);margin-bottom:28px}
+  .services{font-family:'Manrope',sans-serif;font-weight:500;font-size:30px;
+      letter-spacing:.005em;color:#a39d9e}
+  .handle{font-family:'Manrope',sans-serif;font-weight:500;font-size:26px;
+      color:#726c6d;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="og">
+  <div class="inner">
+    <div class="brand"><svg class="lm" viewBox="-6 -6 352 428" aria-hidden="true"><path d="M170 0 333 113 290 180 252 155 270 125 170 57 42 144 215 270 178 297 0 171 1 115Z M170 416 7 303 50 236 88 261 70 291 170 359 298 272 125 146 162 119 340 245 339 301Z"/></svg><span class="lt"><b>SITS</b><small>Sariyev IT Solutions</small></span></div>
+    <div style="display:flex;flex-direction:column">
+      <div class="headline">Работа в отделе продаж:<br/><b style="color:#e23744">40% с первой продажи</b></div>
+      <div class="promo"><i></i>Сделай 1 продажу — и ты в команде SITS</div>
+    </div>
+    <div class="foot">
+      <div class="divider"></div>
+      <div class="services">Сайты · AI-ассистенты · автоматизация · приложения</div>
+      <div class="handle">sariyev.com/salesman</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

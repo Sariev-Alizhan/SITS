@@ -695,6 +695,10 @@ html[data-theme="light"] .hero-arm img{filter:drop-shadow(0 20px 38px rgba(20,12
 /* Казахские пункты меню длиннее — второстепенные прячем на ширинах раньше */
 @media(min-width:941px) and (max-width:1360px){html[lang="kk"] .nav-links a[data-i18n="nav.process"],html[lang="kk"] .nav-links a[data-i18n="nav.about"]{display:none}}
 @media(min-width:941px) and (max-width:1200px){html[lang="kk"] .nav-links a[data-i18n="nav.auto"]{display:none}}
+/* Казахские заголовки длиннее: «компаниялардағы» в 30px Unbounded не влезало в 360px и раздвигало всю страницу
+   (вместе с ней вылезал и баннер cookie). Чуть меньше шрифт + перенос как страховка. */
+@media(max-width:420px){html[lang="kk"] .sec-head h2{font-size:clamp(23px,7vw,28px)}}
+.sec-head h2{overflow-wrap:break-word}
 /* ⌘K discovery hint — отображается только на десктопе с pointer:fine */
 .cmdk-hint{display:none;align-items:center;gap:8px;height:40px;padding:0 11px 0 13px;
   border:1px solid var(--glass-line);border-radius:100px;background:var(--glass);color:var(--muted);
@@ -1019,9 +1023,10 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .pf-8{grid-column:span 3}
 .pf-9{grid-column:span 3}
 .pf-10{grid-column:span 3}
-.pf-11{grid-column:span 2}
-.pf-12{grid-column:span 2}
-.pf-13{grid-column:span 2}
+.pf-11{grid-column:span 3}
+.pf-12{grid-column:span 3}
+.pf-13{grid-column:span 3}
+.pf-14{grid-column:span 3}
 
 /* ============ PRICING ============ */
 .promo-pill{display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;
@@ -1360,7 +1365,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .p-row{grid-template-columns:70px 1fr;gap:22px}
   .p-row p{grid-column:2}
   .pf-bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:220px}
-  .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10,.pf-11,.pf-12,.pf-13{grid-column:span 2;grid-row:span 1}
+  .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10,.pf-11,.pf-12,.pf-13,.pf-14{grid-column:span 2;grid-row:span 1}
   .about-grid{grid-template-columns:1fr;gap:40px;max-width:520px}
   .contact-grid{grid-template-columns:1fr;gap:36px}
 }
@@ -1391,7 +1396,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .pf-bento::-webkit-scrollbar{display:none}
   .pf-bento .pf{flex:0 0 86%;scroll-snap-align:center;scroll-snap-stop:always;opacity:1;transform:none}
   .pf-nav{display:flex}
-  .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10,.pf-11,.pf-12,.pf-13{grid-column:auto;grid-row:auto}
+  .pf-1,.pf-2,.pf-3,.pf-4,.pf-5,.pf-6,.pf-7,.pf-8,.pf-9,.pf-10,.pf-11,.pf-12,.pf-13,.pf-14{grid-column:auto;grid-row:auto}
   .pf{display:flex;flex-direction:column;background:var(--surface)}
   .pf img{position:relative;inset:auto;height:200px}
   .pf .grad{display:none}
@@ -1564,6 +1569,53 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 h1,h2,h3,h4{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
 p,li{overflow-wrap:break-word}
 @media(max-width:400px){.fibo-lead{hyphens:auto;-webkit-hyphens:auto}}
+
+/* ---------- кейс команды ---------- */
+#team-case h2,.tc-h{hyphens:manual;-webkit-hyphens:manual}
+#team-case .sec-head .left{max-width:760px}
+.tc{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+.tc-main{position:relative;overflow:hidden;display:flex;flex-direction:column;border-radius:var(--r-xl);padding:40px;border:1px solid var(--glass-line);
+  background:radial-gradient(120% 90% at 100% 0%,var(--red-soft),transparent 55%),var(--glass);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur)}
+.tc-who{display:flex;align-items:center;gap:14px}
+.tc-av{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;flex:none;background:var(--red);color:#fff;
+  font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:.02em;box-shadow:0 12px 28px -12px var(--red)}
+.tc-nm{font-family:var(--font-display);font-weight:600;font-size:19px;letter-spacing:-.01em}
+.tc-rl{font-size:14px;color:var(--muted);margin-top:2px}
+.tc-grant{position:absolute;top:34px;right:36px;text-align:right}
+.tc-grant b{display:block;font-family:var(--font-display);font-weight:700;font-size:clamp(30px,3.4vw,46px);letter-spacing:-.03em;color:var(--red);line-height:1}
+.tc-grant span{font-size:13px;color:var(--muted)}
+.tc-h{font-family:var(--font-display);font-weight:600;font-size:clamp(22px,2.4vw,30px);line-height:1.18;letter-spacing:-.02em;margin:34px 0 14px;max-width:560px;text-wrap:balance}
+.tc-p{color:var(--muted);font-size:16.5px;line-height:1.6;max-width:600px}
+.tc-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:auto;padding-top:30px}
+.tc-stats div{border:1px solid var(--line-2);border-radius:var(--r-sm);padding:16px 16px 14px}
+.tc-stats b{display:block;font-family:var(--font-display);font-weight:600;font-size:clamp(15px,1.35vw,19px);letter-spacing:-.02em;white-space:nowrap}
+.tc-stats span{display:block;font-size:13px;color:var(--muted);margin-top:4px;line-height:1.35}
+.tc-side{display:flex;flex-direction:column;gap:12px}
+.tc-lbl{font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:4px 4px 0}
+.tc-prj{display:flex;flex-direction:column;gap:4px;border-radius:var(--r-lg);border:1px solid var(--glass-line);background:var(--glass);
+  padding:14px 14px 18px;color:inherit;text-decoration:none;transition:transform .3s var(--ease),border-color .3s}
+a.tc-prj:hover{transform:translateY(-3px);border-color:var(--red)}
+.tc-prj img{width:100%;height:auto;aspect-ratio:16/8;object-fit:cover;object-position:top;border-radius:14px;margin-bottom:10px;border:1px solid var(--line)}
+.tc-prj .tc-cat,.tc-prj .tc-name,.tc-prj .tc-desc,.tc-prj .tc-open{padding:0 4px}
+.tc-cat{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.tc-name{font-family:var(--font-display);font-weight:600;font-size:20px;letter-spacing:-.01em}
+.tc-desc{font-size:14.5px;color:var(--muted);line-height:1.5}
+.tc-open{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;margin-top:6px}
+.tc-open svg{width:15px;height:15px}
+.tc-prj-text{flex:1;justify-content:flex-end;padding:22px 18px 20px}
+.tc-ico{width:44px;height:44px;border-radius:13px;background:var(--red-soft);color:var(--red);display:grid;place-items:center;margin-bottom:auto;margin-left:4px}
+.tc-ico svg{width:23px;height:23px}
+.tc-prj-text .tc-cat{margin-top:18px}
+.tc-foot{margin-top:22px;color:var(--muted);font-size:15px;text-align:center}
+@media (max-width:960px){.tc{grid-template-columns:minmax(0,1fr)}.tc-prj-text .tc-ico{margin-bottom:0}}
+@media (max-width:640px){
+  .tc-main{padding:26px 20px}
+  .tc-grant{position:static;text-align:left;margin-top:22px}
+  .tc-h{margin-top:14px}
+  .tc-stats{grid-template-columns:minmax(0,1fr);gap:8px}
+  .tc-stats div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:13px 14px}
+  .tc-stats span{margin-top:0;text-align:right}
+}
 </style>
 </head>
 <body>
@@ -1905,9 +1957,55 @@ p,li{overflow-wrap:break-word}
     <div class="pf-nav" id="pfNav" aria-label="Портфолио — навигация">
       <button type="button" class="pf-arrow" id="pfPrev" aria-label="Предыдущий проект"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
       <div class="pf-dots" id="pfDots"></div>
-      <span class="pf-count" id="pfCount">1 / 13</span>
+      <span class="pf-count" id="pfCount">1 / 14</span>
       <button type="button" class="pf-arrow" id="pfNext" aria-label="Следующий проект"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
     </div>
+  </div>
+</section>
+
+<!-- ============ КЕЙС КОМАНДЫ ============ -->
+<section class="section" id="team-case">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="left">
+        <div class="sec-tag"><i></i><span data-i18n="tcase.tag">Команда</span></div>
+        <h2 data-i18n="tcase.h2">Сильный кейс нашего разработчика</h2>
+      </div>
+      <p class="desc" data-i18n="tcase.desc">Наши проекты делают люди, чей уровень признают за пределами Казахстана.</p>
+    </div>
+    <div class="tc reveal">
+      <div class="tc-main">
+        <div class="tc-who">
+          <div class="tc-av" aria-hidden="true" data-i18n="tcase.ini">ДЖ</div>
+          <div><div class="tc-nm" data-i18n="tcase.name">Дияр Жакпелов</div><div class="tc-rl" data-i18n="tcase.role">Разработчик SITS</div></div>
+        </div>
+        <div class="tc-grant"><b data-i18n="tcase.grantV">$10 000</b><span data-i18n="tcase.grantL">грант за проект</span></div>
+        <h3 class="tc-h" data-i18n="tcase.h3">Защитил проект перед Тайлером Коуэном и получил грант</h3>
+        <p class="tc-p" data-i18n="tcase.p">Проект, написанный всего за 2 недели, Дияр лично защитил перед Тайлером Коуэном — американским экономистом и профессором Университета Джорджа Мейсона — и получил грант на $10 000.</p>
+        <div class="tc-stats">
+          <div><b data-i18n="tcase.s1V">2 недели</b><span data-i18n="tcase.s1L">на разработку проекта</span></div>
+          <div><b data-i18n="tcase.s2V">$10 000</b><span data-i18n="tcase.s2L">грант после защиты</span></div>
+          <div><b data-i18n="tcase.s3V">2 продукта</b><span data-i18n="tcase.s3L">в продакшене</span></div>
+        </div>
+      </div>
+      <div class="tc-side">
+        <div class="tc-lbl" data-i18n="tcase.prjLbl">Проекты Дияра</div>
+        <a class="tc-prj" href="https://asiatradekz.com/" target="_blank" rel="noopener">
+          <img src="portfolio/14_asiatrade.webp" alt="AsiaTrade — каталог авто из Кореи" loading="lazy" decoding="async" width="1800" height="1125" />
+          <span class="tc-cat" data-i18n="tcase.p1Cat">Платформа · авто из Кореи</span>
+          <span class="tc-name">AsiaTrade</span>
+          <span class="tc-desc" data-i18n="tcase.p1Desc">Каталог авто под ключ в Казахстан: более 180 000 машин с ценами, фото и характеристиками.</span>
+          <span class="tc-open"><span data-i18n="tcase.open">Открыть сайт</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+        </a>
+        <div class="tc-prj tc-prj-text">
+          <span class="tc-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></span>
+          <span class="tc-cat" data-i18n="tcase.p2Cat">EdTech · приложение</span>
+          <span class="tc-name">ENTPrep</span>
+          <span class="tc-desc" data-i18n="tcase.p2Desc">Приложение для подготовки к ЕНТ и поступлению в университеты Казахстана.</span>
+        </div>
+      </div>
+    </div>
+    <p class="tc-foot reveal" data-i18n="tcase.foot">Такие разработчики работают над вашими проектами в SITS.</p>
   </div>
 </section>
 
@@ -2251,6 +2349,7 @@ const I18N = {
         '07':'Маркетплейс', '08':'B2B-маркетплейс', '09':'Каталог / городской сервис',
         '10':'Премиум-шоурум', '11':'Собственный продукт · CRM', '12':'AI на базе Claude',
         '13':'SaaS · CRM + техподдержка',
+        '14':'Авто-маркетплейс · кейс команды',
       },
       desc_: {
         '01':'Студия интерьерного дизайна и бутик (Алматы). Элегантный мультиязычный сайт.',
@@ -2264,7 +2363,24 @@ const I18N = {
         '09':'Каталог акций и магазинов города (Усть-Каменогорск). Карточки товаров и акций.',
         '10':'Премиум-сайт шоурума камня (Астана). Спечённый камень SINISO, керамогранит, мрамор. Расчёт, 3D-визуализация, монтаж под ключ.', '11':'Fibonacci Control — наша CRM-платформа: ИИ-сотрудник, WhatsApp и учёт сделок для любого бизнеса Казахстана.', '12':'AI-консультант сайта SITS: отвечает про услуги и цены на трёх языках и принимает заявки прямо в чате. Нажмите кнопку чата и попробуйте.',
         '13':'Облачная CRM для спа и банных комплексов: ИИ-администратор в WhatsApp, брони, касса и склад. Техподдержку и развитие ведёт SITS.',
+        '14':'Каталог авто из Кореи под ключ в Казахстан: более 180 000 машин с ценами, фото и характеристиками. Разработал Дияр Жакпелов.',
       },
+    },
+    tcase: {
+      tag:'Команда', h2:'Сильный кейс нашего разработчика',
+      desc:'Наши проекты делают люди, чей уровень признают за пределами Казахстана.',
+      name:'Дияр Жакпелов', role:'Разработчик SITS', ini:'ДЖ', grantV:'$10 000',
+      grantL:'грант за проект',
+      h3:'Защитил проект перед Тайлером Коуэном и получил грант',
+      p:'Проект, написанный всего за 2 недели, Дияр лично защитил перед Тайлером Коуэном — американским экономистом и профессором Университета Джорджа Мейсона — и получил грант на $10 000.',
+      s1V:'2 недели', s1L:'на разработку проекта',
+      s2V:'$10 000', s2L:'грант после защиты',
+      s3V:'2 продукта', s3L:'в продакшене',
+      prjLbl:'Проекты Дияра',
+      p1Cat:'Платформа · авто из Кореи', p1Desc:'Каталог авто под ключ в Казахстан: более 180 000 машин с ценами, фото и характеристиками.',
+      p2Cat:'EdTech · приложение', p2Desc:'Приложение для подготовки к ЕНТ и поступлению в университеты Казахстана.',
+      open:'Открыть сайт',
+      foot:'Такие разработчики работают над вашими проектами в SITS.',
     },
     pricing: {
       tag:'Прайс', h2:'Пакеты и цены',
@@ -2518,6 +2634,7 @@ const I18N = {
         '07':'Marketplace', '08':'B2B marketplace', '09':'Catalog / local service',
         '10':'Premium showroom', '11':'Own product · CRM', '12':'AI powered by Claude',
         '13':'SaaS · CRM + tech support',
+        '14':'Car marketplace · team case',
       },
       desc_: {
         '01':'Interior design studio and boutique (Almaty). An elegant multilingual site.',
@@ -2531,7 +2648,24 @@ const I18N = {
         '09':'Local catalog of deals and stores (Oskemen). Product and promo cards.',
         '10':'Premium stone showroom site (Astana). SINISO sintered stone, porcelain, marble. Calculation, 3D viz, turn-key installation.', '11':'Fibonacci Control — our own CRM platform: an AI employee, WhatsApp and deal tracking for any business in Kazakhstan.', '12':'The AI consultant on the SITS site: answers about services and prices in three languages and takes leads right in the chat. Tap the chat button and try it.',
         '13':'Cloud CRM for spas and bathhouse complexes: an AI administrator in WhatsApp, bookings, POS and inventory. Tech support and development by SITS.',
+        '14':'Catalogue of turnkey cars from Korea to Kazakhstan: 180,000+ vehicles with prices, photos and specs. Built by Diyar Zhakpelov.',
       },
+    },
+    tcase: {
+      tag:'Team', h2:'A standout case from our developer',
+      desc:'Our projects are built by people whose level is recognised far beyond Kazakhstan.',
+      name:'Diyar Zhakpelov', role:'Developer at SITS', ini:'DZ', grantV:'$10,000',
+      grantL:'grant for the project',
+      h3:'Defended his project before Tyler Cowen and won a grant',
+      p:'Diyar personally defended a project he built in just 2 weeks before Tyler Cowen — American economist and professor at George Mason University — and received a $10,000 grant.',
+      s1V:'2 weeks', s1L:'to build the project',
+      s2V:'$10,000', s2L:'grant after the defence',
+      s3V:'2 products', s3L:'in production',
+      prjLbl:'Diyar’s projects',
+      p1Cat:'Platform · cars from Korea', p1Desc:'Turnkey car catalogue for Kazakhstan: 180,000+ vehicles with prices, photos and specs.',
+      p2Cat:'EdTech · app', p2Desc:'An app that prepares students for the UNT and admission to Kazakhstan’s universities.',
+      open:'Open website',
+      foot:'Developers like this work on your projects at SITS.',
     },
     pricing: {
       tag:'Pricing', h2:'Packages & prices',
@@ -2785,6 +2919,7 @@ const I18N = {
         '07':'Маркетплейс', '08':'B2B-маркетплейс', '09':'Каталог / қалалық сервис',
         '10':'Премиум-шоурум', '11':'Меншікті өнім · CRM', '12':'Claude негізіндегі AI',
         '13':'SaaS · CRM + техқолдау',
+        '14':'Авто-маркетплейс · команда кейсі',
       },
       desc_: {
         '01':'Интерьер дизайн студиясы және бутик (Алматы). Талғампаз, көп тілді сайт.',
@@ -2798,7 +2933,24 @@ const I18N = {
         '09':'Қаладағы акциялар мен дүкендердің каталогы (Өскемен). Тауар мен акциялардың карточкалары.',
         '10':'Астана тас шоурумының премиум-сайты. SINISO спечен тас, керамогранит, мрамор. Есептеу, 3D-визуализация, кілт астында монтаж.', '11':'Fibonacci Control — өз CRM-платформамыз: ИИ-қызметкер, WhatsApp және мәмілелер есебі кез келген бизнеске.', '12':'SITS сайтындағы AI-кеңесші: қызметтер мен бағалар туралы үш тілде жауап беріп, өтінімдерді чатта қабылдайды. Чат батырмасын басып көріңіз.',
         '13':'Спа және монша кешендеріне арналған бұлттық CRM: WhatsApp-тағы ИИ-әкімші, брондар, касса және қойма. Техқолдау мен дамуын SITS жүргізеді.',
+        '14':'Кореядан Қазақстанға дайын көліктер каталогы: бағасы, фотосы мен сипаттамасы бар 180 000-нан астам көлік. Әзірлеген — Дияр Жакпелов.',
       },
+    },
+    tcase: {
+      tag:'Команда', h2:'Әзірлеушіміздің мықты кейсі',
+      desc:'Жобаларымызды деңгейі Қазақстаннан тыс жерлерде мойындалған мамандар жасайды.',
+      name:'Дияр Жакпелов', role:'SITS әзірлеушісі', ini:'ДЖ', grantV:'$10 000',
+      grantL:'жоба үшін грант',
+      h3:'Жобасын Тайлер Коуэннің алдында қорғап, грант алды',
+      p:'Небәрі 2 аптада жазылған жобасын Дияр американдық экономист, Джордж Мейсон университетінің профессоры Тайлер Коуэннің алдында өзі қорғап, $10 000 грант алды.',
+      s1V:'2 апта', s1L:'жобаны әзірлеуге',
+      s2V:'$10 000', s2L:'қорғаудан кейінгі грант',
+      s3V:'2 өнім', s3L:'продакшнда',
+      prjLbl:'Дияр жобалары',
+      p1Cat:'Платформа · Кореядан көліктер', p1Desc:'Қазақстанға дайын көліктер каталогы: бағасы, фотосы мен сипаттамасы бар 180 000-нан астам көлік.',
+      p2Cat:'EdTech · қосымша', p2Desc:'ҰБТ-ға және Қазақстан университеттеріне түсуге дайындайтын қосымша.',
+      open:'Сайтты ашу',
+      foot:'Сіздің жобаларыңызбен SITS-те осындай әзірлеушілер жұмыс істейді.',
     },
     pricing: {
       tag:'Бағалар', h2:'Пакеттер мен бағалар',
@@ -2998,6 +3150,7 @@ const PORTFOLIO = [
   { id:'11', name:'Fibonacci Control',   url:'https://fibonaccicontrol.com',                   img:'portfolio/11_fibonacci-control.webp', cls:'pf-11' },
   { id:'12', name:'AI-консультант SITS', url:'/price',                                         img:'portfolio/12_ai-assistant.webp',  cls:'pf-12' },
   { id:'13', name:'SmartAdmin',         url:'https://smartadmin.kz',                          img:'portfolio/13_smartadmin.webp?v=2',    cls:'pf-13' },
+  { id:'14', name:'AsiaTrade',          url:'https://asiatradekz.com/',                       img:'portfolio/14_asiatrade.webp',     cls:'pf-14' },
 ];
 
 function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }

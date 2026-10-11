@@ -37,7 +37,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
   -webkit-font-smoothing:antialiased;text-align:center}
 .logo{position:fixed;top:24px;left:32px;display:inline-flex;align-items:center;gap:11px;line-height:1;color:var(--text);text-decoration:none;white-space:nowrap}
 .logo-mark{height:34px;width:auto;display:block;flex-shrink:0;fill:var(--red)}
-.logo-txt{display:flex;flex-direction:column;gap:4px}
+.logo-txt{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left}
 .logo-txt b{font-family:'Unbounded','Arial Black',system-ui,sans-serif;font-weight:700;font-size:18px;letter-spacing:.05em;color:var(--text)}
 .logo-txt small{font-family:'Manrope',system-ui,sans-serif;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .fx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
@@ -69,7 +69,8 @@ p{color:var(--muted);font-size:16px;line-height:1.6;margin-bottom:36px}
 .foot{position:fixed;bottom:22px;left:0;right:0;text-align:center;color:var(--faint);font-size:12px}
 
 /* Длинные слова (особенно казахские) не должны вылезать за экран на узких телефонах */
-h1,h2,h3,h4{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+h1,h2,h3,h4{overflow-wrap:break-word}
+@media(max-width:480px){h1,h2{hyphens:auto;-webkit-hyphens:auto}}
 p,li{overflow-wrap:break-word}
 @media(max-width:400px){.fibo-lead{hyphens:auto;-webkit-hyphens:auto}}
 </style>

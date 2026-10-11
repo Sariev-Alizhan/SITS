@@ -1352,7 +1352,8 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
 }
 
 /* Длинные слова (особенно казахские) не должны вылезать за экран на узких телефонах */
-h1,h2,h3,h4{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+h1,h2,h3,h4{overflow-wrap:break-word}
+@media(max-width:480px){h1,h2{hyphens:auto;-webkit-hyphens:auto}}
 p,li{overflow-wrap:break-word}
 @media(max-width:400px){.fibo-lead{hyphens:auto;-webkit-hyphens:auto}}
 </style>
@@ -1706,7 +1707,7 @@ p,li{overflow-wrap:break-word}
       </article>
 
       <!-- AI Love Story -->
-      <article class="price-card reveal">
+      <article class="price-card wide reveal">
         
         <h3 data-i18n="pricing.mLsH">AI Love Story</h3>
         <p class="pc-sub" data-i18n="pricing.mLsSub">Персональная видео-история о вашей паре, созданная AI: из фотографий и воспоминаний — трогательный ролик в подарок.</p>
@@ -1737,7 +1738,7 @@ p,li{overflow-wrap:break-word}
     <p class="sub-desc reveal" data-i18n="pricing.tgSub">Таргетированная реклама в Instagram: цели и KPI фиксируем договором, отчёт с цифрами — каждый месяц.</p>
     <div class="price-grid">
       <!-- Настройка таргета -->
-      <article class="price-card reveal">
+      <article class="price-card wide reveal">
         
         <h3 data-i18n="pricing.tgAdH">Настройка таргета</h3>
         <p class="pc-sub" data-i18n="pricing.tgAdSub">Реклама в Instagram под ключ: стратегия, креативы, запуск и еженедельная оптимизация.</p>

@@ -173,7 +173,7 @@ section{padding:96px 0;position:relative}
 @media(max-width:640px){section{padding:64px 0}}
 .tag{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
 .tag::before{content:"";width:10px;height:10px;background:var(--cyan);border:2px solid var(--ink);transform:rotate(45deg)}
-h2{overflow-wrap:break-word;hyphens:auto;font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48px);line-height:1.04;letter-spacing:-.02em;text-transform:uppercase;text-wrap:balance}
+h2{overflow-wrap:break-word;font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,48px);line-height:1.04;letter-spacing:-.02em;text-transform:uppercase;text-wrap:balance}
 .sub{color:var(--muted);max-width:620px;margin-top:14px}
 
 /* ---------- Game card ---------- */
@@ -293,6 +293,7 @@ main,.foot{position:relative;z-index:2}
   animation:fall linear infinite}
 @keyframes fall{to{transform:translate(var(--dx),110vh) rotate(540deg)}}
 @media(prefers-reduced-motion:reduce){.petal{display:none}}
+@media(max-width:480px){h2{hyphens:auto;-webkit-hyphens:auto}}
 </style>
 </head>
 <body>

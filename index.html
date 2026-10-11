@@ -623,6 +623,7 @@ main, footer{position:relative;z-index:1}
 .d-left{left:-40px;top:50%;margin-top:-160px}
 .d-tr{right:2%;top:6%}
 .d-bl{left:1%;bottom:6%}
+.d-br{right:1%;bottom:4%}
 /* HERO робо-руки */
 .hero-arm{position:absolute}
 .hero-arm img{display:block;height:auto;
@@ -867,6 +868,23 @@ h1.hero-title{font-family:var(--font-display);font-weight:600;line-height:1.04;l
 .b-card:hover .svc-ico{border-color:var(--line-2)}
 .svc-ico svg{width:23px;height:23px;stroke-width:1.5}
 .svc-num{font-family:var(--font-display);font-weight:500;font-size:13px;color:var(--faint)}
+/* Визуалы в больших карточках услуг: без них верх карточек «Сайты» и «Игры» пустовал */
+.svc-vis{position:relative;flex:1;min-height:150px;margin:22px -6px 0;pointer-events:none}
+.vis-sites img{position:absolute;width:62%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:top;border-radius:12px;
+  border:1px solid var(--line-2);box-shadow:0 24px 50px -24px rgba(0,0,0,.7);transition:transform .6s var(--ease)}
+.vis-sites img:nth-child(1){left:2%;top:16%;transform:rotate(-6deg);opacity:.75}
+.vis-sites img:nth-child(2){right:2%;top:10%;transform:rotate(5deg);opacity:.85}
+.vis-sites img:nth-child(3){left:19%;top:2%;z-index:2}
+.s-sites:hover .vis-sites img:nth-child(1){transform:rotate(-8deg) translate(-8px,4px)}
+.s-sites:hover .vis-sites img:nth-child(2){transform:rotate(7deg) translate(8px,4px)}
+.s-sites:hover .vis-sites img:nth-child(3){transform:translateY(-6px)}
+.vis-sites{-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent 100%);mask-image:linear-gradient(to bottom,#000 55%,transparent 100%)}
+.vis-game{min-height:120px;margin:20px 0 0;overflow:hidden;border-radius:14px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 50%,transparent 88%);mask-image:linear-gradient(to bottom,#000 50%,transparent 88%)}
+/* картинку увеличиваем, чтобы надпись «STEAL A CHIBI» ушла за нижний край — остаются только персонажи */
+.vis-game img{position:absolute;left:50%;top:-8%;height:152%;width:auto;max-width:none;transform:translateX(-40%)}
+@media (max-width:900px){.svc-vis{flex:none}.vis-sites{height:220px}.vis-game{height:160px}}
+@media (max-width:600px){.vis-sites{height:190px}.vis-sites img{width:70%}.vis-game{height:140px}}
 .svc-body{margin-top:auto}
 .b-card h3{font-family:var(--font-display);font-weight:500;font-size:19px;letter-spacing:-.01em;margin-bottom:9px;margin-top:26px}
 .s-sites h3{font-size:27px;margin-top:32px}
@@ -1566,7 +1584,9 @@ footer{border-top:1px solid var(--line);padding:64px 0 38px}
   .cmp-plate,.cmp-plate img{height:62px}}
 
 /* Длинные слова (особенно казахские) не должны вылезать за экран на узких телефонах */
-h1,h2,h3,h4{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+/* Перенос с дефисом — только на узких телефонах, где длинное слово иначе не влезает. На ПК он рвал заголовки («сотрудни-ком»). */
+h1,h2,h3,h4{overflow-wrap:break-word}
+@media(max-width:480px){h1,h2{hyphens:auto;-webkit-hyphens:auto}}
 p,li{overflow-wrap:break-word}
 @media(max-width:400px){.fibo-lead{hyphens:auto;-webkit-hyphens:auto}}
 
@@ -1794,6 +1814,11 @@ a.tc-prj:hover{transform:translateY(-3px);border-color:var(--red)}
           <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M2.5 9h19M6 6.7h.01M9 6.7h.01"/></svg></div>
           <div class="svc-num">01</div>
         </div>
+        <div class="svc-vis vis-sites" aria-hidden="true">
+          <img src="portfolio/10_pro-ceramic.webp" alt="" loading="lazy" decoding="async" width="1800" height="1125">
+          <img src="portfolio/14_asiatrade.webp" alt="" loading="lazy" decoding="async" width="1800" height="1125">
+          <img src="portfolio/01_atelier57.webp" alt="" loading="lazy" decoding="async" width="1800" height="1125">
+        </div>
         <div class="svc-body">
           <h3 data-i18n="services.s1H">Сайты и веб-платформы</h3>
           <p data-i18n="services.s1P">Сайты, лендинги и сложные платформы с нуля. Быстрые, адаптивные, на современном стеке — от визитки до B2B-маркетплейса.</p>
@@ -1812,6 +1837,7 @@ a.tc-prj:hover{transform:translateY(-3px);border-color:var(--red)}
           <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="10" rx="4"/><path d="M6.5 11v2M5.5 12h2M15.5 11.5h.01M18 13.5h.01"/></svg></div>
           <div class="svc-num">03</div>
         </div>
+        <div class="svc-vis vis-game" aria-hidden="true"><img src="brand/roblox/steal-a-chibi.webp" alt="" loading="lazy" decoding="async" width="1410" height="676"></div>
         <div class="svc-body"><h3 data-i18n="services.s3H">Разработка игр</h3><p data-i18n="services.s3P">Игры для мобильных и ПК на Unity и Unreal Engine.</p></div>
       </div>
       <div class="b-card reveal">
@@ -2042,7 +2068,7 @@ a.tc-prj:hover{transform:translateY(-3px);border-color:var(--red)}
 
 <!-- ============ PRICING (тизер → /price) ============ -->
 <section class="section" id="pricing">
-  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-bl" style="--w:270px;--wm:150px;--op:.4;--par:55;--rot:6deg;--dur:10.5s"><div class="deco3d-in"><img src="/brand/3d/chip-3d.webp" alt="" width="1000" height="1000" loading="lazy"></div></div></div>
+  <div class="sec-deco" aria-hidden="true"><div class="deco3d d-br" style="--w:270px;--wm:150px;--op:.4;--par:55;--rot:6deg;--dur:10.5s"><div class="deco3d-in"><img src="/brand/3d/chip-3d.webp" alt="" width="1000" height="1000" loading="lazy"></div></div></div>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left">

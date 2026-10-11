@@ -1572,7 +1572,7 @@ p,li{overflow-wrap:break-word}
 
 /* ---------- кейс команды ---------- */
 #team-case h2,.tc-h{hyphens:manual;-webkit-hyphens:manual}
-#team-case .sec-head .left{max-width:760px}
+
 .tc{display:grid;grid-template-columns:1.12fr 1fr;gap:16px}
 .tc-main{position:relative;overflow:hidden;display:flex;flex-direction:column;border-radius:var(--r-xl);padding:40px;border:1px solid var(--glass-line);
   background:radial-gradient(120% 90% at 100% 0%,var(--red-soft),transparent 55%),var(--glass);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur)}
@@ -1580,7 +1580,7 @@ p,li{overflow-wrap:break-word}
 .tc-av{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;flex:none;background:var(--red);color:#fff;
   font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:.02em;box-shadow:0 12px 28px -12px var(--red)}
 .tc-nm{font-family:var(--font-display);font-weight:600;font-size:19px;letter-spacing:-.01em}
-.tc-rl{font-size:14px;color:var(--muted);margin-top:2px}
+.tc-rl{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .tc-top{display:flex;flex-direction:column;gap:26px}
 .tc-grant{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 14px}
 .tc-grant b{display:block;font-family:var(--font-display);font-weight:700;font-size:clamp(30px,3.4vw,46px);letter-spacing:-.03em;color:var(--red);line-height:1}
@@ -1607,8 +1607,23 @@ a.tc-prj:hover{transform:translateY(-3px);border-color:var(--red)}
 .tc-ico{width:44px;height:44px;border-radius:13px;background:var(--red-soft);color:var(--red);display:grid;place-items:center;margin-bottom:auto;margin-left:4px}
 .tc-ico svg{width:23px;height:23px}
 .tc-prj-text .tc-cat{margin-top:18px}
+.tc-ev{margin-top:16px;display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center;border-radius:var(--r-xl);padding:30px 32px;
+  border:1px solid var(--glass-line);background:linear-gradient(135deg,var(--red-soft),transparent 60%),var(--glass)}
+.tc-ev-l .tc-lbl{padding:0;margin-bottom:8px}
+.tc-ev-name{font-family:var(--font-display);font-weight:700;font-size:clamp(24px,2.6vw,34px);letter-spacing:-.025em;line-height:1.1;margin-bottom:10px}
+.tc-ev-l .tc-desc{display:block;max-width:460px}
+.tc-ev-l .tc-open{margin-top:14px;color:inherit;text-decoration:none}
+.tc-ev-l .tc-open:hover{color:var(--red)}
+.tc-ev-f{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tc-ev-f div{border:1px solid var(--line-2);border-radius:var(--r-sm);padding:16px;background:var(--glass)}
+.tc-ev-f b{display:block;font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:-.01em}
+.tc-ev-f span{display:block;font-size:13px;color:var(--muted);margin-top:5px;line-height:1.4}
+@media (max-width:900px){.tc-ev{grid-template-columns:minmax(0,1fr);gap:20px}}
+@media (max-width:640px){.tc-ev{padding:24px 20px}.tc-ev-f{grid-template-columns:minmax(0,1fr);gap:8px}}
 .tc-foot{margin-top:22px;color:var(--muted);font-size:15px;text-align:center}
-@media (max-width:960px){.tc{grid-template-columns:minmax(0,1fr)}.tc-prj-text .tc-ico{margin-bottom:0}}
+@media (max-width:1080px){.tc{grid-template-columns:minmax(0,1fr)}.tc-stats{padding-top:26px}
+  .tc-side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.tc-lbl{grid-column:1/-1}}
+@media (max-width:640px){.tc-side{display:flex}.tc-prj-text .tc-ico{margin-bottom:0}}
 @media (max-width:640px){
   .tc-main{padding:26px 20px}
   .tc-h{margin-top:14px}
@@ -1968,25 +1983,25 @@ a.tc-prj:hover{transform:translateY(-3px);border-color:var(--red)}
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="left">
-        <div class="sec-tag"><i></i><span data-i18n="tcase.tag">Команда</span></div>
-        <h2 data-i18n="tcase.h2">Сильный кейс нашего разработчика</h2>
+        <div class="sec-tag"><i></i><span data-i18n="tcase.tag">Кейсы</span></div>
+        <h2 data-i18n="tcase.h2">Наши кейсы</h2>
       </div>
-      <p class="desc" data-i18n="tcase.desc">Наши проекты делают люди, чей уровень признают за пределами Казахстана.</p>
+      <p class="desc" data-i18n="tcase.desc">Проекты нашей команды, которые получили признание за пределами Казахстана.</p>
     </div>
     <div class="tc reveal">
       <div class="tc-main">
         <div class="tc-top">
           <div class="tc-who">
             <div class="tc-av" aria-hidden="true" data-i18n="tcase.ini">ДЖ</div>
-            <div><div class="tc-nm" data-i18n="tcase.name">Дияр Жакпелов</div><div class="tc-rl" data-i18n="tcase.role">Разработчик SITS</div></div>
+            <div><div class="tc-rl" data-i18n="tcase.role">Разработчик</div><div class="tc-nm" data-i18n="tcase.name">Дияр Ж.</div></div>
           </div>
           <div class="tc-grant"><b data-i18n="tcase.grantV">$10 000</b><span data-i18n="tcase.grantL">грант за проект</span></div>
         </div>
-        <h3 class="tc-h" data-i18n="tcase.h3">Защитил проект перед Тайлером Коуэном и получил грант</h3>
-        <p class="tc-p" data-i18n="tcase.p">Проект, написанный всего за 2 недели, Дияр лично защитил перед Тайлером Коуэном — американским экономистом и профессором Университета Джорджа Мейсона — и получил грант на $10 000.</p>
+        <h3 class="tc-h" data-i18n="tcase.h3">Защитил проект перед Тайлером Коуэном и получил грант Emergent Ventures</h3>
+        <p class="tc-p" data-i18n="tcase.p">Проект, написанный всего за 2 недели, Дияр лично защитил перед Тайлером Коуэном — председателем Mercatus Center и основателем грантовой программы Emergent Ventures — и получил грант $10 000.</p>
         <div class="tc-stats">
           <div><b data-i18n="tcase.s1V">2 недели</b><span data-i18n="tcase.s1L">на разработку проекта</span></div>
-          <div><b data-i18n="tcase.s2V">$10 000</b><span data-i18n="tcase.s2L">грант после защиты</span></div>
+          <div><b data-i18n="tcase.s2V">Tyler Cowen</b><span data-i18n="tcase.s2L">защита проекта</span></div>
           <div><b data-i18n="tcase.s3V">2 продукта</b><span data-i18n="tcase.s3L">в продакшене</span></div>
         </div>
       </div>
@@ -2007,7 +2022,21 @@ a.tc-prj:hover{transform:translateY(-3px);border-color:var(--red)}
         </div>
       </div>
     </div>
-    <p class="tc-foot reveal" data-i18n="tcase.foot">Такие разработчики работают над вашими проектами в SITS.</p>
+    <div class="tc-ev reveal">
+      <div class="tc-ev-l">
+        <div class="tc-lbl" data-i18n="tcase.evTag">О грантовой программе</div>
+        <div class="tc-ev-name">Emergent Ventures</div>
+        <p class="tc-desc" data-i18n="tcase.evDesc">Грантовая программа, которую Тайлер Коуэн основал в 2018 году при Mercatus Center Университета Джорджа Мейсона. Поддерживает людей по всему миру с масштабируемыми идеями «от нуля к единице».</p>
+        <a class="tc-open" href="https://www.mercatus.org/emergent-ventures" target="_blank" rel="noopener"><span data-i18n="tcase.evLink">Сайт программы</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+      </div>
+      <div class="tc-ev-f">
+        <div><b data-i18n="tcase.f1V">Тайлер Коуэн</b><span data-i18n="tcase.f1L">председатель Mercatus Center, профессор экономики Университета Джорджа Мейсона</span></div>
+        <div><b data-i18n="tcase.f2V">The Economist</b><span data-i18n="tcase.f2L">в списке самых влиятельных экономистов мира (2024)</span></div>
+        <div><b data-i18n="tcase.f3V">Foreign Policy</b><span data-i18n="tcase.f3L">Top 100 Global Thinkers</span></div>
+        <div><b data-i18n="tcase.f4V">Marginal Revolution</b><span data-i18n="tcase.f4L">его блог — «обязательное чтение» по версии The Wall Street Journal</span></div>
+      </div>
+    </div>
+    <p class="tc-foot reveal" data-i18n="tcase.foot">Такие специалисты работают над вашими проектами в SITS.</p>
   </div>
 </section>
 
@@ -2365,24 +2394,29 @@ const I18N = {
         '09':'Каталог акций и магазинов города (Усть-Каменогорск). Карточки товаров и акций.',
         '10':'Премиум-сайт шоурума камня (Астана). Спечённый камень SINISO, керамогранит, мрамор. Расчёт, 3D-визуализация, монтаж под ключ.', '11':'Fibonacci Control — наша CRM-платформа: ИИ-сотрудник, WhatsApp и учёт сделок для любого бизнеса Казахстана.', '12':'AI-консультант сайта SITS: отвечает про услуги и цены на трёх языках и принимает заявки прямо в чате. Нажмите кнопку чата и попробуйте.',
         '13':'Облачная CRM для спа и банных комплексов: ИИ-администратор в WhatsApp, брони, касса и склад. Техподдержку и развитие ведёт SITS.',
-        '14':'Каталог авто из Кореи под ключ в Казахстан: более 180 000 машин с ценами, фото и характеристиками. Разработал Дияр Жакпелов.',
+        '14':'Каталог авто из Кореи под ключ в Казахстан: более 180 000 машин с ценами, фото и характеристиками. Разработчик — Дияр Ж.',
       },
     },
     tcase: {
-      tag:'Команда', h2:'Сильный кейс нашего разработчика',
-      desc:'Наши проекты делают люди, чей уровень признают за пределами Казахстана.',
-      name:'Дияр Жакпелов', role:'Разработчик SITS', ini:'ДЖ', grantV:'$10 000',
+      tag:'Кейсы', h2:'Наши кейсы',
+      desc:'Проекты нашей команды, которые получили признание за пределами Казахстана.',
+      name:'Дияр Ж.', role:'Разработчик', ini:'ДЖ', grantV:'$10 000',
       grantL:'грант за проект',
-      h3:'Защитил проект перед Тайлером Коуэном и получил грант',
-      p:'Проект, написанный всего за 2 недели, Дияр лично защитил перед Тайлером Коуэном — американским экономистом и профессором Университета Джорджа Мейсона — и получил грант на $10 000.',
+      h3:'Защитил проект перед Тайлером Коуэном и получил грант Emergent Ventures',
+      p:'Проект, написанный всего за 2 недели, Дияр лично защитил перед Тайлером Коуэном — председателем Mercatus Center и основателем грантовой программы Emergent Ventures — и получил грант $10 000.',
+      evTag:'О грантовой программе', evDesc:'Грантовая программа, которую Тайлер Коуэн основал в 2018 году при Mercatus Center Университета Джорджа Мейсона. Поддерживает людей по всему миру с масштабируемыми идеями «от нуля к единице».', evLink:'Сайт программы',
+      f1V:'Тайлер Коуэн', f1L:'председатель Mercatus Center, профессор экономики Университета Джорджа Мейсона',
+      f2V:'The Economist', f2L:'в списке самых влиятельных экономистов мира (2024)',
+      f3V:'Foreign Policy', f3L:'Top 100 Global Thinkers',
+      f4V:'Marginal Revolution', f4L:'его блог — «обязательное чтение» по версии The Wall Street Journal',
       s1V:'2 недели', s1L:'на разработку проекта',
-      s2V:'$10 000', s2L:'грант после защиты',
+      s2V:'Tyler Cowen', s2L:'защита проекта',
       s3V:'2 продукта', s3L:'в продакшене',
       prjLbl:'Проекты Дияра',
       p1Cat:'Платформа · авто из Кореи', p1Desc:'Каталог авто под ключ в Казахстан: более 180 000 машин с ценами, фото и характеристиками.',
       p2Cat:'EdTech · приложение', p2Desc:'Приложение для подготовки к ЕНТ и поступлению в университеты Казахстана.',
       open:'Открыть сайт',
-      foot:'Такие разработчики работают над вашими проектами в SITS.',
+      foot:'Такие специалисты работают над вашими проектами в SITS.',
     },
     pricing: {
       tag:'Прайс', h2:'Пакеты и цены',
@@ -2650,24 +2684,29 @@ const I18N = {
         '09':'Local catalog of deals and stores (Oskemen). Product and promo cards.',
         '10':'Premium stone showroom site (Astana). SINISO sintered stone, porcelain, marble. Calculation, 3D viz, turn-key installation.', '11':'Fibonacci Control — our own CRM platform: an AI employee, WhatsApp and deal tracking for any business in Kazakhstan.', '12':'The AI consultant on the SITS site: answers about services and prices in three languages and takes leads right in the chat. Tap the chat button and try it.',
         '13':'Cloud CRM for spas and bathhouse complexes: an AI administrator in WhatsApp, bookings, POS and inventory. Tech support and development by SITS.',
-        '14':'Catalogue of turnkey cars from Korea to Kazakhstan: 180,000+ vehicles with prices, photos and specs. Built by Diyar Zhakpelov.',
+        '14':'Catalogue of turnkey cars from Korea to Kazakhstan: 180,000+ vehicles with prices, photos and specs. Developer: Diyar Zh.',
       },
     },
     tcase: {
-      tag:'Team', h2:'A standout case from our developer',
-      desc:'Our projects are built by people whose level is recognised far beyond Kazakhstan.',
-      name:'Diyar Zhakpelov', role:'Developer at SITS', ini:'DZ', grantV:'$10,000',
+      tag:'Cases', h2:'Our cases',
+      desc:'Work by our team that has been recognised beyond Kazakhstan.',
+      name:'Diyar Zh.', role:'Developer', ini:'DZ', grantV:'$10,000',
       grantL:'grant for the project',
-      h3:'Defended his project before Tyler Cowen and won a grant',
-      p:'Diyar personally defended a project he built in just 2 weeks before Tyler Cowen — American economist and professor at George Mason University — and received a $10,000 grant.',
+      h3:'Defended his project before Tyler Cowen and won an Emergent Ventures grant',
+      p:'Diyar personally defended a project he built in just 2 weeks before Tyler Cowen — chairman of the Mercatus Center and founder of the Emergent Ventures grant programme — and received a $10,000 grant.',
+      evTag:'About the grant programme', evDesc:'A grant programme founded by Tyler Cowen in 2018 at the Mercatus Center, George Mason University. It backs people worldwide with highly scalable, “zero to one” ideas.', evLink:'Programme website',
+      f1V:'Tyler Cowen', f1L:'chairman of the Mercatus Center, professor of economics at George Mason University',
+      f2V:'The Economist', f2L:'named among the most influential economists (2024)',
+      f3V:'Foreign Policy', f3L:'Top 100 Global Thinkers',
+      f4V:'Marginal Revolution', f4L:'his blog — “required reading”, per The Wall Street Journal',
       s1V:'2 weeks', s1L:'to build the project',
-      s2V:'$10,000', s2L:'grant after the defence',
+      s2V:'Tyler Cowen', s2L:'project defence',
       s3V:'2 products', s3L:'in production',
       prjLbl:'Diyar’s projects',
       p1Cat:'Platform · cars from Korea', p1Desc:'Turnkey car catalogue for Kazakhstan: 180,000+ vehicles with prices, photos and specs.',
       p2Cat:'EdTech · app', p2Desc:'An app that prepares students for the UNT and admission to Kazakhstan’s universities.',
       open:'Open website',
-      foot:'Developers like this work on your projects at SITS.',
+      foot:'Specialists like this work on your projects at SITS.',
     },
     pricing: {
       tag:'Pricing', h2:'Packages & prices',
@@ -2935,24 +2974,29 @@ const I18N = {
         '09':'Қаладағы акциялар мен дүкендердің каталогы (Өскемен). Тауар мен акциялардың карточкалары.',
         '10':'Астана тас шоурумының премиум-сайты. SINISO спечен тас, керамогранит, мрамор. Есептеу, 3D-визуализация, кілт астында монтаж.', '11':'Fibonacci Control — өз CRM-платформамыз: ИИ-қызметкер, WhatsApp және мәмілелер есебі кез келген бизнеске.', '12':'SITS сайтындағы AI-кеңесші: қызметтер мен бағалар туралы үш тілде жауап беріп, өтінімдерді чатта қабылдайды. Чат батырмасын басып көріңіз.',
         '13':'Спа және монша кешендеріне арналған бұлттық CRM: WhatsApp-тағы ИИ-әкімші, брондар, касса және қойма. Техқолдау мен дамуын SITS жүргізеді.',
-        '14':'Кореядан Қазақстанға дайын көліктер каталогы: бағасы, фотосы мен сипаттамасы бар 180 000-нан астам көлік. Әзірлеген — Дияр Жакпелов.',
+        '14':'Кореядан Қазақстанға дайын көліктер каталогы: бағасы, фотосы мен сипаттамасы бар 180 000-нан астам көлік. Әзірлеуші — Дияр Ж.',
       },
     },
     tcase: {
-      tag:'Команда', h2:'Әзірлеушіміздің мықты кейсі',
-      desc:'Жобаларымызды деңгейі Қазақстаннан тыс жерлерде мойындалған мамандар жасайды.',
-      name:'Дияр Жакпелов', role:'SITS әзірлеушісі', ini:'ДЖ', grantV:'$10 000',
+      tag:'Кейстер', h2:'Біздің кейстер',
+      desc:'Командамыздың Қазақстаннан тыс жерлерде мойындалған жобалары.',
+      name:'Дияр Ж.', role:'Әзірлеуші', ini:'ДЖ', grantV:'$10 000',
       grantL:'жоба үшін грант',
-      h3:'Жобасын Тайлер Коуэннің алдында қорғап, грант алды',
-      p:'Небәрі 2 аптада жазылған жобасын Дияр американдық экономист, Джордж Мейсон университетінің профессоры Тайлер Коуэннің алдында өзі қорғап, $10 000 грант алды.',
+      h3:'Жобасын Тайлер Коуэннің алдында қорғап, Emergent Ventures грантын алды',
+      p:'Небәрі 2 аптада жазылған жобасын Дияр Mercatus Center төрағасы әрі Emergent Ventures гранттық бағдарламасының негізін қалаушы Тайлер Коуэннің алдында өзі қорғап, $10 000 грант алды.',
+      evTag:'Гранттық бағдарлама туралы', evDesc:'Тайлер Коуэн 2018 жылы Джордж Мейсон университетінің Mercatus Center жанынан құрған гранттық бағдарлама. Әлемнің түкпір-түкпіріндегі «нөлден бірге» ауқымды идеялары бар адамдарды қолдайды.', evLink:'Бағдарлама сайты',
+      f1V:'Тайлер Коуэн', f1L:'Mercatus Center төрағасы, Джордж Мейсон университетінің экономика профессоры',
+      f2V:'The Economist', f2L:'әлемдегі ең ықпалды экономистер тізімінде (2024)',
+      f3V:'Foreign Policy', f3L:'Top 100 Global Thinkers',
+      f4V:'Marginal Revolution', f4L:'оның блогы — The Wall Street Journal бағалауы бойынша «міндетті оқу»',
       s1V:'2 апта', s1L:'жобаны әзірлеуге',
-      s2V:'$10 000', s2L:'қорғаудан кейінгі грант',
+      s2V:'Tyler Cowen', s2L:'жобаны қорғау',
       s3V:'2 өнім', s3L:'продакшнда',
       prjLbl:'Дияр жобалары',
       p1Cat:'Платформа · Кореядан көліктер', p1Desc:'Қазақстанға дайын көліктер каталогы: бағасы, фотосы мен сипаттамасы бар 180 000-нан астам көлік.',
       p2Cat:'EdTech · қосымша', p2Desc:'ҰБТ-ға және Қазақстан университеттеріне түсуге дайындайтын қосымша.',
       open:'Сайтты ашу',
-      foot:'Сіздің жобаларыңызбен SITS-те осындай әзірлеушілер жұмыс істейді.',
+      foot:'Сіздің жобаларыңызбен SITS-те осындай мамандар жұмыс істейді.',
     },
     pricing: {
       tag:'Бағалар', h2:'Пакеттер мен бағалар',
